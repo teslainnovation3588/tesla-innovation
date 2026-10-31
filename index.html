@@ -1,445 +1,350 @@
-<!DOCTYPE html>  <html lang="en">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<meta name="description" content="TESLA Innovation — Premium electric vehicle sales and international enquiries.">  
-<title>TESLA Innovation | Premium Vehicle Showroom</title>  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <style>  
-*{margin:0;padding:0;box-sizing:border-box}  
-body{font-family:Arial,sans-serif;background:#080a0d;color:#fff}  
-header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292d32;background:#080a0d;position:sticky;top:0;z-index:10}  
-.logo{font-size:21px;font-weight:bold;letter-spacing:2px}  
-.logo span{color:#e82127}  
-nav a{color:#ddd;text-decoration:none;margin-left:18px;font-size:13px}  
-.hero{min-height:570px;padding:90px 20px;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(#0008,#000b),url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1800&q=85') center/cover}  
-.hero h1{font-size:clamp(38px,8vw,75px);letter-spacing:4px;margin-bottom:20px}  
-.hero h1 span{color:#e82127}  
-.hero p{max-width:650px;margin:auto;color:#ddd;line-height:1.8}  
-.button{display:inline-block;background:#e82127;color:white;text-decoration:none;padding:14px 24px;border:0;border-radius:3px;font-weight:bold;cursor:pointer;margin-top:25px}  
-.section{padding:65px 7%}  
-.section-title{text-align:center;margin-bottom:35px}  
-.section-title h2{font-size:32px;margin-bottom:12px}  
-.section-title p{color:#aaa;line-height:1.7}  
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:25px}  
-.card{background:#12161c;border:1px solid #292d32;border-radius:5px;overflow:hidden}  
-.card img{width:100%;height:190px;object-fit:cover}  
-.card-content{padding:20px}  
-.card h3{font-size:22px;margin-bottom:10px}  
-.price{font-size:23px;font-weight:bold;color:#e82127;margin:12px 0}  
-.details{color:#aaa;font-size:13px;line-height:1.8}  
-.badge{display:inline-block;background:#222b31;color:#eee;padding:7px 10px;font-size:11px;margin-top:12px}  
-.card-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}  
-.card-buttons button{flex:1;min-width:110px;padding:12px 8px;border:0;cursor:pointer;font-weight:bold;font-size:11px}  
-.buy{background:#e82127;color:white}  
-.negotiate{background:#d2d2d2;color:#111}  
-.panel{background:#12161c;border:1px solid #292d32;padding:28px;border-radius:5px;max-width:650px;margin:30px auto}  
-.panel h3{margin-bottom:15px}  
-input,select,textarea{width:100%;padding:13px;margin:9px 0;background:#080a0d;border:1px solid #343b43;color:white;border-radius:3px}  
-textarea{min-height:90px;resize:vertical}  
-.panel button{width:100%;padding:14px;background:#e82127;color:white;border:0;font-weight:bold;cursor:pointer;margin-top:10px}  
-.note{color:#999;font-size:12px;line-height:1.7;margin-top:12px}  
-footer{text-align:center;padding:30px;border-top:1px solid #292d32;color:#888;font-size:12px;line-height:2}  
-#loadingMessage{color:#aaa;text-align:center;padding:30px}  
-#formMessage{margin-top:15px;font-size:13px;line-height:1.6}  
-button:disabled{opacity:.5;cursor:not-allowed}  
-@media(max-width:600px){  
-header{flex-direction:column;gap:15px}  
-nav a{margin:0 7px}  
-.section{padding:45px 5%}  
-}  
-</style>  </head>  <body>  <header>  
-<div class="logo">TESLA <span>INNOVATION</span></div>  
-<nav>  
-<a href="#home">Home</a>  
-<a href="#vehicles">Vehicles</a>  
-<a href="#negotiation">Negotiation</a>  
-<a href="#contact">Contact</a>  
-</nav>  
-</header>  <section class="hero" id="home">  
-<div>  
-<h1>DRIVE THE <span>FUTURE</span></h1>  
-<p>Premium Vehicles. Global Connections. Exceptional Experience.</p>  
-<p>Explore our premium electric vehicle catalogue, discover available options and make an international purchase enquiry.</p>  
-<a class="button" href="#vehicles">EXPLORE VEHICLES</a>  
-</div>  
-</section>  <section class="section" id="vehicles">  
-<div class="section-title">  
-<h2>OUR VEHICLE COLLECTION</h2>  
-<p>Explore our vehicle range and submit a purchase or pre-order enquiry.</p>  
-</div>  <div id="vehicleGrid" class="grid">  
-<p id="loadingMessage">Loading our vehicle collection...</p>  
-</div>  <p class="note">  
-Prices displayed are catalogue prices and must be confirmed before an order is accepted.  
-Final vehicle configuration, stock, taxes and international delivery charges are subject to confirmation.  
-</p>  
-</section>  <section class="section" id="negotiation">  
-<div class="section-title">  
-<h2>MAKE YOUR OFFER</h2>  
-<p>Have a budget in mind? Submit your proposed budget for our review.</p>  
-</div>  <div class="panel">  
-<h3>Vehicle Budget Negotiation</h3>  <form id="negotiationForm">  <select id="negModel" required>  
-<option value="">Choose vehicle</option>  
-</select>  <input id="budget" type="number" min="1" placeholder="Your budget in USD ($)" required>  <input id="negName" type="text" placeholder="Your full name" required>  <input id="negEmail" type="email" placeholder="Your email address" required>  <input id="negPhone" type="tel" placeholder="Your phone number" required>  <textarea id="negMessage" placeholder="Additional details or preferred vehicle configuration"></textarea>  <button type="submit">SUBMIT MY OFFER</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TESLA Innovation — Premium electric vehicle sales and international enquiries.">
+<title>TESLA Innovation | Premium Vehicle Showroom</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-</form>  <p id="negResult"></p>  <p class="note">  
-Submitting an offer does not guarantee acceptance or reserve a vehicle.  
-Our team must review and respond to your proposal.  
-</p>  
-</div>  
-</section>  <section class="section" id="order">  <div class="section-title">  
-<h2>VEHICLE PURCHASE ENQUIRY</h2>  
-<p>Tell us which vehicle you are interested in purchasing or pre-ordering.</p>  
-</div>  <div class="panel">  
-<h3>Start Your Vehicle Enquiry</h3>  <form id="orderForm">  <select id="orderModel" required>  
-<option value="">Choose vehicle</option>  
-</select>  <input id="orderName" placeholder="Full name" required>  <input id="orderEmail" type="email" placeholder="Email address" required>  <input id="orderPhone" type="tel" placeholder="Phone number" required>  <select id="orderType" required>  
-<option value="">Purchase preference</option>  
-<option>Existing stock</option>  
-<option>Pre-order</option>  
-</select>  <textarea id="orderMessage" placeholder="Preferred colour, variant, delivery destination and other details"></textarea>  <button type="submit">SEND PURCHASE ENQUIRY</button>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#080a0d;color:#fff}
+header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292d32;background:#080a0d;position:sticky;top:0;z-index:10}
+.logo{font-size:21px;font-weight:bold;letter-spacing:2px}
+.logo span{color:#e82127}
+nav a{color:#ddd;text-decoration:none;margin-left:18px;font-size:13px}
+.hero{min-height:570px;padding:90px 20px;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(#0008,#000b),url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1800&q=85') center/cover}
+.hero h1{font-size:clamp(38px,8vw,75px);letter-spacing:4px;margin-bottom:20px}
+.hero h1 span{color:#e82127}
+.hero p{max-width:650px;margin:auto;color:#ddd;line-height:1.8}
+.button{display:inline-block;background:#e82127;color:white;text-decoration:none;padding:14px 24px;border:0;border-radius:3px;font-weight:bold;cursor:pointer;margin-top:25px}
+.section{padding:65px 7%}
+.section-title{text-align:center;margin-bottom:35px}
+.section-title h2{font-size:32px;margin-bottom:12px}
+.section-title p{color:#aaa;line-height:1.7}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:25px}
+.card{background:#12161c;border:1px solid #292d32;border-radius:5px;overflow:hidden}
+.card img{width:100%;height:190px;object-fit:cover}
+.card-content{padding:20px}
+.card h3{font-size:22px;margin-bottom:10px}
+.price{font-size:23px;font-weight:bold;color:#e82127;margin:12px 0}
+.details{color:#aaa;font-size:13px;line-height:1.8}
+.badge{display:inline-block;background:#222b31;color:#eee;padding:7px 10px;font-size:11px;margin-top:12px}
+.card-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.card-buttons button{flex:1;min-width:110px;padding:12px 8px;border:0;cursor:pointer;font-weight:bold;font-size:11px}
+.buy{background:#e82127;color:white}
+.negotiate{background:#d2d2d2;color:#111}
+.panel{background:#12161c;border:1px solid #292d32;padding:28px;border-radius:5px;max-width:650px;margin:30px auto}
+.panel h3{margin-bottom:15px}
+input,select,textarea{width:100%;padding:13px;margin:9px 0;background:#080a0d;border:1px solid #343b43;color:white;border-radius:3px}
+textarea{min-height:90px;resize:vertical}
+.panel button{width:100%;padding:14px;background:#e82127;color:white;border:0;font-weight:bold;cursor:pointer;margin-top:10px}
+.note{color:#999;font-size:12px;line-height:1.7;margin-top:12px}
+footer{text-align:center;padding:30px;border-top:1px solid #292d32;color:#888;font-size:12px;line-height:2}
+#loadingMessage{color:#aaa;text-align:center;padding:30px}
+#formMessage{margin-top:15px;font-size:13px;line-height:1.6}
+button:disabled{opacity:.5;cursor:not-allowed}
+@media(max-width:600px){
+header{flex-direction:column;gap:15px}
+nav a{margin:0 7px}
+.section{padding:45px 5%}
+}
+</style>
+</head>
 
-</form>  <p id="orderResult"></p>  <p class="note">  
-This is an enquiry, not a completed purchase or payment.  
-Vehicle availability and final terms must be confirmed first.  
-</p>  </div>  
-</section>  <section class="section" id="contact">  
-<div class="section-title">  
-<h2>WORLDWIDE ENQUIRIES</h2>  
-<p>Contact our team regarding vehicle availability, pricing and international purchase enquiries.</p>  
-</div>  
-</section>  <footer>  
-© 2026 TESLA Innovation. All rights reserved.  
-<br>Premium Vehicles. Global Connections. Exceptional Experience.  
-</footer>  <script>  
-  
-// ======================================  
-// TESLA INNOVATION - SUPABASE CONNECTION  
-// ======================================  
-  
-const SUPABASE_URL = 'https://dnmktpmvjzsxzmgizdcv.supabase.co';  
-  
-const SUPABASE_KEY = 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';  
-  
-const db = window.supabase.createClient(  
-SUPABASE_URL,  
-SUPABASE_KEY  
-);  
-  
-// ======================================  
-// VEHICLE IMAGE FALLBACKS  
-// ======================================  
-  
-const fallbackImages = {  
-'Model 3':'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=900&q=85',  
-  
-'Model Y':'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=900&q=85',  
-  
-'Model S':'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=900&q=85',  
-  
-'Model X':'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=85',  
-  
-'Cybertruck':'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=900&q=85'  
-};  
-  
-let vehicles = [];  
-  
-// ======================================  
-// LOAD VEHICLES FROM SUPABASE  
-// ======================================  
-  
-async function loadVehicles(){  
-  
-const grid = document.getElementById('vehicleGrid');  
-  
-grid.innerHTML = '<p id="loadingMessage">Loading our vehicle collection...</p>';  
-  
-const {data,error} = await db  
-.from('vehicles')  
-.select('*')  
-.eq('is_published',true)  
-.order('created_at',{ascending:true});  
-  
-if(error){  
-  
-console.error('Vehicle loading error:',error);  
-  
-grid.innerHTML = `  
-<p class="note">  
-Our vehicle collection is temporarily unavailable.  
-Please try again later.  
-</p>`;  
-  
-return;  
-}  
-  
-vehicles = data || [];  
-  
-if(vehicles.length === 0){  
-  
-grid.innerHTML = '<p>No vehicles are currently published.</p>';  
-  
-return;  
-}  
-  
-grid.innerHTML = '';  
-  
-vehicles.forEach(vehicle => {  
-  
-const imageList = Array.isArray(vehicle.image_urls)  
-? vehicle.image_urls  
-: [];  
-  
-const image = imageList.length  
-? imageList[0]  
-: fallbackImages[vehicle.model] || fallbackImages['Model 3'];  
-  
-const price = Number(vehicle.selling_price).toLocaleString('en-US');  
-  
-const availability = vehicle.availability === 'limited_stock'  
-? 'LIMITED INVENTORY ENQUIRIES'  
-: vehicle.availability === 'in_stock'  
-? 'AVAILABLE STOCK'  
-: 'ORDER / PRE-ORDER ENQUIRIES';  
-  
-const card = document.createElement('div');  
-  
-card.className = 'card';  
-  
-card.innerHTML = `  
-  
-<img src="${image}" alt="${vehicle.model}" loading="lazy">  
-  
-<div class="card-content">  
-  
-<h3>${vehicle.model}</h3>  
-  
-<div class="price">  
-$${price}  
-</div>  
-  
-<p class="details">  
-${vehicle.variant || 'Electric vehicle'}<br>  
-${vehicle.description || 'Premium electric vehicle.'}  
-</p>  
-  
-<span class="badge">${availability}</span>  
-  
-<div class="card-buttons">  
-  
-<button class="buy" onclick="order('${vehicle.id}')">  
-${vehicle.availability === 'limited_stock' ? 'ENQUIRE' : 'BUY / PRE-ORDER'}  
-</button>  
-  
-<button class="negotiate" onclick="negotiate('${vehicle.id}')">  
-NEGOTIATE  
-</button>  
-  
-</div>  
-</div>  
-`;  
-  
-grid.appendChild(card);  
-  
-});  
-  
-populateVehicleOptions();  
-  
-}  
-  
-// ======================================  
-// POPULATE FORM VEHICLE OPTIONS  
-// ======================================  
-  
-function populateVehicleOptions(){  
-  
-const orderSelect = document.getElementById('orderModel');  
-  
-const negotiationSelect = document.getElementById('negModel');  
-  
-orderSelect.innerHTML = '<option value="">Choose vehicle</option>';  
-  
-negotiationSelect.innerHTML = '<option value="">Choose vehicle</option>';  
-  
-vehicles.forEach(vehicle => {  
-  
-const option1 = document.createElement('option');  
-  
-option1.value = vehicle.id;  
-  
-option1.textContent = vehicle.model + ' - ' + vehicle.variant;  
-  
-orderSelect.appendChild(option1);  
-  
-const option2 = document.createElement('option');  
-  
-option2.value = vehicle.id;  
-  
-option2.textContent = vehicle.model + ' - ' + vehicle.variant;  
-  
-negotiationSelect.appendChild(option2);  
-  
-});  
-  
-}  
-  
-// ======================================  
-// BUY BUTTON  
-// ======================================  
-  
-function order(vehicleId){  
-  
-document.getElementById('orderModel').value = vehicleId;  
-  
-document.getElementById('order').scrollIntoView({  
-behavior:'smooth'  
-});  
-  
-}  
-  
-// ======================================  
-// NEGOTIATION BUTTON  
-// ======================================  
-  
-function negotiate(vehicleId){  
-  
-document.getElementById('negModel').value = vehicleId;  
-  
-document.getElementById('negotiation').scrollIntoView({  
-behavior:'smooth'  
-});  
-  
-}  
-  
-// ======================================  
-// SUBMIT PURCHASE ENQUIRY  
-// ======================================  
-  
-document.getElementById('orderForm').addEventListener('submit',async function(e){  
-  
-e.preventDefault();  
-  
-const button = this.querySelector('button[type="submit"]');  
-  
-const result = document.getElementById('orderResult');  
-  
-button.disabled = true;  
-  
-button.textContent = 'SUBMITTING...';  
-  
-result.textContent = '';  
-  
-const data = {  
-  
-vehicle_id:document.getElementById('orderModel').value,  
-  
-customer_name:document.getElementById('orderName').value.trim(),  
-  
-customer_email:document.getElementById('orderEmail').value.trim(),  
-  
-customer_phone:document.getElementById('orderPhone').value.trim(),  
-  
-type:document.getElementById('orderType').value,  
-  
-message:document.getElementById('orderMessage').value.trim()  
-  
-};  
-  
-const {error} = await db  
-.from('enquiries')  
-.insert(data);  
-  
-button.disabled = false;  
-  
-button.textContent = 'SEND PURCHASE ENQUIRY';  
-  
-if(error){  
-  
-console.error('Enquiry error:',error);  
-  
-result.style.color = '#ff6b6b';  
-  
-result.textContent = 'We could not submit your enquiry. Please try again later.';  
-  
-return;  
-  
-}  
-  
-result.style.color = '#70df91';  
-  
-result.textContent = 'Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';  
-  
-this.reset();  
-  
-});  
-  
-// ======================================  
-// SUBMIT BUDGET NEGOTIATION  
-// ======================================  
-  
-document.getElementById('negotiationForm').addEventListener('submit',async function(e){  
-  
-e.preventDefault();  
-  
-const button = this.querySelector('button[type="submit"]');  
-  
-const result = document.getElementById('negResult');  
-  
-button.disabled = true;  
-  
-button.textContent = 'SUBMITTING...';  
-  
-result.textContent = '';  
-  
-const data = {  
-  
-vehicle_id:document.getElementById('negModel').value,  
-  
-customer_name:document.getElementById('negName').value.trim(),  
-  
-customer_email:document.getElementById('negEmail').value.trim(),  
-  
-customer_phone:document.getElementById('negPhone').value.trim(),  
-  
-proposed_budget:Number(document.getElementById('budget').value),  
-  
-currency:'USD',  
-  
-message:document.getElementById('negMessage').value.trim()  
-  
-};  
-  
-const {error} = await db  
-.from('negotiations')  
-.insert(data);  
-  
-button.disabled = false;  
-  
-button.textContent = 'SUBMIT MY OFFER';  
-  
-if(error){  
-  
-console.error('Negotiation error:',error);  
-  
-result.style.color = '#ff6b6b';  
-  
-result.textContent = 'Database error: ' + error.message;  
-  
-return;  
-  
-}  
-  
-result.style.color = '#70df91';  
-  
-result.textContent = 'Your budget offer has been submitted successfully. Our team will review it.';  
-  
-this.reset();  
-  
-});  
-  
-// ======================================  
-// START WEBSITE  
-// ======================================  
-  
-loadVehicles();  
-  
-</script>  </body>  
+<body>
+
+<header>
+<div class="logo">TESLA <span>INNOVATION</span></div>
+<nav>
+<a href="#home">Home</a>
+<a href="#vehicles">Vehicles</a>
+<a href="#negotiation">Negotiation</a>
+<a href="#contact">Contact</a>
+</nav>
+</header>
+
+<section class="hero" id="home">
+<div>
+<h1>DRIVE THE <span>FUTURE</span></h1>
+<p>Premium Vehicles. Global Connections. Exceptional Experience.</p>
+<p>Explore our premium electric vehicle catalogue, discover available options and make an international purchase enquiry.</p>
+<a class="button" href="#vehicles">EXPLORE VEHICLES</a>
+</div>
+</section>
+
+<section class="section" id="vehicles">
+<div class="section-title">
+<h2>OUR VEHICLE COLLECTION</h2>
+<p>Explore our vehicle range and submit a purchase or pre-order enquiry.</p>
+</div>
+<div id="vehicleGrid" class="grid">
+<p id="loadingMessage">Loading our vehicle collection...</p>
+</div>
+<p class="note">
+Prices displayed are catalogue prices and must be confirmed before an order is accepted.
+Final vehicle configuration, stock, taxes and international delivery charges are subject to confirmation.
+</p>
+</section>
+
+<section class="section" id="negotiation">
+<div class="section-title">
+<h2>MAKE YOUR OFFER</h2>
+<p>Have a budget in mind? Submit your proposed budget for our review.</p>
+</div>
+<div class="panel">
+<h3>Vehicle Budget Negotiation</h3>
+<form id="negotiationForm">
+<select id="negModel" required>
+<option value="">Choose vehicle</option>
+</select>
+<input id="budget" type="number" min="1" placeholder="Your budget in USD ($)" required>
+<input id="negName" type="text" placeholder="Your full name" required>
+<input id="negEmail" type="email" placeholder="Your email address" required>
+<input id="negPhone" type="tel" placeholder="Your phone number" required>
+<textarea id="negMessage" placeholder="Additional details or preferred vehicle configuration"></textarea>
+<button type="submit">SUBMIT MY OFFER</button>
+</form>
+<p id="negResult"></p>
+<p class="note">
+Submitting an offer does not guarantee acceptance or reserve a vehicle.
+Our team must review and respond to your proposal.
+</p>
+</div>
+</section>
+
+<section class="section" id="order">
+<div class="section-title">
+<h2>VEHICLE PURCHASE ENQUIRY</h2>
+<p>Tell us which vehicle you are interested in purchasing or pre-ordering.</p>
+</div>
+<div class="panel">
+<h3>Start Your Vehicle Enquiry</h3>
+<form id="orderForm">
+<select id="orderModel" required>
+<option value="">Choose vehicle</option>
+</select>
+<input id="orderName" placeholder="Full name" required>
+<input id="orderEmail" type="email" placeholder="Email address" required>
+<input id="orderPhone" type="tel" placeholder="Phone number" required>
+<select id="orderType" required>
+<option value="">Purchase preference</option>
+<option value="Existing stock">Existing stock</option>
+<option value="Pre-order">Pre-order</option>
+</select>
+<textarea id="orderMessage" placeholder="Preferred colour, variant, delivery destination and other details"></textarea>
+<button type="submit">SEND PURCHASE ENQUIRY</button>
+</form>
+<p id="orderResult"></p>
+<p class="note">
+This is an enquiry, not a completed purchase or payment.
+Vehicle availability and final terms must be confirmed first.
+</p>
+</div>
+</section>
+
+<section class="section" id="contact">
+<div class="section-title">
+<h2>WORLDWIDE ENQUIRIES</h2>
+<p>Contact our team regarding vehicle availability, pricing and international purchase enquiries.</p>
+</div>
+</section>
+
+<footer>
+© 2026 TESLA Innovation. All rights reserved.
+<br>Premium Vehicles. Global Connections. Exceptional Experience.
+</footer>
+
+<script>
+const SUPABASE_URL = 'https://dnmktpmvjzsxzmgizdcv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const fallbackImages = {
+'Model 3':'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=900&q=85',
+'Model Y':'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=900&q=85',
+'Model S':'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=900&q=85',
+'Model X':'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=85',
+'Cybertruck':'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=900&q=85'
+};
+
+let vehicles = [];
+
+async function loadVehicles(){
+const grid = document.getElementById('vehicleGrid');
+grid.innerHTML = '<p id="loadingMessage">Loading our vehicle collection...</p>';
+
+const {data,error} = await db
+.from('vehicles')
+.select('*')
+.eq('is_published',true)
+.order('created_at',{ascending:true});
+
+if(error){
+console.error('Vehicle loading error:',error);
+grid.innerHTML = '<p class="note">Our vehicle collection is temporarily unavailable. Please try again later.</p>';
+return;
+}
+
+vehicles = data || [];
+
+if(vehicles.length === 0){
+grid.innerHTML = '<p>No vehicles are currently published.</p>';
+return;
+}
+
+grid.innerHTML = '';
+
+vehicles.forEach(vehicle => {
+const imageList = Array.isArray(vehicle.image_urls) ? vehicle.image_urls : [];
+const image = imageList.length ? imageList[0] : fallbackImages[vehicle.model] || fallbackImages['Model 3'];
+const price = Number(vehicle.selling_price).toLocaleString('en-US');
+
+const availability = vehicle.availability === 'limited_stock'
+? 'LIMITED INVENTORY ENQUIRIES'
+: vehicle.availability === 'in_stock'
+? 'AVAILABLE STOCK'
+: 'ORDER / PRE-ORDER ENQUIRIES';
+
+const card = document.createElement('div');
+card.className = 'card';
+
+card.innerHTML = `
+<img src="${image}" alt="${vehicle.model}" loading="lazy">
+<div class="card-content">
+<h3>${vehicle.model}</h3>
+<div class="price">$${price}</div>
+<p class="details">${vehicle.variant || 'Electric vehicle'}<br>${vehicle.description || 'Premium electric vehicle.'}</p>
+<span class="badge">${availability}</span>
+<div class="card-buttons">
+<button class="buy" onclick="order('${vehicle.id}')">
+${vehicle.availability === 'limited_stock' ? 'ENQUIRE' : 'BUY / PRE-ORDER'}
+</button>
+<button class="negotiate" onclick="negotiate('${vehicle.id}')">NEGOTIATE</button>
+</div>
+</div>
+`;
+grid.appendChild(card);
+});
+
+populateVehicleOptions();
+}
+
+function populateVehicleOptions(){
+const orderSelect = document.getElementById('orderModel');
+const negotiationSelect = document.getElementById('negModel');
+
+orderSelect.innerHTML = '<option value="">Choose vehicle</option>';
+negotiationSelect.innerHTML = '<option value="">Choose vehicle</option>';
+
+vehicles.forEach(vehicle => {
+const label = vehicle.model + ' - ' + vehicle.variant;
+
+const option1 = document.createElement('option');
+option1.value = vehicle.id;
+option1.textContent = label;
+orderSelect.appendChild(option1);
+
+const option2 = document.createElement('option');
+option2.value = vehicle.id;
+option2.textContent = label;
+negotiationSelect.appendChild(option2);
+});
+}
+
+function order(vehicleId){
+document.getElementById('orderModel').value = vehicleId;
+document.getElementById('order').scrollIntoView({behavior:'smooth'});
+}
+
+function negotiate(vehicleId){
+document.getElementById('negModel').value = vehicleId;
+document.getElementById('negotiation').scrollIntoView({behavior:'smooth'});
+}
+
+// CORRECTED PURCHASE ENQUIRY SUBMISSION
+document.getElementById('orderForm').addEventListener('submit',async function(e){
+e.preventDefault();
+
+const button = this.querySelector('button[type="submit"]');
+const result = document.getElementById('orderResult');
+
+button.disabled = true;
+button.textContent = 'SUBMITTING...';
+result.textContent = '';
+
+const data = {
+vehicle_id: document.getElementById('orderModel').value,
+customer_name: document.getElementById('orderName').value.trim(),
+email: document.getElementById('orderEmail').value.trim(),
+phone: document.getElementById('orderPhone').value.trim(),
+enquiry_type: document.getElementById('orderType').value,
+message: document.getElementById('orderMessage').value.trim()
+};
+
+try {
+const {error} = await db.from('enquiries').insert(data);
+
+if(error) throw error;
+
+result.style.color = '#70df91';
+result.textContent = 'Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';
+this.reset();
+
+} catch(error) {
+console.error('Enquiry error:',error);
+result.style.color = '#ff6b6b';
+result.textContent = 'Enquiry error: ' + error.message;
+
+} finally {
+button.disabled = false;
+button.textContent = 'SEND PURCHASE ENQUIRY';
+}
+});
+
+// NEGOTIATION SUBMISSION — PRESERVED
+document.getElementById('negotiationForm').addEventListener('submit',async function(e){
+e.preventDefault();
+
+const button = this.querySelector('button[type="submit"]');
+const result = document.getElementById('negResult');
+
+button.disabled = true;
+button.textContent = 'SUBMITTING...';
+result.textContent = '';
+
+const data = {
+vehicle_id: document.getElementById('negModel').value,
+customer_name: document.getElementById('negName').value.trim(),
+customer_email: document.getElementById('negEmail').value.trim(),
+customer_phone: document.getElementById('negPhone').value.trim(),
+proposed_budget: Number(document.getElementById('budget').value),
+currency: 'USD',
+message: document.getElementById('negMessage').value.trim()
+};
+
+try {
+const {error} = await db.from('negotiations').insert(data);
+if(error) throw error;
+
+result.style.color = '#70df91';
+result.textContent = 'Your budget offer has been submitted successfully. Our team will review it.';
+this.reset();
+
+} catch(error) {
+console.error('Negotiation error:',error);
+result.style.color = '#ff6b6b';
+result.textContent = 'Database error: ' + error.message;
+
+} finally {
+button.disabled = false;
+button.textContent = 'SUBMIT MY OFFER';
+}
+});
+
+loadVehicles();
+</script>
+</body>
 </html>
