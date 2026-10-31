@@ -4,375 +4,216 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TESLA Innovation | Admin Dashboard</title>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-body{
- font-family:Arial,sans-serif;
- background:#090909;
- color:#fff;
- padding:18px;
-}
-
+body{font-family:Arial,sans-serif;background:#090909;color:#fff;padding:18px}
 .container{max-width:1100px;margin:auto}
-
-header{
- display:flex;
- justify-content:space-between;
- align-items:center;
- flex-wrap:wrap;
- gap:15px;
- padding:20px 0;
- border-bottom:1px solid #292929;
- margin-bottom:25px;
-}
-
+header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;padding:20px 0;border-bottom:1px solid #292929;margin-bottom:25px}
 .logo{font-size:23px;font-weight:bold}
 .logo span{color:#f33}
-
-button{
- background:#e52525;
- color:white;
- border:0;
- padding:12px 17px;
- border-radius:7px;
- cursor:pointer;
- font-weight:bold;
-}
-
+button{background:#e52525;color:white;border:0;padding:12px 17px;border-radius:7px;cursor:pointer;font-weight:bold}
 button:hover{opacity:.85}
 .secondary{background:#333}
 .green{background:#168b50}
 .blue{background:#1766b1}
 .danger{background:#b21f1f}
-
-input,select,textarea{
- width:100%;
- padding:13px;
- margin:8px 0 15px;
- background:#171717;
- border:1px solid #444;
- border-radius:7px;
- color:white;
- font-size:15px;
-}
-
+input,select,textarea{width:100%;padding:13px;margin:8px 0 15px;background:#171717;border:1px solid #444;border-radius:7px;color:white;font-size:15px}
 textarea{min-height:90px;resize:vertical}
-
 label{font-size:13px;color:#ccc}
-
-.card{
- background:#141414;
- border:1px solid #292929;
- border-radius:12px;
- padding:20px;
- margin-bottom:20px;
-}
-
+.card{background:#141414;border:1px solid #292929;border-radius:12px;padding:20px;margin-bottom:20px}
 h2{font-size:20px;margin-bottom:17px}
 h3{font-size:17px;margin-bottom:10px}
-
 .hidden{display:none!important}
-
-.tabs{
- display:flex;
- flex-wrap:wrap;
- gap:8px;
- margin-bottom:20px;
-}
-
-.tab{
- background:#292929;
-}
-
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.tab{background:#292929}
 .tab.active{background:#e52525}
-
-.grid{
- display:grid;
- grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
- gap:15px;
-}
-
-.vehicle{
- background:#1b1b1b;
- border:1px solid #333;
- border-radius:10px;
- padding:13px;
-}
-
-.vehicle img{
- width:100%;
- height:155px;
- object-fit:cover;
- border-radius:7px;
- background:#222;
-}
-
-.vehicle p{
- color:#bbb;
- font-size:13px;
- margin:7px 0;
-}
-
-.vehicle-actions{
- display:flex;
- gap:7px;
- flex-wrap:wrap;
- margin-top:12px;
-}
-
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
+.vehicle{background:#1b1b1b;border:1px solid #333;border-radius:10px;padding:13px}
+.vehicle img{width:100%;height:155px;object-fit:cover;border-radius:7px;background:#222}
+.vehicle p{color:#bbb;font-size:13px;margin:7px 0}
+.vehicle-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
 .vehicle-actions button{padding:9px;font-size:12px}
-
-.status{
- display:inline-block;
- background:#292929;
- padding:5px 9px;
- border-radius:20px;
- font-size:12px;
- margin:5px 0;
-}
-
-.offer{
- border:1px solid #333;
- background:#1b1b1b;
- padding:16px;
- border-radius:9px;
- margin-bottom:13px;
-}
-
-.offer p{
- color:#ccc;
- margin:7px 0;
- overflow-wrap:anywhere;
-}
-
-.offer-actions{
- display:flex;
- gap:8px;
- flex-wrap:wrap;
- margin-top:12px;
-}
-
+.status{display:inline-block;background:#292929;padding:5px 9px;border-radius:20px;font-size:12px;margin:5px 0}
+.offer{border:1px solid #333;background:#1b1b1b;padding:16px;border-radius:9px;margin-bottom:13px}
+.offer p{color:#ccc;margin:7px 0;overflow-wrap:anywhere}
+.offer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
 .offer-actions button{padding:9px 12px}
-
-.preview{
- display:flex;
- flex-wrap:wrap;
- gap:10px;
- margin:10px 0;
-}
-
+.preview{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
 .preview-item{position:relative}
-
-.preview img{
- width:100px;
- height:85px;
- object-fit:cover;
- border-radius:7px;
- border:1px solid #555;
-}
-
-.preview button{
- position:absolute;
- top:3px;
- right:3px;
- padding:4px 7px;
- border-radius:50%;
-}
-
-.message{
- padding:12px;
- margin:12px 0;
- border-radius:7px;
- background:#222;
- color:#ddd;
- overflow-wrap:anywhere;
-}
-
+.preview img{width:100px;height:85px;object-fit:cover;border-radius:7px;border:1px solid #555}
+.preview button{position:absolute;top:3px;right:3px;padding:4px 7px;border-radius:50%}
+.message{padding:12px;margin:12px 0;border-radius:7px;background:#222;color:#ddd;overflow-wrap:anywhere}
 .success{color:#55dc91}
 .error{color:#ff6565}
-
 .small{font-size:12px;color:#aaa}
-
 hr{border:0;border-top:1px solid #333;margin:17px 0}
-
-@media(max-width:500px){
- body{padding:12px}
- header{align-items:flex-start}
-}
+.enquiry{background:#1b1b1b;border:1px solid #333;border-radius:9px;padding:17px;margin-bottom:14px}
+.enquiry p{color:#ccc;font-size:14px;line-height:1.7;margin:6px 0;overflow-wrap:anywhere}
+.enquiry strong{color:#fff}
+.enquiry-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.enquiry-actions button{padding:9px 12px}
+@media(max-width:500px){body{padding:12px}header{align-items:flex-start}}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <header>
- <div class="logo">TESLA <span>INNOVATION</span></div>
- <button id="logoutBtn" class="secondary hidden" onclick="logout()">Logout</button>
+<div class="logo">TESLA <span>INNOVATION</span></div>
+<button id="logoutBtn" class="secondary hidden" onclick="logout()">Logout</button>
 </header>
 
-<!-- LOGIN -->
-
 <section id="loginSection" class="card">
- <h2>Administrator Login</h2>
-
- <label>Email address</label>
- <input type="email" id="loginEmail" placeholder="Admin email">
-
- <label>Password</label>
- <input type="password" id="loginPassword" placeholder="Password">
-
- <button onclick="login()">Login to Dashboard</button>
-
- <div id="loginMessage" class="message hidden"></div>
+<h2>Administrator Login</h2>
+<label>Email address</label>
+<input type="email" id="loginEmail" placeholder="Admin email">
+<label>Password</label>
+<input type="password" id="loginPassword" placeholder="Password">
+<button onclick="login()">Login to Dashboard</button>
+<div id="loginMessage" class="message hidden"></div>
 </section>
-
-<!-- DASHBOARD -->
 
 <section id="dashboard" class="hidden">
 
- <div class="card">
-  <h2>Welcome, Administrator</h2>
-  <p class="small">Manage vehicles, customer enquiries and negotiations.</p>
- </div>
+<div class="card">
+<h2>Welcome, Administrator</h2>
+<p class="small">Manage vehicles, customer enquiries and negotiations.</p>
+</div>
 
- <div class="tabs">
-  <button class="tab active" onclick="showTab('vehiclesTab',this)">Vehicles</button>
-  <button class="tab" onclick="showTab('offersTab',this)">Negotiations</button>
- </div>
+<div class="tabs">
+<button class="tab active" onclick="showTab('vehiclesTab',this)">Vehicles</button>
+<button class="tab" onclick="showTab('offersTab',this)">Negotiations</button>
+<button class="tab" onclick="showTab('enquiriesTab',this)">Purchase Enquiries</button>
+</div>
 
- <!-- VEHICLE MANAGEMENT -->
+<!-- VEHICLE MANAGEMENT -->
 
- <section id="vehiclesTab">
+<section id="vehiclesTab">
 
-  <div class="card">
+<div class="card">
+<h2 id="formTitle">Add New Vehicle</h2>
+<input type="hidden" id="vehicleId">
 
-   <h2 id="formTitle">Add New Vehicle</h2>
+<label>Vehicle Model</label>
+<input id="model" placeholder="e.g. Model 3">
 
-   <input type="hidden" id="vehicleId">
+<label>Variant</label>
+<input id="variant" placeholder="e.g. Standard RWD">
 
-   <label>Vehicle Model</label>
-   <input id="model" placeholder="e.g. Model 3">
+<label>Year</label>
+<input id="year" type="number" value="2026">
 
-   <label>Variant</label>
-   <input id="variant" placeholder="e.g. Standard RWD">
+<label>Description</label>
+<textarea id="description" placeholder="Vehicle details and specifications"></textarea>
 
-   <label>Year</label>
-   <input id="year" type="number" value="2026">
+<label>Selling Price (USD)</label>
+<input id="sellingPrice" type="number" min="1" step="0.01">
 
-   <label>Description</label>
-   <textarea id="description" placeholder="Vehicle details and specifications"></textarea>
+<label>Reference Price (USD)</label>
+<input id="referencePrice" type="number" min="0" step="0.01">
 
-   <label>Selling Price (USD)</label>
-   <input id="sellingPrice" type="number" min="1" step="0.01">
+<label>Deposit Percentage (%)</label>
+<input id="depositPercentage" type="number" min="0" max="100" value="30">
 
-   <label>Reference Price (USD)</label>
-   <input id="referencePrice" type="number" min="0" step="0.01">
+<label>Stock Quantity</label>
+<input id="stockQuantity" type="number" min="0" value="0">
 
-   <label>Deposit Percentage (%)</label>
-   <input id="depositPercentage" type="number" min="0" max="100" value="30">
+<label>Availability</label>
+<select id="availability">
+<option value="pre_order">Pre-order</option>
+<option value="in_stock">In Stock</option>
+<option value="limited_stock">Limited Stock</option>
+<option value="out_of_stock">Out of Stock</option>
+</select>
 
-   <label>Stock Quantity</label>
-   <input id="stockQuantity" type="number" min="0" value="0">
+<label>Upload Vehicle Photos</label>
+<input type="file" id="vehiclePhotos" accept="image/*" multiple>
+<p class="small">You can select multiple pictures from your phone gallery.</p>
 
-   <label>Availability</label>
-   <select id="availability">
-    <option value="pre_order">Pre-order</option>
-    <option value="in_stock">In Stock</option>
-    <option value="limited_stock">Limited Stock</option>
-    <option value="out_of_stock">Out of Stock</option>
-   </select>
+<div id="photoPreview" class="preview"></div>
 
-   <label>Upload Vehicle Photos</label>
-   <input type="file" id="vehiclePhotos" accept="image/*" multiple>
+<label>
+<input type="checkbox" id="published" checked style="width:auto">
+Publish this vehicle on the website
+</label>
 
-   <p class="small">You can select multiple pictures from your phone gallery.</p>
+<br><br>
+<button onclick="saveVehicle()">Save Vehicle</button>
+<button class="secondary" onclick="resetForm()">Clear Form</button>
+<div id="vehicleMessage" class="message hidden"></div>
+</div>
 
-   <div id="photoPreview" class="preview"></div>
-
-   <label>
-    <input type="checkbox" id="published" checked style="width:auto">
-    Publish this vehicle on the website
-   </label>
-
-   <br><br>
-
-   <button onclick="saveVehicle()">Save Vehicle</button>
-   <button class="secondary" onclick="resetForm()">Clear Form</button>
-
-   <div id="vehicleMessage" class="message hidden"></div>
-
-  </div>
-
-  <div class="card">
-   <h2>Your Vehicle Listings</h2>
-   <div id="vehicleList">Loading vehicles...</div>
-  </div>
-
- </section>
-
- <!-- NEGOTIATIONS -->
-
- <section id="offersTab" class="hidden">
-
-  <div class="card">
-   <h2>Customer Negotiations</h2>
-   <button class="secondary" onclick="loadOffers()">Refresh Offers</button>
-   <div id="offerList" style="margin-top:15px">Loading offers...</div>
-  </div>
-
- </section>
+<div class="card">
+<h2>Your Vehicle Listings</h2>
+<div id="vehicleList">Loading vehicles...</div>
+</div>
 
 </section>
 
+<!-- NEGOTIATIONS -->
+
+<section id="offersTab" class="hidden">
+<div class="card">
+<h2>Customer Negotiations</h2>
+<button class="secondary" onclick="loadOffers()">Refresh Offers</button>
+<div id="offerList" style="margin-top:15px">Loading offers...</div>
+</div>
+</section>
+
+<!-- PURCHASE ENQUIRIES -->
+
+<section id="enquiriesTab" class="hidden">
+<div class="card">
+<h2>Customer Purchase Enquiries</h2>
+<p class="small">View and manage customer vehicle purchase and pre-order enquiries.</p>
+
+<br>
+<button class="secondary" onclick="loadEnquiries()">Refresh Enquiries</button>
+
+<div id="enquiryList" style="margin-top:18px">
+Loading purchase enquiries...
+</div>
+</div>
+</section>
+
+</section>
 </div>
 
 <script>
 
 // SUPABASE CONNECTION
 
-const SUPABASE_URL = 'https://dnmktpmvjzsxzmgizdcv.supabase.co';
+const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
+const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
 
-const SUPABASE_KEY = 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
-const db = window.supabase.createClient(
- SUPABASE_URL,
- SUPABASE_KEY
-);
-
-let currentUser = null;
-let existingImages = [];
-let removedImages = [];
-let selectedFiles = [];
+let currentUser=null;
+let existingImages=[];
+let removedImages=[];
+let selectedFiles=[];
 
 
 // GENERAL HELPERS
 
 function escapeHTML(value){
- return String(value ?? '').replace(/[&<>"']/g,function(c){
-  return {
-   '&':'&amp;',
-   '<':'&lt;',
-   '>':'&gt;',
-   '"':'&quot;',
-   "'":'&#39;'
-  }[c];
- });
+return String(value??'').replace(/[&<>"']/g,function(c){
+return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+});
 }
 
 function showMessage(id,message,type=''){
- const el=document.getElementById(id);
- el.className='message';
- el.textContent=message;
- if(type) el.classList.add(type);
+const el=document.getElementById(id);
+el.className='message';
+el.textContent=message;
+if(type)el.classList.add(type);
 }
 
 function hideMessage(id){
- document.getElementById(id).classList.add('hidden');
+document.getElementById(id).classList.add('hidden');
 }
 
 
@@ -380,55 +221,54 @@ function hideMessage(id){
 
 async function login(){
 
- const email=document.getElementById('loginEmail').value.trim();
- const password=document.getElementById('loginPassword').value;
+const email=document.getElementById('loginEmail').value.trim();
+const password=document.getElementById('loginPassword').value;
 
- if(!email || !password){
-  showMessage('loginMessage','Enter your email and password.','error');
-  return;
- }
+if(!email||!password){
+showMessage('loginMessage','Enter your email and password.','error');
+return;
+}
 
- showMessage('loginMessage','Checking login...');
+showMessage('loginMessage','Checking login...');
 
- const {data,error}=await db.auth.signInWithPassword({
-  email,
-  password
- });
+const {data,error}=await db.auth.signInWithPassword({email,password});
 
- if(error){
-  showMessage('loginMessage',error.message,'error');
-  return;
- }
+if(error){
+showMessage('loginMessage',error.message,'error');
+return;
+}
 
- const user=data.user;
+const user=data.user;
 
- const {data:admin,error:adminError}=await db
-  .from('admin_users')
-  .select('user_id')
-  .eq('user_id',user.id)
-  .maybeSingle();
+const {data:admin,error:adminError}=await db
+.from('admin_users')
+.select('user_id')
+.eq('user_id',user.id)
+.maybeSingle();
 
- if(adminError || !admin){
+if(adminError||!admin){
+await db.auth.signOut();
+showMessage('loginMessage','Access denied. This account is not registered as an administrator.','error');
+return;
+}
 
-  await db.auth.signOut();
+currentUser=user;
 
-  showMessage(
-   'loginMessage',
-   'Access denied. This account is not registered as an administrator.',
-   'error'
-  );
+openDashboard();
+}
 
-  return;
- }
 
- currentUser=user;
+// DASHBOARD DISPLAY
 
- document.getElementById('loginSection').classList.add('hidden');
- document.getElementById('dashboard').classList.remove('hidden');
- document.getElementById('logoutBtn').classList.remove('hidden');
+function openDashboard(){
 
- loadVehicles();
- loadOffers();
+document.getElementById('loginSection').classList.add('hidden');
+document.getElementById('dashboard').classList.remove('hidden');
+document.getElementById('logoutBtn').classList.remove('hidden');
+
+loadVehicles();
+loadOffers();
+loadEnquiries();
 }
 
 
@@ -436,38 +276,30 @@ async function login(){
 
 async function checkSession(){
 
- const {data}=await db.auth.getSession();
+const {data}=await db.auth.getSession();
 
- if(!data.session) return;
+if(!data.session)return;
 
- const user=data.session.user;
+const user=data.session.user;
 
- const {data:admin,error}=await db
-  .from('admin_users')
-  .select('user_id')
-  .eq('user_id',user.id)
-  .maybeSingle();
+const {data:admin,error}=await db
+.from('admin_users')
+.select('user_id')
+.eq('user_id',user.id)
+.maybeSingle();
 
- if(error || !admin){
-  await db.auth.signOut();
-  return;
- }
+if(error||!admin){
+await db.auth.signOut();
+return;
+}
 
- currentUser=user;
-
- document.getElementById('loginSection').classList.add('hidden');
- document.getElementById('dashboard').classList.remove('hidden');
- document.getElementById('logoutBtn').classList.remove('hidden');
-
- loadVehicles();
- loadOffers();
+currentUser=user;
+openDashboard();
 }
 
 async function logout(){
-
- await db.auth.signOut();
-
- location.reload();
+await db.auth.signOut();
+location.reload();
 }
 
 
@@ -475,124 +307,78 @@ async function logout(){
 
 function showTab(tabId,button){
 
- document.getElementById('vehiclesTab').classList.add('hidden');
- document.getElementById('offersTab').classList.add('hidden');
+['vehiclesTab','offersTab','enquiriesTab'].forEach(id=>{
+document.getElementById(id).classList.add('hidden');
+});
 
- document.getElementById(tabId).classList.remove('hidden');
+document.getElementById(tabId).classList.remove('hidden');
 
- document.querySelectorAll('.tab').forEach(b=>{
-  b.classList.remove('active');
- });
+document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
 
- button.classList.add('active');
+button.classList.add('active');
+
+if(tabId==='enquiriesTab')loadEnquiries();
+if(tabId==='offersTab')loadOffers();
 }
 
 
 // IMAGE PREVIEW
 
 document.getElementById('vehiclePhotos').addEventListener('change',function(){
-
- selectedFiles=Array.from(this.files);
-
- const preview=document.getElementById('photoPreview');
- preview.innerHTML='';
-
- existingImages.forEach((url,index)=>{
-
-  if(removedImages.includes(url)) return;
-
-  const box=document.createElement('div');
-  box.className='preview-item';
-
-  box.innerHTML=`
-   <img src="${escapeHTML(url)}" alt="Existing vehicle photo">
-   <button type="button" onclick="removeExistingImage(${index})">×</button>
-  `;
-
-  preview.appendChild(box);
- });
-
- selectedFiles.forEach((file,index)=>{
-
-  const box=document.createElement('div');
-  box.className='preview-item';
-
-  const img=document.createElement('img');
-  img.src=URL.createObjectURL(file);
-
-  const btn=document.createElement('button');
-  btn.type='button';
-  btn.textContent='×';
-
-  btn.onclick=()=>{
-   selectedFiles.splice(index,1);
-   renderPreviews();
-  };
-
-  box.appendChild(img);
-  box.appendChild(btn);
-  preview.appendChild(box);
- });
-
+selectedFiles=Array.from(this.files);
+renderPreviews();
 });
 
 function removeExistingImage(index){
-
- const url=existingImages[index];
-
- if(!removedImages.includes(url)){
-  removedImages.push(url);
- }
-
- renderPreviews();
+const url=existingImages[index];
+if(!removedImages.includes(url))removedImages.push(url);
+renderPreviews();
 }
 
 function renderPreviews(){
 
- const preview=document.getElementById('photoPreview');
- preview.innerHTML='';
+const preview=document.getElementById('photoPreview');
+preview.innerHTML='';
 
- existingImages.forEach((url,index)=>{
+existingImages.forEach((url,index)=>{
 
-  if(removedImages.includes(url)) return;
+if(removedImages.includes(url))return;
 
-  const box=document.createElement('div');
-  box.className='preview-item';
+const box=document.createElement('div');
+box.className='preview-item';
 
-  const img=document.createElement('img');
-  img.src=url;
+const img=document.createElement('img');
+img.src=url;
 
-  const btn=document.createElement('button');
-  btn.type='button';
-  btn.textContent='×';
-  btn.onclick=()=>removeExistingImage(index);
+const btn=document.createElement('button');
+btn.type='button';
+btn.textContent='×';
+btn.onclick=()=>removeExistingImage(index);
 
-  box.appendChild(img);
-  box.appendChild(btn);
-  preview.appendChild(box);
- });
+box.append(img,btn);
+preview.appendChild(box);
+});
 
- selectedFiles.forEach((file,index)=>{
+selectedFiles.forEach((file,index)=>{
 
-  const box=document.createElement('div');
-  box.className='preview-item';
+const box=document.createElement('div');
+box.className='preview-item';
 
-  const img=document.createElement('img');
-  img.src=URL.createObjectURL(file);
+const img=document.createElement('img');
+img.src=URL.createObjectURL(file);
 
-  const btn=document.createElement('button');
-  btn.type='button';
-  btn.textContent='×';
+const btn=document.createElement('button');
+btn.type='button';
+btn.textContent='×';
 
-  btn.onclick=()=>{
-   selectedFiles.splice(index,1);
-   renderPreviews();
-  };
+btn.onclick=()=>{
+selectedFiles.splice(index,1);
+renderPreviews();
+};
 
-  box.appendChild(img);
-  box.appendChild(btn);
-  preview.appendChild(box);
- });
+box.append(img,btn);
+preview.appendChild(box);
+});
 }
 
 
@@ -600,40 +386,29 @@ function renderPreviews(){
 
 async function uploadPhotos(){
 
- const uploadedURLs=[];
+const uploadedURLs=[];
 
- for(const file of selectedFiles){
+for(const file of selectedFiles){
 
-  if(!file.type.startsWith('image/')){
-   throw new Error('Only image files are allowed.');
-  }
+if(!file.type.startsWith('image/'))throw new Error('Only image files are allowed.');
 
-  if(file.size > 5*1024*1024){
-   throw new Error(file.name+' is larger than 5MB. Please choose a smaller image.');
-  }
+if(file.size>5*1024*1024)throw new Error(file.name+' is larger than 5MB.');
 
-  const extension=file.name.split('.').pop().toLowerCase();
+const extension=file.name.split('.').pop().toLowerCase();
+const path=Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+extension;
 
-  const path=Date.now()+'_'+
-   Math.random().toString(36).slice(2)+'.'+extension;
+const {error}=await db.storage.from('vehicle-images').upload(path,file,{
+contentType:file.type,
+upsert:false
+});
 
-  const {error}=await db.storage
-   .from('vehicle-images')
-   .upload(path,file,{
-    contentType:file.type,
-    upsert:false
-   });
+if(error)throw error;
 
-  if(error) throw error;
+const {data}=db.storage.from('vehicle-images').getPublicUrl(path);
+uploadedURLs.push(data.publicUrl);
+}
 
-  const {data}=db.storage
-   .from('vehicle-images')
-   .getPublicUrl(path);
-
-  uploadedURLs.push(data.publicUrl);
- }
-
- return uploadedURLs;
+return uploadedURLs;
 }
 
 
@@ -641,99 +416,72 @@ async function uploadPhotos(){
 
 async function saveVehicle(){
 
- if(!currentUser){
-  showMessage('vehicleMessage','Please log in first.','error');
-  return;
- }
+if(!currentUser){
+showMessage('vehicleMessage','Please log in first.','error');
+return;
+}
 
- const id=document.getElementById('vehicleId').value;
+const id=document.getElementById('vehicleId').value;
+const model=document.getElementById('model').value.trim();
+const variant=document.getElementById('variant').value.trim();
+const year=Number(document.getElementById('year').value);
+const sellingPrice=Number(document.getElementById('sellingPrice').value);
+const referencePrice=Number(document.getElementById('referencePrice').value);
+const depositPercentage=Number(document.getElementById('depositPercentage').value);
+const stockQuantity=Number(document.getElementById('stockQuantity').value);
 
- const model=document.getElementById('model').value.trim();
- const variant=document.getElementById('variant').value.trim();
- const year=Number(document.getElementById('year').value);
+if(!model||!variant||!year||sellingPrice<=0){
+showMessage('vehicleMessage','Please enter the model, variant, year and a valid selling price.','error');
+return;
+}
 
- const sellingPrice=Number(document.getElementById('sellingPrice').value);
- const referencePrice=Number(document.getElementById('referencePrice').value);
+if(depositPercentage<0||depositPercentage>100||stockQuantity<0){
+showMessage('vehicleMessage','Check your deposit percentage and stock quantity.','error');
+return;
+}
 
- const depositPercentage=Number(document.getElementById('depositPercentage').value);
- const stockQuantity=Number(document.getElementById('stockQuantity').value);
+showMessage('vehicleMessage','Saving vehicle and uploading photos...');
 
- if(!model || !variant || !year || sellingPrice<=0){
-  showMessage('vehicleMessage','Please enter the model, variant, year and a valid selling price.','error');
-  return;
- }
+try{
 
- if(depositPercentage<0 || depositPercentage>100 || stockQuantity<0){
-  showMessage('vehicleMessage','Check your deposit percentage and stock quantity.','error');
-  return;
- }
+const uploaded=await uploadPhotos();
 
- showMessage('vehicleMessage','Saving vehicle and uploading photos...');
+const finalImages=existingImages.filter(url=>!removedImages.includes(url)).concat(uploaded);
 
- try{
+const vehicle={
+model,
+variant,
+year,
+description:document.getElementById('description').value.trim(),
+selling_price:sellingPrice,
+reference_price:referencePrice||sellingPrice,
+currency:'USD',
+deposit_percentage:depositPercentage,
+stock_quantity:stockQuantity,
+availability:document.getElementById('availability').value,
+image_urls:finalImages,
+is_published:document.getElementById('published').checked,
+updated_at:new Date().toISOString()
+};
 
-  const uploaded=await uploadPhotos();
+let result;
 
-  const finalImages=existingImages.filter(url=>!removedImages.includes(url)).concat(uploaded);
+if(id){
+result=await db.from('vehicles').update(vehicle).eq('id',id);
+}else{
+result=await db.from('vehicles').insert(vehicle);
+}
 
-  const vehicle={
+if(result.error)throw result.error;
 
-   model:model,
-   variant:variant,
-   year:year,
-   description:document.getElementById('description').value.trim(),
+showMessage('vehicleMessage',id?'Vehicle updated successfully!':'Vehicle added successfully!','success');
 
-   selling_price:sellingPrice,
-   reference_price:referencePrice || sellingPrice,
-   currency:'USD',
+resetForm();
+await loadVehicles();
 
-   deposit_percentage:depositPercentage,
-   stock_quantity:stockQuantity,
-
-   availability:document.getElementById('availability').value,
-
-   image_urls:finalImages,
-
-   is_published:document.getElementById('published').checked,
-
-   updated_at:new Date().toISOString()
-
-  };
-
-  let result;
-
-  if(id){
-
-   result=await db
-    .from('vehicles')
-    .update(vehicle)
-    .eq('id',id);
-
-  }else{
-
-   result=await db
-    .from('vehicles')
-    .insert(vehicle);
-
-  }
-
-  if(result.error) throw result.error;
-
-  showMessage(
-   'vehicleMessage',
-   id?'Vehicle updated successfully!':'Vehicle added successfully!',
-   'success'
-  );
-
-  resetForm();
-  await loadVehicles();
-
- }catch(error){
-
-  showMessage('vehicleMessage','Error: '+error.message,'error');
-
- }
-
+}catch(error){
+showMessage('vehicleMessage','Error: '+error.message,'error');
+}
 }
 
 
@@ -741,27 +489,25 @@ async function saveVehicle(){
 
 function resetForm(){
 
- document.getElementById('vehicleId').value='';
- document.getElementById('model').value='';
- document.getElementById('variant').value='';
- document.getElementById('year').value='2026';
- document.getElementById('description').value='';
- document.getElementById('sellingPrice').value='';
- document.getElementById('referencePrice').value='';
- document.getElementById('depositPercentage').value='30';
- document.getElementById('stockQuantity').value='0';
- document.getElementById('availability').value='pre_order';
- document.getElementById('published').checked=true;
- document.getElementById('vehiclePhotos').value='';
+document.getElementById('vehicleId').value='';
+document.getElementById('model').value='';
+document.getElementById('variant').value='';
+document.getElementById('year').value='2026';
+document.getElementById('description').value='';
+document.getElementById('sellingPrice').value='';
+document.getElementById('referencePrice').value='';
+document.getElementById('depositPercentage').value='30';
+document.getElementById('stockQuantity').value='0';
+document.getElementById('availability').value='pre_order';
+document.getElementById('published').checked=true;
+document.getElementById('vehiclePhotos').value='';
 
- existingImages=[];
- removedImages=[];
- selectedFiles=[];
+existingImages=[];
+removedImages=[];
+selectedFiles=[];
 
- document.getElementById('photoPreview').innerHTML='';
-
- document.getElementById('formTitle').textContent='Add New Vehicle';
-
+document.getElementById('photoPreview').innerHTML='';
+document.getElementById('formTitle').textContent='Add New Vehicle';
 }
 
 
@@ -769,87 +515,78 @@ function resetForm(){
 
 async function loadVehicles(){
 
- const list=document.getElementById('vehicleList');
+const list=document.getElementById('vehicleList');
+list.textContent='Loading vehicles...';
 
- list.textContent='Loading vehicles...';
+const {data,error}=await db.from('vehicles').select('*').order('created_at',{ascending:false});
 
- const {data,error}=await db
-  .from('vehicles')
-  .select('*')
-  .order('created_at',{ascending:false});
+if(error){
+list.textContent='Could not load vehicles: '+error.message;
+return;
+}
 
- if(error){
-  list.textContent='Could not load vehicles: '+error.message;
-  return;
- }
+if(!data.length){
+list.textContent='No vehicles have been added yet.';
+return;
+}
 
- if(!data.length){
-  list.textContent='No vehicles have been added yet.';
-  return;
- }
+list.innerHTML='<div class="grid" id="vehicleGrid"></div>';
 
- list.innerHTML='<div class="grid" id="vehicleGrid"></div>';
+const grid=document.getElementById('vehicleGrid');
 
- const grid=document.getElementById('vehicleGrid');
+data.forEach(v=>{
 
- data.forEach(v=>{
+const firstImage=Array.isArray(v.image_urls)&&v.image_urls.length?v.image_urls[0]:'';
 
-  const firstImage=Array.isArray(v.image_urls) && v.image_urls.length
-   ? v.image_urls[0]
-   : '';
+const box=document.createElement('div');
+box.className='vehicle';
 
-  const box=document.createElement('div');
-  box.className='vehicle';
+const image=document.createElement('img');
+image.src=firstImage||'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=700';
+image.alt=v.model;
 
-  const image=document.createElement('img');
-  image.src=firstImage || 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=700';
-  image.alt=v.model;
+const title=document.createElement('h3');
+title.textContent=v.model+' '+(v.variant||'');
 
-  const title=document.createElement('h3');
-  title.textContent=v.model+' '+(v.variant || '');
+const price=document.createElement('p');
+price.textContent='Price: $'+Number(v.selling_price).toLocaleString('en-US');
 
-  const price=document.createElement('p');
-  price.textContent='Price: $'+Number(v.selling_price).toLocaleString('en-US');
+const stock=document.createElement('p');
+stock.textContent='Stock: '+v.stock_quantity;
 
-  const stock=document.createElement('p');
-  stock.textContent='Stock: '+v.stock_quantity;
+const availability=document.createElement('p');
+availability.textContent='Availability: '+v.availability;
 
-  const availability=document.createElement('p');
-  availability.textContent='Availability: '+v.availability;
+const photos=document.createElement('p');
+photos.textContent='Photos: '+(v.image_urls?.length||0);
 
-  const photos=document.createElement('p');
-  photos.textContent='Photos: '+(v.image_urls?.length || 0);
+const status=document.createElement('span');
+status.className='status';
+status.textContent=v.is_published?'Published':'Hidden';
 
-  const status=document.createElement('span');
-  status.className='status';
-  status.textContent=v.is_published?'Published':'Hidden';
+const actions=document.createElement('div');
+actions.className='vehicle-actions';
 
-  const actions=document.createElement('div');
-  actions.className='vehicle-actions';
+const edit=document.createElement('button');
+edit.className='blue';
+edit.textContent='Edit';
+edit.onclick=()=>editVehicle(v.id);
 
-  const edit=document.createElement('button');
-  edit.className='blue';
-  edit.textContent='Edit';
-  edit.onclick=()=>editVehicle(v.id);
+const toggle=document.createElement('button');
+toggle.className='secondary';
+toggle.textContent=v.is_published?'Unpublish':'Publish';
+toggle.onclick=()=>togglePublish(v.id,!v.is_published);
 
-  const toggle=document.createElement('button');
-  toggle.className='secondary';
-  toggle.textContent=v.is_published?'Unpublish':'Publish';
-  toggle.onclick=()=>togglePublish(v.id,!v.is_published);
+const remove=document.createElement('button');
+remove.className='danger';
+remove.textContent='Delete';
+remove.onclick=()=>deleteVehicle(v.id);
 
-  const remove=document.createElement('button');
-  remove.className='danger';
-  remove.textContent='Delete';
-  remove.onclick=()=>deleteVehicle(v.id);
+box.append(image,title,price,stock,availability,photos,status,actions);
+actions.append(edit,toggle,remove);
+grid.appendChild(box);
 
-  box.append(image,title,price,stock,availability,photos,status,actions);
-
-  actions.append(edit,toggle,remove);
-
-  grid.appendChild(box);
-
- });
-
+});
 }
 
 
@@ -857,44 +594,34 @@ async function loadVehicles(){
 
 async function editVehicle(id){
 
- const {data,error}=await db
-  .from('vehicles')
-  .select('*')
-  .eq('id',id)
-  .single();
+const {data,error}=await db.from('vehicles').select('*').eq('id',id).single();
 
- if(error){
-  alert(error.message);
-  return;
- }
+if(error){
+alert(error.message);
+return;
+}
 
- document.getElementById('vehicleId').value=data.id;
- document.getElementById('model').value=data.model || '';
- document.getElementById('variant').value=data.variant || '';
- document.getElementById('year').value=data.year || '';
- document.getElementById('description').value=data.description || '';
+document.getElementById('vehicleId').value=data.id;
+document.getElementById('model').value=data.model||'';
+document.getElementById('variant').value=data.variant||'';
+document.getElementById('year').value=data.year||'';
+document.getElementById('description').value=data.description||'';
+document.getElementById('sellingPrice').value=data.selling_price;
+document.getElementById('referencePrice').value=data.reference_price;
+document.getElementById('depositPercentage').value=data.deposit_percentage;
+document.getElementById('stockQuantity').value=data.stock_quantity;
+document.getElementById('availability').value=data.availability||'pre_order';
+document.getElementById('published').checked=data.is_published;
 
- document.getElementById('sellingPrice').value=data.selling_price;
- document.getElementById('referencePrice').value=data.reference_price;
+existingImages=Array.isArray(data.image_urls)?data.image_urls:[];
+removedImages=[];
+selectedFiles=[];
 
- document.getElementById('depositPercentage').value=data.deposit_percentage;
- document.getElementById('stockQuantity').value=data.stock_quantity;
+document.getElementById('vehiclePhotos').value='';
+document.getElementById('formTitle').textContent='Edit Vehicle';
 
- document.getElementById('availability').value=data.availability || 'pre_order';
- document.getElementById('published').checked=data.is_published;
-
- existingImages=Array.isArray(data.image_urls)?data.image_urls:[];
- removedImages=[];
- selectedFiles=[];
-
- document.getElementById('vehiclePhotos').value='';
-
- document.getElementById('formTitle').textContent='Edit Vehicle';
-
- renderPreviews();
-
- window.scrollTo({top:0,behavior:'smooth'});
-
+renderPreviews();
+window.scrollTo({top:0,behavior:'smooth'});
 }
 
 
@@ -902,20 +629,17 @@ async function editVehicle(id){
 
 async function togglePublish(id,value){
 
- const {error}=await db
-  .from('vehicles')
-  .update({
-   is_published:value,
-   updated_at:new Date().toISOString()
-  })
-  .eq('id',id);
+const {error}=await db.from('vehicles').update({
+is_published:value,
+updated_at:new Date().toISOString()
+}).eq('id',id);
 
- if(error){
-  alert(error.message);
-  return;
- }
+if(error){
+alert(error.message);
+return;
+}
 
- await loadVehicles();
+await loadVehicles();
 }
 
 
@@ -923,56 +647,38 @@ async function togglePublish(id,value){
 
 async function deleteVehicle(id){
 
- if(!confirm('Are you sure you want to delete this vehicle listing?')){
-  return;
- }
+if(!confirm('Are you sure you want to delete this vehicle listing?'))return;
 
- const {data,error}=await db
-  .from('vehicles')
-  .select('image_urls')
-  .eq('id',id)
-  .single();
+const {data,error}=await db.from('vehicles').select('image_urls').eq('id',id).single();
 
- if(error){
-  alert(error.message);
-  return;
- }
+if(error){
+alert(error.message);
+return;
+}
 
- const {error:deleteError}=await db
-  .from('vehicles')
-  .delete()
-  .eq('id',id);
+const {error:deleteError}=await db.from('vehicles').delete().eq('id',id);
 
- if(deleteError){
-  alert(deleteError.message);
-  return;
- }
+if(deleteError){
+alert(deleteError.message);
+return;
+}
 
- // Remove its stored photos when possible.
+const urls=Array.isArray(data.image_urls)?data.image_urls:[];
 
- const urls=Array.isArray(data.image_urls)?data.image_urls:[];
+const paths=urls.map(url=>{
+const marker='/vehicle-images/';
+const position=url.indexOf(marker);
+return position>=0?url.substring(position+marker.length):null;
+}).filter(Boolean);
 
- const paths=urls.map(url=>{
-  const marker='/vehicle-images/';
-  const position=url.indexOf(marker);
-  return position>=0?url.substring(position+marker.length):null;
- }).filter(Boolean);
+if(paths.length){
+const {error:storageError}=await db.storage.from('vehicle-images').remove(paths);
+if(storageError)alert('Vehicle deleted, but some photos could not be removed: '+storageError.message);
+}
 
- if(paths.length){
-  const {error:storageError}=await db.storage
-   .from('vehicle-images')
-   .remove(paths);
-
-  if(storageError){
-   alert('Vehicle deleted, but some photos could not be removed: '+storageError.message);
-  }
- }
-
- alert('Vehicle deleted.');
-
- resetForm();
- await loadVehicles();
-
+alert('Vehicle deleted.');
+resetForm();
+await loadVehicles();
 }
 
 
@@ -980,91 +686,77 @@ async function deleteVehicle(id){
 
 async function loadOffers(){
 
- const list=document.getElementById('offerList');
+const list=document.getElementById('offerList');
+list.textContent='Loading negotiations...';
 
- list.textContent='Loading negotiations...';
+const {data:offers,error}=await db.from('negotiations').select('*').order('created_at',{ascending:false});
 
- const {data:offers,error}=await db
-  .from('negotiations')
-  .select('*')
-  .order('created_at',{ascending:false});
+if(error){
+list.textContent='Error loading offers: '+error.message;
+return;
+}
 
- if(error){
-  list.textContent='Error loading offers: '+error.message;
-  return;
- }
+if(!offers.length){
+list.textContent='No customer negotiations yet.';
+return;
+}
 
- if(!offers.length){
-  list.textContent='No customer negotiations yet.';
-  return;
- }
+const {data:vehicles}=await db.from('vehicles').select('id,model,variant');
 
- const {data:vehicles}=await db
-  .from('vehicles')
-  .select('id,model,variant');
+const vehicleMap={};
+(vehicles||[]).forEach(v=>vehicleMap[v.id]=v.model+' '+(v.variant||''));
 
- const vehicleMap={};
+list.innerHTML='';
 
- (vehicles || []).forEach(v=>{
-  vehicleMap[v.id]=v.model+' '+(v.variant || '');
- });
+offers.forEach(o=>{
 
- list.innerHTML='';
+const box=document.createElement('div');
+box.className='offer';
 
- offers.forEach(o=>{
+const title=document.createElement('h3');
+title.textContent=o.customer_name||'Customer';
 
-  const box=document.createElement('div');
-  box.className='offer';
+const details=document.createElement('div');
 
-  const vehicle=vehicleMap[o.vehicle_id] || 'Vehicle';
+const lines=[
+'Vehicle: '+(vehicleMap[o.vehicle_id]||'Vehicle'),
+'Email: '+(o.email||o.customer_email||'Not provided'),
+'Phone: '+(o.phone||o.customer_phone||'Not provided'),
+'Proposed budget: $'+Number(o.proposed_budget).toLocaleString('en-US'),
+'Message: '+(o.message||o.customer_message||'No message'),
+'Status: '+(o.status||'pending'),
+'Admin response: '+(o.admin_response||'No response yet')
+];
 
-  const title=document.createElement('h3');
-  title.textContent=o.customer_name || 'Customer';
+lines.forEach(line=>{
+const p=document.createElement('p');
+p.textContent=line;
+details.appendChild(p);
+});
 
-  const details=document.createElement('div');
+const actions=document.createElement('div');
+actions.className='offer-actions';
 
-  const lines=[
-   'Vehicle: '+vehicle,
-   'Email: '+(o.email || o.customer_email || 'Not provided'),
-   'Phone: '+(o.phone || o.customer_phone || 'Not provided'),
-   'Proposed budget: $'+Number(o.proposed_budget).toLocaleString('en-US'),
-   'Message: '+(o.message || o.customer_message || 'No message'),
-   'Status: '+(o.status || 'pending'),
-   'Admin response: '+(o.admin_response || 'No response yet')
-  ];
+const accept=document.createElement('button');
+accept.className='green';
+accept.textContent='Accept';
+accept.onclick=()=>respond(o.id,'accepted','Your offer has been accepted.');
 
-  lines.forEach(line=>{
-   const p=document.createElement('p');
-   p.textContent=line;
-   details.appendChild(p);
-  });
+const reject=document.createElement('button');
+reject.className='danger';
+reject.textContent='Reject';
+reject.onclick=()=>respond(o.id,'rejected','Your offer has been rejected.');
 
-  const actions=document.createElement('div');
-  actions.className='offer-actions';
+const counter=document.createElement('button');
+counter.className='blue';
+counter.textContent='Counteroffer';
+counter.onclick=()=>makeCounter(o.id);
 
-  const accept=document.createElement('button');
-  accept.className='green';
-  accept.textContent='Accept';
-  accept.onclick=()=>respond(o.id,'accepted','Your offer has been accepted.');
+actions.append(accept,reject,counter);
+box.append(title,details,actions);
+list.appendChild(box);
 
-  const reject=document.createElement('button');
-  reject.className='danger';
-  reject.textContent='Reject';
-  reject.onclick=()=>respond(o.id,'rejected','Your offer has been rejected.');
-
-  const counter=document.createElement('button');
-  counter.className='blue';
-  counter.textContent='Counteroffer';
-  counter.onclick=()=>makeCounter(o.id);
-
-  actions.append(accept,reject,counter);
-
-  box.append(title,details,actions);
-
-  list.appendChild(box);
-
- });
-
+});
 }
 
 
@@ -1072,24 +764,20 @@ async function loadOffers(){
 
 async function respond(id,status,message){
 
- if(!confirm('Confirm this action?')) return;
+if(!confirm('Confirm this action?'))return;
 
- const {error}=await db
-  .from('negotiations')
-  .update({
-   status:status,
-   admin_response:message
-  })
-  .eq('id',id);
+const {error}=await db.from('negotiations').update({
+status:status,
+admin_response:message
+}).eq('id',id);
 
- if(error){
-  alert(error.message);
-  return;
- }
+if(error){
+alert(error.message);
+return;
+}
 
- alert('Negotiation updated.');
- loadOffers();
-
+alert('Negotiation updated.');
+loadOffers();
 }
 
 
@@ -1097,45 +785,180 @@ async function respond(id,status,message){
 
 async function makeCounter(id){
 
- const amount=prompt('Enter your counteroffer amount in USD:');
+const amount=prompt('Enter your counteroffer amount in USD:');
+if(amount===null)return;
 
- if(amount===null) return;
+const value=Number(amount);
 
- const value=Number(amount);
+if(!Number.isFinite(value)||value<=0){
+alert('Please enter a valid amount.');
+return;
+}
 
- if(!Number.isFinite(value) || value<=0){
-  alert('Please enter a valid amount.');
-  return;
- }
+const message='Our counteroffer is $'+value.toLocaleString('en-US');
 
- const message='Our counteroffer is $'+value.toLocaleString('en-US');
+const {error}=await db.from('negotiations').update({
+status:'countered',
+counter_offer:value,
+admin_response:message
+}).eq('id',id);
 
- const {error}=await db
-  .from('negotiations')
-  .update({
-   status:'countered',
-   counter_offer:value,
-   admin_response:message
-  })
-  .eq('id',id);
+if(error){
+alert(error.message);
+return;
+}
 
- if(error){
-  alert(error.message);
-  return;
- }
+alert('Counteroffer saved successfully.');
+loadOffers();
+}
 
- alert('Counteroffer saved successfully.');
 
- loadOffers();
+// ==================================
+// PURCHASE ENQUIRIES INBOX
+// ==================================
+
+async function loadEnquiries(){
+
+const list=document.getElementById('enquiryList');
+list.textContent='Loading purchase enquiries...';
+
+const {data:enquiries,error}=await db
+.from('enquiries')
+.select('*')
+.order('created_at',{ascending:false});
+
+if(error){
+list.textContent='Could not load enquiries: '+error.message;
+console.error('Enquiry loading error:',error);
+return;
+}
+
+if(!enquiries||enquiries.length===0){
+list.textContent='No purchase enquiries have been received yet.';
+return;
+}
+
+const {data:vehicles, error:vehicleError}=await db
+.from('vehicles')
+.select('id,model,variant');
+
+if(vehicleError){
+console.error('Vehicle lookup error:',vehicleError);
+}
+
+const vehicleMap={};
+
+(vehicles||[]).forEach(v=>{
+vehicleMap[v.id]=v.model+' '+(v.variant||'');
+});
+
+list.innerHTML='';
+
+enquiries.forEach(e=>{
+
+const box=document.createElement('div');
+box.className='enquiry';
+
+const title=document.createElement('h3');
+title.textContent=e.customer_name||'Customer enquiry';
+
+const date=e.created_at
+?new Date(e.created_at).toLocaleString()
+:'Date unavailable';
+
+const fields=[
+['Vehicle',vehicleMap[e.vehicle_id]||'Vehicle not found'],
+['Email',e.email||'Not provided'],
+['Phone',e.phone||'Not provided'],
+['Purchase preference',e.enquiry_type||'Not specified'],
+['Preferred colour',e.preferred_colour||e.preferred_color||'Not specified'],
+['Delivery country',e.delivery_country||'Not specified'],
+['Message',e.message||'No additional message'],
+['Submitted',date],
+['Current status',e.status||'new']
+];
+
+box.appendChild(title);
+
+fields.forEach(([label,value])=>{
+
+const p=document.createElement('p');
+
+const strong=document.createElement('strong');
+strong.textContent=label+': ';
+
+p.appendChild(strong);
+p.appendChild(document.createTextNode(String(value)));
+
+box.appendChild(p);
+
+});
+
+const actions=document.createElement('div');
+actions.className='enquiry-actions';
+
+const statusSelect=document.createElement('select');
+
+const statuses=[
+['new','New'],
+['reviewed','Reviewed'],
+['contacted','Contacted'],
+['completed','Completed']
+];
+
+statuses.forEach(([value,label])=>{
+const option=document.createElement('option');
+option.value=value;
+option.textContent=label;
+if((e.status||'new')===value)option.selected=true;
+statusSelect.appendChild(option);
+});
+
+const updateButton=document.createElement('button');
+updateButton.className='green';
+updateButton.textContent='Update Status';
+updateButton.onclick=()=>updateEnquiryStatus(e.id,statusSelect.value,updateButton);
+
+actions.append(statusSelect,updateButton);
+box.appendChild(actions);
+
+list.appendChild(box);
+
+});
 
 }
 
 
-// START
+// UPDATE PURCHASE ENQUIRY STATUS
+
+async function updateEnquiryStatus(id,status,button){
+
+button.disabled=true;
+button.textContent='Updating...';
+
+const {error}=await db
+.from('enquiries')
+.update({status:status})
+.eq('id',id);
+
+button.disabled=false;
+button.textContent='Update Status';
+
+if(error){
+alert('Could not update enquiry status: '+error.message);
+return;
+}
+
+alert('Enquiry status updated successfully.');
+await loadEnquiries();
+
+}
+
+
+// START DASHBOARD
 
 checkSession();
 
 </script>
-
 </body>
 </html>
