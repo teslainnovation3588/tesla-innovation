@@ -364,13 +364,31 @@ message:document.getElementById('orderMessage').value.trim()
   
 try{  
   
-const {error} = await db  
-.from('enquiries')  
-.insert(data);  
-  
-if(error) throw error;  
-  
-result.style.color = '#70df91';  
+const {error} = await db
+  .from('enquiries')
+  .insert(data);
+
+if(error) throw error;
+
+// Send a private email notification after the enquiry is saved.
+try {
+  const { data: emailData, error: emailError } = await db.functions.invoke(
+    'notify-purchase-enquiry',
+    {
+      body: data
+    }
+  );
+
+  if (emailError) {
+    console.error('Email notification error:', emailError);
+  } else {
+    console.log('Email notification result:', emailData);
+  }
+} catch (emailError) {
+  console.error('Email notification failed:', emailError);
+}
+
+result.style.color = '#70df91';
   
 result.textContent = 'Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';  
   
