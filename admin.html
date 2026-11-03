@@ -8,954 +8,972 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#090909;color:#fff;padding:18px}
-.container{max-width:1100px;margin:auto}
-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:15px;padding:20px 0;border-bottom:1px solid #292929;margin-bottom:25px}
-.logo{font-size:23px;font-weight:bold}
-.logo span{color:#f33}
-button{background:#e52525;color:white;border:0;padding:12px 17px;border-radius:7px;cursor:pointer;font-weight:bold}
+body{background:#080808;color:#fff;font-family:Arial,sans-serif;padding:20px}
+.container{max-width:1150px;margin:auto}
+h1,h2,h3{margin-bottom:15px}
+.brand{color:#e82127;font-weight:bold}
+.subtitle{color:#aaa;margin-bottom:25px}
+.panel{background:#151515;border:1px solid #292929;border-radius:12px;padding:22px;margin-bottom:22px}
+input,textarea,select{width:100%;padding:13px;margin:8px 0 15px;border:1px solid #444;border-radius:7px;background:#080808;color:white;font-size:15px}
+textarea{min-height:100px;resize:vertical}
+label{display:block;color:#ddd;font-size:14px;margin-top:8px}
+input[type=checkbox]{width:auto;margin-right:8px}
+input[type=file]{padding:10px}
+button{border:none;border-radius:7px;padding:12px 18px;margin:5px 4px 5px 0;background:#e82127;color:white;font-weight:bold;cursor:pointer}
 button:hover{opacity:.85}
-.secondary{background:#333}
-.green{background:#168b50}
-.blue{background:#1766b1}
-.danger{background:#b21f1f}
-input,select,textarea{width:100%;padding:13px;margin:8px 0 15px;background:#171717;border:1px solid #444;border-radius:7px;color:white;font-size:15px}
-textarea{min-height:90px;resize:vertical}
-label{font-size:13px;color:#ccc}
-.card{background:#141414;border:1px solid #292929;border-radius:12px;padding:20px;margin-bottom:20px}
-h2{font-size:20px;margin-bottom:17px}
-h3{font-size:17px;margin-bottom:10px}
-.hidden{display:none!important}
+button.secondary{background:#333}
+button.success{background:#168b48}
+button.danger{background:#a3151a}
+button:disabled{opacity:.5;cursor:not-allowed}
 .tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
-.tab{background:#292929}
-.tab.active{background:#e52525}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px}
-.vehicle{background:#1b1b1b;border:1px solid #333;border-radius:10px;padding:13px}
-.vehicle img{width:100%;height:155px;object-fit:cover;border-radius:7px;background:#222}
-.vehicle p{color:#bbb;font-size:13px;margin:7px 0}
-.vehicle-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
-.vehicle-actions button{padding:9px;font-size:12px}
-.status{display:inline-block;background:#292929;padding:5px 9px;border-radius:20px;font-size:12px;margin:5px 0}
-.offer{border:1px solid #333;background:#1b1b1b;padding:16px;border-radius:9px;margin-bottom:13px}
-.offer p{color:#ccc;margin:7px 0;overflow-wrap:anywhere}
-.offer-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.offer-actions button{padding:9px 12px}
-.preview{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}
+.tab-button{background:#292929}
+.tab-button.active{background:#e82127}
+.tab-content{display:none}
+.tab-content.active{display:block}
+.message{display:none;padding:12px;border-radius:7px;margin:10px 0 15px;background:#252525;color:#fff}
+.message.error,.message.success{display:block}
+.message.error{background:#4a1515;color:#ffbaba}
+.message.success{background:#123c25;color:#a8ffc6}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.vehicle-card,.offer-card,.order-card,.enquiry-card{background:#101010;border:1px solid #333;border-radius:10px;padding:15px;margin-bottom:14px}
+.vehicle-card img{width:100%;height:170px;object-fit:cover;border-radius:7px;margin-bottom:10px;background:#222}
+.vehicle-card p,.offer-card p,.order-card p,.enquiry-card p{color:#bbb;line-height:1.6;overflow-wrap:anywhere}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:12px 0}
 .preview-item{position:relative}
-.preview img{width:100px;height:85px;object-fit:cover;border-radius:7px;border:1px solid #555}
-.preview button{position:absolute;top:3px;right:3px;padding:4px 7px;border-radius:50%}
-.message{padding:12px;margin:12px 0;border-radius:7px;background:#222;color:#ddd;overflow-wrap:anywhere}
-.success{color:#55dc91}
-.error{color:#ff6565}
-.small{font-size:12px;color:#aaa}
-hr{border:0;border-top:1px solid #333;margin:17px 0}
-.enquiry{background:#1b1b1b;border:1px solid #333;border-radius:9px;padding:17px;margin-bottom:14px}
-.enquiry p{color:#ccc;font-size:14px;line-height:1.7;margin:6px 0;overflow-wrap:anywhere}
-.enquiry strong{color:#fff}
-.enquiry-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.enquiry-actions button{padding:9px 12px}
-@media(max-width:500px){body{padding:12px}header{align-items:flex-start}}
+.preview-item img{width:100%;height:100px;object-fit:cover;border-radius:7px}
+.preview-item button{position:absolute;top:3px;right:3px;padding:5px 8px;margin:0;font-size:12px}
+.muted{color:#888}
+.hidden{display:none!important}
+.topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:25px}
+.order-card a{color:#ff5555;overflow-wrap:anywhere}
+@media(max-width:600px){body{padding:12px}.panel{padding:15px}button{padding:11px 13px}}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<header>
-<div class="logo">TESLA <span>INNOVATION</span></div>
-<button id="logoutBtn" class="secondary hidden" onclick="logout()">Logout</button>
-</header>
+<div class="topbar">
+  <div>
+    <h1><span class="brand">TESLA</span> Innovation</h1>
+    <p class="subtitle">Administrator Control Centre</p>
+  </div>
+</div>
 
-<section id="loginSection" class="card">
-<h2>Administrator Login</h2>
-<label>Email address</label>
-<input type="email" id="loginEmail" placeholder="Admin email">
-<label>Password</label>
-<input type="password" id="loginPassword" placeholder="Password">
-<button onclick="login()">Login to Dashboard</button>
-<div id="loginMessage" class="message hidden"></div>
+<section id="loginPanel" class="panel">
+  <h2>Admin Login</h2>
+  <p class="muted">Sign in with your authorised administrator account.</p>
+
+  <label for="loginEmail">Email address</label>
+  <input type="email" id="loginEmail" placeholder="Admin email">
+
+  <label for="loginPassword">Password</label>
+  <input type="password" id="loginPassword" placeholder="Password">
+
+  <div id="loginMessage" class="message"></div>
+  <button id="loginBtn" onclick="loginAdmin()">Sign In</button>
 </section>
 
 <section id="dashboard" class="hidden">
 
-<div class="card">
-<h2>Welcome, Administrator</h2>
-<p class="small">Manage vehicles, customer enquiries and negotiations.</p>
+<div class="topbar">
+  <div>
+    <h2>Admin Dashboard</h2>
+    <p class="muted">Manage vehicles, negotiations, enquiries and customer orders.</p>
+  </div>
+  <button class="secondary" onclick="logoutAdmin()">Logout</button>
 </div>
 
 <div class="tabs">
-<button class="tab active" onclick="showTab('vehiclesTab',this)">Vehicles</button>
-<button class="tab" onclick="showTab('offersTab',this)">Negotiations</button>
-<button class="tab" onclick="showTab('enquiriesTab',this)">Purchase Enquiries</button>
+  <button class="tab-button active" onclick="showTab('vehiclesTab',this)">Vehicles</button>
+  <button class="tab-button" onclick="showTab('offersTab',this)">Negotiations</button>
+  <button class="tab-button" onclick="showTab('enquiriesTab',this)">Purchase Enquiries</button>
+  <button class="tab-button" onclick="showTab('ordersTab',this)">Customer Orders</button>
 </div>
 
-<!-- VEHICLE MANAGEMENT -->
+<!-- VEHICLES -->
+<div id="vehiclesTab" class="tab-content active">
 
-<section id="vehiclesTab">
+<div class="panel">
+  <h2>Vehicle Management</h2>
+  <p class="muted">Add vehicles, update prices, upload photos and control publication.</p>
 
-<div class="card">
-<h2 id="formTitle">Add New Vehicle</h2>
-<input type="hidden" id="vehicleId">
+  <input type="hidden" id="vehicleId">
 
-<label>Vehicle Model</label>
-<input id="model" placeholder="e.g. Model 3">
+  <div class="grid">
+    <div><label>Vehicle Model</label><input id="model" placeholder="e.g. Model 3"></div>
+    <div><label>Variant</label><input id="variant" placeholder="e.g. Standard RWD"></div>
+    <div><label>Year</label><input id="year" type="number" placeholder="2026"></div>
+    <div><label>Selling Price (USD)</label><input id="sellingPrice" type="number" min="0" placeholder="36990"></div>
+    <div><label>Reference Price (USD)</label><input id="referencePrice" type="number" min="0" placeholder="39990"></div>
+    <div><label>Deposit Percentage (%)</label><input id="depositPercentage" type="number" min="0" max="100" value="30"></div>
+    <div><label>Stock Quantity</label><input id="stockQuantity" type="number" min="0" placeholder="1"></div>
+    <div>
+      <label>Availability</label>
+      <select id="availability">
+        <option value="pre_order">Pre-order</option>
+        <option value="in_stock">In Stock</option>
+        <option value="limited_stock">Limited Stock</option>
+        <option value="out_of_stock">Out of Stock</option>
+      </select>
+    </div>
+  </div>
 
-<label>Variant</label>
-<input id="variant" placeholder="e.g. Standard RWD">
+  <label>Vehicle Description</label>
+  <textarea id="description" placeholder="Write details about this vehicle..."></textarea>
 
-<label>Year</label>
-<input id="year" type="number" value="2026">
+  <label>Upload Vehicle Photos</label>
+  <input id="vehiclePhotos" type="file" accept="image/*" multiple>
+  <div id="photoPreview" class="preview-grid"></div>
 
-<label>Description</label>
-<textarea id="description" placeholder="Vehicle details and specifications"></textarea>
+  <label><input type="checkbox" id="published" checked> Publish this vehicle on the website</label>
 
-<label>Selling Price (USD)</label>
-<input id="sellingPrice" type="number" min="1" step="0.01">
-
-<label>Reference Price (USD)</label>
-<input id="referencePrice" type="number" min="0" step="0.01">
-
-<label>Deposit Percentage (%)</label>
-<input id="depositPercentage" type="number" min="0" max="100" value="30">
-
-<label>Stock Quantity</label>
-<input id="stockQuantity" type="number" min="0" value="0">
-
-<label>Availability</label>
-<select id="availability">
-<option value="pre_order">Pre-order</option>
-<option value="in_stock">In Stock</option>
-<option value="limited_stock">Limited Stock</option>
-<option value="out_of_stock">Out of Stock</option>
-</select>
-
-<label>Upload Vehicle Photos</label>
-<input type="file" id="vehiclePhotos" accept="image/*" multiple>
-<p class="small">You can select multiple pictures from your phone gallery.</p>
-
-<div id="photoPreview" class="preview"></div>
-
-<label>
-<input type="checkbox" id="published" checked style="width:auto">
-Publish this vehicle on the website
-</label>
-
-<br><br>
-<button onclick="saveVehicle()">Save Vehicle</button>
-<button class="secondary" onclick="resetForm()">Clear Form</button>
-<div id="vehicleMessage" class="message hidden"></div>
+  <div id="vehicleMessage" class="message"></div>
+  <button id="saveVehicleBtn" onclick="saveVehicle()">Save Vehicle</button>
+  <button class="secondary" onclick="resetVehicleForm()">Clear Form</button>
 </div>
 
-<div class="card">
-<h2>Your Vehicle Listings</h2>
-<div id="vehicleList">Loading vehicles...</div>
+<div class="panel">
+  <h2>Vehicle Listings</h2>
+  <div id="vehicleList"><p class="muted">Loading vehicles...</p></div>
 </div>
-
-</section>
+</div>
 
 <!-- NEGOTIATIONS -->
-
-<section id="offersTab" class="hidden">
-<div class="card">
-<h2>Customer Negotiations</h2>
-<button class="secondary" onclick="loadOffers()">Refresh Offers</button>
-<div id="offerList" style="margin-top:15px">Loading offers...</div>
+<div id="offersTab" class="tab-content">
+  <div class="panel">
+    <h2>Customer Negotiations</h2>
+    <p class="muted">Review customer offers and respond to negotiations.</p>
+    <div id="offerList"><p class="muted">Loading negotiations...</p></div>
+  </div>
 </div>
-</section>
 
 <!-- PURCHASE ENQUIRIES -->
-
-<section id="enquiriesTab" class="hidden">
-<div class="card">
-<h2>Customer Purchase Enquiries</h2>
-<p class="small">View and manage customer vehicle purchase and pre-order enquiries.</p>
-
-<br>
-<button class="secondary" onclick="loadEnquiries()">Refresh Enquiries</button>
-
-<div id="enquiryList" style="margin-top:18px">
-Loading purchase enquiries...
+<div id="enquiriesTab" class="tab-content">
+  <div class="panel">
+    <h2>Purchase Enquiries</h2>
+    <p class="muted">Review customer vehicle purchase enquiries and update their status.</p>
+    <div id="enquiryList"><p class="muted">Loading purchase enquiries...</p></div>
+  </div>
 </div>
-</div>
-</section>
 
+<!-- CUSTOMER ORDERS -->
+<div id="ordersTab" class="tab-content">
+
+<div class="panel">
+  <h2>Create Customer Order</h2>
+  <p class="muted">Create an order for a registered customer using their account email.</p>
+
+  <label>Customer Email</label>
+  <input id="orderCustomerEmail" type="email" placeholder="Customer registered email">
+
+  <label>Vehicle Name</label>
+  <input id="orderVehicleName" placeholder="e.g. Tesla Model 3">
+
+  <label>Tracking Number (optional)</label>
+  <input id="orderTrackingNumber" placeholder="Leave blank to generate automatically">
+
+  <div class="grid">
+    <div>
+      <label>Payment Status</label>
+      <select id="orderPaymentStatus">
+        <option>Pending</option>
+        <option>Partially Paid</option>
+        <option>Paid</option>
+        <option>Refunded</option>
+      </select>
+    </div>
+    <div>
+      <label>Order Status</label>
+      <select id="orderStatus">
+        <option>Order Received</option>
+        <option>Processing</option>
+        <option>Preparing for Shipment</option>
+        <option>Shipped</option>
+        <option>In Transit</option>
+        <option>Out for Delivery</option>
+        <option>Delivered</option>
+        <option>Cancelled</option>
+      </select>
+    </div>
+  </div>
+
+  <label>Delivery Country</label>
+  <input id="orderCountry" placeholder="e.g. United States">
+
+  <label>Shipping Carrier</label>
+  <input id="orderCarrier" placeholder="e.g. DHL">
+
+  <label>Tracking URL</label>
+  <input id="orderTrackingURL" type="url" placeholder="https://">
+
+  <label>Estimated Delivery Date</label>
+  <input id="orderDeliveryDate" type="date">
+
+  <label>Private Admin Note</label>
+  <textarea id="orderAdminNote" placeholder="Internal note for administrators..."></textarea>
+
+  <div id="orderCreateMessage" class="message"></div>
+  <button id="createOrderBtn" onclick="createCustomerOrder()">Create Order</button>
+  <button class="secondary" onclick="resetOrderForm()">Clear Form</button>
+</div>
+
+<div class="panel">
+  <h2>Customer Orders</h2>
+  <div id="orderList"><p class="muted">Loading customer orders...</p></div>
+</div>
+
+</div>
 </section>
 </div>
 
 <script>
-
+// ==========================================
 // SUPABASE CONNECTION
+// ==========================================
 
-const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
-const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
 
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-let currentUser=null;
-let existingImages=[];
-let removedImages=[];
-let selectedFiles=[];
+let currentUser = null;
+let vehicles = [];
+let existingImages = [];
+let removedImages = [];
+let selectedFiles = [];
 
+// ==========================================
+// HELPERS
+// ==========================================
 
-// GENERAL HELPERS
-
-function escapeHTML(value){
-return String(value??'').replace(/[&<>"']/g,function(c){
-return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
-});
+function escapeHTML(value) {
+  return String(value ?? "").replace(/[&<>"']/g,char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[char]);
 }
 
-function showMessage(id,message,type=''){
-const el=document.getElementById(id);
-el.className='message';
-el.textContent=message;
-if(type)el.classList.add(type);
+function showMessage(id,message,type="") {
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.textContent=message;
+  el.className="message";
+  if(type)el.classList.add(type);
 }
 
-function hideMessage(id){
-document.getElementById(id).classList.add('hidden');
+function hideMessage(id) {
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.textContent="";
+  el.className="message";
 }
 
-
-// LOGIN
-
-async function login(){
-
-const email=document.getElementById('loginEmail').value.trim();
-const password=document.getElementById('loginPassword').value;
-
-if(!email||!password){
-showMessage('loginMessage','Enter your email and password.','error');
-return;
+function formatMoney(value) {
+  return new Intl.NumberFormat("en-US",{
+    style:"currency",currency:"USD",maximumFractionDigits:2
+  }).format(Number(value||0));
 }
 
-showMessage('loginMessage','Checking login...');
-
-const {data,error}=await db.auth.signInWithPassword({email,password});
-
-if(error){
-showMessage('loginMessage',error.message,'error');
-return;
+function formatDate(value) {
+  if(!value)return "Not provided";
+  const date=new Date(value);
+  return Number.isNaN(date.getTime()) ? escapeHTML(value) : date.toLocaleDateString();
 }
 
-const user=data.user;
+// ==========================================
+// ADMIN AUTHENTICATION
+// ==========================================
 
-const {data:admin,error:adminError}=await db
-.from('admin_users')
-.select('user_id')
-.eq('user_id',user.id)
-.maybeSingle();
+async function loginAdmin() {
+  hideMessage("loginMessage");
 
-if(adminError||!admin){
-await db.auth.signOut();
-showMessage('loginMessage','Access denied. This account is not registered as an administrator.','error');
-return;
+  const email=document.getElementById("loginEmail").value.trim();
+  const password=document.getElementById("loginPassword").value;
+
+  if(!email||!password) {
+    showMessage("loginMessage","Enter your email and password.","error");
+    return;
+  }
+
+  const button=document.getElementById("loginBtn");
+  button.disabled=true;
+  button.textContent="Signing in...";
+
+  try {
+    const {data,error}=await db.auth.signInWithPassword({email,password});
+    if(error)throw error;
+
+    currentUser=data.user;
+
+    if(!await verifyAdmin()) {
+      await db.auth.signOut();
+      currentUser=null;
+      throw new Error("This account is not authorised as an administrator.");
+    }
+
+    await openDashboard();
+  } catch(error) {
+    showMessage("loginMessage",error.message||"Login failed.","error");
+  } finally {
+    button.disabled=false;
+    button.textContent="Sign In";
+  }
 }
 
-currentUser=user;
+async function verifyAdmin() {
+  if(!currentUser)return false;
 
-openDashboard();
+  const {data,error}=await db.from("admin_users")
+    .select("user_id,email")
+    .eq("user_id",currentUser.id)
+    .maybeSingle();
+
+  if(error)throw error;
+  return Boolean(data);
 }
 
+async function checkSession() {
+  try {
+    const {data,error}=await db.auth.getSession();
+    if(error)throw error;
 
-// DASHBOARD DISPLAY
+    if(!data.session)return;
 
-function openDashboard(){
+    currentUser=data.session.user;
 
-document.getElementById('loginSection').classList.add('hidden');
-document.getElementById('dashboard').classList.remove('hidden');
-document.getElementById('logoutBtn').classList.remove('hidden');
+    if(!await verifyAdmin()) {
+      await db.auth.signOut();
+      currentUser=null;
+      return;
+    }
 
-loadVehicles();
-loadOffers();
-loadEnquiries();
+    await openDashboard();
+  } catch(error) {
+    console.error("Session check failed:",error);
+  }
 }
 
+async function openDashboard() {
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
 
-// CHECK EXISTING SESSION
-
-async function checkSession(){
-
-const {data}=await db.auth.getSession();
-
-if(!data.session)return;
-
-const user=data.session.user;
-
-const {data:admin,error}=await db
-.from('admin_users')
-.select('user_id')
-.eq('user_id',user.id)
-.maybeSingle();
-
-if(error||!admin){
-await db.auth.signOut();
-return;
+  await loadVehicles();
+  await Promise.all([
+    loadOffers(),
+    loadEnquiries(),
+    loadOrders()
+  ]);
 }
 
-currentUser=user;
-openDashboard();
+async function logoutAdmin() {
+  await db.auth.signOut();
+  currentUser=null;
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginPanel").classList.remove("hidden");
+  document.getElementById("loginPassword").value="";
 }
 
-async function logout(){
-await db.auth.signOut();
-location.reload();
-}
-
-
+// ==========================================
 // DASHBOARD TABS
+// ==========================================
 
-function showTab(tabId,button){
+function showTab(tabId,button) {
+  document.querySelectorAll(".tab-content").forEach(tab=>tab.classList.remove("active"));
+  document.querySelectorAll(".tab-button").forEach(btn=>btn.classList.remove("active"));
 
-['vehiclesTab','offersTab','enquiriesTab'].forEach(id=>{
-document.getElementById(id).classList.add('hidden');
+  document.getElementById(tabId).classList.add("active");
+  if(button)button.classList.add("active");
+
+  if(tabId==="vehiclesTab")loadVehicles();
+  if(tabId==="offersTab")loadOffers();
+  if(tabId==="enquiriesTab")loadEnquiries();
+  if(tabId==="ordersTab")loadOrders();
+}
+
+// ==========================================
+// VEHICLE PHOTO MANAGEMENT
+// ==========================================
+
+document.getElementById("vehiclePhotos").addEventListener("change",event=>{
+  selectedFiles=Array.from(event.target.files||[]);
+  renderPreviews();
 });
 
-document.getElementById(tabId).classList.remove('hidden');
+function renderPreviews() {
+  const preview=document.getElementById("photoPreview");
+  preview.innerHTML="";
 
-document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  existingImages.forEach(url=>{
+    if(removedImages.includes(url))return;
 
-button.classList.add('active');
+    const item=document.createElement("div");
+    item.className="preview-item";
+    const img=document.createElement("img");
+    img.src=url;
+    img.alt="Vehicle photo";
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="danger";
+    btn.textContent="×";
+    btn.onclick=()=>{
+      removedImages.push(url);
+      renderPreviews();
+    };
+    item.append(img,btn);
+    preview.appendChild(item);
+  });
 
-if(tabId==='enquiriesTab')loadEnquiries();
-if(tabId==='offersTab')loadOffers();
+  selectedFiles.forEach((file,index)=>{
+    const item=document.createElement("div");
+    item.className="preview-item";
+    const img=document.createElement("img");
+    img.src=URL.createObjectURL(file);
+    img.alt="New vehicle photo";
+    const btn=document.createElement("button");
+    btn.type="button";
+    btn.className="danger";
+    btn.textContent="×";
+    btn.onclick=()=>{
+      selectedFiles.splice(index,1);
+      renderPreviews();
+    };
+    item.append(img,btn);
+    preview.appendChild(item);
+  });
 }
 
+async function uploadPhotos(vehicleId) {
+  const uploadedURLs=[];
 
-// IMAGE PREVIEW
+  for(const file of selectedFiles) {
+    const extension=file.name.split(".").pop()||"jpg";
+    const fileName=vehicleId+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+extension;
 
-document.getElementById('vehiclePhotos').addEventListener('change',function(){
-selectedFiles=Array.from(this.files);
-renderPreviews();
-});
+    const {error}=await db.storage.from("vehicle-images").upload(fileName,file,{
+      cacheControl:"3600",upsert:false
+    });
 
-function removeExistingImage(index){
-const url=existingImages[index];
-if(!removedImages.includes(url))removedImages.push(url);
-renderPreviews();
+    if(error)throw error;
+
+    const {data}=db.storage.from("vehicle-images").getPublicUrl(fileName);
+    uploadedURLs.push(data.publicUrl);
+  }
+
+  return uploadedURLs;
 }
 
-function renderPreviews(){
-
-const preview=document.getElementById('photoPreview');
-preview.innerHTML='';
-
-existingImages.forEach((url,index)=>{
-
-if(removedImages.includes(url))return;
-
-const box=document.createElement('div');
-box.className='preview-item';
-
-const img=document.createElement('img');
-img.src=url;
-
-const btn=document.createElement('button');
-btn.type='button';
-btn.textContent='×';
-btn.onclick=()=>removeExistingImage(index);
-
-box.append(img,btn);
-preview.appendChild(box);
-});
-
-selectedFiles.forEach((file,index)=>{
-
-const box=document.createElement('div');
-box.className='preview-item';
-
-const img=document.createElement('img');
-img.src=URL.createObjectURL(file);
-
-const btn=document.createElement('button');
-btn.type='button';
-btn.textContent='×';
-
-btn.onclick=()=>{
-selectedFiles.splice(index,1);
-renderPreviews();
-};
-
-box.append(img,btn);
-preview.appendChild(box);
-});
-}
-
-
-// UPLOAD PHOTOS
-
-async function uploadPhotos(){
-
-const uploadedURLs=[];
-
-for(const file of selectedFiles){
-
-if(!file.type.startsWith('image/'))throw new Error('Only image files are allowed.');
-
-if(file.size>5*1024*1024)throw new Error(file.name+' is larger than 5MB.');
-
-const extension=file.name.split('.').pop().toLowerCase();
-const path=Date.now()+'_'+Math.random().toString(36).slice(2)+'.'+extension;
-
-const {error}=await db.storage.from('vehicle-images').upload(path,file,{
-contentType:file.type,
-upsert:false
-});
-
-if(error)throw error;
-
-const {data}=db.storage.from('vehicle-images').getPublicUrl(path);
-uploadedURLs.push(data.publicUrl);
-}
-
-return uploadedURLs;
-}
-
-
-// SAVE VEHICLE
-
-async function saveVehicle(){
-
-if(!currentUser){
-showMessage('vehicleMessage','Please log in first.','error');
-return;
-}
-
-const id=document.getElementById('vehicleId').value;
-const model=document.getElementById('model').value.trim();
-const variant=document.getElementById('variant').value.trim();
-const year=Number(document.getElementById('year').value);
-const sellingPrice=Number(document.getElementById('sellingPrice').value);
-const referencePrice=Number(document.getElementById('referencePrice').value);
-const depositPercentage=Number(document.getElementById('depositPercentage').value);
-const stockQuantity=Number(document.getElementById('stockQuantity').value);
-
-if(!model||!variant||!year||sellingPrice<=0){
-showMessage('vehicleMessage','Please enter the model, variant, year and a valid selling price.','error');
-return;
-}
-
-if(depositPercentage<0||depositPercentage>100||stockQuantity<0){
-showMessage('vehicleMessage','Check your deposit percentage and stock quantity.','error');
-return;
-}
-
-showMessage('vehicleMessage','Saving vehicle and uploading photos...');
-
-try{
-
-const uploaded=await uploadPhotos();
-
-const finalImages=existingImages.filter(url=>!removedImages.includes(url)).concat(uploaded);
-
-const vehicle={
-model,
-variant,
-year,
-description:document.getElementById('description').value.trim(),
-selling_price:sellingPrice,
-reference_price:referencePrice||sellingPrice,
-currency:'USD',
-deposit_percentage:depositPercentage,
-stock_quantity:stockQuantity,
-availability:document.getElementById('availability').value,
-image_urls:finalImages,
-is_published:document.getElementById('published').checked,
-updated_at:new Date().toISOString()
-};
-
-let result;
-
-if(id){
-result=await db.from('vehicles').update(vehicle).eq('id',id);
-}else{
-result=await db.from('vehicles').insert(vehicle);
-}
-
-if(result.error)throw result.error;
-
-showMessage('vehicleMessage',id?'Vehicle updated successfully!':'Vehicle added successfully!','success');
-
-resetForm();
-await loadVehicles();
-
-}catch(error){
-showMessage('vehicleMessage','Error: '+error.message,'error');
-}
-}
-
-
-// RESET FORM
-
-function resetForm(){
-
-document.getElementById('vehicleId').value='';
-document.getElementById('model').value='';
-document.getElementById('variant').value='';
-document.getElementById('year').value='2026';
-document.getElementById('description').value='';
-document.getElementById('sellingPrice').value='';
-document.getElementById('referencePrice').value='';
-document.getElementById('depositPercentage').value='30';
-document.getElementById('stockQuantity').value='0';
-document.getElementById('availability').value='pre_order';
-document.getElementById('published').checked=true;
-document.getElementById('vehiclePhotos').value='';
-
-existingImages=[];
-removedImages=[];
-selectedFiles=[];
-
-document.getElementById('photoPreview').innerHTML='';
-document.getElementById('formTitle').textContent='Add New Vehicle';
-}
-
-
+// ==========================================
 // LOAD VEHICLES
+// ==========================================
 
-async function loadVehicles(){
+async function loadVehicles() {
+  const list=document.getElementById("vehicleList");
+  list.innerHTML="<p class='muted'>Loading vehicles...</p>";
 
-const list=document.getElementById('vehicleList');
-list.textContent='Loading vehicles...';
+  try {
+    const {data,error}=await db.from("vehicles")
+      .select("*")
+      .order("created_at",{ascending:false});
 
-const {data,error}=await db.from('vehicles').select('*').order('created_at',{ascending:false});
+    if(error)throw error;
+    vehicles=data||[];
 
-if(error){
-list.textContent='Could not load vehicles: '+error.message;
-return;
+    if(!vehicles.length) {
+      list.innerHTML="<p class='muted'>No vehicles have been added yet.</p>";
+      return;
+    }
+
+    list.innerHTML=vehicles.map(vehicle=>{
+      const images=Array.isArray(vehicle.image_urls)?vehicle.image_urls:[];
+      const firstImage=images.length
+        ?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(vehicle.model)}">`:"";
+      const published=vehicle.is_published===true;
+
+      return `
+      <div class="vehicle-card">
+        ${firstImage}
+        <h3>${escapeHTML(vehicle.model||"Unnamed Vehicle")}</h3>
+        <p><strong>Variant:</strong> ${escapeHTML(vehicle.variant||"Not specified")}</p>
+        <p><strong>Year:</strong> ${escapeHTML(vehicle.year||"Not specified")}</p>
+        <p><strong>Price:</strong> ${formatMoney(vehicle.selling_price)}</p>
+        <p><strong>Availability:</strong> ${escapeHTML(vehicle.availability||"Not specified")}</p>
+        <p><strong>Stock:</strong> ${escapeHTML(vehicle.stock_quantity??0)}</p>
+        <p><strong>Publication:</strong> ${published?"Published":"Unpublished"}</p>
+        <button onclick="editVehicle('${escapeHTML(vehicle.id)}')">Edit</button>
+        <button class="secondary" onclick="toggleVehiclePublication('${escapeHTML(vehicle.id)}',${!published})">${published?"Unpublish":"Publish"}</button>
+        <button class="danger" onclick="deleteVehicle('${escapeHTML(vehicle.id)}')">Delete</button>
+      </div>`;
+    }).join("");
+  } catch(error) {
+    console.error(error);
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+  }
 }
 
-if(!data.length){
-list.textContent='No vehicles have been added yet.';
-return;
+// ==========================================
+// SAVE VEHICLE
+// ==========================================
+
+async function saveVehicle() {
+  hideMessage("vehicleMessage");
+
+  const model=document.getElementById("model").value.trim();
+  const price=Number(document.getElementById("sellingPrice").value);
+
+  if(!model) {
+    showMessage("vehicleMessage","Enter the vehicle model.","error");
+    return;
+  }
+
+  if(!Number.isFinite(price)||price<=0) {
+    showMessage("vehicleMessage","Enter a valid selling price.","error");
+    return;
+  }
+
+  const button=document.getElementById("saveVehicleBtn");
+  button.disabled=true;
+  button.textContent="Saving...";
+
+  try {
+    const editingId=document.getElementById("vehicleId").value;
+    const vehicleId=editingId||crypto.randomUUID();
+
+    const uploadedURLs=await uploadPhotos(vehicleId);
+    const finalImages=[
+      ...existingImages.filter(url=>!removedImages.includes(url)),
+      ...uploadedURLs
+    ];
+
+    const payload={
+      model,
+      variant:document.getElementById("variant").value.trim(),
+      year:Number(document.getElementById("year").value)||null,
+      description:document.getElementById("description").value.trim(),
+      selling_price:price,
+      reference_price:Number(document.getElementById("referencePrice").value)||null,
+      deposit_percentage:Number(document.getElementById("depositPercentage").value)||30,
+      stock_quantity:Number(document.getElementById("stockQuantity").value)||0,
+      availability:document.getElementById("availability").value,
+      image_urls:finalImages,
+      is_published:document.getElementById("published").checked,
+      updated_at:new Date().toISOString()
+    };
+
+    let result;
+
+    if(editingId) {
+      result=await db.from("vehicles").update(payload).eq("id",editingId);
+    } else {
+      result=await db.from("vehicles").insert({id:vehicleId,...payload});
+    }
+
+    if(result.error)throw result.error;
+
+    showMessage("vehicleMessage",editingId?"Vehicle updated successfully.":"Vehicle added successfully.","success");
+    resetVehicleForm();
+    await loadVehicles();
+  } catch(error) {
+    console.error(error);
+    showMessage("vehicleMessage",error.message||"Could not save vehicle.","error");
+  } finally {
+    button.disabled=false;
+    button.textContent="Save Vehicle";
+  }
 }
 
-list.innerHTML='<div class="grid" id="vehicleGrid"></div>';
+function editVehicle(id) {
+  const vehicle=vehicles.find(item=>String(item.id)===String(id));
+  if(!vehicle)return alert("Vehicle not found.");
 
-const grid=document.getElementById('vehicleGrid');
+  document.getElementById("vehicleId").value=vehicle.id||"";
+  document.getElementById("model").value=vehicle.model||"";
+  document.getElementById("variant").value=vehicle.variant||"";
+  document.getElementById("year").value=vehicle.year||"";
+  document.getElementById("description").value=vehicle.description||"";
+  document.getElementById("sellingPrice").value=vehicle.selling_price||"";
+  document.getElementById("referencePrice").value=vehicle.reference_price||"";
+  document.getElementById("depositPercentage").value=vehicle.deposit_percentage??30;
+  document.getElementById("stockQuantity").value=vehicle.stock_quantity??"";
+  document.getElementById("availability").value=vehicle.availability||"pre_order";
+  document.getElementById("published").checked=vehicle.is_published===true;
 
-data.forEach(v=>{
+  existingImages=Array.isArray(vehicle.image_urls)?[...vehicle.image_urls]:[];
+  removedImages=[];
+  selectedFiles=[];
+  document.getElementById("vehiclePhotos").value="";
+  renderPreviews();
 
-const firstImage=Array.isArray(v.image_urls)&&v.image_urls.length?v.image_urls[0]:'';
+  document.getElementById("vehiclesTab").scrollIntoView({behavior:"smooth"});
+  showMessage("vehicleMessage","Editing vehicle: "+vehicle.model,"success");
+}
 
-const box=document.createElement('div');
-box.className='vehicle';
+function resetVehicleForm() {
+  ["vehicleId","model","variant","year","description","sellingPrice","referencePrice","stockQuantity"].forEach(id=>{
+    document.getElementById(id).value="";
+  });
 
-const image=document.createElement('img');
-image.src=firstImage||'https://images.unsplash.com/photo-1560958089-b8a1929cea89?w=700';
-image.alt=v.model;
+  document.getElementById("depositPercentage").value="30";
+  document.getElementById("availability").value="pre_order";
+  document.getElementById("published").checked=true;
+  document.getElementById("vehiclePhotos").value="";
 
-const title=document.createElement('h3');
-title.textContent=v.model+' '+(v.variant||'');
+  existingImages=[];
+  removedImages=[];
+  selectedFiles=[];
+  renderPreviews();
+  hideMessage("vehicleMessage");
+}
 
-const price=document.createElement('p');
-price.textContent='Price: $'+Number(v.selling_price).toLocaleString('en-US');
+async function toggleVehiclePublication(id,publish) {
+  const {error}=await db.from("vehicles").update({
+    is_published:publish,
+    updated_at:new Date().toISOString()
+  }).eq("id",id);
 
-const stock=document.createElement('p');
-stock.textContent='Stock: '+v.stock_quantity;
+  if(error)return alert(error.message);
+  await loadVehicles();
+}
 
-const availability=document.createElement('p');
-availability.textContent='Availability: '+v.availability;
+async function deleteVehicle(id) {
+  if(!confirm("Are you sure you want to delete this vehicle?"))return;
 
-const photos=document.createElement('p');
-photos.textContent='Photos: '+(v.image_urls?.length||0);
+  const {error}=await db.from("vehicles").delete().eq("id",id);
+  if(error)return alert(error.message);
+  await loadVehicles();
+}
 
-const status=document.createElement('span');
-status.className='status';
-status.textContent=v.is_published?'Published':'Hidden';
+// ==========================================
+// NEGOTIATIONS
+// ==========================================
 
-const actions=document.createElement('div');
-actions.className='vehicle-actions';
+async function loadOffers() {
+  const list=document.getElementById("offerList");
+  list.innerHTML="<p class='muted'>Loading negotiations...</p>";
 
-const edit=document.createElement('button');
-edit.className='blue';
-edit.textContent='Edit';
-edit.onclick=()=>editVehicle(v.id);
+  try {
+    const {data,error}=await db.from("negotiations")
+      .select("*")
+      .order("created_at",{ascending:false});
 
-const toggle=document.createElement('button');
-toggle.className='secondary';
-toggle.textContent=v.is_published?'Unpublish':'Publish';
-toggle.onclick=()=>togglePublish(v.id,!v.is_published);
+    if(error)throw error;
 
-const remove=document.createElement('button');
-remove.className='danger';
-remove.textContent='Delete';
-remove.onclick=()=>deleteVehicle(v.id);
+    if(!data||!data.length) {
+      list.innerHTML="<p class='muted'>No customer negotiations yet.</p>";
+      return;
+    }
 
-box.append(image,title,price,stock,availability,photos,status,actions);
-actions.append(edit,toggle,remove);
-grid.appendChild(box);
+    list.innerHTML=data.map(offer=>`
+      <div class="offer-card">
+        <h3>${escapeHTML(offer.vehicle_id||"Vehicle Negotiation")}</h3>
+        <p><strong>Customer:</strong> ${escapeHTML(offer.customer_name||"Not provided")}</p>
+        <p><strong>Email:</strong> ${escapeHTML(offer.email||offer.customer_email||"Not provided")}</p>
+        <p><strong>Phone:</strong> ${escapeHTML(offer.phone||offer.customer_phone||"Not provided")}</p>
+        <p><strong>Offer:</strong> ${formatMoney(offer.proposed_budget)}</p>
+        <p><strong>Message:</strong> ${escapeHTML(offer.customer_message||"No message")}</p>
+        <p><strong>Status:</strong> ${escapeHTML(offer.status||"Pending")}</p>
+        ${offer.counter_offer?`<p><strong>Counteroffer:</strong> ${formatMoney(offer.counter_offer)}</p>`:""}
+        <button class="success" onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">Accept</button>
+        <button class="secondary" onclick="makeCounter('${escapeHTML(offer.id)}')">Make Counteroffer</button>
+        <button class="danger" onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">Reject</button>
+      </div>
+    `).join("");
+  } catch(error) {
+    console.error(error);
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+  }
+}
 
+async function respondToOffer(id,status) {
+  const {error}=await db.from("negotiations")
+    .update({status})
+    .eq("id",id);
+
+  if(error)return alert(error.message);
+  await loadOffers();
+}
+
+async function makeCounter(id) {
+  const amount=prompt("Enter your counteroffer amount in USD:");
+  if(amount===null)return;
+
+  const counteroffer=Number(amount);
+  if(!Number.isFinite(counteroffer)||counteroffer<=0)return alert("Enter a valid amount.");
+
+  const {error}=await db.from("negotiations")
+    .update({status:"countered",counter_offer:counteroffer})
+    .eq("id",id);
+
+  if(error)return alert(error.message);
+  await loadOffers();
+}
+
+// ==========================================
+// PURCHASE ENQUIRIES
+// ==========================================
+
+async function loadEnquiries() {
+  const list=document.getElementById("enquiryList");
+  list.innerHTML="<p class='muted'>Loading purchase enquiries...</p>";
+
+  try {
+    const {data,error}=await db.from("enquiries")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+    if(error)throw error;
+
+    if(!data||!data.length) {
+      list.innerHTML="<p class='muted'>No purchase enquiries yet.</p>";
+      return;
+    }
+
+    list.innerHTML=data.map(enquiry=>{
+      const vehicle=vehicles.find(item=>String(item.id)===String(enquiry.vehicle_id));
+
+      return `
+      <div class="enquiry-card">
+        <h3>${escapeHTML(vehicle?.model||"Vehicle Enquiry")}</h3>
+        <p><strong>Customer:</strong> ${escapeHTML(enquiry.customer_name||"Not provided")}</p>
+        <p><strong>Email:</strong> ${escapeHTML(enquiry.email||"Not provided")}</p>
+        <p><strong>Phone:</strong> ${escapeHTML(enquiry.phone||"Not provided")}</p>
+        <p><strong>Enquiry Type:</strong> ${escapeHTML(enquiry.enquiry_type||"Not specified")}</p>
+        <p><strong>Vehicle ID:</strong> ${escapeHTML(enquiry.vehicle_id||"Not provided")}</p>
+        <p><strong>Preferred Colour:</strong> ${escapeHTML(enquiry.preferred_colour||"Not specified")}</p>
+        <p><strong>Delivery Country:</strong> ${escapeHTML(enquiry.delivery_country||"Not specified")}</p>
+        <p><strong>Message:</strong> ${escapeHTML(enquiry.message||"No message")}</p>
+        <p><strong>Status:</strong> ${escapeHTML(enquiry.status||"Pending")}</p>
+        <p><strong>Date:</strong> ${formatDate(enquiry.created_at)}</p>
+        <button onclick="updateEnquiryStatus('${escapeHTML(enquiry.id)}')">Update Status</button>
+      </div>`;
+    }).join("");
+  } catch(error) {
+    console.error("Enquiry loading error:",error);
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+  }
+}
+
+async function updateEnquiryStatus(id) {
+  const status=prompt("Enter the new enquiry status:");
+  if(status===null)return;
+
+  const selectedStatus=status.trim();
+  if(!selectedStatus)return alert("Enter a status.");
+
+  const {error}=await db.from("enquiries")
+    .update({status:selectedStatus})
+    .eq("id",id);
+
+  if(error)return alert(error.message);
+
+  alert("Enquiry status updated successfully.");
+  await loadEnquiries();
+}
+
+// ==========================================
+// CREATE CUSTOMER ORDER
+// ==========================================
+
+async function createCustomerOrder() {
+  hideMessage("orderCreateMessage");
+
+  const customerEmail=document.getElementById("orderCustomerEmail").value.trim();
+  const vehicleName=document.getElementById("orderVehicleName").value.trim();
+
+  if(!customerEmail||!vehicleName) {
+    showMessage("orderCreateMessage","Customer email and vehicle name are required.","error");
+    return;
+  }
+
+  const button=document.getElementById("createOrderBtn");
+  button.disabled=true;
+  button.textContent="Creating Order...";
+
+  try {
+    const orderData={
+      customerEmail,
+      vehicleName,
+      tracking_number:document.getElementById("orderTrackingNumber").value.trim()||null,
+      payment_status:document.getElementById("orderPaymentStatus").value,
+      order_status:document.getElementById("orderStatus").value,
+      delivery_country:document.getElementById("orderCountry").value.trim(),
+      shipping_carrier:document.getElementById("orderCarrier").value.trim(),
+      tracking_url:document.getElementById("orderTrackingURL").value.trim(),
+      estimated_delivery:document.getElementById("orderDeliveryDate").value||null,
+      admin_note:document.getElementById("orderAdminNote").value.trim()
+    };
+
+    const {data,error}=await db.functions.invoke("create-customer-order-",{
+      body:orderData
+    });
+
+    if(error) {
+      let details=error.message||"Order creation failed.";
+      try {
+        if(error.context&&typeof error.context.json==="function") {
+          const response=await error.context.json();
+          details=response.error||response.message||details;
+        }
+      } catch(_){}
+      throw new Error(details);
+    }
+
+    if(data?.error)throw new Error(data.error);
+
+    const trackingNumber=data?.order?.tracking_number||data?.tracking_number||"Created successfully";
+
+    showMessage("orderCreateMessage","Order created successfully. Tracking number: "+trackingNumber,"success");
+    resetOrderForm();
+    await loadOrders();
+  } catch(error) {
+    console.error("Create order error:",error);
+    showMessage("orderCreateMessage",error.message||"Could not create customer order.","error");
+  } finally {
+    button.disabled=false;
+    button.textContent="Create Order";
+  }
+}
+
+function resetOrderForm() {
+  document.getElementById("orderCustomerEmail").value="";
+  document.getElementById("orderVehicleName").value="";
+  document.getElementById("orderTrackingNumber").value="";
+  document.getElementById("orderPaymentStatus").value="Pending";
+  document.getElementById("orderStatus").value="Order Received";
+  document.getElementById("orderCountry").value="";
+  document.getElementById("orderCarrier").value="";
+  document.getElementById("orderTrackingURL").value="";
+  document.getElementById("orderDeliveryDate").value="";
+  document.getElementById("orderAdminNote").value="";
+}
+
+// ==========================================
+// LOAD CUSTOMER ORDERS
+// ==========================================
+
+async function loadOrders() {
+  const list=document.getElementById("orderList");
+  list.innerHTML="<p class='muted'>Loading customer orders...</p>";
+
+  try {
+    const {data,error}=await db.from("customer_orders")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+    if(error)throw error;
+
+    if(!data||!data.length) {
+      list.innerHTML="<p class='muted'>No customer orders have been created yet.</p>";
+      return;
+    }
+
+    list.innerHTML=data.map(order=>`
+      <div class="order-card">
+        <h3>${escapeHTML(order.vehicle_name||"Vehicle Order")}</h3>
+        <p><strong>Customer ID:</strong> ${escapeHTML(order.customer_id||"Not available")}</p>
+        <p><strong>Tracking Number:</strong> ${escapeHTML(order.tracking_number||"Not assigned")}</p>
+        <p><strong>Payment:</strong> ${escapeHTML(order.payment_status||"Pending")}</p>
+        <p><strong>Order Status:</strong> ${escapeHTML(order.order_status||"Processing")}</p>
+        <p><strong>Country:</strong> ${escapeHTML(order.delivery_country||"Not provided")}</p>
+        <p><strong>Carrier:</strong> ${escapeHTML(order.shipping_carrier||"Not assigned")}</p>
+        <p><strong>Estimated Delivery:</strong> ${formatDate(order.estimated_delivery)}</p>
+        <p><strong>Tracking URL:</strong>
+          ${order.tracking_url?`<a href="${escapeHTML(order.tracking_url)}" target="_blank" rel="noopener noreferrer">Open tracking</a>`:"Not provided"}
+        </p>
+        <p><strong>Private Admin Note:</strong> ${escapeHTML(order.admin_note||"None")}</p>
+        <button onclick="editCustomerOrder('${escapeHTML(order.id)}')">Update Order</button>
+      </div>
+    `).join("");
+  } catch(error) {
+    console.error("Load orders error:",error);
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+  }
+}
+
+// ==========================================
+// UPDATE CUSTOMER ORDER
+// ==========================================
+
+async function editCustomerOrder(id) {
+  const {data:order,error:fetchError}=await db.from("customer_orders")
+    .select("*")
+    .eq("id",id)
+    .single();
+
+  if(fetchError)return alert(fetchError.message);
+
+  const paymentStatus=prompt(
+    "Payment status:\nPending, Partially Paid, Paid, Refunded",
+    order.payment_status||"Pending"
+  );
+  if(paymentStatus===null)return;
+
+  const orderStatus=prompt(
+    "Order status:\nOrder Received, Processing, Preparing for Shipment, Shipped, In Transit, Out for Delivery, Delivered, Cancelled",
+    order.order_status||"Processing"
+  );
+  if(orderStatus===null)return;
+
+  const carrier=prompt("Shipping carrier:",order.shipping_carrier||"");
+  if(carrier===null)return;
+
+  const trackingURL=prompt("Tracking URL:",order.tracking_url||"");
+  if(trackingURL===null)return;
+
+  const deliveryDate=prompt("Estimated delivery date (YYYY-MM-DD):",order.estimated_delivery||"");
+  if(deliveryDate===null)return;
+
+  const adminNote=prompt("Private admin note:",order.admin_note||"");
+  if(adminNote===null)return;
+
+  const allowedPayments=["Pending","Partially Paid","Paid","Refunded"];
+  const allowedStatuses=[
+    "Order Received","Processing","Preparing for Shipment","Shipped",
+    "In Transit","Out for Delivery","Delivered","Cancelled"
+  ];
+
+  if(!allowedPayments.includes(paymentStatus.trim()))return alert("Invalid payment status.");
+  if(!allowedStatuses.includes(orderStatus.trim()))return alert("Invalid order status.");
+
+  if(trackingURL.trim()) {
+    try{new URL(trackingURL.trim());}
+    catch(_){return alert("Enter a valid tracking URL.");}
+  }
+
+  const updateData={
+    payment_status:paymentStatus.trim(),
+    order_status:orderStatus.trim(),
+    shipping_carrier:carrier.trim(),
+    tracking_url:trackingURL.trim(),
+    estimated_delivery:deliveryDate.trim()||null,
+    admin_note:adminNote.trim(),
+    updated_at:new Date().toISOString()
+  };
+
+  const {error}=await db.from("customer_orders")
+    .update(updateData)
+    .eq("id",id);
+
+  if(error)return alert(error.message);
+
+  alert("Customer order updated successfully.");
+  await loadOrders();
+}
+
+// ==========================================
+// AUTH STATE CHANGES
+// ==========================================
+
+db.auth.onAuthStateChange(event=>{
+  if(event==="SIGNED_OUT") {
+    currentUser=null;
+    document.getElementById("dashboard").classList.add("hidden");
+    document.getElementById("loginPanel").classList.remove("hidden");
+  }
 });
-}
 
-
-// EDIT VEHICLE
-
-async function editVehicle(id){
-
-const {data,error}=await db.from('vehicles').select('*').eq('id',id).single();
-
-if(error){
-alert(error.message);
-return;
-}
-
-document.getElementById('vehicleId').value=data.id;
-document.getElementById('model').value=data.model||'';
-document.getElementById('variant').value=data.variant||'';
-document.getElementById('year').value=data.year||'';
-document.getElementById('description').value=data.description||'';
-document.getElementById('sellingPrice').value=data.selling_price;
-document.getElementById('referencePrice').value=data.reference_price;
-document.getElementById('depositPercentage').value=data.deposit_percentage;
-document.getElementById('stockQuantity').value=data.stock_quantity;
-document.getElementById('availability').value=data.availability||'pre_order';
-document.getElementById('published').checked=data.is_published;
-
-existingImages=Array.isArray(data.image_urls)?data.image_urls:[];
-removedImages=[];
-selectedFiles=[];
-
-document.getElementById('vehiclePhotos').value='';
-document.getElementById('formTitle').textContent='Edit Vehicle';
-
-renderPreviews();
-window.scrollTo({top:0,behavior:'smooth'});
-}
-
-
-// PUBLISH / UNPUBLISH
-
-async function togglePublish(id,value){
-
-const {error}=await db.from('vehicles').update({
-is_published:value,
-updated_at:new Date().toISOString()
-}).eq('id',id);
-
-if(error){
-alert(error.message);
-return;
-}
-
-await loadVehicles();
-}
-
-
-// DELETE VEHICLE
-
-async function deleteVehicle(id){
-
-if(!confirm('Are you sure you want to delete this vehicle listing?'))return;
-
-const {data,error}=await db.from('vehicles').select('image_urls').eq('id',id).single();
-
-if(error){
-alert(error.message);
-return;
-}
-
-const {error:deleteError}=await db.from('vehicles').delete().eq('id',id);
-
-if(deleteError){
-alert(deleteError.message);
-return;
-}
-
-const urls=Array.isArray(data.image_urls)?data.image_urls:[];
-
-const paths=urls.map(url=>{
-const marker='/vehicle-images/';
-const position=url.indexOf(marker);
-return position>=0?url.substring(position+marker.length):null;
-}).filter(Boolean);
-
-if(paths.length){
-const {error:storageError}=await db.storage.from('vehicle-images').remove(paths);
-if(storageError)alert('Vehicle deleted, but some photos could not be removed: '+storageError.message);
-}
-
-alert('Vehicle deleted.');
-resetForm();
-await loadVehicles();
-}
-
-
-// CUSTOMER NEGOTIATIONS
-
-async function loadOffers(){
-
-const list=document.getElementById('offerList');
-list.textContent='Loading negotiations...';
-
-const {data:offers,error}=await db.from('negotiations').select('*').order('created_at',{ascending:false});
-
-if(error){
-list.textContent='Error loading offers: '+error.message;
-return;
-}
-
-if(!offers.length){
-list.textContent='No customer negotiations yet.';
-return;
-}
-
-const {data:vehicles}=await db.from('vehicles').select('id,model,variant');
-
-const vehicleMap={};
-(vehicles||[]).forEach(v=>vehicleMap[v.id]=v.model+' '+(v.variant||''));
-
-list.innerHTML='';
-
-offers.forEach(o=>{
-
-const box=document.createElement('div');
-box.className='offer';
-
-const title=document.createElement('h3');
-title.textContent=o.customer_name||'Customer';
-
-const details=document.createElement('div');
-
-const lines=[
-'Vehicle: '+(vehicleMap[o.vehicle_id]||'Vehicle'),
-'Email: '+(o.email||o.customer_email||'Not provided'),
-'Phone: '+(o.phone||o.customer_phone||'Not provided'),
-'Proposed budget: $'+Number(o.proposed_budget).toLocaleString('en-US'),
-'Message: '+(o.message||o.customer_message||'No message'),
-'Status: '+(o.status||'pending'),
-'Admin response: '+(o.admin_response||'No response yet')
-];
-
-lines.forEach(line=>{
-const p=document.createElement('p');
-p.textContent=line;
-details.appendChild(p);
-});
-
-const actions=document.createElement('div');
-actions.className='offer-actions';
-
-const accept=document.createElement('button');
-accept.className='green';
-accept.textContent='Accept';
-accept.onclick=()=>respond(o.id,'accepted','Your offer has been accepted.');
-
-const reject=document.createElement('button');
-reject.className='danger';
-reject.textContent='Reject';
-reject.onclick=()=>respond(o.id,'rejected','Your offer has been rejected.');
-
-const counter=document.createElement('button');
-counter.className='blue';
-counter.textContent='Counteroffer';
-counter.onclick=()=>makeCounter(o.id);
-
-actions.append(accept,reject,counter);
-box.append(title,details,actions);
-list.appendChild(box);
-
-});
-}
-
-
-// ACCEPT / REJECT
-
-async function respond(id,status,message){
-
-if(!confirm('Confirm this action?'))return;
-
-const {error}=await db.from('negotiations').update({
-status:status,
-admin_response:message
-}).eq('id',id);
-
-if(error){
-alert(error.message);
-return;
-}
-
-alert('Negotiation updated.');
-loadOffers();
-}
-
-
-// COUNTEROFFER
-
-async function makeCounter(id){
-
-const amount=prompt('Enter your counteroffer amount in USD:');
-if(amount===null)return;
-
-const value=Number(amount);
-
-if(!Number.isFinite(value)||value<=0){
-alert('Please enter a valid amount.');
-return;
-}
-
-const message='Our counteroffer is $'+value.toLocaleString('en-US');
-
-const {error}=await db.from('negotiations').update({
-status:'countered',
-counter_offer:value,
-admin_response:message
-}).eq('id',id);
-
-if(error){
-alert(error.message);
-return;
-}
-
-alert('Counteroffer saved successfully.');
-loadOffers();
-}
-
-
-// ==================================
-// PURCHASE ENQUIRIES INBOX
-// ==================================
-
-async function loadEnquiries(){
-
-const list=document.getElementById('enquiryList');
-list.textContent='Loading purchase enquiries...';
-
-const {data:enquiries,error}=await db
-.from('enquiries')
-.select('*')
-.order('created_at',{ascending:false});
-
-if(error){
-list.textContent='Could not load enquiries: '+error.message;
-console.error('Enquiry loading error:',error);
-return;
-}
-
-if(!enquiries||enquiries.length===0){
-list.textContent='No purchase enquiries have been received yet.';
-return;
-}
-
-const {data:vehicles, error:vehicleError}=await db
-.from('vehicles')
-.select('id,model,variant');
-
-if(vehicleError){
-console.error('Vehicle lookup error:',vehicleError);
-}
-
-const vehicleMap={};
-
-(vehicles||[]).forEach(v=>{
-vehicleMap[v.id]=v.model+' '+(v.variant||'');
-});
-
-list.innerHTML='';
-
-enquiries.forEach(e=>{
-
-const box=document.createElement('div');
-box.className='enquiry';
-
-const title=document.createElement('h3');
-title.textContent=e.customer_name||'Customer enquiry';
-
-const date=e.created_at
-?new Date(e.created_at).toLocaleString()
-:'Date unavailable';
-
-const fields=[
-['Vehicle',vehicleMap[e.vehicle_id]||'Vehicle not found'],
-['Email',e.email||'Not provided'],
-['Phone',e.phone||'Not provided'],
-['Purchase preference',e.enquiry_type||'Not specified'],
-['Preferred colour',e.preferred_colour||e.preferred_color||'Not specified'],
-['Delivery country',e.delivery_country||'Not specified'],
-['Message',e.message||'No additional message'],
-['Submitted',date],
-['Current status',e.status||'new']
-];
-
-box.appendChild(title);
-
-fields.forEach(([label,value])=>{
-
-const p=document.createElement('p');
-
-const strong=document.createElement('strong');
-strong.textContent=label+': ';
-
-p.appendChild(strong);
-p.appendChild(document.createTextNode(String(value)));
-
-box.appendChild(p);
-
-});
-
-const actions=document.createElement('div');
-actions.className='enquiry-actions';
-
-const statusSelect=document.createElement('select');
-
-const statuses=[
-['new','New'],
-['reviewed','Reviewed'],
-['contacted','Contacted'],
-['completed','Completed']
-];
-
-statuses.forEach(([value,label])=>{
-const option=document.createElement('option');
-option.value=value;
-option.textContent=label;
-if((e.status||'new')===value)option.selected=true;
-statusSelect.appendChild(option);
-});
-
-const updateButton=document.createElement('button');
-updateButton.className='green';
-updateButton.textContent='Update Status';
-updateButton.onclick=()=>updateEnquiryStatus(e.id,statusSelect.value,updateButton);
-
-actions.append(statusSelect,updateButton);
-box.appendChild(actions);
-
-list.appendChild(box);
-
-});
-
-}
-
-
-// UPDATE PURCHASE ENQUIRY STATUS
-
-async function updateEnquiryStatus(id,status,button){
-
-button.disabled=true;
-button.textContent='Updating...';
-
-const {error}=await db
-.from('enquiries')
-.update({status:status})
-.eq('id',id);
-
-button.disabled=false;
-button.textContent='Update Status';
-
-if(error){
-alert('Could not update enquiry status: '+error.message);
-return;
-}
-
-alert('Enquiry status updated successfully.');
-await loadEnquiries();
-
-}
-
-
+// ==========================================
 // START DASHBOARD
+// ==========================================
 
 checkSession();
 
