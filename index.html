@@ -1,14 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="TESLA Innovation — Premium electric vehicle sales and international enquiries.">
-<title>TESLA Innovation | Premium Vehicle Showroom</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<title>TESLA Innovation | Premium Vehicle Showroom</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:Arial,sans-serif;background:#080a0d;color:#fff}
 header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292d32;background:#080a0d;position:sticky;top:0;z-index:10}
@@ -58,17 +53,16 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .tracking-link{display:inline-block;color:#ff555a;margin-top:10px}
 .account-actions{display:flex;gap:10px;flex-wrap:wrap}
 .account-actions button{flex:1}
+.negotiation-card{background:#080a0d;border:1px solid #343b43;border-left:3px solid #e82127;border-radius:5px;padding:20px;margin:15px 0}
+.negotiation-card h4{font-size:17px;margin-bottom:12px}
+.negotiation-card p{font-size:13px;color:#bbb;line-height:1.9;overflow-wrap:anywhere}
+.negotiation-card .offer-value{color:#fff;font-weight:bold}
 @media(max-width:700px){
 header{flex-direction:column;gap:15px}
 nav{justify-content:center}
 .section{padding:45px 5%}
 }
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
 <div class="logo">TESLA <span>INNOVATION</span></div>
 <nav>
 <a href="#home">Home</a>
@@ -77,213 +71,97 @@ nav{justify-content:center}
 <a href="#account">My Account</a>
 <a href="#contact">Contact</a>
 </nav>
-</header>
-
-<section class="hero" id="home">
+</header><section class="hero" id="home">
 <div>
 <h1>DRIVE THE <span>FUTURE</span></h1>
 <p>Premium Vehicles. Global Connections. Exceptional Experience.</p>
 <p>Explore our premium electric vehicle catalogue, discover available options and make an international purchase enquiry.</p>
 <a class="button" href="#vehicles">EXPLORE VEHICLES</a>
 </div>
-</section>
-
-<section class="section" id="vehicles">
+</section><section class="section" id="vehicles">
 <div class="section-title">
 <h2>OUR VEHICLE COLLECTION</h2>
 <p>Explore our vehicle range and submit a purchase or pre-order enquiry.</p>
-</div>
-
-<div id="vehicleGrid" class="grid">
+</div><div id="vehicleGrid" class="grid">
 <p id="loadingMessage">Loading our vehicle collection...</p>
-</div>
-
-<p class="note">
+</div><p class="note">
 Prices displayed are catalogue prices and must be confirmed before an order is accepted.
 Final vehicle configuration, stock, taxes and international delivery charges are subject to confirmation.
 </p>
-</section>
-
-<section class="section" id="negotiation">
+</section><section class="section" id="negotiation">
 <div class="section-title">
 <h2>MAKE YOUR OFFER</h2>
 <p>Have a budget in mind? Submit your proposed budget for our review.</p>
-</div>
-
-<div class="panel">
-<h3>Vehicle Budget Negotiation</h3>
-
-<form id="negotiationForm">
+</div><div class="panel">
+<h3>Vehicle Budget Negotiation</h3><form id="negotiationForm">
 <select id="negModel" required>
 <option value="">Choose vehicle</option>
-</select>
-
-<input id="budget" type="number" min="1" placeholder="Your budget in USD ($)" required>
+</select><input id="budget" type="number" min="1" placeholder="Your budget in USD ($)" required>
 <input id="negName" type="text" placeholder="Your full name" required>
 <input id="negEmail" type="email" placeholder="Your email address" required>
 <input id="negPhone" type="tel" placeholder="Your phone number" required>
-<textarea id="negMessage" placeholder="Additional details or preferred vehicle configuration"></textarea>
+<textarea id="negMessage" placeholder="Additional details or preferred vehicle configuration"></textarea><button type="submit">SUBMIT MY OFFER</button>
 
-<button type="submit">SUBMIT MY OFFER</button>
-</form>
-
-<p id="negResult"></p>
-
-<p class="note">
+</form><p id="negResult"></p><p class="note">
+You must sign in to your customer account before submitting an offer. Your offer and our response will then appear in My Account.
 Submitting an offer does not guarantee acceptance or reserve a vehicle.
-Our team must review and respond to your proposal.
 </p>
 </div>
-</section>
-
-<section class="section" id="order">
+</section><section class="section" id="order">
 <div class="section-title">
 <h2>VEHICLE PURCHASE ENQUIRY</h2>
 <p>Tell us which vehicle you are interested in purchasing or pre-ordering.</p>
-</div>
-
-<div class="panel">
-<h3>Start Your Vehicle Enquiry</h3>
-
-<form id="orderForm">
+</div><div class="panel">
+<h3>Start Your Vehicle Enquiry</h3><form id="orderForm">
 <select id="orderModel" required>
 <option value="">Choose vehicle</option>
-</select>
-
-<input id="orderName" type="text" placeholder="Full name" required>
+</select><input id="orderName" type="text" placeholder="Full name" required>
 <input id="orderEmail" type="email" placeholder="Email address" required>
-<input id="orderPhone" type="tel" placeholder="Phone number" required>
-
-<select id="orderType" required>
+<input id="orderPhone" type="tel" placeholder="Phone number" required><select id="orderType" required>
 <option value="">Purchase preference</option>
 <option value="Existing stock">Existing stock</option>
 <option value="Pre-order">Pre-order</option>
-</select>
+</select><input id="orderColour" type="text" placeholder="Preferred vehicle colour" required>
+<input id="orderCountry" type="text" placeholder="Delivery country" required><textarea id="orderMessage" placeholder="Additional message or vehicle requirements"></textarea><button type="submit">SEND PURCHASE ENQUIRY</button>
 
-<input id="orderColour" type="text" placeholder="Preferred vehicle colour" required>
-<input id="orderCountry" type="text" placeholder="Delivery country" required>
-
-<textarea id="orderMessage" placeholder="Additional message or vehicle requirements"></textarea>
-
-<button type="submit">SEND PURCHASE ENQUIRY</button>
-</form>
-
-<p id="orderResult"></p>
-
-<p class="note">
+</form><p id="orderResult"></p><p class="note">
 This is an enquiry, not a completed purchase or payment.
 Vehicle availability and final terms must be confirmed first.
 </p>
 </div>
-</section>
-
-<!-- CUSTOMER ACCOUNT SECTION -->
-
-<section class="section" id="account">
-
-<div class="section-title">
+</section><section class="section" id="account"><div class="section-title">
 <h2>MY CUSTOMER ACCOUNT</h2>
-<p>Create an account, sign in and follow your vehicle order progress.</p>
-</div>
+<p>Create an account, sign in and follow your vehicle orders and negotiation responses.</p>
+</div><div class="panel" id="authPanel"><h3 id="authHeading">Create Your Customer Account</h3><form id="authForm"><input id="authName" type="text" placeholder="Your full name" autocomplete="name" required><input id="authEmail" type="email" placeholder="Email address" autocomplete="email" required><input id="authPassword" type="password" placeholder="Password (minimum 6 characters)" autocomplete="new-password" minlength="6" required><button type="submit" id="authSubmit">CREATE ACCOUNT</button>
 
-<!-- SIGN UP AND LOGIN -->
+</form><button type="button" class="secondary" id="googleButton">CONTINUE WITH GOOGLE</button>
 
-<div class="panel" id="authPanel">
+<button type="button" class="secondary" id="switchAuth">Already have an account? Sign in</button>
 
-<h3 id="authHeading">Create Your Customer Account</h3>
-
-<form id="authForm">
-
-<input
-id="authName"
-type="text"
-placeholder="Your full name"
-autocomplete="name"
-required
->
-
-<input
-id="authEmail"
-type="email"
-placeholder="Email address"
-autocomplete="email"
-required
->
-
-<input
-id="authPassword"
-type="password"
-placeholder="Password (minimum 6 characters)"
-autocomplete="new-password"
-minlength="6"
-required
->
-
-<button type="submit" id="authSubmit">
-CREATE ACCOUNT
-</button>
-
-</form>
-
-<button type="button" class="secondary" id="googleButton">
-CONTINUE WITH GOOGLE
-</button>
-
-<button type="button" class="secondary" id="switchAuth">
-Already have an account? Sign in
-</button>
-
-<p id="authResult"></p>
-
-<p class="note">
+<p id="authResult"></p><p class="note">
 By creating an account, you agree that your account information will be used to manage your customer enquiries and order tracking.
-</p>
-
-</div>
-
-<!-- LOGGED IN CUSTOMER DASHBOARD -->
-
-<div class="panel hidden" id="accountPanel">
-
-<h3>WELCOME TO YOUR ACCOUNT</h3>
-
-<p class="account-info" id="customerEmail"></p>
-
-<div class="account-actions">
+</p></div><div class="panel hidden" id="accountPanel"><h3>WELCOME TO YOUR ACCOUNT</h3><p class="account-info" id="customerEmail"></p><div class="account-actions">
 <button type="button" id="refreshOrders">REFRESH MY ORDERS</button>
+<button type="button" id="refreshNegotiations">REFRESH MY OFFERS</button>
 <button type="button" class="secondary" id="logoutButton">LOG OUT</button>
-</div>
-
-<hr style="border:0;border-top:1px solid #343b43;margin:25px 0">
-
-<h3>MY VEHICLE ORDERS</h3>
-
-<p class="note">
+</div><hr style="border:0;border-top:1px solid #343b43;margin:25px 0"><h3>MY VEHICLE ORDERS</h3><p class="note">
 Your confirmed orders and their latest delivery updates will appear here.
 Purchase enquiries are not confirmed orders.
-</p>
-
-<div id="ordersList">
+</p><div id="ordersList">
 <p class="note">Loading your orders...</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="section" id="contact">
+</div><hr style="border:0;border-top:1px solid #343b43;margin:30px 0"><h3>MY NEGOTIATIONS</h3><p class="note">
+View your submitted budgets, counteroffers and responses from our team here.
+</p><div id="negotiationsList">
+<p class="note">Loading your negotiations...</p>
+</div></div></section><section class="section" id="contact">
 <div class="section-title">
 <h2>WORLDWIDE ENQUIRIES</h2>
 <p>Contact our team regarding vehicle availability, pricing and international purchase enquiries.</p>
 </div>
-</section>
-
-<footer>
+</section><footer>
 © 2026 TESLA Innovation. All rights reserved.
 <br>Premium Vehicles. Global Connections. Exceptional Experience.
-</footer>
-
-<script>
+</footer><script>
 
 // ======================================
 // SUPABASE CONNECTION
@@ -314,6 +192,18 @@ return {
 "'":'&#039;'
 }[char];
 });
+}
+
+function formatMoney(value,currency='USD'){
+const amount = Number(value);
+
+if(!Number.isFinite(amount)) return 'Not available';
+
+return new Intl.NumberFormat('en-US',{
+style:'currency',
+currency:currency || 'USD',
+maximumFractionDigits:2
+}).format(amount);
 }
 
 // ======================================
@@ -388,6 +278,8 @@ const availability = vehicle.availability === 'limited_stock'
 ? 'LIMITED INVENTORY ENQUIRIES'
 : vehicle.availability === 'in_stock'
 ? 'AVAILABLE STOCK'
+: vehicle.availability === 'out_of_stock'
+? 'CURRENTLY UNAVAILABLE'
 : 'ORDER / PRE-ORDER ENQUIRIES';
 
 const card = document.createElement('div');
@@ -694,7 +586,19 @@ accountPanel.classList.remove('hidden');
 document.getElementById('customerEmail').textContent =
 'Signed in as: ' + currentUser.email;
 
+// Automatically connect negotiation form to this account.
+
+document.getElementById('negEmail').value = currentUser.email || '';
+
+const customerName = currentUser.user_metadata?.full_name || '';
+
+if(customerName && !document.getElementById('negName').value.trim()){
+document.getElementById('negName').value = customerName;
+}
+
 await loadCustomerOrders();
+
+await loadCustomerNegotiations();
 
 }
 
@@ -836,9 +740,139 @@ list.appendChild(card);
 
 }
 
-// REFRESH ORDERS
+// ======================================
+// LOAD CUSTOMER NEGOTIATIONS
+// ======================================
+
+async function loadCustomerNegotiations(){
+
+const list = document.getElementById('negotiationsList');
+
+if(!currentUser){
+
+list.innerHTML = '<p class="note">Please sign in to view your offers.</p>';
+
+return;
+}
+
+list.innerHTML = '<p class="note">Loading your negotiations...</p>';
+
+const {data,error} = await db
+.from('negotiations')
+.select('*')
+.eq('customer_email',currentUser.email)
+.order('created_at',{ascending:false});
+
+if(error){
+
+console.error('Negotiation loading error:',error);
+
+list.innerHTML = `
+<p style="color:#ff6b6b">
+We could not load your negotiations. Please refresh and try again.
+</p>`;
+
+return;
+}
+
+if(!data || data.length === 0){
+
+list.innerHTML = `
+<div class="negotiation-card">
+<h4>No offers submitted yet</h4>
+<p>
+When you submit a vehicle budget offer while signed in with this email address,
+your offer and our response will appear here.
+</p>
+</div>`;
+
+return;
+}
+
+list.innerHTML = '';
+
+data.forEach(item => {
+
+const card = document.createElement('div');
+
+card.className = 'negotiation-card';
+
+const vehicle = vehicles.find(v => String(v.id) === String(item.vehicle_id));
+
+const vehicleName = vehicle
+? vehicle.model + (vehicle.variant ? ' - ' + vehicle.variant : '')
+: 'Vehicle';
+
+const submittedDate = item.created_at
+? new Date(item.created_at).toLocaleString()
+: 'Not available';
+
+const currency = item.currency || 'USD';
+
+const proposedBudget = formatMoney(item.proposed_budget,currency);
+
+const counterOffer = item.counter_offer !== null &&
+item.counter_offer !== undefined &&
+item.counter_offer !== ''
+? formatMoney(item.counter_offer,currency)
+: 'No counteroffer yet';
+
+const adminResponse = item.admin_response
+? escapeHTML(item.admin_response)
+: 'No written response yet.';
+
+const customerMessage = item.message || item.customer_message || '';
+
+card.innerHTML = `
+
+<h4>${escapeHTML(vehicleName)}</h4>
+
+<p>
+<strong>Date submitted:</strong>
+${escapeHTML(submittedDate)}
+</p>
+
+<p>
+<strong>Your proposed budget:</strong>
+<span class="offer-value">${escapeHTML(proposedBudget)}</span>
+</p>
+
+<p>
+<strong>Our counteroffer:</strong>
+<span class="offer-value">${escapeHTML(counterOffer)}</span>
+</p>
+
+<p>
+<strong>Offer status:</strong>
+<span class="status">${escapeHTML(item.status || 'Pending')}</span>
+</p>
+
+<p>
+<strong>Response from our team:</strong><br>
+${adminResponse}
+</p>
+
+${customerMessage ? `
+<p>
+<strong>Your message:</strong><br>
+${escapeHTML(customerMessage)}
+</p>` : ''}
+
+`;
+
+list.appendChild(card);
+
+});
+
+}
+
+// ======================================
+// REFRESH BUTTONS
+// ======================================
 
 document.getElementById('refreshOrders').addEventListener('click',loadCustomerOrders);
+
+document.getElementById('refreshNegotiations').addEventListener('click',loadCustomerNegotiations);
 
 // ======================================
 // LOG OUT
@@ -861,6 +895,8 @@ document.getElementById('accountPanel').classList.add('hidden');
 document.getElementById('authPanel').classList.remove('hidden');
 
 document.getElementById('authForm').reset();
+
+document.getElementById('negotiationForm').reset();
 
 showAuthMessage('You have successfully logged out.');
 
@@ -944,8 +980,6 @@ const {error} = await db
 
 if(error) throw error;
 
-// Private email notification
-
 try{
 
 const {data:emailData,error:emailError} = await db.functions.invoke(
@@ -1008,6 +1042,36 @@ const button = this.querySelector('button[type="submit"]');
 
 const result = document.getElementById('negResult');
 
+// Require a signed-in customer so the offer is linked to their account.
+
+if(!currentUser){
+
+result.style.color = '#ff6b6b';
+
+result.textContent =
+'Please create an account or sign in before submitting a negotiation offer.';
+
+document.getElementById('account').scrollIntoView({
+behavior:'smooth'
+});
+
+return;
+}
+
+const enteredEmail = document.getElementById('negEmail').value.trim().toLowerCase();
+
+const accountEmail = (currentUser.email || '').trim().toLowerCase();
+
+if(enteredEmail !== accountEmail){
+
+result.style.color = '#ff6b6b';
+
+result.textContent =
+'Please use the same email address as your signed-in customer account.';
+
+return;
+}
+
 button.disabled = true;
 
 button.textContent = 'SUBMITTING...';
@@ -1020,7 +1084,7 @@ vehicle_id:document.getElementById('negModel').value,
 
 customer_name:document.getElementById('negName').value.trim(),
 
-customer_email:document.getElementById('negEmail').value.trim(),
+customer_email:currentUser.email,
 
 customer_phone:document.getElementById('negPhone').value.trim(),
 
@@ -1043,9 +1107,19 @@ if(error) throw error;
 result.style.color = '#70df91';
 
 result.textContent =
-'Your budget offer has been submitted successfully. Our team will review it.';
+'Your budget offer has been submitted successfully. You can follow its progress in My Account under My Negotiations.';
 
 this.reset();
+
+// Restore the signed-in customer's email after resetting the form.
+
+document.getElementById('negEmail').value = currentUser.email || '';
+
+const customerName = currentUser.user_metadata?.full_name || '';
+
+document.getElementById('negName').value = customerName;
+
+await loadCustomerNegotiations();
 
 }catch(error){
 
@@ -1091,7 +1165,5 @@ await updateAccountDisplay();
 
 startWebsite();
 
-</script>
-
-</body>
+</script></body>
 </html>
