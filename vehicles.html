@@ -141,7 +141,8 @@ return `
 <div class="price">${money(car.selling_price,car.currency)}</div>
 <div class="deposit">${deposit}% deposit: ${money(depositAmount,car.currency)}</div>
 <div class="actions">
-<a class="btn primary" href="enquiry.html?vehicle=${encodeURIComponent(car.id)}">${unavailable?"Enquire":"Pre-order / Buy"}</a>
+<a class="btn primary" href="configure.html?id=${encodeURIComponent(car.id)}">Configure</a>
+<a class="btn" href="enquiry.html?vehicle=${encodeURIComponent(car.id)}">${unavailable?"Enquire":"Pre-order / Buy"}</a>
 <a class="btn" href="negotiate.html?vehicle=${encodeURIComponent(car.id)}">Negotiate</a>
 </div>
 </div>
