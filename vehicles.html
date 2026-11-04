@@ -1,51 +1,96 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vehicles | TESLA Innovation</title>
 <meta name="description" content="Explore premium Tesla vehicles, pricing and availability at TESLA Innovation.">
+
 <style>
 :root{--red:#e82127;--bg:#080808;--panel:#141414;--muted:#aaa;--white:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
 a{color:inherit;text-decoration:none}
-header{height:76px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252525;background:#080808;position:sticky;top:0;z-index:10}
-.logo{font-size:19px;font-weight:900;letter-spacing:2px}.logo span{color:var(--red)}
+
+header{min-height:76px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252525;background:#080808;position:sticky;top:0;z-index:10}
+.logo{font-size:19px;font-weight:900;letter-spacing:2px}
+.logo span{color:var(--red)}
 nav{display:flex;gap:23px;font-size:12px;font-weight:bold;flex-wrap:wrap}
 nav a:hover,nav a.active{color:var(--red)}
+
 .hero{padding:75px 7% 45px;text-align:center;background:radial-gradient(ellipse at top,#292020 0%,#080808 65%)}
 .eyebrow{color:var(--red);font-size:11px;font-weight:bold;letter-spacing:4px;margin-bottom:17px}
 h1{font-size:clamp(36px,7vw,66px);letter-spacing:-2px;margin-bottom:15px}
 .hero p{color:var(--muted);max-width:600px;margin:auto;line-height:1.7;font-size:14px}
+
 .toolbar{padding:25px 7%;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
 input,select{background:#151515;border:1px solid #333;color:white;padding:13px 15px;border-radius:5px;outline:none}
 input:focus,select:focus{border-color:var(--red)}
 .toolbar input{flex:1;min-width:190px}
 .toolbar select{min-width:160px}
 .count{padding:0 7%;color:#999;font-size:12px}
+
 .grid{padding:22px 7% 75px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
 .card{background:var(--panel);border:1px solid #252525;border-radius:9px;overflow:hidden;transition:.3s}
-.card:hover{transform:translateY(-7px);border-color:var(--red);box-shadow:0 15px 35px #0008}
-.photo{height:190px;background:#202020;display:flex;align-items:center;justify-content:center;overflow:hidden}
-.photo img{width:100%;height:100%;object-fit:cover;transition:.5s}
-.card:hover .photo img{transform:scale(1.05)}
+.card:hover{transform:translateY(-5px);border-color:var(--red);box-shadow:0 15px 35px #0008}
+
+.photo{height:220px;background:#202020;position:relative;overflow:hidden}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo-placeholder{height:100%;display:flex;align-items:center;justify-content:center;color:#888;font-size:13px}
+
+.gallery-arrow{
+position:absolute;top:50%;transform:translateY(-50%);
+width:35px;height:35px;border:0;border-radius:50%;
+background:#000b;color:white;font-size:22px;cursor:pointer;
+display:flex;align-items:center;justify-content:center;
+}
+.gallery-arrow:hover{background:var(--red)}
+.gallery-prev{left:10px}
+.gallery-next{right:10px}
+
+.gallery-counter{
+position:absolute;right:10px;bottom:10px;
+background:#000b;padding:6px 10px;border-radius:20px;
+font-size:11px;color:white
+}
+
+.thumbnails{display:flex;gap:6px;padding:9px;background:#101010;overflow-x:auto}
+.thumbnail{
+width:48px;height:38px;flex-shrink:0;object-fit:cover;
+border:2px solid transparent;border-radius:3px;cursor:pointer;
+opacity:.65
+}
+.thumbnail.active{border-color:var(--red);opacity:1}
+
 .details{padding:21px}
 .badge{display:inline-block;background:#321416;color:#ff6267;padding:6px 9px;border-radius:3px;font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
 .details h2{font-size:21px;margin-bottom:7px}
 .variant{color:#aaa;font-size:12px;margin-bottom:18px}
 .price{font-size:23px;font-weight:800;margin-bottom:7px}
 .deposit{font-size:11px;color:#999;margin-bottom:20px}
-.actions{display:flex;gap:9px}
-.btn{flex:1;text-align:center;padding:12px 8px;border-radius:4px;font-size:11px;font-weight:bold;border:1px solid var(--red);transition:.2s}
+.actions{display:flex;gap:9px;flex-wrap:wrap}
+.btn{flex:1;min-width:75px;text-align:center;padding:12px 8px;border-radius:4px;font-size:11px;font-weight:bold;border:1px solid var(--red);transition:.2s}
 .btn.primary{background:var(--red);color:white}
 .btn:hover{background:#b9151b;border-color:#b9151b}
+
 .empty{grid-column:1/-1;text-align:center;padding:50px 15px;color:#aaa;line-height:1.8}
 footer{border-top:1px solid #252525;padding:30px 7%;text-align:center;color:#888;font-size:11px;line-height:2}
 footer a{color:white}
-@media(max-width:650px){header{height:auto;padding:18px 5%;align-items:flex-start;gap:15px;flex-direction:column}nav{gap:13px}.hero{padding-top:55px}.toolbar{padding:20px 5%}.grid{padding:20px 5% 55px;grid-template-columns:1fr}.count{padding:0 5%}}
+
+@media(max-width:650px){
+header{height:auto;padding:18px 5%;align-items:flex-start;gap:15px;flex-direction:column}
+nav{gap:13px}
+.hero{padding-top:55px}
+.toolbar{padding:20px 5%}
+.grid{padding:20px 5% 55px;grid-template-columns:1fr}
+.count{padding:0 5%}
+.photo{height:230px}
+}
 </style>
 </head>
+
 <body>
+
 <header>
 <a class="logo" href="index.html">TESLA <span>INNOVATION</span></a>
 <nav>
@@ -56,11 +101,15 @@ footer a{color:white}
 <a href="account.html">MY ACCOUNT</a>
 <a href="contact.html">CONTACT</a>
 </nav>
-</header><section class="hero">
+</header>
+
+<section class="hero">
 <div class="eyebrow">THE VEHICLE COLLECTION</div>
 <h1>FIND YOUR <span style="color:#e82127">NEXT DRIVE.</span></h1>
 <p>Explore our premium Tesla collection. Discover vehicle specifications, current prices and availability, and take the next step towards your new vehicle.</p>
-</section><section class="toolbar">
+</section>
+
+<section class="toolbar">
 <input id="search" type="search" placeholder="Search Tesla models...">
 <select id="availability">
 <option value="">All availability</option>
@@ -74,15 +123,24 @@ footer a{color:white}
 <option value="low">Price: Low to high</option>
 <option value="high">Price: High to low</option>
 </select>
-</section><div class="count" id="count">Loading vehicle collection...</div>
+</section>
+
+<div class="count" id="count">Loading vehicle collection...</div>
+
 <section class="grid" id="vehicles">
 <div class="empty">Connecting to our vehicle collection...</div>
-</section><footer>
+</section>
+
+<footer>
 <strong>TESLA INNOVATION</strong><br>
 Premium Vehicles. Global Connections. Exceptional Experience.<br>
 <a href="contact.html">Contact our team</a> &nbsp; | &nbsp;
 <a href="index.html">Return home</a>
-</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
 const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
 const SUPABASE_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -90,87 +148,275 @@ const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 let allVehicles = [];
 
 function money(value,currency="USD"){
-return new Intl.NumberFormat("en-US",{style:"currency",currency:currency||"USD",maximumFractionDigits:0}).format(Number(value)||0);
+return new Intl.NumberFormat("en-US",{
+style:"currency",
+currency:currency||"USD",
+maximumFractionDigits:0
+}).format(Number(value)||0);
 }
 
 function availabilityLabel(value){
-const labels={in_stock:"In Stock",limited_stock:"Limited Stock",pre_order:"Available for Pre-order",out_of_stock:"Out of Stock"};
+const labels={
+in_stock:"In Stock",
+limited_stock:"Limited Stock",
+pre_order:"Available for Pre-order",
+out_of_stock:"Out of Stock"
+};
 return labels[value]||"Contact for Availability";
 }
 
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,char=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[char]));
+}
+
+/* Read all images saved for a vehicle */
+function getVehicleImages(car){
+
+let images=[];
+
+/* Supports image_urls and image_url */
+let source=car.image_urls ?? car.image_url;
+
+if(Array.isArray(source)){
+images=source;
+}
+else if(typeof source==="string" && source.trim()){
+try{
+const parsed=JSON.parse(source);
+images=Array.isArray(parsed)?parsed:[parsed];
+}catch{
+images=[source];
+}
+}
+
+return [...new Set(
+images.filter(url=>typeof url==="string" && url.trim())
+)];
+}
+
+/* Build the image gallery */
+function createGallery(car){
+
+const images=getVehicleImages(car);
+const galleryId="gallery-"+car.id;
+
+if(!images.length){
+return `
+<div class="photo">
+<div class="photo-placeholder">VEHICLE IMAGE COMING SOON</div>
+</div>`;
+}
+
+const firstImage=escapeHTML(images[0]);
+
+return `
+<div class="photo" id="${galleryId}">
+<img class="main-gallery-image"
+src="${firstImage}"
+alt="${escapeHTML(car.model)}"
+loading="lazy"
+onerror="this.style.display='none';this.parentElement.querySelector('.photo-placeholder').style.display='flex';">
+
+<div class="photo-placeholder" style="display:none;position:absolute;inset:0">
+Image unavailable
+</div>
+
+${images.length>1?`
+<button class="gallery-arrow gallery-prev" type="button"
+onclick="changeImage('${galleryId}',-1)">‹</button>
+
+<button class="gallery-arrow gallery-next" type="button"
+onclick="changeImage('${galleryId}',1)">›</button>
+
+<div class="gallery-counter">
+<span class="current-image">1</span> / ${images.length}
+</div>
+`:""}
+</div>
+
+${images.length>1?`
+<div class="thumbnails">
+${images.map((url,index)=>`
+<img
+class="thumbnail ${index===0?'active':''}"
+src="${escapeHTML(url)}"
+alt="${escapeHTML(car.model)} photo ${index+1}"
+onclick="selectImage('${galleryId}',${index})"
+loading="lazy">
+`).join("")}
+</div>
+`:""}
+`;
+}
+
+/* Change image using arrows */
+function changeImage(galleryId,direction){
+
+const gallery=document.getElementById(galleryId);
+if(!gallery)return;
+
+const thumbnails=gallery.parentElement.querySelectorAll(".thumbnail");
+const images=Array.from(thumbnails).map(item=>item.src);
+
+if(!images.length)return;
+
+let current=Number(gallery.dataset.current||0);
+current=(current+direction+images.length)%images.length;
+
+selectImage(galleryId,current);
+}
+
+/* Select image using thumbnails */
+function selectImage(galleryId,index){
+
+const gallery=document.getElementById(galleryId);
+if(!gallery)return;
+
+const card=gallery.parentElement;
+const thumbnails=card.querySelectorAll(".thumbnail");
+const mainImage=gallery.querySelector(".main-gallery-image");
+const counter=gallery.querySelector(".current-image");
+
+if(!thumbnails.length||!mainImage)return;
+
+if(index<0||index>=thumbnails.length)return;
+
+mainImage.src=thumbnails[index].src;
+gallery.dataset.current=index;
+
+thumbnails.forEach((thumbnail,i)=>{
+thumbnail.classList.toggle("active",i===index);
+});
+
+if(counter)counter.textContent=index+1;
+}
+
 function renderVehicles(){
+
 const search=document.getElementById("search").value.toLowerCase().trim();
 const availability=document.getElementById("availability").value;
 const sort=document.getElementById("sort").value;
 
 let list=allVehicles.filter(car=>{
-const matchesSearch=(car.model+" "+(car.variant||"")+" "+(car.year||"")).toLowerCase().includes(search);
+
+const matchesSearch=(
+(car.model||"")+" "+
+(car.variant||"")+" "+
+(car.year||"")
+).toLowerCase().includes(search);
+
 const matchesAvailability=!availability||car.availability===availability;
+
 return matchesSearch&&matchesAvailability;
 });
 
-if(sort==="low")list.sort((a,b)=>Number(a.selling_price)-Number(b.selling_price));
-if(sort==="high")list.sort((a,b)=>Number(b.selling_price)-Number(a.selling_price));
+if(sort==="low"){
+list.sort((a,b)=>Number(a.selling_price)-Number(b.selling_price));
+}
+
+if(sort==="high"){
+list.sort((a,b)=>Number(b.selling_price)-Number(a.selling_price));
+}
 
 document.getElementById("count").textContent=list.length+" vehicle(s) found";
 
 const container=document.getElementById("vehicles");
+
 if(!list.length){
 container.innerHTML='<div class="empty">No vehicles match your search.<br>Try changing your filters.</div>';
 return;
 }
 
 container.innerHTML=list.map(car=>{
-const image=Array.isArray(car.image_urls)?car.image_urls[0]:"";
+
 const stock=car.availability||"";
 const unavailable=stock==="out_of_stock";
+
 const deposit=Number(car.deposit_percentage??30);
 const depositAmount=Number(car.selling_price||0)*deposit/100;
-const vehicleName=car.model+" "+(car.variant||"");
-const imageHTML=image
-?'<img src="'+escapeHTML(image)+'" alt="'+escapeHTML(vehicleName)+'">'
-:'<div style="color:#888;font-size:13px">TESLA INNOVATION</div>';
 
 return `
 <article class="card">
-<div class="photo">${imageHTML}</div>
+
+${createGallery(car)}
+
 <div class="details">
+
 <span class="badge">${availabilityLabel(stock)}</span>
+
 <h2>${escapeHTML(car.model||"Tesla Vehicle")}</h2>
-<div class="variant">${escapeHTML(car.variant||"Premium Electric Vehicle")} ${car.year?" · "+escapeHTML(String(car.year)):""}</div>
-<div class="price">${money(car.selling_price,car.currency)}</div>
-<div class="deposit">${deposit}% deposit: ${money(depositAmount,car.currency)}</div>
+
+<div class="variant">
+${escapeHTML(car.variant||"Premium Electric Vehicle")}
+${car.year?" · "+escapeHTML(String(car.year)):""}
+</div>
+
+<div class="price">
+${money(car.selling_price,car.currency)}
+</div>
+
+<div class="deposit">
+${deposit}% deposit: ${money(depositAmount,car.currency)}
+</div>
+
 <div class="actions">
-<a class="btn primary" href="configure.html?id=${encodeURIComponent(car.id)}">Configure</a>
-<a class="btn" href="enquiry.html?vehicle=${encodeURIComponent(car.id)}">${unavailable?"Enquire":"Pre-order / Buy"}</a>
-<a class="btn" href="negotiate.html?vehicle=${encodeURIComponent(car.id)}">Negotiate</a>
+
+<a class="btn primary"
+href="configure.html?id=${encodeURIComponent(car.id)}">
+Configure
+</a>
+
+<a class="btn"
+href="enquiry.html?vehicle=${encodeURIComponent(car.id)}">
+${unavailable?"Enquire":"Pre-order / Buy"}
+</a>
+
+<a class="btn"
+href="negotiate.html?vehicle=${encodeURIComponent(car.id)}">
+Negotiate
+</a>
+
 </div>
 </div>
-</article>`;
+</article>
+`;
 }).join("");
 }
 
-function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,char=>({
-"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
-}[char]));
-}
-
 async function loadVehicles(){
+
 const container=document.getElementById("vehicles");
+
 try{
+
 const {data,error}=await db.from("vehicles")
 .select("*")
 .eq("is_published",true)
 .order("created_at",{ascending:true});
 
 if(error)throw error;
+
 allVehicles=data||[];
+
 renderVehicles();
+
 }catch(error){
+
 console.error("Vehicle loading error:",error);
+
 document.getElementById("count").textContent="Vehicle collection";
-container.innerHTML='<div class="empty">We could not load the vehicle collection right now.<br>Please refresh the page or contact our team.</div>';
+
+container.innerHTML=`
+<div class="empty">
+We could not load the vehicle collection right now.<br>
+Please refresh the page or contact our team.
+</div>`;
 }
 }
 
@@ -179,5 +425,7 @@ document.getElementById("availability").addEventListener("change",renderVehicles
 document.getElementById("sort").addEventListener("change",renderVehicles);
 
 loadVehicles();
-</script></body>
+</script>
+
+</body>
 </html>
