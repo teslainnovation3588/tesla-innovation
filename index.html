@@ -1,1169 +1,773 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="TESLA Innovation — Premium electric vehicle sales and international enquiries.">
-<title>TESLA Innovation | Premium Vehicle Showroom</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:Arial,sans-serif;background:#080a0d;color:#fff}
-header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292d32;background:#080a0d;position:sticky;top:0;z-index:10}
-.logo{font-size:21px;font-weight:bold;letter-spacing:2px}
-.logo span{color:#e82127}
-nav{display:flex;flex-wrap:wrap;align-items:center;gap:15px}
-nav a{color:#ddd;text-decoration:none;font-size:13px}
-nav a:hover{color:#e82127}
-.hero{min-height:570px;padding:90px 20px;display:flex;align-items:center;justify-content:center;text-align:center;background:linear-gradient(#0008,#000b),url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1800&q=85') center/cover}
-.hero h1{font-size:clamp(38px,8vw,75px);letter-spacing:4px;margin-bottom:20px}
-.hero h1 span{color:#e82127}
-.hero p{max-width:650px;margin:auto;color:#ddd;line-height:1.8}
-.button{display:inline-block;background:#e82127;color:white;text-decoration:none;padding:14px 24px;border:0;border-radius:3px;font-weight:bold;cursor:pointer;margin-top:25px}
-.section{padding:65px 7%}
-.section-title{text-align:center;margin-bottom:35px}
-.section-title h2{font-size:32px;margin-bottom:12px}
-.section-title p{color:#aaa;line-height:1.7}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:25px}
-.card{background:#12161c;border:1px solid #292d32;border-radius:5px;overflow:hidden}
-.card img{width:100%;height:190px;object-fit:cover}
-.card-content{padding:20px}
-.card h3{font-size:22px;margin-bottom:10px}
-.price{font-size:23px;font-weight:bold;color:#e82127;margin:12px 0}
-.details{color:#aaa;font-size:13px;line-height:1.8}
-.badge{display:inline-block;background:#222b31;color:#eee;padding:7px 10px;font-size:11px;margin-top:12px}
-.card-buttons{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
-.card-buttons button{flex:1;min-width:110px;padding:12px 8px;border:0;cursor:pointer;font-weight:bold;font-size:11px}
-.buy{background:#e82127;color:white}
-.negotiate{background:#d2d2d2;color:#111}
-.panel{background:#12161c;border:1px solid #292d32;padding:28px;border-radius:5px;max-width:650px;margin:30px auto}
-.panel h3{margin-bottom:15px}
-input,select,textarea{width:100%;padding:13px;margin:9px 0;background:#080a0d;border:1px solid #343b43;color:white;border-radius:3px}
-textarea{min-height:90px;resize:vertical}
-.panel button{width:100%;padding:14px;background:#e82127;color:white;border:0;font-weight:bold;cursor:pointer;margin-top:10px}
-.panel button.secondary{background:#303943}
-.note{color:#999;font-size:12px;line-height:1.7;margin-top:12px}
-footer{text-align:center;padding:30px;border-top:1px solid #292d32;color:#888;font-size:12px;line-height:2}
-#loadingMessage{color:#aaa;text-align:center;padding:30px}
-#orderResult,#negResult,#authResult{margin-top:15px;font-size:13px;line-height:1.6}
-button:disabled{opacity:.5;cursor:not-allowed}
-.hidden{display:none!important}
-.account-info{color:#aaa;font-size:13px;line-height:1.8;margin-bottom:15px}
-.order-card{background:#080a0d;border:1px solid #343b43;border-radius:5px;padding:20px;margin:15px 0}
-.order-card h3{color:#fff;margin-bottom:12px}
-.order-card p{font-size:13px;color:#bbb;line-height:1.9;overflow-wrap:anywhere}
-.status{display:inline-block;background:#252d35;color:#fff;padding:7px 10px;margin:5px 5px 5px 0;font-size:11px;border-radius:3px}
-.tracking-link{display:inline-block;color:#ff555a;margin-top:10px}
-.account-actions{display:flex;gap:10px;flex-wrap:wrap}
-.account-actions button{flex:1}
-.negotiation-card{background:#080a0d;border:1px solid #343b43;border-left:3px solid #e82127;border-radius:5px;padding:20px;margin:15px 0}
-.negotiation-card h4{font-size:17px;margin-bottom:12px}
-.negotiation-card p{font-size:13px;color:#bbb;line-height:1.9;overflow-wrap:anywhere}
-.negotiation-card .offer-value{color:#fff;font-weight:bold}
-@media(max-width:700px){
-header{flex-direction:column;gap:15px}
-nav{justify-content:center}
-.section{padding:45px 5%}
+<meta name="description" content="TESLA Innovation — Premium Vehicles. Global Connections. Exceptional Experience.">
+<title>TESLA Innovation | Premium Showroom</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --background: #080a0d;
+  --surface: #12161c;
+  --surface-light: #191f27;
+  --red: #e82127;
+  --white: #ffffff;
+  --muted: #a5aab2;
+  --border: #292d32;
 }
-</style></head><body><header>
-<div class="logo">TESLA <span>INNOVATION</span></div>
-<nav>
-<a href="#home">Home</a>
-<a href="#vehicles">Vehicles</a>
-<a href="#negotiation">Negotiation</a>
-<a href="#account">My Account</a>
-<a href="#contact">Contact</a>
-</nav>
-</header><section class="hero" id="home">
-<div>
-<h1>DRIVE THE <span>FUTURE</span></h1>
-<p>Premium Vehicles. Global Connections. Exceptional Experience.</p>
-<p>Explore our premium electric vehicle catalogue, discover available options and make an international purchase enquiry.</p>
-<a class="button" href="#vehicles">EXPLORE VEHICLES</a>
-</div>
-</section><section class="section" id="vehicles">
-<div class="section-title">
-<h2>OUR VEHICLE COLLECTION</h2>
-<p>Explore our vehicle range and submit a purchase or pre-order enquiry.</p>
-</div><div id="vehicleGrid" class="grid">
-<p id="loadingMessage">Loading our vehicle collection...</p>
-</div><p class="note">
-Prices displayed are catalogue prices and must be confirmed before an order is accepted.
-Final vehicle configuration, stock, taxes and international delivery charges are subject to confirmation.
-</p>
-</section><section class="section" id="negotiation">
-<div class="section-title">
-<h2>MAKE YOUR OFFER</h2>
-<p>Have a budget in mind? Submit your proposed budget for our review.</p>
-</div><div class="panel">
-<h3>Vehicle Budget Negotiation</h3><form id="negotiationForm">
-<select id="negModel" required>
-<option value="">Choose vehicle</option>
-</select><input id="budget" type="number" min="1" placeholder="Your budget in USD ($)" required>
-<input id="negName" type="text" placeholder="Your full name" required>
-<input id="negEmail" type="email" placeholder="Your email address" required>
-<input id="negPhone" type="tel" placeholder="Your phone number" required>
-<textarea id="negMessage" placeholder="Additional details or preferred vehicle configuration"></textarea><button type="submit">SUBMIT MY OFFER</button>
 
-</form><p id="negResult"></p><p class="note">
-You must sign in to your customer account before submitting an offer. Your offer and our response will then appear in My Account.
-Submitting an offer does not guarantee acceptance or reserve a vehicle.
-</p>
-</div>
-</section><section class="section" id="order">
-<div class="section-title">
-<h2>VEHICLE PURCHASE ENQUIRY</h2>
-<p>Tell us which vehicle you are interested in purchasing or pre-ordering.</p>
-</div><div class="panel">
-<h3>Start Your Vehicle Enquiry</h3><form id="orderForm">
-<select id="orderModel" required>
-<option value="">Choose vehicle</option>
-</select><input id="orderName" type="text" placeholder="Full name" required>
-<input id="orderEmail" type="email" placeholder="Email address" required>
-<input id="orderPhone" type="tel" placeholder="Phone number" required><select id="orderType" required>
-<option value="">Purchase preference</option>
-<option value="Existing stock">Existing stock</option>
-<option value="Pre-order">Pre-order</option>
-</select><input id="orderColour" type="text" placeholder="Preferred vehicle colour" required>
-<input id="orderCountry" type="text" placeholder="Delivery country" required><textarea id="orderMessage" placeholder="Additional message or vehicle requirements"></textarea><button type="submit">SEND PURCHASE ENQUIRY</button>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-</form><p id="orderResult"></p><p class="note">
-This is an enquiry, not a completed purchase or payment.
-Vehicle availability and final terms must be confirmed first.
-</p>
-</div>
-</section><section class="section" id="account"><div class="section-title">
-<h2>MY CUSTOMER ACCOUNT</h2>
-<p>Create an account, sign in and follow your vehicle orders and negotiation responses.</p>
-</div><div class="panel" id="authPanel"><h3 id="authHeading">Create Your Customer Account</h3><form id="authForm"><input id="authName" type="text" placeholder="Your full name" autocomplete="name" required><input id="authEmail" type="email" placeholder="Email address" autocomplete="email" required><input id="authPassword" type="password" placeholder="Password (minimum 6 characters)" autocomplete="new-password" minlength="6" required><button type="submit" id="authSubmit">CREATE ACCOUNT</button>
+html {
+  scroll-behavior: smooth;
+}
 
-</form><button type="button" class="secondary" id="googleButton">CONTINUE WITH GOOGLE</button>
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: var(--background);
+  color: var(--white);
+  overflow-x: hidden;
+}
 
-<button type="button" class="secondary" id="switchAuth">Already have an account? Sign in</button>
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-<p id="authResult"></p><p class="note">
-By creating an account, you agree that your account information will be used to manage your customer enquiries and order tracking.
-</p></div><div class="panel hidden" id="accountPanel"><h3>WELCOME TO YOUR ACCOUNT</h3><p class="account-info" id="customerEmail"></p><div class="account-actions">
-<button type="button" id="refreshOrders">REFRESH MY ORDERS</button>
-<button type="button" id="refreshNegotiations">REFRESH MY OFFERS</button>
-<button type="button" class="secondary" id="logoutButton">LOG OUT</button>
-</div><hr style="border:0;border-top:1px solid #343b43;margin:25px 0"><h3>MY VEHICLE ORDERS</h3><p class="note">
-Your confirmed orders and their latest delivery updates will appear here.
-Purchase enquiries are not confirmed orders.
-</p><div id="ordersList">
-<p class="note">Loading your orders...</p>
-</div><hr style="border:0;border-top:1px solid #343b43;margin:30px 0"><h3>MY NEGOTIATIONS</h3><p class="note">
-View your submitted budgets, counteroffers and responses from our team here.
-</p><div id="negotiationsList">
-<p class="note">Loading your negotiations...</p>
-</div></div></section><section class="section" id="contact">
-<div class="section-title">
-<h2>WORLDWIDE ENQUIRIES</h2>
-<p>Contact our team regarding vehicle availability, pricing and international purchase enquiries.</p>
-</div>
-</section><footer>
-© 2026 TESLA Innovation. All rights reserved.
-<br>Premium Vehicles. Global Connections. Exceptional Experience.
-</footer><script>
+header {
+  width: 100%;
+  padding: 22px 7%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(8,10,13,.92);
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(18px);
+}
 
-// ======================================
-// SUPABASE CONNECTION
-// ======================================
+.logo {
+  font-size: 21px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  white-space: nowrap;
+}
 
+.logo span {
+  color: var(--red);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 27px;
+}
+
+nav a {
+  font-size: 12px;
+  font-weight: 600;
+  color: #d5d5d5;
+  transition: .3s;
+}
+
+nav a:hover {
+  color: var(--red);
+}
+
+.nav-button {
+  background: var(--red);
+  padding: 12px 19px;
+  border-radius: 3px;
+  color: white;
+}
+
+.menu-toggle {
+  display: none;
+  background: none;
+  color: white;
+  border: 1px solid var(--border);
+  padding: 9px 13px;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.hero {
+  min-height: 690px;
+  padding: 100px 8%;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.58), rgba(0,0,0,.2)),
+    linear-gradient(0deg, #080a0d 0%, transparent 45%),
+    url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=2000&q=90')
+    center/cover no-repeat;
+}
+
+.hero-content {
+  max-width: 760px;
+  animation: heroReveal 1s ease both;
+}
+
+.eyebrow {
+  color: var(--red);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  margin-bottom: 25px;
+}
+
+.hero h1 {
+  font-size: clamp(44px, 8vw, 88px);
+  line-height: 1.03;
+  font-weight: 900;
+  letter-spacing: -4px;
+  margin-bottom: 25px;
+}
+
+.hero h1 span {
+  color: var(--red);
+}
+
+.hero p {
+  color: #d0d0d0;
+  max-width: 560px;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 35px;
+}
+
+.button {
+  display: inline-block;
+  padding: 16px 26px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  border: 1px solid var(--red);
+  transition: .3s ease;
+}
+
+.button.primary {
+  background: var(--red);
+  color: white;
+}
+
+.button.secondary {
+  background: transparent;
+  color: white;
+}
+
+.button:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(232,33,39,.2);
+}
+
+.hero-bottom {
+  position: absolute;
+  bottom: 38px;
+  left: 8%;
+  right: 8%;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  color: #c4c4c4;
+  font-size: 10px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.section {
+  padding: 100px 7%;
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 50px;
+}
+
+.section-heading .eyebrow {
+  margin-bottom: 15px;
+}
+
+.section-heading h2 {
+  font-size: clamp(27px, 4vw, 43px);
+  letter-spacing: -1.5px;
+  margin-bottom: 15px;
+}
+
+.section-heading p {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+}
+
+.vehicle-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  border-radius: 7px;
+  transition: transform .4s, border-color .4s, box-shadow .4s;
+  opacity: 0;
+  transform: translateY(25px);
+}
+
+.vehicle-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vehicle-card:hover {
+  transform: translateY(-9px);
+  border-color: var(--red);
+  box-shadow: 0 18px 45px rgba(0,0,0,.45);
+}
+
+.vehicle-image {
+  height: 220px;
+  overflow: hidden;
+  background: #090b0e;
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .7s;
+}
+
+.vehicle-card:hover .vehicle-image img {
+  transform: scale(1.07);
+}
+
+.vehicle-content {
+  padding: 24px;
+}
+
+.vehicle-content h3 {
+  font-size: 22px;
+  margin-bottom: 9px;
+}
+
+.vehicle-content p {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+.vehicle-price {
+  color: var(--red);
+  font-size: 23px;
+  font-weight: 800;
+  margin: 15px 0;
+}
+
+.vehicle-status {
+  display: inline-block;
+  color: #eee;
+  background: #252d35;
+  padding: 8px 11px;
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+}
+
+.card-link {
+  display: block;
+  text-align: center;
+  padding: 13px;
+  background: var(--red);
+  color: white;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  transition: .3s;
+}
+
+.card-link:hover {
+  background: #bd171d;
+}
+
+.loading {
+  text-align: center;
+  color: var(--muted);
+  padding: 35px;
+  grid-column: 1/-1;
+}
+
+.collection-link {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.experience {
+  background: linear-gradient(120deg, #151a21, #090b0e);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: center;
+  padding: 95px 7%;
+}
+
+.experience h2 {
+  font-size: clamp(28px, 5vw, 48px);
+  margin-bottom: 18px;
+}
+
+.experience p {
+  color: var(--muted);
+  max-width: 650px;
+  margin: auto;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 18px;
+  margin-top: 45px;
+}
+
+.feature {
+  padding: 28px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  transition: .3s;
+}
+
+.feature:hover {
+  border-color: var(--red);
+  transform: translateY(-5px);
+}
+
+.feature h3 {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.feature p {
+  font-size: 11px;
+}
+
+footer {
+  padding: 40px 7%;
+  text-align: center;
+  border-top: 1px solid var(--border);
+  color: #888;
+  font-size: 11px;
+  line-height: 2;
+}
+
+footer strong {
+  color: white;
+}
+
+@keyframes heroReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media(max-width:850px) {
+  header {
+    padding: 18px 5%;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    padding: 25px 5%;
+    background: #080a0d;
+    border-bottom: 1px solid var(--border);
+    flex-direction: column;
+    align-items: stretch;
+    gap: 22px;
+  }
+
+  nav.open {
+    display: flex;
+  }
+
+  nav a {
+    font-size: 13px;
+  }
+
+  .hero {
+    min-height: 610px;
+    padding: 85px 6%;
+  }
+
+  .hero h1 {
+    letter-spacing: -2px;
+  }
+
+  .hero-bottom {
+    left: 6%;
+    right: 6%;
+    font-size: 8px;
+  }
+
+  .section {
+    padding: 75px 5%;
+  }
+}
+
+@media(max-width:480px) {
+  .logo {
+    font-size: 17px;
+  }
+
+  .hero {
+    min-height: 590px;
+  }
+
+  .hero p {
+    font-size: 13px;
+  }
+
+  .hero-bottom {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .button {
+    text-align: center;
+  }
+
+  .vehicle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media(prefers-reduced-motion:reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <a href="index.html" class="logo">TESLA <span>INNOVATION</span></a>
+
+  <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+
+  <nav id="mainNav">
+    <a href="index.html">HOME</a>
+    <a href="vehicles.html">VEHICLES</a>
+    <a href="negotiate.html">NEGOTIATE</a>
+    <a href="enquiry.html">ENQUIRIES</a>
+    <a href="account.html">MY ACCOUNT</a>
+    <a href="contact.html">CONTACT</a>
+    <a href="vehicles.html" class="nav-button">EXPLORE COLLECTION</a>
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="hero-content">
+    <div class="eyebrow">THE FUTURE OF PREMIUM MOBILITY</div>
+
+    <h1>DRIVE THE <span>FUTURE.</span></h1>
+
+    <p>
+      Discover exceptional electric vehicles through a premium
+      showroom experience built around innovation, confidence
+      and international connections.
+    </p>
+
+    <div class="hero-actions">
+      <a href="vehicles.html" class="button primary">EXPLORE VEHICLES</a>
+      <a href="enquiry.html" class="button secondary">START AN ENQUIRY</a>
+    </div>
+  </div>
+
+  <div class="hero-bottom">
+    <span>Premium Vehicles</span>
+    <span>Global Connections</span>
+    <span>Exceptional Experience</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-heading">
+    <div class="eyebrow">THE COLLECTION</div>
+    <h2>ENGINEERED TO INSPIRE.</h2>
+    <p>
+      Explore our featured vehicle collection. Discover available
+      models, review catalogue prices and continue to the dedicated
+      vehicle showroom for more details.
+    </p>
+  </div>
+
+  <div class="vehicle-grid" id="vehicleGrid">
+    <div class="loading">Loading our vehicle collection...</div>
+  </div>
+
+  <div class="collection-link">
+    <a href="vehicles.html" class="button primary">VIEW FULL COLLECTION</a>
+  </div>
+</section>
+
+<section class="experience">
+  <div class="eyebrow">THE TESLA INNOVATION EXPERIENCE</div>
+  <h2>MORE THAN A VEHICLE.</h2>
+  <p>
+    A considered approach to vehicle discovery, customer service
+    and international purchase enquiries.
+  </p>
+
+  <div class="feature-grid">
+    <div class="feature">
+      <h3>Curated Collection</h3>
+      <p>Explore our published vehicle catalogue and availability.</p>
+    </div>
+
+    <div class="feature">
+      <h3>Personalised Offers</h3>
+      <p>Submit your proposed budget for our team's review.</p>
+    </div>
+
+    <div class="feature">
+      <h3>International Enquiries</h3>
+      <p>Tell us your preferred vehicle and delivery destination.</p>
+    </div>
+
+    <div class="feature">
+      <h3>Customer Account</h3>
+      <p>Access your order updates and negotiation responses.</p>
+    </div>
+  </div>
+</section>
+
+<section class="experience">
+  <div class="eyebrow">YOUR NEXT JOURNEY STARTS HERE</div>
+  <h2>READY TO EXPLORE?</h2>
+  <p>
+    Discover the collection or speak with our team about your
+    preferred vehicle and purchase requirements.
+  </p>
+
+  <div class="hero-actions" style="justify-content:center">
+    <a href="vehicles.html" class="button primary">BROWSE VEHICLES</a>
+    <a href="contact.html" class="button secondary">CONTACT OUR TEAM</a>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <strong>TESLA INNOVATION</strong>
+  <br>
+  Premium Vehicles. Global Connections. Exceptional Experience.
+  <br>
+  © 2026 TESLA Innovation. All rights reserved.
+  <br>
+  <a href="contact.html">Contact</a> &nbsp; | &nbsp;
+  <a href="account.html">Customer Account</a>
+</footer>
+
+<script>
 const SUPABASE_URL = 'https://dnmktpmvjzsxzmgizdcv.supabase.co';
-
 const SUPABASE_KEY = 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
 
-const SITE_URL = 'https://teslainnovation3588.github.io/tesla-innovation/';
-
 const db = window.supabase.createClient(
-SUPABASE_URL,
-SUPABASE_KEY
+  SUPABASE_URL,
+  SUPABASE_KEY
 );
-
-// ======================================
-// SAFE TEXT DISPLAY
-// ======================================
-
-function escapeHTML(value){
-return String(value ?? '').replace(/[&<>"']/g,function(char){
-return {
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;',
-"'":'&#039;'
-}[char];
-});
-}
-
-function formatMoney(value,currency='USD'){
-const amount = Number(value);
-
-if(!Number.isFinite(amount)) return 'Not available';
-
-return new Intl.NumberFormat('en-US',{
-style:'currency',
-currency:currency || 'USD',
-maximumFractionDigits:2
-}).format(amount);
-}
-
-// ======================================
-// VEHICLE IMAGE FALLBACKS
-// ======================================
 
 const fallbackImages = {
-'Model 3':'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=900&q=85',
-'Model Y':'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=900&q=85',
-'Model S':'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=900&q=85',
-'Model X':'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=85',
-'Cybertruck':'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=900&q=85'
+  'Model 3': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=900&q=85',
+  'Model Y': 'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=900&q=85',
+  'Model S': 'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=900&q=85',
+  'Model X': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=85',
+  'Cybertruck': 'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=900&q=85'
 };
 
-let vehicles = [];
-let currentUser = null;
-let loginMode = false;
-
-// ======================================
-// LOAD VEHICLES
-// ======================================
-
-async function loadVehicles(){
-
-const grid = document.getElementById('vehicleGrid');
-
-grid.innerHTML = '<p id="loadingMessage">Loading our vehicle collection...</p>';
-
-const {data,error} = await db
-.from('vehicles')
-.select('*')
-.eq('is_published',true)
-.order('created_at',{ascending:true});
-
-if(error){
-
-console.error('Vehicle loading error:',error);
-
-grid.innerHTML = `
-<p class="note">
-Our vehicle collection is temporarily unavailable.
-Please try again later.
-</p>`;
-
-return;
+function escapeHTML(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  }[char]));
 }
 
-vehicles = data || [];
+function money(value, currency = 'USD') {
+  const amount = Number(value);
 
-if(vehicles.length === 0){
+  if (!Number.isFinite(amount)) return 'Price on request';
 
-grid.innerHTML = '<p>No vehicles are currently published.</p>';
-
-return;
+  try {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: currency || 'USD',
+      maximumFractionDigits: 0
+    }).format(amount);
+  } catch {
+    return '$' + amount.toLocaleString('en-US');
+  }
 }
 
-grid.innerHTML = '';
+function availabilityLabel(status) {
+  if (status === 'in_stock') return 'AVAILABLE STOCK';
+  if (status === 'limited_stock') return 'LIMITED AVAILABILITY';
+  if (status === 'out_of_stock') return 'CURRENTLY UNAVAILABLE';
+  return 'PRE-ORDER ENQUIRIES';
+}
 
-vehicles.forEach(vehicle => {
+async function loadFeaturedVehicles() {
+  const grid = document.getElementById('vehicleGrid');
 
-const imageList = Array.isArray(vehicle.image_urls)
-? vehicle.image_urls
-: [];
+  try {
+    const { data, error } = await db
+      .from('vehicles')
+      .select('*')
+      .eq('is_published', true)
+      .order('created_at', { ascending: true })
+      .limit(4);
 
-const image = imageList.length
-? imageList[0]
-: fallbackImages[vehicle.model] || fallbackImages['Model 3'];
+    if (error) throw error;
 
-const price = Number(vehicle.selling_price).toLocaleString('en-US');
+    if (!data || data.length === 0) {
+      grid.innerHTML = '<p class="loading">Our collection is being updated. Please check again soon.</p>';
+      return;
+    }
 
-const availability = vehicle.availability === 'limited_stock'
-? 'LIMITED INVENTORY ENQUIRIES'
-: vehicle.availability === 'in_stock'
-? 'AVAILABLE STOCK'
-: vehicle.availability === 'out_of_stock'
-? 'CURRENTLY UNAVAILABLE'
-: 'ORDER / PRE-ORDER ENQUIRIES';
+    grid.innerHTML = '';
 
-const card = document.createElement('div');
+    data.forEach(vehicle => {
+      const images = Array.isArray(vehicle.image_urls)
+        ? vehicle.image_urls
+        : [];
 
-card.className = 'card';
+      const image = images[0] ||
+        fallbackImages[vehicle.model] ||
+        fallbackImages['Model 3'];
 
-card.innerHTML = `
+      const card = document.createElement('article');
+      card.className = 'vehicle-card';
 
-<img src="${escapeHTML(image)}" alt="${escapeHTML(vehicle.model)}" loading="lazy">
+      card.innerHTML = `
+        <div class="vehicle-image">
+          <img
+            src="${escapeHTML(image)}"
+            alt="${escapeHTML(vehicle.model)}"
+            loading="lazy"
+          >
+        </div>
 
-<div class="card-content">
+        <div class="vehicle-content">
+          <h3>${escapeHTML(vehicle.model)}</h3>
 
-<h3>${escapeHTML(vehicle.model)}</h3>
+          <p>
+            ${escapeHTML(vehicle.variant || 'Electric vehicle')}
+          </p>
 
-<div class="price">$${price}</div>
+          <div class="vehicle-price">
+            ${money(vehicle.selling_price, vehicle.currency || 'USD')}
+          </div>
 
-<p class="details">
-${escapeHTML(vehicle.variant || 'Electric vehicle')}<br>
-${escapeHTML(vehicle.description || 'Premium electric vehicle.')}
-</p>
+          <span class="vehicle-status">
+            ${availabilityLabel(vehicle.availability)}
+          </span>
 
-<span class="badge">${availability}</span>
+          <a class="card-link" href="vehicles.html">
+            EXPLORE THIS VEHICLE →
+          </a>
+        </div>
+      `;
 
-<div class="card-buttons">
+      grid.appendChild(card);
+    });
 
-<button class="buy" onclick="order('${escapeHTML(vehicle.id)}')">
-${vehicle.availability === 'limited_stock' ? 'ENQUIRE' : 'BUY / PRE-ORDER'}
-</button>
+    const cards = document.querySelectorAll('.vehicle-card');
 
-<button class="negotiate" onclick="negotiate('${escapeHTML(vehicle.id)}')">
-NEGOTIATE
-</button>
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
 
-</div>
-</div>
-`;
+    cards.forEach(card => observer.observe(card));
 
-grid.appendChild(card);
+  } catch (error) {
+    console.error('Vehicle loading error:', error);
 
+    grid.innerHTML = `
+      <p class="loading">
+        We couldn't load the vehicle collection right now.
+        Please visit the full showroom.
+      </p>
+    `;
+  }
+}
+
+document.getElementById('menuToggle').addEventListener('click', () => {
+  document.getElementById('mainNav').classList.toggle('open');
 });
 
-populateVehicleOptions();
-
-}
-
-// ======================================
-// VEHICLE DROPDOWNS
-// ======================================
-
-function populateVehicleOptions(){
-
-const orderSelect = document.getElementById('orderModel');
-
-const negotiationSelect = document.getElementById('negModel');
-
-orderSelect.innerHTML = '<option value="">Choose vehicle</option>';
-
-negotiationSelect.innerHTML = '<option value="">Choose vehicle</option>';
-
-vehicles.forEach(vehicle => {
-
-const label = vehicle.model + ' - ' + vehicle.variant;
-
-const option1 = document.createElement('option');
-
-option1.value = vehicle.id;
-
-option1.textContent = label;
-
-orderSelect.appendChild(option1);
-
-const option2 = document.createElement('option');
-
-option2.value = vehicle.id;
-
-option2.textContent = label;
-
-negotiationSelect.appendChild(option2);
-
+document.querySelectorAll('#mainNav a').forEach(link => {
+  link.addEventListener('click', () => {
+    document.getElementById('mainNav').classList.remove('open');
+  });
 });
 
-}
+loadFeaturedVehicles();
+</script>
 
-// ======================================
-// BUY BUTTON
-// ======================================
-
-function order(vehicleId){
-
-document.getElementById('orderModel').value = vehicleId;
-
-document.getElementById('order').scrollIntoView({
-behavior:'smooth'
-});
-
-}
-
-// ======================================
-// NEGOTIATION BUTTON
-// ======================================
-
-function negotiate(vehicleId){
-
-document.getElementById('negModel').value = vehicleId;
-
-document.getElementById('negotiation').scrollIntoView({
-behavior:'smooth'
-});
-
-}
-
-// ======================================
-// CUSTOMER AUTHENTICATION
-// ======================================
-
-function showAuthMessage(message,color){
-
-const result = document.getElementById('authResult');
-
-result.textContent = message;
-
-result.style.color = color || '#70df91';
-
-}
-
-function setLoginMode(){
-
-loginMode = !loginMode;
-
-document.getElementById('authHeading').textContent =
-loginMode ? 'Customer Login' : 'Create Your Customer Account';
-
-document.getElementById('authName').classList.toggle('hidden',loginMode);
-
-document.getElementById('authName').required = !loginMode;
-
-document.getElementById('authPassword').autocomplete =
-loginMode ? 'current-password' : 'new-password';
-
-document.getElementById('authSubmit').textContent =
-loginMode ? 'SIGN IN' : 'CREATE ACCOUNT';
-
-document.getElementById('switchAuth').textContent =
-loginMode ? 'New customer? Create an account' : 'Already have an account? Sign in';
-
-showAuthMessage('');
-
-}
-
-document.getElementById('switchAuth').addEventListener('click',setLoginMode);
-
-// EMAIL SIGN UP / LOGIN
-
-document.getElementById('authForm').addEventListener('submit',async function(e){
-
-e.preventDefault();
-
-const button = document.getElementById('authSubmit');
-
-const email = document.getElementById('authEmail').value.trim();
-
-const password = document.getElementById('authPassword').value;
-
-const fullName = document.getElementById('authName').value.trim();
-
-button.disabled = true;
-
-button.textContent = loginMode ? 'SIGNING IN...' : 'CREATING ACCOUNT...';
-
-showAuthMessage('');
-
-try{
-
-if(loginMode){
-
-const {data,error} = await db.auth.signInWithPassword({
-email:email,
-password:password
-});
-
-if(error) throw error;
-
-currentUser = data.user;
-
-showAuthMessage('Welcome back! Your account is ready.');
-
-await updateAccountDisplay();
-
-}else{
-
-const {data,error} = await db.auth.signUp({
-
-email:email,
-
-password:password,
-
-options:{
-data:{
-full_name:fullName
-},
-emailRedirectTo:SITE_URL
-}
-
-});
-
-if(error) throw error;
-
-if(data.session){
-
-currentUser = data.user;
-
-showAuthMessage('Your account has been created successfully.');
-
-await updateAccountDisplay();
-
-}else{
-
-showAuthMessage(
-'Account created! Please check your email and click the confirmation link before signing in.',
-'#70df91'
-);
-
-}
-
-}
-
-}catch(error){
-
-console.error('Authentication error:',error);
-
-showAuthMessage(error.message,'#ff6b6b');
-
-}finally{
-
-button.disabled = false;
-
-button.textContent = loginMode ? 'SIGN IN' : 'CREATE ACCOUNT';
-
-}
-
-});
-
-// GOOGLE SIGN IN
-
-document.getElementById('googleButton').addEventListener('click',async function(){
-
-this.disabled = true;
-
-this.textContent = 'CONNECTING TO GOOGLE...';
-
-showAuthMessage('');
-
-try{
-
-const {error} = await db.auth.signInWithOAuth({
-
-provider:'google',
-
-options:{
-redirectTo:SITE_URL
-}
-
-});
-
-if(error) throw error;
-
-}catch(error){
-
-console.error('Google sign-in error:',error);
-
-showAuthMessage(error.message,'#ff6b6b');
-
-this.disabled = false;
-
-this.textContent = 'CONTINUE WITH GOOGLE';
-
-}
-
-});
-
-// ======================================
-// ACCOUNT DISPLAY
-// ======================================
-
-async function updateAccountDisplay(){
-
-const authPanel = document.getElementById('authPanel');
-
-const accountPanel = document.getElementById('accountPanel');
-
-if(!currentUser){
-
-authPanel.classList.remove('hidden');
-
-accountPanel.classList.add('hidden');
-
-return;
-}
-
-authPanel.classList.add('hidden');
-
-accountPanel.classList.remove('hidden');
-
-document.getElementById('customerEmail').textContent =
-'Signed in as: ' + currentUser.email;
-
-// Automatically connect negotiation form to this account.
-
-document.getElementById('negEmail').value = currentUser.email || '';
-
-const customerName = currentUser.user_metadata?.full_name || '';
-
-if(customerName && !document.getElementById('negName').value.trim()){
-document.getElementById('negName').value = customerName;
-}
-
-await loadCustomerOrders();
-
-await loadCustomerNegotiations();
-
-}
-
-// ======================================
-// LOAD CUSTOMER ORDERS
-// ======================================
-
-async function loadCustomerOrders(){
-
-const list = document.getElementById('ordersList');
-
-if(!currentUser){
-
-list.innerHTML = '<p class="note">Please sign in to view your orders.</p>';
-
-return;
-}
-
-list.innerHTML = '<p class="note">Loading your orders...</p>';
-
-const {data,error} = await db
-.from('customer_orders')
-.select('*')
-.eq('customer_id',currentUser.id)
-.order('created_at',{ascending:false});
-
-if(error){
-
-console.error('Order loading error:',error);
-
-list.innerHTML = `
-<p style="color:#ff6b6b">
-We could not load your orders. Please try again.
-</p>`;
-
-return;
-}
-
-if(!data || data.length === 0){
-
-list.innerHTML = `
-<div class="order-card">
-<h3>No confirmed orders yet</h3>
-<p>
-When our team confirms your vehicle order and adds its tracking information,
-it will appear here.
-</p>
-</div>`;
-
-return;
-}
-
-list.innerHTML = '';
-
-data.forEach(item => {
-
-const card = document.createElement('div');
-
-card.className = 'order-card';
-
-const createdDate = item.created_at
-? new Date(item.created_at).toLocaleDateString()
-: 'Not available';
-
-let trackingLink = '';
-
-if(item.tracking_url){
-
-try{
-
-const url = new URL(item.tracking_url);
-
-if(url.protocol === 'https:' || url.protocol === 'http:'){
-
-trackingLink = `
-<a class="tracking-link"
-href="${escapeHTML(url.href)}"
-target="_blank"
-rel="noopener noreferrer">
-OPEN DELIVERY TRACKING
-</a>`;
-
-}
-
-}catch(error){
-
-console.warn('Invalid tracking URL');
-
-}
-
-}
-
-card.innerHTML = `
-
-<h3>${escapeHTML(item.vehicle_name)}</h3>
-
-<p>
-<strong>Tracking number:</strong>
-${escapeHTML(item.tracking_number || 'Not assigned yet')}
-</p>
-
-<p>
-<strong>Order date:</strong>
-${escapeHTML(createdDate)}
-</p>
-
-<p>
-<strong>Payment status:</strong>
-<span class="status">${escapeHTML(item.payment_status || 'Pending')}</span>
-</p>
-
-<p>
-<strong>Order status:</strong>
-<span class="status">${escapeHTML(item.order_status || 'Processing')}</span>
-</p>
-
-<p>
-<strong>Delivery country:</strong>
-${escapeHTML(item.delivery_country || 'Awaiting confirmation')}
-</p>
-
-<p>
-<strong>Shipping company:</strong>
-${escapeHTML(item.shipping_carrier || 'Not assigned yet')}
-</p>
-
-<p>
-<strong>Estimated delivery:</strong>
-${escapeHTML(item.estimated_delivery || 'Awaiting confirmation')}
-</p>
-
-${trackingLink}
-
-`;
-
-list.appendChild(card);
-
-});
-
-}
-
-// ======================================
-// LOAD CUSTOMER NEGOTIATIONS
-// ======================================
-
-async function loadCustomerNegotiations(){
-
-const list = document.getElementById('negotiationsList');
-
-if(!currentUser){
-
-list.innerHTML = '<p class="note">Please sign in to view your offers.</p>';
-
-return;
-}
-
-list.innerHTML = '<p class="note">Loading your negotiations...</p>';
-
-const {data,error} = await db
-.from('negotiations')
-.select('*')
-.eq('customer_email',currentUser.email)
-.order('created_at',{ascending:false});
-
-if(error){
-
-console.error('Negotiation loading error:',error);
-
-list.innerHTML = `
-<p style="color:#ff6b6b">
-We could not load your negotiations. Please refresh and try again.
-</p>`;
-
-return;
-}
-
-if(!data || data.length === 0){
-
-list.innerHTML = `
-<div class="negotiation-card">
-<h4>No offers submitted yet</h4>
-<p>
-When you submit a vehicle budget offer while signed in with this email address,
-your offer and our response will appear here.
-</p>
-</div>`;
-
-return;
-}
-
-list.innerHTML = '';
-
-data.forEach(item => {
-
-const card = document.createElement('div');
-
-card.className = 'negotiation-card';
-
-const vehicle = vehicles.find(v => String(v.id) === String(item.vehicle_id));
-
-const vehicleName = vehicle
-? vehicle.model + (vehicle.variant ? ' - ' + vehicle.variant : '')
-: 'Vehicle';
-
-const submittedDate = item.created_at
-? new Date(item.created_at).toLocaleString()
-: 'Not available';
-
-const currency = item.currency || 'USD';
-
-const proposedBudget = formatMoney(item.proposed_budget,currency);
-
-const counterOffer = item.counter_offer !== null &&
-item.counter_offer !== undefined &&
-item.counter_offer !== ''
-? formatMoney(item.counter_offer,currency)
-: 'No counteroffer yet';
-
-const adminResponse = item.admin_response
-? escapeHTML(item.admin_response)
-: 'No written response yet.';
-
-const customerMessage = item.message || item.customer_message || '';
-
-card.innerHTML = `
-
-<h4>${escapeHTML(vehicleName)}</h4>
-
-<p>
-<strong>Date submitted:</strong>
-${escapeHTML(submittedDate)}
-</p>
-
-<p>
-<strong>Your proposed budget:</strong>
-<span class="offer-value">${escapeHTML(proposedBudget)}</span>
-</p>
-
-<p>
-<strong>Our counteroffer:</strong>
-<span class="offer-value">${escapeHTML(counterOffer)}</span>
-</p>
-
-<p>
-<strong>Offer status:</strong>
-<span class="status">${escapeHTML(item.status || 'Pending')}</span>
-</p>
-
-<p>
-<strong>Response from our team:</strong><br>
-${adminResponse}
-</p>
-
-${customerMessage ? `
-<p>
-<strong>Your message:</strong><br>
-${escapeHTML(customerMessage)}
-</p>` : ''}
-
-`;
-
-list.appendChild(card);
-
-});
-
-}
-
-// ======================================
-// REFRESH BUTTONS
-// ======================================
-
-document.getElementById('refreshOrders').addEventListener('click',loadCustomerOrders);
-
-document.getElementById('refreshNegotiations').addEventListener('click',loadCustomerNegotiations);
-
-// ======================================
-// LOG OUT
-// ======================================
-
-document.getElementById('logoutButton').addEventListener('click',async function(){
-
-this.disabled = true;
-
-try{
-
-const {error} = await db.auth.signOut();
-
-if(error) throw error;
-
-currentUser = null;
-
-document.getElementById('accountPanel').classList.add('hidden');
-
-document.getElementById('authPanel').classList.remove('hidden');
-
-document.getElementById('authForm').reset();
-
-document.getElementById('negotiationForm').reset();
-
-showAuthMessage('You have successfully logged out.');
-
-document.getElementById('account').scrollIntoView({
-behavior:'smooth'
-});
-
-}catch(error){
-
-console.error('Logout error:',error);
-
-alert('Unable to log out: ' + error.message);
-
-}finally{
-
-this.disabled = false;
-
-}
-
-});
-
-// ======================================
-// AUTH SESSION CHECK
-// ======================================
-
-db.auth.onAuthStateChange((event,session)=>{
-
-currentUser = session ? session.user : null;
-
-setTimeout(()=>{
-
-updateAccountDisplay();
-
-},0);
-
-});
-
-// ======================================
-// SUBMIT PURCHASE ENQUIRY
-// ======================================
-
-document.getElementById('orderForm').addEventListener('submit',async function(e){
-
-e.preventDefault();
-
-const button = this.querySelector('button[type="submit"]');
-
-const result = document.getElementById('orderResult');
-
-button.disabled = true;
-
-button.textContent = 'SUBMITTING...';
-
-result.textContent = '';
-
-const data = {
-
-vehicle_id:document.getElementById('orderModel').value,
-
-customer_name:document.getElementById('orderName').value.trim(),
-
-email:document.getElementById('orderEmail').value.trim(),
-
-phone:document.getElementById('orderPhone').value.trim(),
-
-enquiry_type:document.getElementById('orderType').value,
-
-preferred_colour:document.getElementById('orderColour').value.trim(),
-
-delivery_country:document.getElementById('orderCountry').value.trim(),
-
-message:document.getElementById('orderMessage').value.trim()
-
-};
-
-try{
-
-const {error} = await db
-.from('enquiries')
-.insert(data);
-
-if(error) throw error;
-
-try{
-
-const {data:emailData,error:emailError} = await db.functions.invoke(
-'notify-purchase-enquiry',
-{
-body:data
-}
-);
-
-if(emailError){
-
-console.error('Email notification error:',emailError);
-
-}else{
-
-console.log('Email notification result:',emailData);
-
-}
-
-}catch(emailError){
-
-console.error('Email notification failed:',emailError);
-
-}
-
-result.style.color = '#70df91';
-
-result.textContent =
-'Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';
-
-this.reset();
-
-}catch(error){
-
-console.error('Enquiry error:',error);
-
-result.style.color = '#ff6b6b';
-
-result.textContent = 'We could not submit your enquiry: ' + error.message;
-
-}finally{
-
-button.disabled = false;
-
-button.textContent = 'SEND PURCHASE ENQUIRY';
-
-}
-
-});
-
-// ======================================
-// SUBMIT BUDGET NEGOTIATION
-// ======================================
-
-document.getElementById('negotiationForm').addEventListener('submit',async function(e){
-
-e.preventDefault();
-
-const button = this.querySelector('button[type="submit"]');
-
-const result = document.getElementById('negResult');
-
-// Require a signed-in customer so the offer is linked to their account.
-
-if(!currentUser){
-
-result.style.color = '#ff6b6b';
-
-result.textContent =
-'Please create an account or sign in before submitting a negotiation offer.';
-
-document.getElementById('account').scrollIntoView({
-behavior:'smooth'
-});
-
-return;
-}
-
-const enteredEmail = document.getElementById('negEmail').value.trim().toLowerCase();
-
-const accountEmail = (currentUser.email || '').trim().toLowerCase();
-
-if(enteredEmail !== accountEmail){
-
-result.style.color = '#ff6b6b';
-
-result.textContent =
-'Please use the same email address as your signed-in customer account.';
-
-return;
-}
-
-button.disabled = true;
-
-button.textContent = 'SUBMITTING...';
-
-result.textContent = '';
-
-const data = {
-
-vehicle_id:document.getElementById('negModel').value,
-
-customer_name:document.getElementById('negName').value.trim(),
-
-customer_email:currentUser.email,
-
-customer_phone:document.getElementById('negPhone').value.trim(),
-
-proposed_budget:Number(document.getElementById('budget').value),
-
-currency:'USD',
-
-message:document.getElementById('negMessage').value.trim()
-
-};
-
-try{
-
-const {error} = await db
-.from('negotiations')
-.insert(data);
-
-if(error) throw error;
-
-result.style.color = '#70df91';
-
-result.textContent =
-'Your budget offer has been submitted successfully. You can follow its progress in My Account under My Negotiations.';
-
-this.reset();
-
-// Restore the signed-in customer's email after resetting the form.
-
-document.getElementById('negEmail').value = currentUser.email || '';
-
-const customerName = currentUser.user_metadata?.full_name || '';
-
-document.getElementById('negName').value = customerName;
-
-await loadCustomerNegotiations();
-
-}catch(error){
-
-console.error('Negotiation error:',error);
-
-result.style.color = '#ff6b6b';
-
-result.textContent = 'Database error: ' + error.message;
-
-}finally{
-
-button.disabled = false;
-
-button.textContent = 'SUBMIT MY OFFER';
-
-}
-
-});
-
-// ======================================
-// START WEBSITE
-// ======================================
-
-async function startWebsite(){
-
-await loadVehicles();
-
-const {data,error} = await db.auth.getSession();
-
-if(error){
-
-console.error('Session check error:',error);
-
-return;
-
-}
-
-currentUser = data.session ? data.session.user : null;
-
-await updateAccountDisplay();
-
-}
-
-startWebsite();
-
-</script></body>
+</body>
 </html>
