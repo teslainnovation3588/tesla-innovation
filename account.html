@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Account | TESLA Innovation</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--red:#e82127;--bg:#080808;--panel:#151515;--muted:#999;--line:#292929}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+header{padding:20px 6%;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:800;letter-spacing:2px}
+.logo span{color:var(--red)}
+nav{display:flex;gap:17px;flex-wrap:wrap}
+nav a{color:#ccc;text-decoration:none;font-size:13px}
+nav a:hover{color:var(--red)}
+main{width:min(1100px,92%);margin:45px auto}
+h1{font-size:34px;margin-bottom:8px}
+.subtitle{color:var(--muted);line-height:1.6}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:24px;margin:22px 0}
+input{width:100%;padding:14px;margin:8px 0 15px;background:#090909;border:1px solid #383838;border-radius:7px;color:white}
+button{background:var(--red);color:white;border:0;border-radius:7px;padding:13px 19px;font-weight:bold;cursor:pointer}
+button.secondary{background:#292929}
+button:disabled{opacity:.5;cursor:not-allowed}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.message{color:#ff7777;margin-top:12px;line-height:1.5}
+.hidden{display:none!important}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px}
+.stat{background:#101010;border:1px solid var(--line);padding:18px;border-radius:9px}
+.stat strong{display:block;font-size:27px;margin-bottom:7px}
+.stat span{font-size:12px;color:var(--muted)}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;margin:25px 0}
+.tabs button{background:#292929}
+.tabs button.active{background:var(--red)}
+.record{padding:16px 0;border-bottom:1px solid var(--line);line-height:1.7}
+.record:last-child{border-bottom:0}
+.record strong{color:white}
+.record small{color:var(--muted)}
+.badge{display:inline-block;background:#292929;border-radius:20px;padding:4px 10px;font-size:11px;color:#ddd}
+.empty{color:var(--muted);padding:15px 0}
+footer{text-align:center;padding:30px;color:#777;border-top:1px solid var(--line);font-size:12px}
+@media(max-width:600px){main{margin:28px auto}h1{font-size:27px}.card{padding:17px}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">TESLA <span>INNOVATION</span></div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="vehicles.html">Vehicles</a>
+    <a href="negotiate.html">Negotiate</a>
+    <a href="enquiry.html">Enquiry</a>
+  </nav>
+</header>
+
+<main>
+  <section id="loginSection">
+    <h1>My Account</h1>
+    <p class="subtitle">Sign in to access your enquiries, negotiations and vehicle orders.</p>
+
+    <div class="card">
+      <h2>Customer sign in</h2>
+      <label for="email">Email address</label>
+      <input id="email" type="email" placeholder="Enter your email" autocomplete="email">
+
+      <label for="password">Password</label>
+      <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password">
+
+      <div class="actions">
+        <button id="loginButton" onclick="signIn()">SIGN IN</button>
+        <button class="secondary" onclick="createAccount()">CREATE ACCOUNT</button>
+      </div>
+      <p id="authMessage" class="message"></p>
+      <p class="subtitle">New customers can create an account using their email and a password.</p>
+    </div>
+  </section>
+
+  <section id="dashboard" class="hidden">
+    <h1>Welcome to your account</h1>
+    <p class="subtitle" id="customerEmail"></p>
+
+    <div class="actions">
+      <button class="secondary" onclick="loadDashboard()">REFRESH ACCOUNT</button>
+      <button class="secondary" onclick="signOut()">SIGN OUT</button>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><strong id="enquiryCount">0</strong><span>MY ENQUIRIES</span></div>
+      <div class="stat"><strong id="negotiationCount">0</strong><span>MY NEGOTIATIONS</span></div>
+      <div class="stat"><strong id="orderCount">0</strong><span>MY ORDERS</span></div>
+    </div>
+
+    <div class="tabs">
+      <button class="active" onclick="showTab('enquiries',this)">Enquiries</button>
+      <button onclick="showTab('negotiations',this)">Negotiations</button>
+      <button onclick="showTab('orders',this)">Orders</button>
+      <button onclick="showTab('profile',this)">My Profile</button>
+    </div>
+
+    <div class="card">
+      <div id="enquiriesPanel">
+        <h2>My Enquiries</h2>
+        <div id="enquiriesList" class="empty">Loading enquiries...</div>
+      </div>
+
+      <div id="negotiationsPanel" class="hidden">
+        <h2>My Negotiations</h2>
+        <div id="negotiationsList" class="empty">Loading negotiations...</div>
+      </div>
+
+      <div id="ordersPanel" class="hidden">
+        <h2>My Orders</h2>
+        <div id="ordersList" class="empty">Loading orders...</div>
+      </div>
+
+      <div id="profilePanel" class="hidden">
+        <h2>My Profile</h2>
+        <div class="record"><small>Account email</small><br><strong id="profileEmail"></strong></div>
+        <div class="record"><small>Account ID</small><br><strong id="profileId"></strong></div>
+        <p class="subtitle">Your account email is used to associate your customer records.</p>
+      </div>
+    </div>
+    <p id="dashboardMessage" class="message"></p>
+  </section>
+</main>
+
+<footer>© 2026 TESLA Innovation. All rights reserved.</footer>
+
+<script>
+const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const SUPABASE_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+let currentUser = null;
+let enquiries = [];
+let negotiations = [];
+let orders = [];
+
+function message(id,text){
+  document.getElementById(id).textContent = text;
+}
+
+function safe(value){
+  return String(value ?? "Not provided").replace(/[&<>"']/g, char => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+  })[char]);
+}
+
+async function signIn(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email || !password){
+    message("authMessage","Enter your email and password.");
+    return;
+  }
+
+  const button = document.getElementById("loginButton");
+  button.disabled = true;
+  message("authMessage","Signing in...");
+
+  const {data,error} = await db.auth.signInWithPassword({email,password});
+
+  button.disabled = false;
+
+  if(error){
+    message("authMessage",error.message);
+    return;
+  }
+
+  currentUser = data.user;
+  await openDashboard();
+}
+
+async function createAccount(){
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  if(!email || !password){
+    message("authMessage","Enter your email and choose a password.");
+    return;
+  }
+
+  if(password.length < 8){
+    message("authMessage","Use a password with at least 8 characters.");
+    return;
+  }
+
+  message("authMessage","Creating your account...");
+
+  const {data,error} = await db.auth.signUp({
+    email,
+    password,
+    options:{
+      emailRedirectTo:window.location.origin + window.location.pathname
+    }
+  });
+
+  if(error){
+    message("authMessage",error.message);
+    return;
+  }
+
+  if(data.session){
+    currentUser = data.user;
+    await openDashboard();
+  }else{
+    message("authMessage","Account created. Check your email for the confirmation link, then return here and sign in.");
+  }
+}
+
+async function signOut(){
+  await db.auth.signOut();
+  currentUser = null;
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginSection").classList.remove("hidden");
+  message("authMessage","You have signed out.");
+}
+
+async function openDashboard(){
+  document.getElementById("loginSection").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+
+  document.getElementById("customerEmail").textContent =
+    currentUser.email || "Customer account";
+
+  document.getElementById("profileEmail").textContent =
+    currentUser.email || "Not available";
+
+  document.getElementById("profileId").textContent =
+    currentUser.id;
+
+  await loadDashboard();
+}
+
+async function loadDashboard(){
+  if(!currentUser) return;
+
+  message("dashboardMessage","Loading your account records...");
+
+  const email = currentUser.email;
+
+  const enquiryResult = await db
+    .from("enquiries")
+    .select("*")
+    .ilike("email",email)
+    .order("created_at",{ascending:false});
+
+  const negotiationResult = await db
+    .from("negotiations")
+    .select("*")
+    .ilike("customer_email",email)
+    .order("created_at",{ascending:false});
+
+  const orderResult = await db
+    .from("customer_orders")
+    .select("*")
+    .eq("customer_id",currentUser.id)
+    .order("created_at",{ascending:false});
+
+  enquiries = enquiryResult.data || [];
+  negotiations = negotiationResult.data || [];
+  orders = orderResult.data || [];
+
+  document.getElementById("enquiryCount").textContent = enquiries.length;
+  document.getElementById("negotiationCount").textContent = negotiations.length;
+  document.getElementById("orderCount").textContent = orders.length;
+
+  renderEnquiries();
+  renderNegotiations();
+  renderOrders();
+
+  const errors = [
+    enquiryResult.error && "Enquiries: " + enquiryResult.error.message,
+    negotiationResult.error && "Negotiations: " + negotiationResult.error.message,
+    orderResult.error && "Orders: " + orderResult.error.message
+  ].filter(Boolean);
+
+  message("dashboardMessage",errors.length
+    ? errors.join(" | ")
+    : "Your account records have been refreshed.");
+}
+
+function renderEnquiries(){
+  const box = document.getElementById("enquiriesList");
+
+  if(!enquiries.length){
+    box.textContent = "No enquiries are currently linked to this account.";
+    return;
+  }
+
+  box.innerHTML = enquiries.map(item => `
+    <div class="record">
+      <strong>${safe(item.enquiry_type || "Vehicle enquiry")}</strong>
+      <br>Vehicle ID: ${safe(item.vehicle_id)}
+      <br>Colour: ${safe(item.preferred_colour)}
+      <br>Delivery country: ${safe(item.delivery_country)}
+      <br>Status: <span class="badge">${safe(item.status || "Received")}</span>
+      <br><small>${safe(item.created_at)}</small>
+    </div>
+  `).join("");
+}
+
+function renderNegotiations(){
+  const box = document.getElementById("negotiationsList");
+
+  if(!negotiations.length){
+    box.textContent = "No negotiations are currently linked to this account.";
+    return;
+  }
+
+  box.innerHTML = negotiations.map(item => `
+    <div class="record">
+      <strong>Vehicle ID: ${safe(item.vehicle_id)}</strong>
+      <br>Your offer: ${safe(item.currency || "USD")} ${safe(item.proposed_budget)}
+      <br>Counteroffer: ${item.counter_offer == null ? "Not provided" : safe(item.currency || "USD") + " " + safe(item.counter_offer)}
+      <br>Admin response: ${safe(item.admin_response)}
+      <br>Status: <span class="badge">${safe(item.status || "Pending")}</span>
+      <br><small>${safe(item.created_at)}</small>
+    </div>
+  `).join("");
+}
+
+function renderOrders(){
+  const box = document.getElementById("ordersList");
+
+  if(!orders.length){
+    box.textContent = "No orders are currently linked to this account.";
+    return;
+  }
+
+  box.innerHTML = orders.map(item => `
+    <div class="record">
+      <strong>${safe(item.vehicle_name)}</strong>
+      <br>Tracking number: ${safe(item.tracking_number)}
+      <br>Payment: <span class="badge">${safe(item.payment_status)}</span>
+      <br>Order status: <span class="badge">${safe(item.order_status)}</span>
+      <br>Delivery country: ${safe(item.delivery_country)}
+      <br>Carrier: ${safe(item.shipping_carrier)}
+      <br>Estimated delivery: ${safe(item.estimated_delivery)}
+      ${item.tracking_url ? `<br><a style="color:#ff5555" href="${safe(item.tracking_url)}" target="_blank" rel="noopener">Open tracking page</a>` : ""}
+      <br><small>${safe(item.created_at)}</small>
+    </div>
+  `).join("");
+}
+
+function showTab(name,button){
+  ["enquiries","negotiations","orders","profile"].forEach(tab=>{
+    document.getElementById(tab+"Panel").classList.toggle("hidden",tab!==name);
+  });
+
+  document.querySelectorAll(".tabs button").forEach(btn=>{
+    btn.classList.remove("active");
+  });
+
+  button.classList.add("active");
+}
+
+db.auth.onAuthStateChange((event,session)=>{
+  if(event === "SIGNED_IN" && session?.user){
+    currentUser = session.user;
+  }
+
+  if(event === "SIGNED_OUT"){
+    currentUser = null;
+  }
+});
+
+(async()=>{
+  const {data} = await db.auth.getSession();
+
+  if(data.session?.user){
+    currentUser = data.session.user;
+    await openDashboard();
+  }
+})();
+</script>
+</body>
+</html>
