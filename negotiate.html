@@ -1,0 +1,185 @@
+<!DOCTYPE html><html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Negotiate | TESLA Innovation</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--red:#e82127;--bg:#080808;--panel:#151515;--muted:#aaa}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:#fff;font-family:Arial,sans-serif}
+a{color:inherit;text-decoration:none}
+header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #292929;gap:20px;flex-wrap:wrap}
+.logo{font-size:19px;font-weight:900;letter-spacing:2px}.logo span{color:var(--red)}
+nav{display:flex;gap:18px;flex-wrap:wrap;font-size:11px;font-weight:bold}
+nav a:hover{color:var(--red)}
+.hero{text-align:center;padding:65px 20px 35px;background:radial-gradient(ellipse at top,#321416,#080808 70%)}
+.eyebrow{color:var(--red);font-size:11px;font-weight:bold;letter-spacing:4px;margin-bottom:15px}
+h1{font-size:clamp(34px,6vw,55px);margin-bottom:14px}
+.hero p{max-width:570px;margin:auto;color:var(--muted);font-size:14px;line-height:1.7}
+.container{max-width:720px;margin:35px auto 75px;padding:0 18px}
+.form-card{background:var(--panel);border:1px solid #303030;border-radius:10px;padding:30px}
+.form-card h2{font-size:23px;margin-bottom:8px}
+.intro{color:var(--muted);font-size:13px;line-height:1.6;margin-bottom:25px}
+label{display:block;font-size:12px;font-weight:bold;margin:18px 0 8px}
+input,select,textarea{width:100%;padding:14px;background:#0b0b0b;border:1px solid #393939;border-radius:5px;color:white;font-size:14px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--red)}
+textarea{min-height:110px;resize:vertical}
+button{width:100%;border:0;border-radius:5px;background:var(--red);color:white;padding:16px;font-size:13px;font-weight:bold;cursor:pointer;margin-top:23px}
+button:hover{background:#bd171d}
+button:disabled{opacity:.5;cursor:not-allowed}
+.notice{font-size:11px;color:#999;line-height:1.6;margin-top:17px}
+#message{display:none;padding:14px;border-radius:5px;margin-top:18px;font-size:13px;line-height:1.6}
+.success{display:block!important;background:#12301d;color:#9ff0b5}
+.error{display:block!important;background:#351416;color:#ffb4b4}
+footer{text-align:center;padding:28px 15px;border-top:1px solid #292929;color:#888;font-size:11px;line-height:2}
+@media(max-width:600px){header{padding:18px 5%;}nav{gap:12px}.form-card{padding:22px 17px}}
+</style>
+</head>
+<body>
+<header>
+<a class="logo" href="index.html">TESLA <span>INNOVATION</span></a>
+<nav>
+<a href="index.html">HOME</a>
+<a href="vehicles.html">VEHICLES</a>
+<a href="negotiate.html">NEGOTIATE</a>
+<a href="enquiry.html">ENQUIRIES</a>
+<a href="account.html">MY ACCOUNT</a>
+<a href="contact.html">CONTACT</a>
+</nav>
+</header><section class="hero">
+<div class="eyebrow">PERSONALISED VEHICLE OFFERS</div>
+<h1>LET'S TALK <span style="color:#e82127">NUMBERS.</span></h1>
+<p>Have a budget in mind? Send us your offer for a vehicle and our team will review it. We will contact you with a response or counteroffer.</p>
+</section><main class="container">
+<section class="form-card">
+<h2>Submit Your Offer</h2>
+<p class="intro">Complete the details below. Please make sure your contact information is correct so our team can respond.</p><form id="offerForm">
+<label for="name">Full Name *</label>
+<input id="name" type="text" autocomplete="name" required placeholder="Your full name"><label for="email">Email Address *</label>
+<input id="email" type="email" autocomplete="email" required placeholder="you@example.com">
+
+<label for="phone">Phone Number *</label>
+<input id="phone" type="tel" autocomplete="tel" required placeholder="Include country code">
+
+<label for="vehicle">Select Vehicle *</label>
+<select id="vehicle" required>
+
+<option value="">Loading vehicles...</option>
+</select><label for="budget">Your Proposed Budget (USD) *</label>
+<input id="budget" type="number" min="1" step="1" required placeholder="Enter your budget">
+
+<label for="messageText">Additional Message</label>
+
+<textarea id="messageText" placeholder="Tell us about your offer or preferred payment arrangement..."></textarea><button id="submitButton" type="submit">SUBMIT MY OFFER</button>
+
+<div id="message" role="status" aria-live="polite"></div>
+<p class="notice">Submitting an offer does not confirm a purchase or guarantee acceptance. Our team will review your proposal and contact you. Please do not send payment until you receive official confirmation.</p>
+</form>
+</section>
+</main><footer>
+<strong>TESLA INNOVATION</strong><br>
+Premium Vehicles. Global Connections. Exceptional Experience.<br>
+<a href="contact.html">Contact our team</a>
+</footer><script>
+const SUPABASE_URL="https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const SUPABASE_KEY="sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const vehicleSelect=document.getElementById("vehicle");
+const form=document.getElementById("offerForm");
+const messageBox=document.getElementById("message");
+const submitButton=document.getElementById("submitButton");
+
+function showMessage(text,type){
+messageBox.textContent=text;
+messageBox.className=type;
+}
+
+async function loadVehicles(){
+try{
+const {data,error}=await db.from("vehicles")
+.select("id,model,variant,selling_price,currency,is_published")
+.eq("is_published",true)
+.order("created_at",{ascending:true});
+
+if(error)throw error;
+
+vehicleSelect.innerHTML='<option value="">Choose a vehicle</option>';
+
+(data||[]).forEach(car=>{
+const option=document.createElement("option");
+option.value=car.id;
+option.textContent=car.model+" "+(car.variant||"")+" — "+new Intl.NumberFormat("en-US",{style:"currency",currency:car.currency||"USD",maximumFractionDigits:0}).format(Number(car.selling_price)||0);
+vehicleSelect.appendChild(option);
+});
+
+const requestedVehicle=new URLSearchParams(location.search).get("vehicle");
+if(requestedVehicle)vehicleSelect.value=requestedVehicle;
+
+}catch(error){
+console.error(error);
+vehicleSelect.innerHTML='<option value="">Vehicles could not load. Please refresh.</option>';
+}
+}
+
+form.addEventListener("submit",async function(event){
+event.preventDefault();
+messageBox.className="";
+messageBox.textContent="";
+
+submitButton.disabled=true;
+submitButton.textContent="SUBMITTING...";
+
+try{
+const name=document.getElementById("name").value.trim();
+const email=document.getElementById("email").value.trim();
+const phone=document.getElementById("phone").value.trim();
+const vehicleId=vehicleSelect.value;
+const budget=Number(document.getElementById("budget").value);
+const customerMessage=document.getElementById("messageText").value.trim();
+
+if(!name||!email||!phone||!vehicleId||!Number.isFinite(budget)||budget<=0){
+throw new Error("Please complete all required fields with valid information.");
+}
+
+const {data:vehicle,error:vehicleError}=await db.from("vehicles")
+.select("id,currency")
+.eq("id",vehicleId)
+.single();
+
+if(vehicleError||!vehicle)throw new Error("Please select a valid vehicle and try again.");
+
+const offerData={
+customer_name:name,
+email:email,
+phone:phone,
+customer_email:email,
+customer_phone:phone,
+vehicle_id:vehicleId,
+proposed_budget:budget,
+currency:vehicle.currency||"USD",
+customer_message:customerMessage,
+message:customerMessage,
+status:"pending"
+};
+
+const {error}=await db.from("negotiations").insert([offerData]);
+
+if(error)throw error;
+
+showMessage("Your offer has been submitted successfully. Our team will review it and contact you using the details you provided.","success");
+form.reset();
+
+}catch(error){
+console.error("Offer submission error:",error);
+showMessage(error.message||"We could not submit your offer. Please try again.","error");
+}finally{
+submitButton.disabled=false;
+submitButton.textContent="SUBMIT MY OFFER";
+}
+});
+
+loadVehicles();
+</script></body>
+</html>
