@@ -1,0 +1,389 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080808">
+  <title>Vehicle Enquiry | TESLA Innovation</title>
+  <meta name="description" content="Submit a vehicle purchase or pre-order enquiry to TESLA Innovation.">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #080808;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+    }
+
+    header {
+      padding: 20px 7%;
+      border-bottom: 1px solid #252525;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .brand span {
+      color: #e82127;
+    }
+
+    nav a {
+      color: #ccc;
+      text-decoration: none;
+      margin-left: 18px;
+      font-size: 14px;
+    }
+
+    nav a:hover {
+      color: #e82127;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 760px;
+      margin: 55px auto;
+    }
+
+    .heading {
+      text-align: center;
+      margin-bottom: 35px;
+    }
+
+    .heading small {
+      color: #e82127;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(30px, 6vw, 46px);
+      margin: 12px 0;
+    }
+
+    .heading p {
+      color: #aaa;
+    }
+
+    form {
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .field {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 14px;
+      color: #ddd;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 14px;
+      background: #080808;
+      border: 1px solid #333;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 15px;
+      outline: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #e82127;
+    }
+
+    select option {
+      background: #111;
+      color: #fff;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      width: 100%;
+      padding: 16px;
+      background: #e82127;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #c71920;
+    }
+
+    button:disabled {
+      opacity: .6;
+      cursor: wait;
+    }
+
+    #message {
+      display: none;
+      padding: 14px;
+      margin-bottom: 20px;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+
+    #message.success {
+      display: block;
+      background: #102719;
+      border: 1px solid #247b43;
+      color: #a9f0bd;
+    }
+
+    #message.error {
+      display: block;
+      background: #2b1111;
+      border: 1px solid #8c2929;
+      color: #ffb3b3;
+    }
+
+    .note {
+      color: #888;
+      font-size: 12px;
+      margin-top: 18px;
+      text-align: center;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px 15px;
+      color: #777;
+      border-top: 1px solid #252525;
+      font-size: 13px;
+    }
+
+    @media (max-width: 550px) {
+      header {
+        justify-content: center;
+      }
+
+      nav {
+        text-align: center;
+      }
+
+      nav a {
+        display: inline-block;
+        margin: 5px 8px;
+      }
+
+      form {
+        padding: 20px;
+      }
+    }
+  </style></head><body><header>
+  <div class="brand">TESLA <span>INNOVATION</span></div>  <nav>
+    <a href="index.html">Home</a>
+    <a href="vehicles.html">Vehicles</a>
+    <a href="negotiate.html">Negotiate</a>
+  </nav>
+</header><main class="container">  <section class="heading">
+    <small>YOUR NEXT VEHICLE STARTS HERE</small>
+    <h1>Vehicle Enquiry</h1>
+    <p>Tell us what you're interested in. Our team will review your enquiry and get back to you.</p>
+  </section>  <form id="enquiryForm"><div id="message" role="status" aria-live="polite"></div>
+
+<div class="field">
+  <label for="name">Full name *</label>
+  <input id="name" type="text" required maxlength="120" autocomplete="name">
+</div>
+
+<div class="field">
+  <label for="email">Email address *</label>
+  <input id="email" type="email" required maxlength="254" autocomplete="email">
+</div>
+
+<div class="field">
+  <label for="phone">Phone number *</label>
+  <input id="phone" type="tel" required maxlength="40" autocomplete="tel">
+</div>
+
+<div class="field">
+  <label for="vehicle">Vehicle of interest *</label>
+  <select id="vehicle" required>
+    <option value="">Loading available vehicles...</option>
+  </select>
+</div>
+
+<div class="field">
+  <label for="type">Enquiry type *</label>
+  <select id="type" required>
+    <option value="purchase">Purchase enquiry</option>
+    <option value="pre_order">Pre-order enquiry</option>
+  </select>
+</div>
+
+<div class="field">
+  <label for="colour">Preferred colour</label>
+  <input id="colour" type="text" maxlength="60" placeholder="e.g. Pearl White">
+</div>
+
+<div class="field">
+  <label for="country">Delivery country *</label>
+  <input id="country" type="text" required maxlength="100" autocomplete="country-name" placeholder="Enter your country">
+</div>
+
+<div class="field">
+  <label for="details">Additional message</label>
+  <textarea id="details" maxlength="2000" placeholder="Tell us about your requirements..."></textarea>
+</div>
+
+<button id="submitButton" type="submit">SUBMIT ENQUIRY</button>
+
+<p class="note">
+  Submitting this form sends an enquiry for review. It does not confirm an order or payment.
+</p>
+
+  </form>
+</main><footer>
+  © <span id="year"></span> TESLA Innovation. All rights reserved.
+</footer><script>
+  const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
+
+  const form = document.getElementById("enquiryForm");
+  const vehicleSelect = document.getElementById("vehicle");
+  const submitButton = document.getElementById("submitButton");
+  const messageBox = document.getElementById("message");
+
+  document.getElementById("year").textContent =
+    new Date().getFullYear();
+
+  function showMessage(text, type) {
+    messageBox.textContent = text;
+    messageBox.className = type;
+  }
+
+  async function loadVehicles() {
+    const { data, error } = await db
+      .from("vehicles")
+      .select("id, model, variant, year, availability")
+      .eq("is_published", true)
+      .order("model");
+
+    if (error) {
+      vehicleSelect.innerHTML =
+        '<option value="">Unable to load vehicles</option>';
+      console.error("Vehicle loading error:", error);
+      return;
+    }
+
+    vehicleSelect.innerHTML =
+      '<option value="">Select a vehicle</option>';
+
+    (data || []).forEach(vehicle => {
+      const option = document.createElement("option");
+      option.value = vehicle.id;
+
+      const details = [
+        vehicle.model,
+        vehicle.variant,
+        vehicle.year
+      ].filter(Boolean).join(" ");
+
+      option.textContent =
+        details + " — " + (vehicle.availability || "Availability to be confirmed");
+
+      vehicleSelect.appendChild(option);
+    });
+  }
+
+  loadVehicles();
+
+  form.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    submitButton.disabled = true;
+    submitButton.textContent = "SUBMITTING...";
+    messageBox.className = "";
+    messageBox.textContent = "";
+
+    const enquiry = {
+      customer_name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      enquiry_type: document.getElementById("type").value,
+      vehicle_id: vehicleSelect.value,
+      preferred_colour: document.getElementById("colour").value.trim() || null,
+      delivery_country: document.getElementById("country").value.trim(),
+      message: document.getElementById("details").value.trim() || null,
+      status: "pending"
+    };
+
+    try {
+      const { data, error } = await db
+        .from("enquiries")
+        .insert(enquiry)
+        .select()
+        .single();
+
+      if (error) {
+        throw error;
+      }
+
+      // Notification is sent by the server-side Edge Function.
+      // The private notification recipient is not exposed in this page.
+      const { error: notificationError } = await db.functions.invoke(
+        "notify-purchase-enquiry",
+        {
+          body: { enquiry: data }
+        }
+      );
+
+      if (notificationError) {
+        console.error("Notification error:", notificationError);
+      }
+
+      showMessage(
+        "Your enquiry has been submitted successfully. Our team will review it and contact you.",
+        "success"
+      );
+
+      form.reset();
+      await loadVehicles();
+
+    } catch (error) {
+      console.error("Enquiry submission error:", error);
+
+      showMessage(
+        "We couldn't submit your enquiry. Please check your details and try again. If the problem continues, contact our team.",
+        "error"
+      );
+
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "SUBMIT ENQUIRY";
+    }
+  });
+</script></body>
+</html>
