@@ -1,52 +1,127 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080808">
 <title>Configure Your Vehicle | TESLA Innovation</title>
 <meta name="description" content="Explore and configure your preferred vehicle with TESLA Innovation.">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080808;color:#fff;font-family:Arial,sans-serif}
+
 header{padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #292929;flex-wrap:wrap}
 .brand{font-size:20px;font-weight:bold;letter-spacing:2px}
 .brand span{color:#e82127}
 nav a{color:#ccc;text-decoration:none;margin-left:17px;font-size:14px}
 nav a:hover{color:#e82127}
+
 .hero{text-align:center;padding:55px 15px 35px}
 .hero small{color:#e82127;letter-spacing:3px;font-weight:bold}
 .hero h1{font-size:clamp(30px,6vw,48px);margin:12px 0}
 .hero p{color:#aaa}
+
 .container{width:92%;max-width:1100px;margin:auto;padding-bottom:60px}
 .layout{display:grid;grid-template-columns:1.4fr 1fr;gap:25px}
+
 .panel{background:#111;border:1px solid #292929;border-radius:12px;padding:25px;margin-bottom:20px}
 .panel h2{font-size:21px;margin-bottom:20px}
-.vehicle-image{height:300px;border-radius:9px;background:#191919;display:flex;align-items:center;justify-content:center;overflow:hidden;margin-bottom:20px}
-.vehicle-image img{width:100%;height:100%;object-fit:cover}
-.vehicle-placeholder{color:#777;text-align:center;padding:20px}
+
+.vehicle-image{
+height:300px;border-radius:9px;background:#191919;
+position:relative;overflow:hidden;margin-bottom:0
+}
+
+.vehicle-image img{
+width:100%;height:100%;object-fit:cover;display:block
+}
+
+.vehicle-placeholder{
+color:#777;text-align:center;padding:20px;
+height:100%;display:flex;align-items:center;justify-content:center
+}
+
+.gallery-arrow{
+position:absolute;top:50%;transform:translateY(-50%);
+width:42px;height:42px;border:0;border-radius:50%;
+background:#000b;color:white;font-size:25px;
+cursor:pointer;display:flex;align-items:center;justify-content:center
+}
+.gallery-arrow:hover{background:#e82127}
+.gallery-prev{left:12px}
+.gallery-next{right:12px}
+
+.gallery-counter{
+position:absolute;right:12px;bottom:12px;
+background:#000b;padding:7px 12px;
+border-radius:20px;font-size:12px;color:white
+}
+
+.thumbnails{
+display:flex;gap:8px;padding:12px 0 20px;
+overflow-x:auto
+}
+
+.thumbnail{
+width:65px;height:48px;object-fit:cover;
+flex-shrink:0;border:2px solid transparent;
+border-radius:5px;cursor:pointer;opacity:.65
+}
+.thumbnail.active{border-color:#e82127;opacity:1}
+
 .field{margin-bottom:18px}
 label{display:block;color:#ccc;font-size:13px;margin-bottom:8px}
-select,input{width:100%;padding:14px;background:#080808;color:#fff;border:1px solid #383838;border-radius:6px;font-size:15px}
+select,input{
+width:100%;padding:14px;background:#080808;color:#fff;
+border:1px solid #383838;border-radius:6px;font-size:15px
+}
 select:focus,input:focus{outline:none;border-color:#e82127}
+
 .specs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
 .spec{background:#191919;padding:15px 8px;text-align:center;border-radius:7px}
 .spec strong{display:block;font-size:19px}
 .spec span{font-size:11px;color:#999}
+
 .price{font-size:30px;font-weight:bold;margin:10px 0}
 .muted{color:#999;font-size:13px}
-.row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #292929;font-size:14px}
+
+.row{
+display:flex;justify-content:space-between;gap:12px;
+padding:12px 0;border-bottom:1px solid #292929;font-size:14px
+}
 .total{font-size:19px;font-weight:bold;color:#fff}
 .deposit{color:#e82127}
-button{width:100%;padding:16px;border:0;border-radius:6px;background:#e82127;color:white;font-weight:bold;font-size:15px;cursor:pointer}
-button:hover{background:#c71920}
-button:disabled{opacity:.5;cursor:wait}
+
+button.continue{
+width:100%;padding:16px;border:0;border-radius:6px;
+background:#e82127;color:white;font-weight:bold;
+font-size:15px;cursor:pointer
+}
+button.continue:hover{background:#c71920}
+button.continue:disabled{opacity:.5;cursor:wait}
+
 .notice{font-size:12px;color:#888;margin-top:15px;line-height:1.6}
+
 #status{display:none;margin:15px 0;padding:13px;border-radius:6px;font-size:13px}
 #status.error{display:block;background:#321515;color:#ffbaba}
 #status.success{display:block;background:#12301b;color:#b4f5c6}
+
 footer{text-align:center;padding:25px;border-top:1px solid #292929;color:#777;font-size:13px}
-@media(max-width:750px){.layout{grid-template-columns:1fr}.vehicle-image{height:230px}header{justify-content:center}nav{text-align:center}nav a{display:inline-block;margin:5px 8px}}
-</style></head><body>
+
+@media(max-width:750px){
+.layout{grid-template-columns:1fr}
+.vehicle-image{height:230px}
+header{justify-content:center}
+nav{text-align:center}
+nav a{display:inline-block;margin:5px 8px}
+}
+</style>
+</head>
+
+<body>
+
 <header>
 <div class="brand">TESLA <span>INNOVATION</span></div>
 <nav>
@@ -55,30 +130,67 @@ footer{text-align:center;padding:25px;border-top:1px solid #292929;color:#777;fo
 <a href="negotiate.html">Negotiate</a>
 <a href="enquiry.html">Enquiry</a>
 </nav>
-</header><section class="hero">
+</header>
+
+<section class="hero">
 <small>YOUR VEHICLE. YOUR CHOICE.</small>
 <h1>Configure Your Vehicle</h1>
 <p>Choose your preferred vehicle and review your configuration.</p>
-</section><main class="container">
-<div id="status"></div><div class="layout">
+</section>
+
+<main class="container">
+
+<div id="status"></div>
+
+<div class="layout">
+
 <section>
+
 <div class="panel">
+
 <h2>Select your vehicle</h2>
+
 <div class="field">
 <label for="vehicle">Available vehicles</label>
 <select id="vehicle">
 <option value="">Loading vehicles...</option>
 </select>
-</div><div class="vehicle-image" id="vehicleImage">
-<div class="vehicle-placeholder">Vehicle preview will appear here</div>
-</div><h2 id="vehicleName">Choose a vehicle</h2>
-<p class="muted" id="vehicleDescription">Select a vehicle to see its details.</p><div class="specs">
-<div class="spec"><strong id="year">—</strong><span>MODEL YEAR</span></div>
-<div class="spec"><strong id="availability">—</strong><span>AVAILABILITY</span></div>
-<div class="spec"><strong id="variant">—</strong><span>VARIANT</span></div>
 </div>
-</div><div class="panel">
-<h2>Personalise your vehicle</h2><div class="field">
+
+<div class="vehicle-image" id="vehicleImage">
+<div class="vehicle-placeholder">Vehicle preview will appear here</div>
+</div>
+
+<div id="vehicleThumbnails" class="thumbnails"></div>
+
+<h2 id="vehicleName">Choose a vehicle</h2>
+
+<p class="muted" id="vehicleDescription">
+Select a vehicle to see its details.
+</p>
+
+<div class="specs">
+<div class="spec">
+<strong id="year">—</strong>
+<span>MODEL YEAR</span>
+</div>
+<div class="spec">
+<strong id="availability">—</strong>
+<span>AVAILABILITY</span>
+</div>
+<div class="spec">
+<strong id="variant">—</strong>
+<span>VARIANT</span>
+</div>
+</div>
+
+</div>
+
+<div class="panel">
+
+<h2>Personalise your vehicle</h2>
+
+<div class="field">
 <label for="colour">Preferred exterior colour</label>
 <select id="colour">
 <option value="Standard colour">Standard colour</option>
@@ -88,54 +200,90 @@ footer{text-align:center;padding:25px;border-top:1px solid #292929;color:#777;fo
 <option value="Ultra Red">Ultra Red</option>
 <option value="Other / To be confirmed">Other / To be confirmed</option>
 </select>
-</div><div class="field">
+</div>
+
+<div class="field">
 <label for="wheels">Wheel preference</label>
 <select id="wheels">
 <option value="Standard wheels">Standard wheels</option>
 <option value="Premium wheels">Premium wheels</option>
 <option value="To be confirmed">To be confirmed</option>
 </select>
-</div><p class="notice">Colour and wheel selections are preferences for your enquiry. Availability and any additional costs must be confirmed by our team before an order is finalised.</p>
 </div>
-</section><aside>
+
+<p class="notice">
+Colour and wheel selections are preferences for your enquiry.
+Availability and any additional costs must be confirmed by our team before an order is finalised.
+</p>
+
+</div>
+
+</section>
+
+<aside>
+
 <div class="panel">
+
 <h2>Order summary</h2>
+
 <p class="muted">Vehicle price</p>
-<div class="price" id="vehiclePrice">$0</div><div class="row">
+<div class="price" id="vehiclePrice">$0</div>
+
+<div class="row">
 <span>Vehicle</span>
 <strong id="summaryVehicle">Not selected</strong>
 </div>
+
 <div class="row">
 <span>Exterior colour</span>
 <strong id="summaryColour">Standard colour</strong>
 </div>
+
 <div class="row">
 <span>Wheels</span>
 <strong id="summaryWheels">Standard wheels</strong>
 </div>
+
 <div class="row">
 <span>Deposit percentage</span>
 <strong id="depositPercent">30%</strong>
 </div>
+
 <div class="row">
 <span>Estimated deposit</span>
 <strong class="deposit" id="depositAmount">$0</strong>
 </div>
+
 <div class="row">
 <span>Remaining balance</span>
 <strong id="balance">$0</strong>
 </div>
+
 <br>
-<button id="continueButton" disabled>CONTINUE TO ENQUIRY</button>
-<p class="notice">This is an indicative price summary, not a payment request. No payment is collected on this page. Final vehicle configuration, pricing, availability, delivery and payment terms must be confirmed before an order is accepted.</p>
+
+<button class="continue" id="continueButton" disabled>
+CONTINUE TO ENQUIRY
+</button>
+
+<p class="notice">
+This is an indicative price summary, not a payment request.
+No payment is collected on this page. Final vehicle configuration, pricing, availability, delivery and payment terms must be confirmed before an order is accepted.
+</p>
+
 </div>
+
 </aside>
 </div>
-</main><footer>
+</main>
+
+<footer>
 © <span id="yearNow"></span> TESLA Innovation. All rights reserved.
-</footer><script>
+</footer>
+
+<script>
 const SUPABASE_URL="https://dnmktpmvjzsxzmgizdcv.supabase.co";
 const SUPABASE_KEY="sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const vehicleSelect=document.getElementById("vehicle");
@@ -146,6 +294,8 @@ const statusBox=document.getElementById("status");
 
 let vehicles=[];
 let selectedVehicle=null;
+let galleryImages=[];
+let currentImageIndex=0;
 
 document.getElementById("yearNow").textContent=new Date().getFullYear();
 
@@ -154,7 +304,7 @@ return new Intl.NumberFormat("en-US",{
 style:"currency",
 currency:"USD",
 maximumFractionDigits:0
-}).format(value||0);
+}).format(Number(value)||0);
 }
 
 function showStatus(text,type){
@@ -162,7 +312,130 @@ statusBox.textContent=text;
 statusBox.className=type;
 }
 
+function escapeHTML(value){
+return String(value).replace(/[&<>"']/g,char=>({
+"&":"&amp;",
+"<":"&lt;",
+">":"&gt;",
+'"':"&quot;",
+"'":"&#39;"
+}[char]));
+}
+
+/* Supports both possible image column names */
+function getVehicleImages(vehicle){
+
+let source=vehicle.image_urls ?? vehicle.image_url;
+let images=[];
+
+if(Array.isArray(source)){
+images=source;
+}
+else if(typeof source==="string" && source.trim()){
+try{
+const parsed=JSON.parse(source);
+images=Array.isArray(parsed)?parsed:[parsed];
+}catch{
+images=[source];
+}
+}
+
+return [...new Set(
+images.filter(url=>typeof url==="string"&&url.trim())
+)];
+}
+
+/* Display selected gallery image */
+function showGalleryImage(index){
+
+if(!galleryImages.length)return;
+
+currentImageIndex=(index+galleryImages.length)%galleryImages.length;
+
+const imageBox=document.getElementById("vehicleImage");
+const image=document.createElement("img");
+
+image.src=galleryImages[currentImageIndex];
+image.alt=selectedVehicle?.model||"Vehicle image";
+
+image.onerror=()=>{
+imageBox.innerHTML='<div class="vehicle-placeholder">Vehicle image unavailable</div>';
+};
+
+imageBox.innerHTML="";
+imageBox.appendChild(image);
+
+if(galleryImages.length>1){
+
+const previous=document.createElement("button");
+previous.className="gallery-arrow gallery-prev";
+previous.type="button";
+previous.innerHTML="‹";
+previous.setAttribute("aria-label","Previous image");
+previous.onclick=()=>showGalleryImage(currentImageIndex-1);
+
+const next=document.createElement("button");
+next.className="gallery-arrow gallery-next";
+next.type="button";
+next.innerHTML="›";
+next.setAttribute("aria-label","Next image");
+next.onclick=()=>showGalleryImage(currentImageIndex+1);
+
+const counter=document.createElement("div");
+counter.className="gallery-counter";
+counter.textContent=(currentImageIndex+1)+" / "+galleryImages.length;
+
+imageBox.appendChild(previous);
+imageBox.appendChild(next);
+imageBox.appendChild(counter);
+}
+
+document.querySelectorAll(".thumbnail").forEach((thumb,i)=>{
+thumb.classList.toggle("active",i===currentImageIndex);
+});
+}
+
+/* Create clickable thumbnails */
+function buildGallery(vehicle){
+
+galleryImages=getVehicleImages(vehicle);
+currentImageIndex=0;
+
+const imageBox=document.getElementById("vehicleImage");
+const thumbnails=document.getElementById("vehicleThumbnails");
+
+thumbnails.innerHTML="";
+
+if(!galleryImages.length){
+imageBox.innerHTML='<div class="vehicle-placeholder">Vehicle images coming soon</div>';
+return;
+}
+
+if(galleryImages.length>1){
+
+galleryImages.forEach((url,index)=>{
+
+const thumb=document.createElement("img");
+
+thumb.src=url;
+thumb.alt=vehicle.model+" image "+(index+1);
+thumb.className="thumbnail";
+
+thumb.onerror=()=>thumb.style.display="none";
+
+thumb.onclick=()=>showGalleryImage(index);
+
+thumbnails.appendChild(thumb);
+
+});
+
+}
+
+showGalleryImage(0);
+}
+
 function updateSummary(){
+
 if(!selectedVehicle)return;
 
 const price=Number(selectedVehicle.selling_price)||0;
@@ -182,6 +455,7 @@ continueButton.disabled=false;
 }
 
 function displayVehicle(vehicle){
+
 selectedVehicle=vehicle;
 
 document.getElementById("vehicleName").textContent=
@@ -191,49 +465,48 @@ document.getElementById("vehicleDescription").textContent=
 vehicle.description||"Contact our team for more vehicle information.";
 
 document.getElementById("year").textContent=vehicle.year||"—";
+
 document.getElementById("availability").textContent=
 (vehicle.availability||"To confirm").replaceAll("_"," ");
+
 document.getElementById("variant").textContent=vehicle.variant||"Standard";
 
-const imageBox=document.getElementById("vehicleImage");
-const imageUrl=Array.isArray(vehicle.image_urls)?vehicle.image_urls[0]:null;
-
-if(imageUrl){
-const img=document.createElement("img");
-img.src=imageUrl;
-img.alt=vehicle.model;
-img.onerror=()=>imageBox.innerHTML='<div class="vehicle-placeholder">Vehicle image unavailable</div>';
-imageBox.innerHTML="";
-imageBox.appendChild(img);
-}else{
-imageBox.innerHTML='<div class="vehicle-placeholder">Vehicle images coming soon</div>';
-}
+buildGallery(vehicle);
 
 updateSummary();
 }
 
 async function loadVehicles(){
+
 const {data,error}=await db
 .from("vehicles")
-.select("id,model,variant,year,description,selling_price,currency,deposit_percentage,availability,image_urls,is_published")
+.select("*")
 .eq("is_published",true)
 .order("model");
 
 if(error){
+
 vehicleSelect.innerHTML='<option value="">Unable to load vehicles</option>';
-showStatus("We couldn't load the vehicle inventory. Please refresh the page.", "error");
+
+showStatus("We couldn't load the vehicle inventory. Please refresh the page.","error");
+
 console.error(error);
 return;
 }
 
 vehicles=data||[];
+
 vehicleSelect.innerHTML='<option value="">Choose your vehicle</option>';
 
 vehicles.forEach(vehicle=>{
+
 const option=document.createElement("option");
+
 option.value=vehicle.id;
 option.textContent=[vehicle.model,vehicle.variant].filter(Boolean).join(" ");
+
 vehicleSelect.appendChild(option);
+
 });
 
 const requestedId=new URLSearchParams(location.search).get("id");
@@ -242,7 +515,9 @@ const requestedModel=new URLSearchParams(location.search).get("model");
 let initial=vehicles.find(v=>v.id===requestedId);
 
 if(!initial&&requestedModel){
-initial=vehicles.find(v=>v.model.toLowerCase()===requestedModel.toLowerCase());
+initial=vehicles.find(v=>
+(v.model||"").toLowerCase()===requestedModel.toLowerCase()
+);
 }
 
 if(initial){
@@ -252,14 +527,26 @@ displayVehicle(initial);
 }
 
 vehicleSelect.addEventListener("change",()=>{
+
 const vehicle=vehicles.find(v=>v.id===vehicleSelect.value);
-if(vehicle)displayVehicle(vehicle);
+
+if(vehicle){
+displayVehicle(vehicle);
+}else{
+selectedVehicle=null;
+continueButton.disabled=true;
+document.getElementById("vehicleImage").innerHTML=
+'<div class="vehicle-placeholder">Choose a vehicle to see its images</div>';
+document.getElementById("vehicleThumbnails").innerHTML="";
+}
+
 });
 
 colourSelect.addEventListener("change",updateSummary);
 wheelsSelect.addEventListener("change",updateSummary);
 
 continueButton.addEventListener("click",()=>{
+
 if(!selectedVehicle)return;
 
 const params=new URLSearchParams({
@@ -269,8 +556,11 @@ wheels:wheelsSelect.value
 });
 
 location.href="enquiry.html?"+params.toString();
+
 });
 
 loadVehicles();
-</script></body>
+</script>
+
+</body>
 </html>
