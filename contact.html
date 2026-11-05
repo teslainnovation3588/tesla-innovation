@@ -143,17 +143,25 @@
     .button {
       display: inline-block;
       padding: 12px 20px;
+      border: none;
       border-radius: 5px;
       background: var(--red);
       color: white;
       font-weight: bold;
       font-size: 13px;
+      cursor: pointer;
       transition: .2s;
     }
 
     .button:hover {
       background: #bd171d;
       transform: translateY(-2px);
+    }
+
+    .button:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
     }
 
     .secondary {
@@ -235,6 +243,28 @@
       margin-top: 12px;
     }
 
+    .status-message {
+      display: none;
+      padding: 13px;
+      margin-top: 18px;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .status-success {
+      display: block;
+      color: #a8f0bd;
+      background: #102719;
+      border: 1px solid #24683b;
+    }
+
+    .status-error {
+      display: block;
+      color: #ffaaaa;
+      background: #2b1111;
+      border: 1px solid #773030;
+    }
+
     .quick-links {
       display: flex;
       flex-wrap: wrap;
@@ -275,6 +305,10 @@
 
       main {
         padding: 45px 6%;
+      }
+
+      .contact-form {
+        padding: 22px;
       }
     }
   </style></head><body><header>
@@ -323,50 +357,55 @@
 
   </section>  <section class="contact-form">
     <h2>Send Us a Message</h2>
-    <p>Complete the form below. It will open your email application with your message prepared.</p><form id="contactForm">
+    <p>Complete the form below and your message will be submitted to our contact system.</p><form id="contactForm">
+
   <div class="form-grid">
 
     <div class="field">
       <label for="name">Full Name</label>
-      <input id="name" type="text" required placeholder="Your full name">
+      <input id="name" type="text" required maxlength="120" placeholder="Your full name">
     </div>
 
     <div class="field">
       <label for="email">Email Address</label>
-      <input id="email" type="email" required placeholder="you@example.com">
+      <input id="email" type="email" required maxlength="254" placeholder="you@example.com">
     </div>
 
     <div class="field">
       <label for="phone">Phone Number</label>
-      <input id="phone" type="tel" placeholder="Your phone number">
+      <input id="phone" type="tel" maxlength="40" placeholder="Your phone number">
     </div>
 
     <div class="field">
       <label for="topic">Enquiry Topic</label>
       <select id="topic" required>
         <option value="">Select a topic</option>
-        <option>Vehicle Purchase</option>
-        <option>Vehicle Pre-order</option>
-        <option>Price Negotiation</option>
-        <option>Energy Solutions</option>
-        <option>Existing Order</option>
-        <option>Other</option>
+        <option value="Vehicle Purchase">Vehicle Purchase</option>
+        <option value="Vehicle Pre-order">Vehicle Pre-order</option>
+        <option value="Price Negotiation">Price Negotiation</option>
+        <option value="Energy Solutions">Energy Solutions</option>
+        <option value="Existing Order">Existing Order</option>
+        <option value="Other">Other</option>
       </select>
     </div>
 
     <div class="field full">
       <label for="message">Your Message</label>
-      <textarea id="message" required placeholder="Tell us how we can help..."></textarea>
+      <textarea id="message" required maxlength="5000" placeholder="Tell us how we can help..."></textarea>
     </div>
 
   </div>
 
-  <button type="submit" class="button">Prepare Email Message</button>
+  <button type="submit" class="button" id="submitButton">
+    Send Message
+  </button>
+
+  <div id="formStatus" class="status-message" role="status" aria-live="polite"></div>
 
   <p class="form-note">
-    This form opens your device's email application. It does not send or store
-    a message automatically.
+    Your message will be saved securely in our contact system. Our team can review it and respond using the email address you provide.
   </p>
+
 </form>
 
 <div class="quick-links">
@@ -377,43 +416,74 @@
   </section></main><footer>
   <p>© <span id="year"></span> TESLA Innovation. All rights reserved.</p>
   <p>Vehicle and energy enquiries are subject to confirmation of availability, specifications and terms.</p>
-</footer><script>
+</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+  const supabaseClient = window.supabase.createClient(
+    "https://dnmktpmvjzsxzmgizdcv.supabase.co",
+    "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj"
+  );
+
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  document.getElementById("contactForm").addEventListener("submit", function(event) {
+  const contactForm = document.getElementById("contactForm");
+  const submitButton = document.getElementById("submitButton");
+  const formStatus = document.getElementById("formStatus");
+
+  contactForm.addEventListener("submit", async function(event) {
     event.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
-    const phone = document.getElementById("phone").value.trim();
-    const topic = document.getElementById("topic").value;
-    const message = document.getElementById("message").value.trim();
+    formStatus.className = "status-message";
+    formStatus.textContent = "";
 
-    const subject = encodeURIComponent("TESLA Innovation Contact - " + topic);
+    const contactData = {
+      full_name: document.getElementById("name").value.trim(),
+      email: document.getElementById("email").value.trim(),
+      phone: document.getElementById("phone").value.trim(),
+      topic: document.getElementById("topic").value,
+      message: document.getElementById("message").value.trim()
+    };
 
-    const body = encodeURIComponent(
-      "Name: " + name + "\n" +
-      "Email: " + email + "\n" +
-      "Phone: " + phone + "\n" +
-      "Topic: " + topic + "\n\n" +
-      "Message:\n" + message
-    );
-
-    /*
-      Replace the placeholder below with a verified public business
-      contact email before using this form for real customer messages.
-    */
-    const recipient = "YOUR_PUBLIC_BUSINESS_EMAIL@example.com";
-
-    if (recipient.includes("YOUR_PUBLIC")) {
-      alert("The contact form is not connected yet. Please contact us through the Enquiry page while we configure the public business email.");
+    if (
+      !contactData.full_name ||
+      !contactData.email ||
+      !contactData.topic ||
+      !contactData.message
+    ) {
+      formStatus.textContent = "Please complete all required fields.";
+      formStatus.className = "status-message status-error";
       return;
     }
 
-    window.location.href =
-      "mailto:" + recipient +
-      "?subject=" + subject +
-      "&body=" + body;
+    submitButton.disabled = true;
+    submitButton.textContent = "Sending...";
+
+    try {
+      const { error } = await supabaseClient
+        .from("contact_messages")
+        .insert([contactData]);
+
+      if (error) {
+        throw error;
+      }
+
+      formStatus.textContent =
+        "Your message has been submitted successfully. Thank you for contacting TESLA Innovation!";
+
+      formStatus.className = "status-message status-success";
+
+      contactForm.reset();
+
+    } catch (error) {
+      console.error("Contact submission error:", error);
+
+      formStatus.textContent =
+        "We could not submit your message. Please try again or use our Enquiry page.";
+
+      formStatus.className = "status-message status-error";
+
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Send Message";
+    }
   });
 </script></body>
 </html>
