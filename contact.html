@@ -1,0 +1,419 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contact TESLA Innovation for vehicle pre-orders, purchase enquiries, negotiations and energy solutions.">
+  <title>Contact | TESLA Innovation</title>  <style>
+    :root {
+      --red: #e82127;
+      --black: #080808;
+      --panel: #141414;
+      --muted: #aaa;
+      --white: #fff;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    header {
+      min-height: 76px;
+      padding: 18px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      border-bottom: 1px solid #242424;
+      background: #090909;
+    }
+
+    .logo {
+      font-size: 19px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+    }
+
+    .logo span {
+      color: var(--red);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    nav a {
+      color: #ccc;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    nav a:hover,
+    nav a.active {
+      color: var(--red);
+    }
+
+    .hero {
+      padding: 90px 7% 65px;
+      text-align: center;
+      background:
+        linear-gradient(rgba(0,0,0,.76), rgba(0,0,0,.94)),
+        url("https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1800&q=85") center/cover;
+    }
+
+    .eyebrow {
+      color: var(--red);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 4px;
+      margin-bottom: 15px;
+    }
+
+    h1 {
+      font-size: clamp(38px, 7vw, 65px);
+      line-height: 1.1;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 650px;
+      margin: auto;
+      color: #ccc;
+      font-size: 16px;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 65px 7%;
+    }
+
+    .intro {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .intro h2 {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .intro p {
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 28px;
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 12px;
+    }
+
+    .card p {
+      color: var(--muted);
+      margin-bottom: 18px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 12px 20px;
+      border-radius: 5px;
+      background: var(--red);
+      color: white;
+      font-weight: bold;
+      font-size: 13px;
+      transition: .2s;
+    }
+
+    .button:hover {
+      background: #bd171d;
+      transform: translateY(-2px);
+    }
+
+    .secondary {
+      background: transparent;
+      border: 1px solid #555;
+    }
+
+    .secondary:hover {
+      border-color: var(--red);
+      background: transparent;
+    }
+
+    .contact-form {
+      margin-top: 55px;
+      background: #111;
+      border: 1px solid #292929;
+      border-radius: 12px;
+      padding: 30px;
+    }
+
+    .contact-form h2 {
+      font-size: 27px;
+      margin-bottom: 8px;
+    }
+
+    .contact-form > p {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    label {
+      display: block;
+      color: #ddd;
+      font-size: 13px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 14px;
+      background: #080808;
+      border: 1px solid #383838;
+      border-radius: 5px;
+      color: white;
+      font: inherit;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--red);
+    }
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .full {
+      grid-column: 1 / -1;
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: #999;
+      margin-top: 12px;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    footer {
+      padding: 30px 7%;
+      border-top: 1px solid #292929;
+      text-align: center;
+      color: #888;
+      font-size: 12px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      nav {
+        gap: 13px;
+      }
+
+      .grid,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .full {
+        grid-column: auto;
+      }
+
+      .hero {
+        padding: 70px 6%;
+      }
+
+      main {
+        padding: 45px 6%;
+      }
+    }
+  </style></head><body><header>
+  <a href="index.html" class="logo">TESLA <span>INNOVATION</span></a>  <nav>
+    <a href="index.html">Home</a>
+    <a href="vehicles.html">Vehicles</a>
+    <a href="energy.html">Energy</a>
+    <a href="negotiate.html">Negotiate</a>
+    <a href="enquiry.html">Enquiry</a>
+    <a href="contact.html" class="active">Contact</a>
+    <a href="account.html">My Account</a>
+  </nav>
+</header><section class="hero">
+  <div class="eyebrow">WE'RE HERE TO HELP</div>
+  <h1>LET'S CONNECT.</h1>
+  <p>
+    Have a question about a vehicle, pre-order, negotiation or energy solution?
+    Contact our team and tell us what you need.
+  </p>
+</section><main>  <section class="intro">
+    <h2>How Can We Help You?</h2>
+    <p>Choose the option that best matches your enquiry.</p>
+  </section>  <section class="grid"><div class="card">
+  <h3>Vehicle Enquiries</h3>
+  <p>Ask about vehicle models, pricing, availability, colours and international delivery arrangements.</p>
+  <a href="enquiry.html" class="button">Make an Enquiry</a>
+</div>
+
+<div class="card">
+  <h3>Price Negotiation</h3>
+  <p>Have a budget in mind? Submit an offer for a vehicle and our team can review it.</p>
+  <a href="negotiate.html" class="button">Submit an Offer</a>
+</div>
+
+<div class="card">
+  <h3>Energy Solutions</h3>
+  <p>Ask about solar energy, battery storage, charging solutions and commercial energy enquiries.</p>
+  <a href="energy.html" class="button">Explore Energy</a>
+</div>
+
+<div class="card">
+  <h3>Existing Orders</h3>
+  <p>Sign in to your customer account to review your enquiries, negotiations and order updates.</p>
+  <a href="account.html" class="button">Visit My Account</a>
+</div>
+
+  </section>  <section class="contact-form">
+    <h2>Send Us a Message</h2>
+    <p>Complete the form below. It will open your email application with your message prepared.</p><form id="contactForm">
+  <div class="form-grid">
+
+    <div class="field">
+      <label for="name">Full Name</label>
+      <input id="name" type="text" required placeholder="Your full name">
+    </div>
+
+    <div class="field">
+      <label for="email">Email Address</label>
+      <input id="email" type="email" required placeholder="you@example.com">
+    </div>
+
+    <div class="field">
+      <label for="phone">Phone Number</label>
+      <input id="phone" type="tel" placeholder="Your phone number">
+    </div>
+
+    <div class="field">
+      <label for="topic">Enquiry Topic</label>
+      <select id="topic" required>
+        <option value="">Select a topic</option>
+        <option>Vehicle Purchase</option>
+        <option>Vehicle Pre-order</option>
+        <option>Price Negotiation</option>
+        <option>Energy Solutions</option>
+        <option>Existing Order</option>
+        <option>Other</option>
+      </select>
+    </div>
+
+    <div class="field full">
+      <label for="message">Your Message</label>
+      <textarea id="message" required placeholder="Tell us how we can help..."></textarea>
+    </div>
+
+  </div>
+
+  <button type="submit" class="button">Prepare Email Message</button>
+
+  <p class="form-note">
+    This form opens your device's email application. It does not send or store
+    a message automatically.
+  </p>
+</form>
+
+<div class="quick-links">
+  <a href="vehicles.html" class="button secondary">Browse Vehicles</a>
+  <a href="account.html" class="button secondary">Customer Account</a>
+</div>
+
+  </section></main><footer>
+  <p>© <span id="year"></span> TESLA Innovation. All rights reserved.</p>
+  <p>Vehicle and energy enquiries are subject to confirmation of availability, specifications and terms.</p>
+</footer><script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  document.getElementById("contactForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const topic = document.getElementById("topic").value;
+    const message = document.getElementById("message").value.trim();
+
+    const subject = encodeURIComponent("TESLA Innovation Contact - " + topic);
+
+    const body = encodeURIComponent(
+      "Name: " + name + "\n" +
+      "Email: " + email + "\n" +
+      "Phone: " + phone + "\n" +
+      "Topic: " + topic + "\n\n" +
+      "Message:\n" + message
+    );
+
+    /*
+      Replace the placeholder below with a verified public business
+      contact email before using this form for real customer messages.
+    */
+    const recipient = "YOUR_PUBLIC_BUSINESS_EMAIL@example.com";
+
+    if (recipient.includes("YOUR_PUBLIC")) {
+      alert("The contact form is not connected yet. Please contact us through the Enquiry page while we configure the public business email.");
+      return;
+    }
+
+    window.location.href =
+      "mailto:" + recipient +
+      "?subject=" + subject +
+      "&body=" + body;
+  });
+</script></body>
+</html>
