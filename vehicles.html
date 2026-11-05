@@ -1,12 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vehicles | TESLA Innovation</title>
-<meta name="description" content="Explore premium Tesla vehicles, pricing and availability at TESLA Innovation.">
-
-<style>
+<meta name="description" content="Explore premium Tesla vehicles, pricing and availability at TESLA Innovation."><style>
 :root{--red:#e82127;--bg:#080808;--panel:#141414;--muted:#aaa;--white:#fff}
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
@@ -86,30 +83,22 @@ nav{gap:13px}
 .count{padding:0 5%}
 .photo{height:230px}
 }
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
 <a class="logo" href="index.html">TESLA <span>INNOVATION</span></a>
 <nav>
 <a href="index.html">HOME</a>
 <a class="active" href="vehicles.html">VEHICLES</a>
+<a href="energy.html">ENERGY</a>
 <a href="negotiate.html">NEGOTIATE</a>
 <a href="enquiry.html">ENQUIRIES</a>
 <a href="account.html">MY ACCOUNT</a>
 <a href="contact.html">CONTACT</a>
 </nav>
-</header>
-
-<section class="hero">
+</header><section class="hero">
 <div class="eyebrow">THE VEHICLE COLLECTION</div>
 <h1>FIND YOUR <span style="color:#e82127">NEXT DRIVE.</span></h1>
 <p>Explore our premium Tesla collection. Discover vehicle specifications, current prices and availability, and take the next step towards your new vehicle.</p>
-</section>
-
-<section class="toolbar">
+</section><section class="toolbar">
 <input id="search" type="search" placeholder="Search Tesla models...">
 <select id="availability">
 <option value="">All availability</option>
@@ -123,24 +112,15 @@ nav{gap:13px}
 <option value="low">Price: Low to high</option>
 <option value="high">Price: High to low</option>
 </select>
-</section>
-
-<div class="count" id="count">Loading vehicle collection...</div>
-
-<section class="grid" id="vehicles">
+</section><div class="count" id="count">Loading vehicle collection...</div><section class="grid" id="vehicles">
 <div class="empty">Connecting to our vehicle collection...</div>
-</section>
-
-<footer>
+</section><footer>
 <strong>TESLA INNOVATION</strong><br>
 Premium Vehicles. Global Connections. Exceptional Experience.<br>
+<a href="energy.html">Explore Energy</a> &nbsp; | &nbsp;
 <a href="contact.html">Contact our team</a> &nbsp; | &nbsp;
 <a href="index.html">Return home</a>
-</footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<script>
+</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
 const SUPABASE_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
@@ -175,12 +155,8 @@ return String(value).replace(/[&<>"']/g,char=>({
 }[char]));
 }
 
-/* Read all images saved for a vehicle */
 function getVehicleImages(car){
-
 let images=[];
-
-/* Supports image_urls and image_url */
 let source=car.image_urls ?? car.image_url;
 
 if(Array.isArray(source)){
@@ -200,9 +176,7 @@ images.filter(url=>typeof url==="string" && url.trim())
 )];
 }
 
-/* Build the image gallery */
 function createGallery(car){
-
 const images=getVehicleImages(car);
 const galleryId="gallery-"+car.id;
 
@@ -255,9 +229,7 @@ loading="lazy">
 `;
 }
 
-/* Change image using arrows */
 function changeImage(galleryId,direction){
-
 const gallery=document.getElementById(galleryId);
 if(!gallery)return;
 
@@ -272,9 +244,7 @@ current=(current+direction+images.length)%images.length;
 selectImage(galleryId,current);
 }
 
-/* Select image using thumbnails */
 function selectImage(galleryId,index){
-
 const gallery=document.getElementById(galleryId);
 if(!gallery)return;
 
@@ -284,7 +254,6 @@ const mainImage=gallery.querySelector(".main-gallery-image");
 const counter=gallery.querySelector(".current-image");
 
 if(!thumbnails.length||!mainImage)return;
-
 if(index<0||index>=thumbnails.length)return;
 
 mainImage.src=thumbnails[index].src;
@@ -298,13 +267,11 @@ if(counter)counter.textContent=index+1;
 }
 
 function renderVehicles(){
-
 const search=document.getElementById("search").value.toLowerCase().trim();
 const availability=document.getElementById("availability").value;
 const sort=document.getElementById("sort").value;
 
 let list=allVehicles.filter(car=>{
-
 const matchesSearch=(
 (car.model||"")+" "+
 (car.variant||"")+" "+
@@ -312,7 +279,6 @@ const matchesSearch=(
 ).toLowerCase().includes(search);
 
 const matchesAvailability=!availability||car.availability===availability;
-
 return matchesSearch&&matchesAvailability;
 });
 
@@ -325,7 +291,6 @@ list.sort((a,b)=>Number(b.selling_price)-Number(a.selling_price));
 }
 
 document.getElementById("count").textContent=list.length+" vehicle(s) found";
-
 const container=document.getElementById("vehicles");
 
 if(!list.length){
@@ -334,10 +299,8 @@ return;
 }
 
 container.innerHTML=list.map(car=>{
-
 const stock=car.availability||"";
 const unavailable=stock==="out_of_stock";
-
 const deposit=Number(car.deposit_percentage??30);
 const depositAmount=Number(car.selling_price||0)*deposit/100;
 
@@ -390,11 +353,9 @@ Negotiate
 }
 
 async function loadVehicles(){
-
 const container=document.getElementById("vehicles");
 
 try{
-
 const {data,error}=await db.from("vehicles")
 .select("*")
 .eq("is_published",true)
@@ -403,13 +364,10 @@ const {data,error}=await db.from("vehicles")
 if(error)throw error;
 
 allVehicles=data||[];
-
 renderVehicles();
 
 }catch(error){
-
 console.error("Vehicle loading error:",error);
-
 document.getElementById("count").textContent="Vehicle collection";
 
 container.innerHTML=`
@@ -425,7 +383,5 @@ document.getElementById("availability").addEventListener("change",renderVehicles
 document.getElementById("sort").addEventListener("change",renderVehicles);
 
 loadVehicles();
-</script>
-
-</body>
+</script></body>
 </html>
