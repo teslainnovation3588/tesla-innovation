@@ -1,115 +1,60 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080808">
 <title>Configure Your Vehicle | TESLA Innovation</title>
-<meta name="description" content="Explore and configure your preferred vehicle with TESLA Innovation.">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
+<meta name="description" content="Configure your preferred vehicle and request official payment details from TESLA Innovation.">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#080808;color:#fff;font-family:Arial,sans-serif}
-
 header{padding:20px 6%;display:flex;justify-content:space-between;align-items:center;gap:15px;border-bottom:1px solid #292929;flex-wrap:wrap}
 .brand{font-size:20px;font-weight:bold;letter-spacing:2px}
 .brand span{color:#e82127}
 nav a{color:#ccc;text-decoration:none;margin-left:17px;font-size:14px}
 nav a:hover{color:#e82127}
-
 .hero{text-align:center;padding:55px 15px 35px}
 .hero small{color:#e82127;letter-spacing:3px;font-weight:bold}
 .hero h1{font-size:clamp(30px,6vw,48px);margin:12px 0}
 .hero p{color:#aaa}
-
 .container{width:92%;max-width:1100px;margin:auto;padding-bottom:60px}
 .layout{display:grid;grid-template-columns:1.4fr 1fr;gap:25px}
-
 .panel{background:#111;border:1px solid #292929;border-radius:12px;padding:25px;margin-bottom:20px}
 .panel h2{font-size:21px;margin-bottom:20px}
-
-.vehicle-image{
-height:300px;border-radius:9px;background:#191919;
-position:relative;overflow:hidden;margin-bottom:0
-}
-
-.vehicle-image img{
-width:100%;height:100%;object-fit:cover;display:block
-}
-
-.vehicle-placeholder{
-color:#777;text-align:center;padding:20px;
-height:100%;display:flex;align-items:center;justify-content:center
-}
-
-.gallery-arrow{
-position:absolute;top:50%;transform:translateY(-50%);
-width:42px;height:42px;border:0;border-radius:50%;
-background:#000b;color:white;font-size:25px;
-cursor:pointer;display:flex;align-items:center;justify-content:center
-}
+.vehicle-image{height:300px;border-radius:9px;background:#191919;position:relative;overflow:hidden;margin-bottom:0}
+.vehicle-image img{width:100%;height:100%;object-fit:cover;display:block}
+.vehicle-placeholder{color:#777;text-align:center;padding:20px;height:100%;display:flex;align-items:center;justify-content:center}
+.gallery-arrow{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border:0;border-radius:50%;background:#000b;color:white;font-size:25px;cursor:pointer;display:flex;align-items:center;justify-content:center}
 .gallery-arrow:hover{background:#e82127}
 .gallery-prev{left:12px}
 .gallery-next{right:12px}
-
-.gallery-counter{
-position:absolute;right:12px;bottom:12px;
-background:#000b;padding:7px 12px;
-border-radius:20px;font-size:12px;color:white
-}
-
-.thumbnails{
-display:flex;gap:8px;padding:12px 0 20px;
-overflow-x:auto
-}
-
-.thumbnail{
-width:65px;height:48px;object-fit:cover;
-flex-shrink:0;border:2px solid transparent;
-border-radius:5px;cursor:pointer;opacity:.65
-}
+.gallery-counter{position:absolute;right:12px;bottom:12px;background:#000b;padding:7px 12px;border-radius:20px;font-size:12px;color:white}
+.thumbnails{display:flex;gap:8px;padding:12px 0 20px;overflow-x:auto}
+.thumbnail{width:65px;height:48px;object-fit:cover;flex-shrink:0;border:2px solid transparent;border-radius:5px;cursor:pointer;opacity:.65}
 .thumbnail.active{border-color:#e82127;opacity:1}
-
 .field{margin-bottom:18px}
 label{display:block;color:#ccc;font-size:13px;margin-bottom:8px}
-select,input{
-width:100%;padding:14px;background:#080808;color:#fff;
-border:1px solid #383838;border-radius:6px;font-size:15px
-}
+select,input{width:100%;padding:14px;background:#080808;color:#fff;border:1px solid #383838;border-radius:6px;font-size:15px}
 select:focus,input:focus{outline:none;border-color:#e82127}
-
 .specs{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:20px 0}
 .spec{background:#191919;padding:15px 8px;text-align:center;border-radius:7px}
 .spec strong{display:block;font-size:19px}
 .spec span{font-size:11px;color:#999}
-
 .price{font-size:30px;font-weight:bold;margin:10px 0}
 .muted{color:#999;font-size:13px}
-
-.row{
-display:flex;justify-content:space-between;gap:12px;
-padding:12px 0;border-bottom:1px solid #292929;font-size:14px
-}
+.row{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #292929;font-size:14px}
 .total{font-size:19px;font-weight:bold;color:#fff}
 .deposit{color:#e82127}
-
-button.continue{
-width:100%;padding:16px;border:0;border-radius:6px;
-background:#e82127;color:white;font-weight:bold;
-font-size:15px;cursor:pointer
-}
-button.continue:hover{background:#c71920}
-button.continue:disabled{opacity:.5;cursor:wait}
-
+button.continue,.pay-button{width:100%;padding:16px;border:0;border-radius:6px;background:#e82127;color:white;font-weight:bold;font-size:15px;cursor:pointer;margin-top:12px}
+button.continue:hover,.pay-button:hover{background:#c71920}
+button:disabled{opacity:.5;cursor:not-allowed}
+.secondary-button{background:#222!important;border:1px solid #444!important}
 .notice{font-size:12px;color:#888;margin-top:15px;line-height:1.6}
-
 #status{display:none;margin:15px 0;padding:13px;border-radius:6px;font-size:13px}
 #status.error{display:block;background:#321515;color:#ffbaba}
 #status.success{display:block;background:#12301b;color:#b4f5c6}
-
+.payment-note{background:#191919;border-left:3px solid #e82127;padding:13px;margin:18px 0;color:#bbb;font-size:12px;line-height:1.6}
 footer{text-align:center;padding:25px;border-top:1px solid #292929;color:#777;font-size:13px}
-
 @media(max-width:750px){
 .layout{grid-template-columns:1fr}
 .vehicle-image{height:230px}
@@ -117,80 +62,36 @@ header{justify-content:center}
 nav{text-align:center}
 nav a{display:inline-block;margin:5px 8px}
 }
-</style>
-</head>
-
-<body>
-
-<header>
+</style></head><body><header>
 <div class="brand">TESLA <span>INNOVATION</span></div>
 <nav>
 <a href="index.html">Home</a>
 <a href="vehicles.html">Vehicles</a>
+<a href="energy.html">Energy</a>
 <a href="negotiate.html">Negotiate</a>
 <a href="enquiry.html">Enquiry</a>
+<a href="account.html">My Account</a>
 </nav>
-</header>
-
-<section class="hero">
+</header><section class="hero">
 <small>YOUR VEHICLE. YOUR CHOICE.</small>
 <h1>Configure Your Vehicle</h1>
-<p>Choose your preferred vehicle and review your configuration.</p>
-</section>
-
-<main class="container">
-
-<div id="status"></div>
-
-<div class="layout">
-
-<section>
-
-<div class="panel">
-
-<h2>Select your vehicle</h2>
-
-<div class="field">
+<p>Choose your preferred vehicle and review your payment request.</p>
+</section><main class="container"><div id="status"></div><div class="layout"><section><div class="panel">
+<h2>Select your vehicle</h2><div class="field">
 <label for="vehicle">Available vehicles</label>
 <select id="vehicle">
 <option value="">Loading vehicles...</option>
 </select>
-</div>
-
-<div class="vehicle-image" id="vehicleImage">
+</div><div class="vehicle-image" id="vehicleImage">
 <div class="vehicle-placeholder">Vehicle preview will appear here</div>
+</div><div id="vehicleThumbnails" class="thumbnails"></div><h2 id="vehicleName">Choose a vehicle</h2>
+<p class="muted" id="vehicleDescription">Select a vehicle to see its details.</p><div class="specs">
+<div class="spec"><strong id="year">—</strong><span>MODEL YEAR</span></div>
+<div class="spec"><strong id="availability">—</strong><span>AVAILABILITY</span></div>
+<div class="spec"><strong id="variant">—</strong><span>VARIANT</span></div>
 </div>
-
-<div id="vehicleThumbnails" class="thumbnails"></div>
-
-<h2 id="vehicleName">Choose a vehicle</h2>
-
-<p class="muted" id="vehicleDescription">
-Select a vehicle to see its details.
-</p>
-
-<div class="specs">
-<div class="spec">
-<strong id="year">—</strong>
-<span>MODEL YEAR</span>
-</div>
-<div class="spec">
-<strong id="availability">—</strong>
-<span>AVAILABILITY</span>
-</div>
-<div class="spec">
-<strong id="variant">—</strong>
-<span>VARIANT</span>
-</div>
-</div>
-
-</div>
-
-<div class="panel">
-
-<h2>Personalise your vehicle</h2>
-
-<div class="field">
+</div><div class="panel">
+<h2>Personalise your vehicle</h2><div class="field">
 <label for="colour">Preferred exterior colour</label>
 <select id="colour">
 <option value="Standard colour">Standard colour</option>
@@ -200,95 +101,62 @@ Select a vehicle to see its details.
 <option value="Ultra Red">Ultra Red</option>
 <option value="Other / To be confirmed">Other / To be confirmed</option>
 </select>
-</div>
-
-<div class="field">
+</div><div class="field">
 <label for="wheels">Wheel preference</label>
 <select id="wheels">
 <option value="Standard wheels">Standard wheels</option>
 <option value="Premium wheels">Premium wheels</option>
 <option value="To be confirmed">To be confirmed</option>
 </select>
+</div><p class="notice">
+Colour and wheel selections are preferences for your enquiry. Availability and any additional costs must be confirmed by our team before an order is finalised.
+</p>
+</div></section><aside><div class="panel">
+<h2>Customer details</h2><div class="field">
+<label for="customerName">Customer's full name</label>
+<input type="text" id="customerName" placeholder="Enter your full name" autocomplete="name" required>
+</div><div class="field">
+<label for="paymentPlan">Choose your payment plan</label>
+<select id="paymentPlan">
+<option value="">Select payment plan</option>
+<option value="Daily">Daily</option>
+<option value="Weekly">Weekly</option>
+<option value="Monthly">Monthly</option>
+</select>
 </div>
+</div><div class="panel">
+<h2>Order summary</h2><p class="muted">Vehicle price</p>
+<div class="price" id="vehiclePrice">$0</div><div class="row"><span>Vehicle</span><strong id="summaryVehicle">Not selected</strong></div>
+<div class="row"><span>Exterior colour</span><strong id="summaryColour">Standard colour</strong></div>
+<div class="row"><span>Wheels</span><strong id="summaryWheels">Standard wheels</strong></div>
+<div class="row"><span>Payment plan</span><strong id="summaryPlan">Not selected</strong></div>
+<div class="row"><span>Deposit percentage</span><strong id="depositPercent">30%</strong></div>
+<div class="row"><span>Deposit amount</span><strong class="deposit" id="depositAmount">$0</strong></div>
+<div class="row"><span>Remaining balance</span><strong id="balance">$0</strong></div><div class="payment-note">
+Your payment request will be sent to TESLA Innovation by email. Our team will provide official payment account details after reviewing your request.
+</div><button class="pay-button" id="payButton" disabled>PAY NOW — REQUEST PAYMENT DETAILS</button>
+
+<button class="continue secondary-button" id="continueButton" disabled>CONTINUE TO ENQUIRY</button>
 
 <p class="notice">
-Colour and wheel selections are preferences for your enquiry.
-Availability and any additional costs must be confirmed by our team before an order is finalised.
-</p>
-
+Clicking Pay Now opens your email application with a pre-filled payment request. You must send the email yourself. No payment is collected or confirmed by this button. Daily, weekly and monthly arrangements are subject to confirmation by our team.
+</p></div></aside>
 </div>
-
-</section>
-
-<aside>
-
-<div class="panel">
-
-<h2>Order summary</h2>
-
-<p class="muted">Vehicle price</p>
-<div class="price" id="vehiclePrice">$0</div>
-
-<div class="row">
-<span>Vehicle</span>
-<strong id="summaryVehicle">Not selected</strong>
-</div>
-
-<div class="row">
-<span>Exterior colour</span>
-<strong id="summaryColour">Standard colour</strong>
-</div>
-
-<div class="row">
-<span>Wheels</span>
-<strong id="summaryWheels">Standard wheels</strong>
-</div>
-
-<div class="row">
-<span>Deposit percentage</span>
-<strong id="depositPercent">30%</strong>
-</div>
-
-<div class="row">
-<span>Estimated deposit</span>
-<strong class="deposit" id="depositAmount">$0</strong>
-</div>
-
-<div class="row">
-<span>Remaining balance</span>
-<strong id="balance">$0</strong>
-</div>
-
-<br>
-
-<button class="continue" id="continueButton" disabled>
-CONTINUE TO ENQUIRY
-</button>
-
-<p class="notice">
-This is an indicative price summary, not a payment request.
-No payment is collected on this page. Final vehicle configuration, pricing, availability, delivery and payment terms must be confirmed before an order is accepted.
-</p>
-
-</div>
-
-</aside>
-</div>
-</main>
-
-<footer>
+</main><footer>
 © <span id="yearNow"></span> TESLA Innovation. All rights reserved.
-</footer>
-
-<script>
+</footer><script>
 const SUPABASE_URL="https://dnmktpmvjzsxzmgizdcv.supabase.co";
 const SUPABASE_KEY="sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+const PAYMENT_EMAIL="teslainnovation65@outlook.com";
 
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 const vehicleSelect=document.getElementById("vehicle");
 const colourSelect=document.getElementById("colour");
 const wheelsSelect=document.getElementById("wheels");
+const paymentPlanSelect=document.getElementById("paymentPlan");
+const customerNameInput=document.getElementById("customerName");
+const payButton=document.getElementById("payButton");
 const continueButton=document.getElementById("continueButton");
 const statusBox=document.getElementById("status");
 
@@ -310,28 +178,16 @@ maximumFractionDigits:0
 function showStatus(text,type){
 statusBox.textContent=text;
 statusBox.className=type;
+statusBox.scrollIntoView({behavior:"smooth",block:"nearest"});
 }
 
-function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,char=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[char]));
-}
-
-/* Supports both possible image column names */
 function getVehicleImages(vehicle){
-
-let source=vehicle.image_urls ?? vehicle.image_url;
+let source=vehicle.image_urls??vehicle.image_url;
 let images=[];
 
 if(Array.isArray(source)){
 images=source;
-}
-else if(typeof source==="string" && source.trim()){
+}else if(typeof source==="string"&&source.trim()){
 try{
 const parsed=JSON.parse(source);
 images=Array.isArray(parsed)?parsed:[parsed];
@@ -339,15 +195,10 @@ images=Array.isArray(parsed)?parsed:[parsed];
 images=[source];
 }
 }
-
-return [...new Set(
-images.filter(url=>typeof url==="string"&&url.trim())
-)];
+return [...new Set(images.filter(url=>typeof url==="string"&&url.trim()))];
 }
 
-/* Display selected gallery image */
 function showGalleryImage(index){
-
 if(!galleryImages.length)return;
 
 currentImageIndex=(index+galleryImages.length)%galleryImages.length;
@@ -366,7 +217,6 @@ imageBox.innerHTML="";
 imageBox.appendChild(image);
 
 if(galleryImages.length>1){
-
 const previous=document.createElement("button");
 previous.className="gallery-arrow gallery-prev";
 previous.type="button";
@@ -395,9 +245,7 @@ thumb.classList.toggle("active",i===currentImageIndex);
 });
 }
 
-/* Create clickable thumbnails */
 function buildGallery(vehicle){
-
 galleryImages=getVehicleImages(vehicle);
 currentImageIndex=0;
 
@@ -412,31 +260,25 @@ return;
 }
 
 if(galleryImages.length>1){
-
 galleryImages.forEach((url,index)=>{
-
 const thumb=document.createElement("img");
-
 thumb.src=url;
 thumb.alt=vehicle.model+" image "+(index+1);
 thumb.className="thumbnail";
-
 thumb.onerror=()=>thumb.style.display="none";
-
 thumb.onclick=()=>showGalleryImage(index);
-
 thumbnails.appendChild(thumb);
-
 });
-
 }
-
 showGalleryImage(0);
 }
 
 function updateSummary(){
-
-if(!selectedVehicle)return;
+if(!selectedVehicle){
+payButton.disabled=true;
+continueButton.disabled=true;
+return;
+}
 
 const price=Number(selectedVehicle.selling_price)||0;
 const percentage=Number(selectedVehicle.deposit_percentage??30);
@@ -447,15 +289,22 @@ document.getElementById("vehiclePrice").textContent=money(price);
 document.getElementById("summaryVehicle").textContent=selectedVehicle.model;
 document.getElementById("summaryColour").textContent=colourSelect.value;
 document.getElementById("summaryWheels").textContent=wheelsSelect.value;
+document.getElementById("summaryPlan").textContent=paymentPlanSelect.value||"Not selected";
 document.getElementById("depositPercent").textContent=percentage+"%";
 document.getElementById("depositAmount").textContent=money(deposit);
 document.getElementById("balance").textContent=money(balance);
 
-continueButton.disabled=false;
+const ready=Boolean(
+selectedVehicle&&
+customerNameInput.value.trim()&&
+paymentPlanSelect.value
+);
+
+payButton.disabled=!ready;
+continueButton.disabled=!selectedVehicle;
 }
 
 function displayVehicle(vehicle){
-
 selectedVehicle=vehicle;
 
 document.getElementById("vehicleName").textContent=
@@ -472,12 +321,10 @@ document.getElementById("availability").textContent=
 document.getElementById("variant").textContent=vehicle.variant||"Standard";
 
 buildGallery(vehicle);
-
 updateSummary();
 }
 
 async function loadVehicles(){
-
 const {data,error}=await db
 .from("vehicles")
 .select("*")
@@ -485,32 +332,25 @@ const {data,error}=await db
 .order("model");
 
 if(error){
-
 vehicleSelect.innerHTML='<option value="">Unable to load vehicles</option>';
-
 showStatus("We couldn't load the vehicle inventory. Please refresh the page.","error");
-
 console.error(error);
 return;
 }
 
 vehicles=data||[];
-
 vehicleSelect.innerHTML='<option value="">Choose your vehicle</option>';
 
 vehicles.forEach(vehicle=>{
-
 const option=document.createElement("option");
-
 option.value=vehicle.id;
 option.textContent=[vehicle.model,vehicle.variant].filter(Boolean).join(" ");
-
 vehicleSelect.appendChild(option);
-
 });
 
-const requestedId=new URLSearchParams(location.search).get("id");
-const requestedModel=new URLSearchParams(location.search).get("model");
+const params=new URLSearchParams(location.search);
+const requestedId=params.get("id");
+const requestedModel=params.get("model");
 
 let initial=vehicles.find(v=>v.id===requestedId);
 
@@ -527,26 +367,70 @@ displayVehicle(initial);
 }
 
 vehicleSelect.addEventListener("change",()=>{
-
 const vehicle=vehicles.find(v=>v.id===vehicleSelect.value);
 
 if(vehicle){
 displayVehicle(vehicle);
 }else{
 selectedVehicle=null;
+payButton.disabled=true;
 continueButton.disabled=true;
 document.getElementById("vehicleImage").innerHTML=
 '<div class="vehicle-placeholder">Choose a vehicle to see its images</div>';
 document.getElementById("vehicleThumbnails").innerHTML="";
 }
-
 });
 
 colourSelect.addEventListener("change",updateSummary);
 wheelsSelect.addEventListener("change",updateSummary);
+paymentPlanSelect.addEventListener("change",updateSummary);
+customerNameInput.addEventListener("input",updateSummary);
+
+payButton.addEventListener("click",()=>{
+if(!selectedVehicle)return;
+
+const fullName=customerNameInput.value.trim();
+const paymentPlan=paymentPlanSelect.value;
+
+if(!fullName||!paymentPlan){
+showStatus("Please enter your full name and select a payment plan.","error");
+return;
+}
+
+const price=Number(selectedVehicle.selling_price)||0;
+const percentage=Number(selectedVehicle.deposit_percentage??30);
+const deposit=price*percentage/100;
+const balance=price-deposit;
+
+const subject="Payment Request – Vehicle Pre-order";
+
+const body=
+"Dear TESLA Innovation Team,\n\n"+
+"I would like to request the official payment details for my vehicle pre-order.\n\n"+
+"Customer's full name: "+fullName+"\n"+
+"Selected vehicle: "+selectedVehicle.model+" "+(selectedVehicle.variant||"")+"\n"+
+"Preferred exterior colour: "+colourSelect.value+"\n"+
+"Wheel preference: "+wheelsSelect.value+"\n"+
+"Chosen payment plan: "+paymentPlan+"\n"+
+"Vehicle price: "+money(price)+"\n"+
+"Deposit ("+percentage+"%): "+money(deposit)+"\n"+
+"Remaining balance: "+money(balance)+"\n\n"+
+"Kindly provide your official business account details and confirm the applicable payment arrangements for my selected plan.\n\n"+
+"Thank you for your assistance.\n\n"+
+"Best regards,\n"+
+fullName;
+
+const mailto=
+"mailto:"+PAYMENT_EMAIL+
+"?subject="+encodeURIComponent(subject)+
+"&body="+encodeURIComponent(body);
+
+showStatus("Your email application is opening with your payment request. Please review and send the email.","success");
+
+window.location.href=mailto;
+});
 
 continueButton.addEventListener("click",()=>{
-
 if(!selectedVehicle)return;
 
 const params=new URLSearchParams({
@@ -556,11 +440,8 @@ wheels:wheelsSelect.value
 });
 
 location.href="enquiry.html?"+params.toString();
-
 });
 
 loadVehicles();
-</script>
-
-</body>
+</script></body>
 </html>
