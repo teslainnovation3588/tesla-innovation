@@ -3,770 +3,2163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="TESLA Innovation — Premium Vehicles. Global Connections. Exceptional Experience.">
-<title>TESLA Innovation | Premium Showroom</title>
+
+<meta name="theme-color" content="#08090b">
+
+<meta name="description" content="TESLA Innovation — Premium electric vehicles, international vehicle sales and pre-order enquiries.">
+
+<title>TESLA Innovation | Premium Electric Vehicles</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
 <style>
-:root {
-  --background: #080a0d;
-  --surface: #12161c;
-  --surface-light: #191f27;
-  --red: #e82127;
-  --white: #ffffff;
-  --muted: #a5aab2;
-  --border: #292d32;
+
+/* =================================
+   GLOBAL DESIGN
+================================= */
+
+:root{
+--bg:#08090b;
+--surface:#111317;
+--surface2:#181b20;
+--red:#e82127;
+--white:#ffffff;
+--muted:#a5a7ac;
+--border:rgba(255,255,255,.10);
+--green:#43d69a;
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-html {
-  scroll-behavior: smooth;
+html{
+scroll-behavior:smooth;
+scroll-padding-top:90px;
 }
 
-body {
-  font-family: 'Inter', Arial, sans-serif;
-  background: var(--background);
-  color: var(--white);
-  overflow-x: hidden;
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--bg);
+color:var(--white);
+line-height:1.6;
+overflow-x:hidden;
 }
 
-a {
-  text-decoration: none;
-  color: inherit;
+a{
+text-decoration:none;
+color:inherit;
 }
 
-header {
-  width: 100%;
-  padding: 22px 7%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(8,10,13,.92);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  backdrop-filter: blur(18px);
+button,input,select,textarea{
+font:inherit;
 }
 
-.logo {
-  font-size: 21px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  white-space: nowrap;
+button{
+cursor:pointer;
 }
 
-.logo span {
-  color: var(--red);
+.container{
+width:min(1200px,90%);
+margin:auto;
 }
 
-nav {
-  display: flex;
-  align-items: center;
-  gap: 27px;
+.section{
+padding:100px 0;
 }
 
-nav a {
-  font-size: 12px;
-  font-weight: 600;
-  color: #d5d5d5;
-  transition: .3s;
+/* =================================
+   NAVIGATION
+================================= */
+
+header{
+position:sticky;
+top:0;
+z-index:1000;
+background:rgba(8,9,11,.94);
+backdrop-filter:blur(18px);
+border-bottom:1px solid var(--border);
 }
 
-nav a:hover {
-  color: var(--red);
+.navbar{
+min-height:78px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:25px;
 }
 
-.nav-button {
-  background: var(--red);
-  padding: 12px 19px;
-  border-radius: 3px;
-  color: white;
+.logo{
+font-size:22px;
+font-weight:900;
+letter-spacing:2px;
+white-space:nowrap;
 }
 
-.menu-toggle {
-  display: none;
-  background: none;
-  color: white;
-  border: 1px solid var(--border);
-  padding: 9px 13px;
-  font-size: 20px;
-  cursor: pointer;
+.logo span{
+color:var(--red);
 }
 
-.hero {
-  min-height: 690px;
-  padding: 100px 8%;
-  display: flex;
-  align-items: center;
-  position: relative;
-  overflow: hidden;
-  background:
-    linear-gradient(90deg, rgba(0,0,0,.94), rgba(0,0,0,.58), rgba(0,0,0,.2)),
-    linear-gradient(0deg, #080a0d 0%, transparent 45%),
-    url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=2000&q=90')
-    center/cover no-repeat;
+.nav-links{
+display:flex;
+align-items:center;
+gap:30px;
 }
 
-.hero-content {
-  max-width: 760px;
-  animation: heroReveal 1s ease both;
+.nav-links a{
+color:#c6c7ca;
+font-size:13px;
+transition:.3s;
 }
 
-.eyebrow {
-  color: var(--red);
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 4px;
-  margin-bottom: 25px;
+.nav-links a:hover{
+color:var(--red);
 }
 
-.hero h1 {
-  font-size: clamp(44px, 8vw, 88px);
-  line-height: 1.03;
-  font-weight: 900;
-  letter-spacing: -4px;
-  margin-bottom: 25px;
+.nav-cta{
+background:var(--red);
+padding:12px 19px;
+border-radius:4px;
+font-size:12px;
+font-weight:bold;
+transition:.3s;
 }
 
-.hero h1 span {
-  color: var(--red);
+.nav-cta:hover{
+background:#bd171d;
+transform:translateY(-2px);
 }
 
-.hero p {
-  color: #d0d0d0;
-  max-width: 560px;
-  font-size: 15px;
-  line-height: 1.9;
+.menu-toggle{
+display:none;
+background:none;
+border:1px solid var(--border);
+color:white;
+padding:8px 12px;
+border-radius:4px;
+font-size:21px;
 }
 
-.hero-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 35px;
+/* =================================
+   HERO SECTION
+================================= */
+
+.hero{
+min-height:690px;
+position:relative;
+display:flex;
+align-items:center;
+overflow:hidden;
+
+background:
+linear-gradient(
+90deg,
+rgba(0,0,0,.95),
+rgba(0,0,0,.67),
+rgba(0,0,0,.18)
+),
+url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=2000&q=90')
+center/cover no-repeat;
 }
 
-.button {
-  display: inline-block;
-  padding: 16px 26px;
-  font-size: 11px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  border: 1px solid var(--red);
-  transition: .3s ease;
+.hero-content{
+max-width:850px;
+padding:100px 0;
+position:relative;
+z-index:2;
 }
 
-.button.primary {
-  background: var(--red);
-  color: white;
+.hero-label{
+display:inline-block;
+color:#ff555b;
+font-size:12px;
+letter-spacing:4px;
+font-weight:bold;
+margin-bottom:25px;
 }
 
-.button.secondary {
-  background: transparent;
-  color: white;
+.hero h1{
+font-size:clamp(48px,8vw,95px);
+line-height:1.05;
+letter-spacing:-3px;
+font-weight:900;
+margin-bottom:25px;
 }
 
-.button:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 12px 30px rgba(232,33,39,.2);
+.hero h1 span{
+color:var(--red);
 }
 
-.hero-bottom {
-  position: absolute;
-  bottom: 38px;
-  left: 8%;
-  right: 8%;
-  display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  color: #c4c4c4;
-  font-size: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+.hero-description{
+max-width:620px;
+color:#d0d0d0;
+font-size:16px;
+line-height:1.9;
 }
 
-.section {
-  padding: 100px 7%;
+.hero-buttons{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+margin-top:35px;
 }
 
-.section-heading {
-  text-align: center;
-  max-width: 700px;
-  margin: 0 auto 50px;
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:15px 25px;
+border-radius:4px;
+font-weight:bold;
+font-size:12px;
+letter-spacing:1px;
+border:none;
+transition:.3s;
 }
 
-.section-heading .eyebrow {
-  margin-bottom: 15px;
+.btn-red{
+background:var(--red);
+color:white;
 }
 
-.section-heading h2 {
-  font-size: clamp(27px, 4vw, 43px);
-  letter-spacing: -1.5px;
-  margin-bottom: 15px;
+.btn-red:hover{
+background:#bd171d;
+transform:translateY(-3px);
 }
 
-.section-heading p {
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.8;
+.btn-outline{
+border:1px solid rgba(255,255,255,.5);
+color:white;
+background:transparent;
 }
 
-.vehicle-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 25px;
+.btn-outline:hover{
+background:white;
+color:black;
 }
 
-.vehicle-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  overflow: hidden;
-  border-radius: 7px;
-  transition: transform .4s, border-color .4s, box-shadow .4s;
-  opacity: 0;
-  transform: translateY(25px);
+/* =================================
+   FEATURE STRIP
+================================= */
+
+.features{
+background:#111317;
+border-top:1px solid var(--border);
+border-bottom:1px solid var(--border);
 }
 
-.vehicle-card.visible {
-  opacity: 1;
-  transform: translateY(0);
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
 }
 
-.vehicle-card:hover {
-  transform: translateY(-9px);
-  border-color: var(--red);
-  box-shadow: 0 18px 45px rgba(0,0,0,.45);
+.feature{
+padding:28px 15px;
+text-align:center;
+border-right:1px solid var(--border);
 }
 
-.vehicle-image {
-  height: 220px;
-  overflow: hidden;
-  background: #090b0e;
+.feature:last-child{
+border-right:none;
 }
 
-.vehicle-image img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform .7s;
+.feature strong{
+display:block;
+font-size:14px;
+margin-bottom:5px;
 }
 
-.vehicle-card:hover .vehicle-image img {
-  transform: scale(1.07);
+.feature p{
+color:var(--muted);
+font-size:12px;
 }
 
-.vehicle-content {
-  padding: 24px;
+/* =================================
+   SECTION HEADINGS
+================================= */
+
+.section-heading{
+margin-bottom:45px;
 }
 
-.vehicle-content h3 {
-  font-size: 22px;
-  margin-bottom: 9px;
+.eyebrow{
+color:var(--red);
+font-size:11px;
+font-weight:bold;
+letter-spacing:4px;
+margin-bottom:12px;
 }
 
-.vehicle-content p {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 1.8;
+.section-heading h2{
+font-size:clamp(29px,5vw,43px);
+font-weight:900;
+letter-spacing:-1px;
+margin-bottom:12px;
 }
 
-.vehicle-price {
-  color: var(--red);
-  font-size: 23px;
-  font-weight: 800;
-  margin: 15px 0;
+.section-heading p{
+color:var(--muted);
+font-size:14px;
+max-width:650px;
+line-height:1.9;
 }
 
-.vehicle-status {
-  display: inline-block;
-  color: #eee;
-  background: #252d35;
-  padding: 8px 11px;
-  font-size: 9px;
-  letter-spacing: 1px;
-  margin-bottom: 18px;
+/* =================================
+   VEHICLE FILTERS
+================================= */
+
+.vehicle-tools{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+margin-bottom:30px;
 }
 
-.card-link {
-  display: block;
-  text-align: center;
-  padding: 13px;
-  background: var(--red);
-  color: white;
-  font-size: 10px;
-  font-weight: 800;
-  letter-spacing: 1px;
-  transition: .3s;
+.vehicle-tools input,
+.vehicle-tools select{
+flex:1;
+min-width:180px;
+padding:14px;
+background:var(--surface);
+border:1px solid var(--border);
+color:white;
+border-radius:4px;
+outline:none;
 }
 
-.card-link:hover {
-  background: #bd171d;
+.vehicle-tools input:focus,
+.vehicle-tools select:focus{
+border-color:var(--red);
 }
 
-.loading {
-  text-align: center;
-  color: var(--muted);
-  padding: 35px;
-  grid-column: 1/-1;
+.vehicle-tools select option{
+background:#111;
 }
 
-.collection-link {
-  text-align: center;
-  margin-top: 40px;
+.filter-buttons{
+display:flex;
+gap:9px;
+flex-wrap:wrap;
+margin-bottom:30px;
 }
 
-.experience {
-  background: linear-gradient(120deg, #151a21, #090b0e);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  text-align: center;
-  padding: 95px 7%;
+.filter-btn{
+background:#171a1f;
+border:1px solid var(--border);
+color:#ccc;
+padding:10px 16px;
+border-radius:3px;
+font-size:11px;
+font-weight:bold;
 }
 
-.experience h2 {
-  font-size: clamp(28px, 5vw, 48px);
-  margin-bottom: 18px;
+.filter-btn.active,
+.filter-btn:hover{
+background:var(--red);
+border-color:var(--red);
+color:white;
 }
 
-.experience p {
-  color: var(--muted);
-  max-width: 650px;
-  margin: auto;
-  font-size: 14px;
-  line-height: 1.9;
+/* =================================
+   VEHICLE GRID
+================================= */
+
+.vehicle-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:25px;
 }
 
-.feature-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  gap: 18px;
-  margin-top: 45px;
+.vehicle-card{
+background:var(--surface);
+border:1px solid var(--border);
+border-radius:7px;
+overflow:hidden;
+transition:.35s;
 }
 
-.feature {
-  padding: 28px 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 5px;
-  transition: .3s;
+.vehicle-card:hover{
+transform:translateY(-7px);
+border-color:rgba(232,33,39,.6);
+box-shadow:0 18px 45px rgba(0,0,0,.35);
 }
 
-.feature:hover {
-  border-color: var(--red);
-  transform: translateY(-5px);
+.vehicle-image{
+height:230px;
+position:relative;
+overflow:hidden;
+background:#17191e;
 }
 
-.feature h3 {
-  font-size: 15px;
-  margin-bottom: 10px;
+.vehicle-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:.5s;
 }
 
-.feature p {
-  font-size: 11px;
+.vehicle-card:hover .vehicle-image img{
+transform:scale(1.06);
 }
 
-footer {
-  padding: 40px 7%;
-  text-align: center;
-  border-top: 1px solid var(--border);
-  color: #888;
-  font-size: 11px;
-  line-height: 2;
+.stock-badge{
+position:absolute;
+top:15px;
+left:15px;
+padding:7px 11px;
+border-radius:3px;
+font-size:10px;
+font-weight:bold;
+background:rgba(0,0,0,.85);
 }
 
-footer strong {
-  color: white;
+.stock-in{
+color:var(--green);
 }
 
-@keyframes heroReveal {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.stock-limited{
+color:#ffcf65;
 }
 
-@media(max-width:850px) {
-  header {
-    padding: 18px 5%;
-  }
-
-  .menu-toggle {
-    display: block;
-  }
-
-  nav {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    padding: 25px 5%;
-    background: #080a0d;
-    border-bottom: 1px solid var(--border);
-    flex-direction: column;
-    align-items: stretch;
-    gap: 22px;
-  }
-
-  nav.open {
-    display: flex;
-  }
-
-  nav a {
-    font-size: 13px;
-  }
-
-  .hero {
-    min-height: 610px;
-    padding: 85px 6%;
-  }
-
-  .hero h1 {
-    letter-spacing: -2px;
-  }
-
-  .hero-bottom {
-    left: 6%;
-    right: 6%;
-    font-size: 8px;
-  }
-
-  .section {
-    padding: 75px 5%;
-  }
+.stock-pre{
+color:#8ecbff;
 }
 
-@media(max-width:480px) {
-  .logo {
-    font-size: 17px;
-  }
-
-  .hero {
-    min-height: 590px;
-  }
-
-  .hero p {
-    font-size: 13px;
-  }
-
-  .hero-bottom {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .hero-actions {
-    flex-direction: column;
-    align-items: stretch;
-  }
-
-  .button {
-    text-align: center;
-  }
-
-  .vehicle-grid {
-    grid-template-columns: 1fr;
-  }
+.stock-out{
+color:#ff7777;
 }
 
-@media(prefers-reduced-motion:reduce) {
-  *, *::before, *::after {
-    scroll-behavior: auto !important;
-    animation-duration: .01ms !important;
-    transition-duration: .01ms !important;
-  }
+.vehicle-info{
+padding:23px;
 }
+
+.vehicle-info h3{
+font-size:23px;
+margin-bottom:5px;
+}
+
+.vehicle-variant{
+color:var(--muted);
+font-size:12px;
+margin-bottom:15px;
+}
+
+.vehicle-price{
+font-size:27px;
+font-weight:900;
+color:white;
+margin-bottom:13px;
+}
+
+.vehicle-price small{
+font-size:11px;
+color:var(--muted);
+font-weight:normal;
+}
+
+.vehicle-description{
+font-size:12px;
+color:var(--muted);
+line-height:1.8;
+min-height:55px;
+}
+
+.vehicle-buttons{
+display:flex;
+gap:9px;
+margin-top:20px;
+}
+
+.vehicle-buttons button{
+flex:1;
+padding:13px 8px;
+border:none;
+border-radius:3px;
+font-size:10px;
+font-weight:bold;
+}
+
+.buy-button{
+background:var(--red);
+color:white;
+}
+
+.negotiate-button{
+background:#e6e6e6;
+color:#111;
+}
+
+.vehicle-buttons button:hover{
+opacity:.8;
+}
+
+.empty-message{
+grid-column:1/-1;
+text-align:center;
+padding:45px;
+color:var(--muted);
+background:var(--surface);
+border-radius:5px;
+}
+
+/* =================================
+   ABOUT SECTION
+================================= */
+
+.about-section{
+background:#111317;
+}
+
+.about-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:60px;
+align-items:center;
+}
+
+.about-image{
+height:400px;
+border-radius:6px;
+overflow:hidden;
+}
+
+.about-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.about-content h2{
+font-size:37px;
+line-height:1.2;
+margin-bottom:20px;
+}
+
+.about-content p{
+font-size:14px;
+color:var(--muted);
+line-height:2;
+margin-bottom:17px;
+}
+
+.about-points{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-top:25px;
+}
+
+.about-point{
+padding:17px;
+background:#1a1d22;
+border:1px solid var(--border);
+border-radius:4px;
+}
+
+.about-point strong{
+display:block;
+font-size:13px;
+margin-bottom:5px;
+}
+
+.about-point span{
+font-size:11px;
+color:var(--muted);
+}
+
+/* =================================
+   FORMS
+================================= */
+
+.form-section{
+background:var(--bg);
+}
+
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:35px;
+align-items:start;
+}
+
+.form-panel{
+background:var(--surface);
+border:1px solid var(--border);
+padding:30px;
+border-radius:6px;
+}
+
+.form-panel h3{
+font-size:21px;
+margin-bottom:8px;
+}
+
+.form-panel>p{
+font-size:12px;
+color:var(--muted);
+margin-bottom:22px;
+}
+
+form label{
+display:block;
+font-size:11px;
+color:#ccc;
+margin-top:13px;
+}
+
+form input,
+form select,
+form textarea{
+width:100%;
+padding:14px;
+margin-top:7px;
+background:#08090b;
+border:1px solid #30343b;
+color:white;
+border-radius:3px;
+outline:none;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus{
+border-color:var(--red);
+}
+
+form select option{
+background:#111;
+}
+
+form textarea{
+min-height:100px;
+resize:vertical;
+}
+
+form button{
+width:100%;
+margin-top:20px;
+padding:15px;
+background:var(--red);
+border:0;
+border-radius:3px;
+color:white;
+font-weight:bold;
+font-size:12px;
+letter-spacing:1px;
+}
+
+form button:hover{
+background:#bd171d;
+}
+
+form button:disabled{
+opacity:.5;
+cursor:not-allowed;
+}
+
+.form-note{
+font-size:11px;
+color:#888;
+line-height:1.8;
+margin-top:15px;
+}
+
+.form-result{
+margin-top:15px;
+font-size:12px;
+line-height:1.7;
+}
+
+/* =================================
+   CONTACT
+================================= */
+
+.contact-section{
+background:#111317;
+text-align:center;
+}
+
+.contact-section h2{
+font-size:35px;
+margin-bottom:15px;
+}
+
+.contact-section p{
+max-width:650px;
+margin:auto;
+color:var(--muted);
+font-size:14px;
+line-height:1.9;
+}
+
+/* =================================
+   FOOTER
+================================= */
+
+footer{
+background:#07080a;
+border-top:1px solid var(--border);
+padding:45px 0 25px;
+}
+
+.footer-content{
+display:flex;
+justify-content:space-between;
+gap:30px;
+flex-wrap:wrap;
+padding-bottom:30px;
+}
+
+.footer-brand{
+font-size:20px;
+font-weight:900;
+letter-spacing:2px;
+}
+
+.footer-brand span{
+color:var(--red);
+}
+
+.footer-content p{
+font-size:12px;
+color:var(--muted);
+margin-top:10px;
+max-width:350px;
+line-height:1.9;
+}
+
+.footer-links{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+align-items:center;
+}
+
+.footer-links a{
+font-size:12px;
+color:#aaa;
+}
+
+.footer-links a:hover{
+color:var(--red);
+}
+
+.copyright{
+border-top:1px solid var(--border);
+padding-top:20px;
+text-align:center;
+font-size:11px;
+color:#777;
+}
+
+/* =================================
+   ANIMATIONS
+================================= */
+
+.reveal{
+opacity:0;
+transform:translateY(25px);
+transition:opacity .7s ease,transform .7s ease;
+}
+
+.reveal.visible{
+opacity:1;
+transform:translateY(0);
+}
+
+/* =================================
+   RESPONSIVE DESIGN
+================================= */
+
+@media(max-width:950px){
+
+.vehicle-grid{
+grid-template-columns:repeat(2,1fr);
+}
+
+.about-grid{
+gap:30px;
+}
+
+}
+
+@media(max-width:700px){
+
+.container{
+width:91%;
+}
+
+.section{
+padding:70px 0;
+}
+
+.navbar{
+min-height:70px;
+flex-wrap:wrap;
+}
+
+.menu-toggle{
+display:block;
+}
+
+.nav-links{
+display:none;
+width:100%;
+flex-direction:column;
+align-items:stretch;
+gap:0;
+padding:10px 0 18px;
+}
+
+.nav-links.open{
+display:flex;
+}
+
+.nav-links a{
+padding:13px 5px;
+border-bottom:1px solid var(--border);
+}
+
+.nav-cta{
+display:block;
+text-align:center;
+margin-top:10px;
+}
+
+.hero{
+min-height:600px;
+background-position:58% center;
+}
+
+.hero-content{
+padding:80px 0;
+}
+
+.hero h1{
+letter-spacing:-2px;
+}
+
+.hero-description{
+font-size:14px;
+}
+
+.feature-grid{
+grid-template-columns:1fr;
+}
+
+.feature{
+border-right:none;
+border-bottom:1px solid var(--border);
+}
+
+.vehicle-grid{
+grid-template-columns:1fr;
+}
+
+.vehicle-image{
+height:240px;
+}
+
+.about-grid,
+.form-grid{
+grid-template-columns:1fr;
+}
+
+.about-image{
+height:270px;
+}
+
+.about-content h2{
+font-size:30px;
+}
+
+.about-points{
+grid-template-columns:1fr 1fr;
+}
+
+.vehicle-tools{
+flex-direction:column;
+}
+
+.vehicle-tools input,
+.vehicle-tools select{
+width:100%;
+}
+
+.form-panel{
+padding:22px;
+}
+
+.footer-content{
+flex-direction:column;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
+<!-- =================================
+     NAVIGATION
+================================= -->
+
 <header>
-  <a href="index.html" class="logo">TESLA <span>INNOVATION</span></a>
 
-  <button class="menu-toggle" id="menuToggle" aria-label="Open navigation">☰</button>
+<div class="container navbar">
 
-  <nav id="mainNav">
-    <a href="index.html">HOME</a>
-    <a href="vehicles.html">VEHICLES</a>
-    <a href="negotiate.html">NEGOTIATE</a>
-    <a href="enquiry.html">ENQUIRIES</a>
-    <a href="account.html">MY ACCOUNT</a>
-    <a href="contact.html">CONTACT</a>
-    <a href="vehicles.html" class="nav-button">EXPLORE COLLECTION</a>
-  </nav>
+<a href="#home" class="logo">
+TESLA <span>INNOVATION</span>
+</a>
+
+<button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
+☰
+</button>
+
+<nav class="nav-links" id="navLinks">
+
+<a href="#home">Home</a>
+<a href="#vehicles">Vehicles</a>
+<a href="#about">About</a>
+<a href="#negotiation">Negotiation</a>
+<a href="#contact">Contact</a>
+
+<a href="#order" class="nav-cta">EXPLORE PURCHASE</a>
+
+</nav>
+
+</div>
+
 </header>
 
-<main>
 
-<section class="hero">
-  <div class="hero-content">
-    <div class="eyebrow">THE FUTURE OF PREMIUM MOBILITY</div>
+<!-- =================================
+     HERO
+================================= -->
 
-    <h1>DRIVE THE <span>FUTURE.</span></h1>
+<section class="hero" id="home">
 
-    <p>
-      Discover exceptional electric vehicles through a premium
-      showroom experience built around innovation, confidence
-      and international connections.
-    </p>
+<div class="container">
 
-    <div class="hero-actions">
-      <a href="vehicles.html" class="button primary">EXPLORE VEHICLES</a>
-      <a href="enquiry.html" class="button secondary">START AN ENQUIRY</a>
-    </div>
-  </div>
+<div class="hero-content">
 
-  <div class="hero-bottom">
-    <span>Premium Vehicles</span>
-    <span>Global Connections</span>
-    <span>Exceptional Experience</span>
-  </div>
+<div class="hero-label">
+PREMIUM ELECTRIC MOBILITY
+</div>
+
+<h1>
+DRIVE THE <span>FUTURE.</span>
+</h1>
+
+<p class="hero-description">
+Discover premium electric vehicles, explore available configurations and connect with our team for international vehicle purchase and pre-order enquiries.
+</p>
+
+<div class="hero-buttons">
+
+<a href="#vehicles" class="btn btn-red">
+EXPLORE VEHICLES →
+</a>
+
+<a href="#contact" class="btn btn-outline">
+CONTACT OUR TEAM
+</a>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-<section class="section">
-  <div class="section-heading">
-    <div class="eyebrow">THE COLLECTION</div>
-    <h2>ENGINEERED TO INSPIRE.</h2>
-    <p>
-      Explore our featured vehicle collection. Discover available
-      models, review catalogue prices and continue to the dedicated
-      vehicle showroom for more details.
-    </p>
-  </div>
 
-  <div class="vehicle-grid" id="vehicleGrid">
-    <div class="loading">Loading our vehicle collection...</div>
-  </div>
+<!-- =================================
+     FEATURES
+================================= -->
 
-  <div class="collection-link">
-    <a href="vehicles.html" class="button primary">VIEW FULL COLLECTION</a>
-  </div>
+<section class="features">
+
+<div class="container feature-grid">
+
+<div class="feature">
+
+<strong>PREMIUM VEHICLE COLLECTION</strong>
+
+<p>Explore our electric vehicle catalogue.</p>
+
+</div>
+
+<div class="feature">
+
+<strong>INTERNATIONAL ENQUIRIES</strong>
+
+<p>Connect with our team across markets.</p>
+
+</div>
+
+<div class="feature">
+
+<strong>PERSONALISED OFFERS</strong>
+
+<p>Submit your preferred vehicle budget.</p>
+
+</div>
+
+</div>
+
 </section>
 
-<section class="experience">
-  <div class="eyebrow">THE TESLA INNOVATION EXPERIENCE</div>
-  <h2>MORE THAN A VEHICLE.</h2>
-  <p>
-    A considered approach to vehicle discovery, customer service
-    and international purchase enquiries.
-  </p>
 
-  <div class="feature-grid">
-    <div class="feature">
-      <h3>Curated Collection</h3>
-      <p>Explore our published vehicle catalogue and availability.</p>
-    </div>
+<!-- =================================
+     VEHICLE SHOWROOM
+================================= -->
 
-    <div class="feature">
-      <h3>Personalised Offers</h3>
-      <p>Submit your proposed budget for our team's review.</p>
-    </div>
+<section class="section" id="vehicles">
 
-    <div class="feature">
-      <h3>International Enquiries</h3>
-      <p>Tell us your preferred vehicle and delivery destination.</p>
-    </div>
+<div class="container">
 
-    <div class="feature">
-      <h3>Customer Account</h3>
-      <p>Access your order updates and negotiation responses.</p>
-    </div>
-  </div>
+<div class="section-heading reveal">
+
+<div class="eyebrow">THE COLLECTION</div>
+
+<h2>EXPLORE OUR VEHICLES</h2>
+
+<p>
+Discover our vehicle collection, review catalogue prices and enquire about availability and international delivery.
+</p>
+
+</div>
+
+
+<div class="vehicle-tools reveal">
+
+<input
+type="search"
+id="vehicleSearch"
+placeholder="Search vehicle models..."
+aria-label="Search vehicles"
+>
+
+<select id="availabilityFilter" aria-label="Filter by availability">
+
+<option value="all">All availability</option>
+
+<option value="in_stock">Available stock</option>
+
+<option value="limited_stock">Limited stock</option>
+
+<option value="pre_order">Pre-order</option>
+
+<option value="out_of_stock">Out of stock</option>
+
+</select>
+
+</div>
+
+
+<div class="vehicle-grid" id="vehicleGrid">
+
+<div class="empty-message">
+Loading our vehicle collection...
+</div>
+
+</div>
+
+
+<p class="form-note">
+Displayed prices are catalogue prices and must be confirmed before an order is accepted. Vehicle configuration, stock, taxes, import duties and international delivery costs are subject to confirmation.
+</p>
+
+</div>
+
 </section>
 
-<section class="experience">
-  <div class="eyebrow">YOUR NEXT JOURNEY STARTS HERE</div>
-  <h2>READY TO EXPLORE?</h2>
-  <p>
-    Discover the collection or speak with our team about your
-    preferred vehicle and purchase requirements.
-  </p>
 
-  <div class="hero-actions" style="justify-content:center">
-    <a href="vehicles.html" class="button primary">BROWSE VEHICLES</a>
-    <a href="contact.html" class="button secondary">CONTACT OUR TEAM</a>
-  </div>
+<!-- =================================
+     ABOUT
+================================= -->
+
+<section class="section about-section" id="about">
+
+<div class="container about-grid">
+
+<div class="about-image reveal">
+
+<img
+src="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1200&q=85"
+alt="Premium electric vehicle"
+loading="lazy"
+>
+
+</div>
+
+
+<div class="about-content reveal">
+
+<div class="eyebrow">ABOUT OUR BUSINESS</div>
+
+<h2>
+A BETTER WAY TO EXPLORE ELECTRIC MOBILITY.
+</h2>
+
+<p>
+TESLA Innovation is focused on premium electric vehicle sales, vehicle sourcing and international customer enquiries.
+</p>
+
+<p>
+Our aim is to provide customers with clear vehicle information, transparent catalogue pricing and a structured purchase enquiry experience.
+</p>
+
+<div class="about-points">
+
+<div class="about-point">
+
+<strong>VEHICLE OPTIONS</strong>
+
+<span>Explore available models.</span>
+
+</div>
+
+<div class="about-point">
+
+<strong>GLOBAL CONNECTIONS</strong>
+
+<span>International enquiries.</span>
+
+</div>
+
+<div class="about-point">
+
+<strong>PERSONALISED SERVICE</strong>
+
+<span>Individual purchase support.</span>
+
+</div>
+
+<div class="about-point">
+
+<strong>PRICE NEGOTIATION</strong>
+
+<span>Submit your preferred budget.</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
 </section>
 
-</main>
+
+<!-- =================================
+     NEGOTIATION FORM
+================================= -->
+
+<section class="section form-section" id="negotiation">
+
+<div class="container">
+
+<div class="section-heading reveal">
+
+<div class="eyebrow">PERSONALISED VEHICLE OFFERS</div>
+
+<h2>MAKE YOUR OFFER</h2>
+
+<p>
+Have a preferred budget? Tell us what you are looking to spend and submit your proposal for review.
+</p>
+
+</div>
+
+
+<div class="form-panel reveal" style="max-width:700px;margin:auto;">
+
+<h3>Vehicle Budget Negotiation</h3>
+
+<p>Submit your preferred vehicle and proposed budget.</p>
+
+
+<form id="negotiationForm">
+
+<label for="negModel">Select vehicle</label>
+
+<select id="negModel" required>
+
+<option value="">Choose vehicle</option>
+
+</select>
+
+
+<label for="budget">Your proposed budget (USD)</label>
+
+<input
+id="budget"
+type="number"
+min="1"
+step="0.01"
+placeholder="Enter your budget"
+required
+>
+
+
+<label for="negName">Full name</label>
+
+<input
+id="negName"
+type="text"
+placeholder="Your full name"
+required
+>
+
+
+<label for="negEmail">Email address</label>
+
+<input
+id="negEmail"
+type="email"
+placeholder="Your email address"
+required
+>
+
+
+<label for="negPhone">Phone number</label>
+
+<input
+id="negPhone"
+type="tel"
+placeholder="Your phone number"
+required
+>
+
+
+<label for="negMessage">Additional message</label>
+
+<textarea
+id="negMessage"
+placeholder="Tell us about your preferred configuration or offer."
+></textarea>
+
+
+<button type="submit">
+SUBMIT MY OFFER
+</button>
+
+</form>
+
+
+<div class="form-result" id="negResult" aria-live="polite"></div>
+
+
+<p class="form-note">
+Submitting an offer does not guarantee acceptance or reserve a vehicle. All proposals are subject to review and confirmation.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =================================
+     PURCHASE ENQUIRY
+================================= -->
+
+<section class="section form-section" id="order">
+
+<div class="container">
+
+<div class="section-heading reveal">
+
+<div class="eyebrow">START YOUR JOURNEY</div>
+
+<h2>VEHICLE PURCHASE ENQUIRY</h2>
+
+<p>
+Tell us your preferred vehicle, configuration and delivery destination. Our team can review your enquiry and provide further information.
+</p>
+
+</div>
+
+
+<div class="form-panel reveal" style="max-width:700px;margin:auto;">
+
+<h3>Start Your Vehicle Enquiry</h3>
+
+<p>Complete the details below to submit your request.</p>
+
+
+<form id="orderForm">
+
+<label for="orderModel">Preferred vehicle</label>
+
+<select id="orderModel" required>
+
+<option value="">Choose vehicle</option>
+
+</select>
+
+
+<label for="orderName">Full name</label>
+
+<input
+id="orderName"
+type="text"
+placeholder="Your full name"
+required
+>
+
+
+<label for="orderEmail">Email address</label>
+
+<input
+id="orderEmail"
+type="email"
+placeholder="Your email address"
+required
+>
+
+
+<label for="orderPhone">Phone number</label>
+
+<input
+id="orderPhone"
+type="tel"
+placeholder="Your phone number"
+required
+>
+
+
+<label for="orderType">Purchase preference</label>
+
+<select id="orderType" required>
+
+<option value="">Choose preference</option>
+
+<option value="Existing stock">Existing stock</option>
+
+<option value="Pre-order">Pre-order</option>
+
+</select>
+
+
+<label for="orderColour">Preferred vehicle colour</label>
+
+<input
+id="orderColour"
+type="text"
+placeholder="Preferred colour"
+required
+>
+
+
+<label for="orderCountry">Delivery country</label>
+
+<input
+id="orderCountry"
+type="text"
+placeholder="Delivery country"
+required
+>
+
+
+<label for="orderMessage">Additional requirements</label>
+
+<textarea
+id="orderMessage"
+placeholder="Additional message or vehicle requirements"
+></textarea>
+
+
+<button type="submit">
+SEND PURCHASE ENQUIRY
+</button>
+
+</form>
+
+
+<div class="form-result" id="orderResult" aria-live="polite"></div>
+
+
+<p class="form-note">
+This form submits a purchase enquiry, not a completed purchase or payment. Final pricing, vehicle availability, delivery and payment arrangements must be confirmed first.
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- =================================
+     CONTACT
+================================= -->
+
+<section class="section contact-section" id="contact">
+
+<div class="container reveal">
+
+<div class="eyebrow">WE ARE HERE TO HELP</div>
+
+<h2>LET'S CONNECT.</h2>
+
+<p>
+Have questions about a vehicle, international delivery, pricing or availability? Submit a purchase enquiry or budget proposal and our team can review your request.
+</p>
+
+<a href="#order" class="btn btn-red" style="margin-top:25px;">
+MAKE AN ENQUIRY →
+</a>
+
+</div>
+
+</section>
+
+
+<!-- =================================
+     FOOTER
+================================= -->
 
 <footer>
-  <strong>TESLA INNOVATION</strong>
-  <br>
-  Premium Vehicles. Global Connections. Exceptional Experience.
-  <br>
-  © 2026 TESLA Innovation. All rights reserved.
-  <br>
-  <a href="contact.html">Contact</a> &nbsp; | &nbsp;
-  <a href="account.html">Customer Account</a>
+
+<div class="container">
+
+<div class="footer-content">
+
+<div>
+
+<div class="footer-brand">
+TESLA <span>INNOVATION</span>
+</div>
+
+<p>
+Premium electric vehicle sales, vehicle sourcing and international purchase enquiries.
+</p>
+
+</div>
+
+
+<div class="footer-links">
+
+<a href="#home">Home</a>
+
+<a href="#vehicles">Vehicles</a>
+
+<a href="#about">About</a>
+
+<a href="#negotiation">Negotiation</a>
+
+<a href="#order">Purchase Enquiry</a>
+
+</div>
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 TESLA Innovation. All rights reserved.
+
+<br>
+
+Premium Vehicles. Global Connections. Exceptional Experience.
+
+</div>
+
+</div>
+
 </footer>
 
+
 <script>
-const SUPABASE_URL = 'https://dnmktpmvjzsxzmgizdcv.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+
+/* =====================================
+   SUPABASE CONNECTION
+===================================== */
+
+const SUPABASE_URL =
+'https://dnmktpmvjzsxzmgizdcv.supabase.co';
+
+const SUPABASE_KEY =
+'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
 
 const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_KEY
+SUPABASE_URL,
+SUPABASE_KEY
 );
 
+
+/* =====================================
+   VEHICLE FALLBACK IMAGES
+===================================== */
+
 const fallbackImages = {
-  'Model 3': 'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=900&q=85',
-  'Model Y': 'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=900&q=85',
-  'Model S': 'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=900&q=85',
-  'Model X': 'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=900&q=85',
-  'Cybertruck': 'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=900&q=85'
+
+'Model 3':
+'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85',
+
+'Model Y':
+'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=1000&q=85',
+
+'Model S':
+'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1000&q=85',
+
+'Model X':
+'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=85',
+
+'Cybertruck':
+'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=1000&q=85'
+
 };
 
-function escapeHTML(value) {
-  return String(value ?? '').replace(/[&<>"']/g, char => ({
-    '&': '&amp;',
-    '<': '&lt;',
-    '>': '&gt;',
-    '"': '&quot;',
-    "'": '&#039;'
-  }[char]));
-}
 
-function money(value, currency = 'USD') {
-  const amount = Number(value);
+let vehicles = [];
 
-  if (!Number.isFinite(amount)) return 'Price on request';
+let activeAvailability = 'all';
 
-  try {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: currency || 'USD',
-      maximumFractionDigits: 0
-    }).format(amount);
-  } catch {
-    return '$' + amount.toLocaleString('en-US');
-  }
-}
 
-function availabilityLabel(status) {
-  if (status === 'in_stock') return 'AVAILABLE STOCK';
-  if (status === 'limited_stock') return 'LIMITED AVAILABILITY';
-  if (status === 'out_of_stock') return 'CURRENTLY UNAVAILABLE';
-  return 'PRE-ORDER ENQUIRIES';
-}
+/* =====================================
+   SAFE TEXT DISPLAY
+===================================== */
 
-async function loadFeaturedVehicles() {
-  const grid = document.getElementById('vehicleGrid');
+function escapeHTML(value){
 
-  try {
-    const { data, error } = await db
-      .from('vehicles')
-      .select('*')
-      .eq('is_published', true)
-      .order('created_at', { ascending: true })
-      .limit(4);
+return String(value ?? '').replace(/[&<>"']/g,function(char){
 
-    if (error) throw error;
+return {
 
-    if (!data || data.length === 0) {
-      grid.innerHTML = '<p class="loading">Our collection is being updated. Please check again soon.</p>';
-      return;
-    }
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;',
+"'":'&#39;'
 
-    grid.innerHTML = '';
+}[char];
 
-    data.forEach(vehicle => {
-      const images = Array.isArray(vehicle.image_urls)
-        ? vehicle.image_urls
-        : [];
-
-      const image = images[0] ||
-        fallbackImages[vehicle.model] ||
-        fallbackImages['Model 3'];
-
-      const card = document.createElement('article');
-      card.className = 'vehicle-card';
-
-      card.innerHTML = `
-        <div class="vehicle-image">
-          <img
-            src="${escapeHTML(image)}"
-            alt="${escapeHTML(vehicle.model)}"
-            loading="lazy"
-          >
-        </div>
-
-        <div class="vehicle-content">
-          <h3>${escapeHTML(vehicle.model)}</h3>
-
-          <p>
-            ${escapeHTML(vehicle.variant || 'Electric vehicle')}
-          </p>
-
-          <div class="vehicle-price">
-            ${money(vehicle.selling_price, vehicle.currency || 'USD')}
-          </div>
-
-          <span class="vehicle-status">
-            ${availabilityLabel(vehicle.availability)}
-          </span>
-
-          <a class="card-link" href="vehicles.html">
-            EXPLORE THIS VEHICLE →
-          </a>
-        </div>
-      `;
-
-      grid.appendChild(card);
-    });
-
-    const cards = document.querySelectorAll('.vehicle-card');
-
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-
-    cards.forEach(card => observer.observe(card));
-
-  } catch (error) {
-    console.error('Vehicle loading error:', error);
-
-    grid.innerHTML = `
-      <p class="loading">
-        We couldn't load the vehicle collection right now.
-        Please visit the full showroom.
-      </p>
-    `;
-  }
-}
-
-document.getElementById('menuToggle').addEventListener('click', () => {
-  document.getElementById('mainNav').classList.toggle('open');
 });
 
-document.querySelectorAll('#mainNav a').forEach(link => {
-  link.addEventListener('click', () => {
-    document.getElementById('mainNav').classList.remove('open');
-  });
+}
+
+
+/* =====================================
+   MOBILE NAVIGATION
+===================================== */
+
+const menuToggle =
+document.getElementById('menuToggle');
+
+const navLinks =
+document.getElementById('navLinks');
+
+
+menuToggle.addEventListener('click',function(){
+
+const opened = navLinks.classList.toggle('open');
+
+menuToggle.setAttribute('aria-expanded',opened);
+
+menuToggle.textContent = opened ? '×' : '☰';
+
 });
 
-loadFeaturedVehicles();
+
+navLinks.querySelectorAll('a').forEach(link=>{
+
+link.addEventListener('click',()=>{
+
+navLinks.classList.remove('open');
+
+menuToggle.setAttribute('aria-expanded','false');
+
+menuToggle.textContent='☰';
+
+});
+
+});
+
+
+/* =====================================
+   LOAD VEHICLES
+===================================== */
+
+async function loadVehicles(){
+
+const grid = document.getElementById('vehicleGrid');
+
+grid.innerHTML =
+'<div class="empty-message">Loading our vehicle collection...</div>';
+
+try{
+
+const {data,error} = await db
+.from('vehicles')
+.select('*')
+.eq('is_published',true)
+.order('created_at',{ascending:true});
+
+if(error) throw error;
+
+vehicles = data || [];
+
+if(vehicles.length===0){
+
+grid.innerHTML =
+'<div class="empty-message">No vehicles are currently published.</div>';
+
+populateVehicleOptions();
+
+return;
+
+}
+
+populateVehicleOptions();
+
+renderVehicles();
+
+}catch(error){
+
+console.error('Vehicle loading error:',error);
+
+grid.innerHTML =
+'<div class="empty-message">Our vehicle collection is temporarily unavailable. Please try again later.</div>';
+
+}
+
+}
+
+
+/* =====================================
+   VEHICLE AVAILABILITY
+===================================== */
+
+function getAvailability(vehicle){
+
+const status = vehicle.availability || 'pre_order';
+
+const labels = {
+
+in_stock:'AVAILABLE STOCK',
+
+limited_stock:'LIMITED STOCK',
+
+pre_order:'PRE-ORDER',
+
+out_of_stock:'CURRENTLY UNAVAILABLE'
+
+};
+
+return {
+
+label:labels[status] || 'ENQUIRE FOR AVAILABILITY',
+
+className:{
+
+in_stock:'stock-in',
+
+limited_stock:'stock-limited',
+
+pre_order:'stock-pre',
+
+out_of_stock:'stock-out'
+
+}[status] || 'stock-pre'
+
+};
+
+}
+
+
+/* =====================================
+   RENDER VEHICLES
+===================================== */
+
+function renderVehicles(){
+
+const grid = document.getElementById('vehicleGrid');
+
+const search =
+document.getElementById('vehicleSearch').value.toLowerCase().trim();
+
+let filtered = vehicles.filter(vehicle=>{
+
+const matchesSearch =
+
+(vehicle.model || '').toLowerCase().includes(search) ||
+
+(vehicle.variant || '').toLowerCase().includes(search) ||
+
+(vehicle.description || '').toLowerCase().includes(search);
+
+
+const matchesAvailability =
+
+activeAvailability==='all' ||
+
+vehicle.availability===activeAvailability;
+
+
+return matchesSearch && matchesAvailability;
+
+});
+
+
+if(filtered.length===0){
+
+grid.innerHTML =
+'<div class="empty-message">No vehicles match your search.</div>';
+
+return;
+
+}
+
+
+grid.innerHTML='';
+
+
+filtered.forEach(vehicle=>{
+
+const images = Array.isArray(vehicle.image_urls)
+? vehicle.image_urls
+: [];
+
+
+const image = images[0] ||
+
+fallbackImages[vehicle.model] ||
+
+fallbackImages['Model 3'];
+
+
+const price = Number(vehicle.selling_price || 0)
+
+.toLocaleString('en-US');
+
+
+const availability = getAvailability(vehicle);
+
+
+const card = document.createElement('article');
+
+card.className='vehicle-card';
+
+
+card.innerHTML=`
+
+<div class="vehicle-image">
+
+<img
+src="${escapeHTML(image)}"
+alt="${escapeHTML(vehicle.model)}"
+loading="lazy"
+onerror="this.onerror=null;this.src='${fallbackImages['Model 3']}';"
+>
+
+<span class="stock-badge ${availability.className}">
+
+${availability.label}
+
+</span>
+
+</div>
+
+
+<div class="vehicle-info">
+
+<h3>${escapeHTML(vehicle.model)}</h3>
+
+<div class="vehicle-variant">
+
+${escapeHTML(vehicle.variant || 'Premium Electric Vehicle')}
+
+</div>
+
+<div class="vehicle-price">
+
+$${price}
+
+<small>USD</small>
+
+</div>
+
+<p class="vehicle-description">
+
+${escapeHTML(vehicle.description || 'Discover this premium electric vehicle. Contact our team for specifications and availability.')}
+
+</p>
+
+
+<div class="vehicle-buttons">
+
+<button
+class="buy-button"
+data-action="order"
+data-id="${escapeHTML(vehicle.id)}"
+>
+
+${vehicle.availability==='out_of_stock'?'ENQUIRE':'BUY / PRE-ORDER'}
+
+</button>
+
+
+<button
+class="negotiate-button"
+data-action="negotiate"
+data-id="${escapeHTML(vehicle.id)}"
+>
+
+NEGOTIATE
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+
+grid.appendChild(card);
+
+});
+
+}
+
+
+/* =====================================
+   VEHICLE BUTTON EVENTS
+===================================== */
+
+document.getElementById('vehicleGrid')
+
+.addEventListener('click',function(e){
+
+const button = e.target.closest('button[data-action]');
+
+if(!button) return;
+
+const id = button.dataset.id;
+
+if(button.dataset.action==='order'){
+
+order(id);
+
+}
+
+if(button.dataset.action==='negotiate'){
+
+negotiate(id);
+
+}
+
+});
+
+
+/* =====================================
+   VEHICLE FILTERS
+===================================== */
+
+document.getElementById('vehicleSearch')
+
+.addEventListener('input',renderVehicles);
+
+
+document.getElementById('availabilityFilter')
+
+.addEventListener('change',function(){
+
+activeAvailability=this.value;
+
+renderVehicles();
+
+});
+
+
+/* =====================================
+   VEHICLE DROPDOWNS
+===================================== */
+
+function populateVehicleOptions(){
+
+const orderSelect =
+document.getElementById('orderModel');
+
+const negSelect =
+document.getElementById('negModel');
+
+
+orderSelect.innerHTML =
+'<option value="">Choose vehicle</option>';
+
+negSelect.innerHTML =
+'<option value="">Choose vehicle</option>';
+
+
+vehicles.forEach(vehicle=>{
+
+const label =
+
+vehicle.model + ' - ' + (vehicle.variant || '');
+
+
+const option1=document.createElement('option');
+
+option1.value=vehicle.id;
+
+option1.textContent=label;
+
+orderSelect.appendChild(option1);
+
+
+const option2=document.createElement('option');
+
+option2.value=vehicle.id;
+
+option2.textContent=label;
+
+negSelect.appendChild(option2);
+
+});
+
+}
+
+
+/* =====================================
+   BUY BUTTON
+===================================== */
+
+function order(vehicleId){
+
+document.getElementById('orderModel').value=vehicleId;
+
+document.getElementById('order')
+
+.scrollIntoView({behavior:'smooth'});
+
+}
+
+
+/* =====================================
+   NEGOTIATION BUTTON
+===================================== */
+
+function negotiate(vehicleId){
+
+document.getElementById('negModel').value=vehicleId;
+
+document.getElementById('negotiation')
+
+.scrollIntoView({behavior:'smooth'});
+
+}
+
+
+/* =====================================
+   PURCHASE ENQUIRY
+===================================== */
+
+document.getElementById('orderForm')
+
+.addEventListener('submit',async function(e){
+
+e.preventDefault();
+
+const button=this.querySelector('button[type="submit"]');
+
+const result=document.getElementById('orderResult');
+
+button.disabled=true;
+
+button.textContent='SUBMITTING...';
+
+result.textContent='';
+
+
+const data={
+
+vehicle_id:document.getElementById('orderModel').value,
+
+customer_name:document.getElementById('orderName').value.trim(),
+
+email:document.getElementById('orderEmail').value.trim(),
+
+phone:document.getElementById('orderPhone').value.trim(),
+
+enquiry_type:document.getElementById('orderType').value,
+
+preferred_colour:document.getElementById('orderColour').value.trim(),
+
+delivery_country:document.getElementById('orderCountry').value.trim(),
+
+message:document.getElementById('orderMessage').value.trim()
+
+};
+
+
+try{
+
+const {error}=await db
+
+.from('enquiries')
+
+.insert(data);
+
+
+if(error) throw error;
+
+
+result.style.color='#43d69a';
+
+result.textContent=
+
+'Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';
+
+this.reset();
+
+
+}catch(error){
+
+console.error('Enquiry error:',error);
+
+result.style.color='#ff7777';
+
+result.textContent=
+
+'We could not submit your enquiry: '+error.message;
+
+}finally{
+
+button.disabled=false;
+
+button.textContent='SEND PURCHASE ENQUIRY';
+
+}
+
+});
+
+
+/* =====================================
+   NEGOTIATION SUBMISSION
+===================================== */
+
+document.getElementById('negotiationForm')
+
+.addEventListener('submit',async function(e){
+
+e.preventDefault();
+
+const button=this.querySelector('button[type="submit"]');
+
+const result=document.getElementById('negResult');
+
+button.disabled=true;
+
+button.textContent='SUBMITTING...';
+
+result.textContent='';
+
+
+const data={
+
+vehicle_id:document.getElementById('negModel').value,
+
+customer_name:document.getElementById('negName').value.trim(),
+
+customer_email:document.getElementById('negEmail').value.trim(),
+
+customer_phone:document.getElementById('negPhone').value.trim(),
+
+proposed_budget:Number(document.getElementById('budget').value),
+
+currency:'USD',
+
+customer_message:document.getElementById('negMessage').value.trim()
+
+};
+
+
+try{
+
+const {error}=await db
+
+.from('negotiations')
+
+.insert(data);
+
+
+if(error) throw error;
+
+
+result.style.color='#43d69a';
+
+result.textContent=
+
+'Your budget offer has been submitted successfully. Our team will review your proposal.';
+
+this.reset();
+
+
+}catch(error){
+
+console.error('Negotiation error:',error);
+
+result.style.color='#ff7777';
+
+result.textContent=
+
+'We could not submit your offer: '+error.message;
+
+}finally{
+
+button.disabled=false;
+
+button.textContent='SUBMIT MY OFFER';
+
+}
+
+});
+
+
+/* =====================================
+   SCROLL ANIMATIONS
+===================================== */
+
+const observer = new IntersectionObserver(entries=>{
+
+entries.forEach(entry=>{
+
+if(entry.isIntersecting){
+
+entry.target.classList.add('visible');
+
+observer.unobserve(entry.target);
+
+}
+
+});
+
+},{threshold:.12});
+
+
+document.querySelectorAll('.reveal').forEach(element=>{
+
+observer.observe(element);
+
+});
+
+
+/* =====================================
+   START WEBSITE
+===================================== */
+
+loadVehicles();
+
 </script>
 
 </body>
