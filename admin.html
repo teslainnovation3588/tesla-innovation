@@ -30,7 +30,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .tab-button.active{background:#e82127}
 .tab-content{display:none}
 .tab-content.active{display:block}
-.message{display:none;padding:12px;border-radius:7px;margin:10px 0 15px;background:#252525;color:#fff}
+.message{display:none;padding:12px;border-radius:7px;margin:10px 0 15px;background:#252525;color:#fff;overflow-wrap:anywhere}
 .message.error,.message.success{display:block}
 .message.error{background:#4a1515;color:#ffbaba}
 .message.success{background:#123c25;color:#a8ffc6}
@@ -278,6 +278,67 @@ function formatDate(value) {
   if(!value)return "Not provided";
   const date=new Date(value);
   return Number.isNaN(date.getTime()) ? escapeHTML(value) : date.toLocaleDateString();
+}
+
+// ==========================================
+// ORDER EMAIL NOTIFICATIONS
+// ==========================================
+
+async function sendOrderNotification(event, orderId) {
+  if (!orderId) {
+    return {
+      success: false,
+      message: "Order ID was not available."
+    };
+  }
+
+  try {
+    const { data, error } = await db.functions.invoke(
+      "send-order-notification",
+      {
+        body: {
+          event,
+          order_id: orderId
+        }
+      }
+    );
+
+    if (error) {
+      let details = error.message || "Notification failed.";
+
+      try {
+        if (error.context && typeof error.context.json === "function") {
+          const response = await error.context.json();
+          details = response.error || response.message || details;
+        }
+      } catch (_) {}
+
+      return {
+        success: false,
+        message: details
+      };
+    }
+
+    if (data?.error) {
+      return {
+        success: false,
+        message: data.error
+      };
+    }
+
+    return {
+      success: true,
+      message: "Notification request completed."
+    };
+
+  } catch (error) {
+    console.error("Order notification error:", error);
+
+    return {
+      success: false,
+      message: error.message || "Could not send notification."
+    };
+  }
 }
 
 // ==========================================
@@ -819,11 +880,77 @@ async function createCustomerOrder() {
 
     if(data?.error)throw new Error(data.error);
 
-    const trackingNumber=data?.order?.tracking_number||data?.tracking_number||"Created successfully";
+    let createdOrder =
+      data?.order ||
+      data?.customer_order ||
+      data ||
+      {};
 
-    showMessage("orderCreateMessage","Order created successfully. Tracking number: "+trackingNumber,"success");
+    let orderId = createdOrder.id || null;
+    let trackingNumber =
+      createdOrder.tracking_number ||
+      orderData.tracking_number ||
+      null;
+
+    // Find the registered customer's account ID.
+    const {data:customerData,error:customerError}=await db.auth.admin
+      ? {data:null,error:new Error("Admin lookup is not available in the browser.")}
+      : {data:null,error:null};
+
+    // The admin function response may include the customer ID.
+    const customerId =
+      createdOrder.customer_id ||
+      data?.customer_id ||
+      null;
+
+    // If the order ID was not returned, locate the latest matching order.
+    if (!orderId && customerId) {
+      let query = db.from("customer_orders")
+        .select("id,tracking_number")
+        .eq("customer_id",customerId)
+        .order("created_at",{ascending:false})
+        .limit(5);
+
+      if (trackingNumber) {
+        query = query.eq("tracking_number",trackingNumber);
+      }
+
+      const {data:foundOrders,error:lookupError}=await query;
+
+      if (!lookupError && foundOrders?.length) {
+        orderId=foundOrders[0].id;
+        trackingNumber=foundOrders[0].tracking_number || trackingNumber;
+      }
+    }
+
+    // Use a returned order ID if available. Never guess an ID.
+    let notificationMessage="";
+
+    if (orderId) {
+      const notification=await sendOrderNotification(
+        "order_created",
+        orderId
+      );
+
+      notificationMessage=notification.success
+        ? " Notification request submitted."
+        : " Email notification failed: "+notification.message;
+    } else {
+      notificationMessage =
+        " Email notification was not triggered because the order ID was not returned by the order-creation function.";
+    }
+
+    showMessage(
+      "orderCreateMessage",
+      "Order created successfully. Tracking number: "+
+      (trackingNumber||"Created successfully")+
+      notificationMessage,
+      "success"
+    );
+
     resetOrderForm();
     await loadOrders();
+
   } catch(error) {
     console.error("Create order error:",error);
     showMessage("orderCreateMessage",error.message||"Could not create customer order.","error");
@@ -935,8 +1062,10 @@ async function editCustomerOrder(id) {
   if(!allowedStatuses.includes(orderStatus.trim()))return alert("Invalid order status.");
 
   if(trackingURL.trim()) {
-    try{new URL(trackingURL.trim());}
-    catch(_){return alert("Enter a valid tracking URL.");}
+    try {
+      const parsedURL=new URL(trackingURL.trim());
+      if(parsedURL.protocol!=="https:")return alert("Tracking links must use HTTPS.");
+    } catch(_){return alert("Enter a valid tracking URL.");}
   }
 
   const updateData={
@@ -949,14 +1078,39 @@ async function editCustomerOrder(id) {
     updated_at:new Date().toISOString()
   };
 
+  const paymentChanged=(order.payment_status||"")!==updateData.payment_status;
+  const statusChanged=(order.order_status||"")!==updateData.order_status;
+
   const {error}=await db.from("customer_orders")
     .update(updateData)
     .eq("id",id);
 
   if(error)return alert(error.message);
 
-  alert("Customer order updated successfully.");
+  const notificationProblems=[];
+
+  if(paymentChanged) {
+    const result=await sendOrderNotification("payment_updated",id);
+    if(!result.success)notificationProblems.push("Payment notification: "+result.message);
+  }
+
+  if(statusChanged) {
+    const result=await sendOrderNotification("order_status_updated",id);
+    if(!result.success)notificationProblems.push("Order notification: "+result.message);
+  }
+
   await loadOrders();
+
+  if(notificationProblems.length) {
+    alert(
+      "Order updated successfully, but some notifications failed:\n\n"+
+      notificationProblems.join("\n\n")
+    );
+  } else if(paymentChanged||statusChanged) {
+    alert("Order updated successfully. Notification requests submitted.");
+  } else {
+    alert("Customer order updated successfully.");
+  }
 }
 
 // ==========================================
