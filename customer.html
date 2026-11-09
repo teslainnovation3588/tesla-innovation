@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Portal | TESLA Innovation</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #080808;
+    color: #fff;
+    min-height: 100vh;
+}
+
+header {
+    padding: 22px 7%;
+    border-bottom: 1px solid #252525;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.logo span {
+    color: #e82127;
+}
+
+header a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 13px;
+}
+
+.container {
+    max-width: 950px;
+    margin: 55px auto;
+    padding: 20px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #999;
+    margin-bottom: 30px;
+    line-height: 1.6;
+}
+
+.card {
+    background: #121212;
+    border: 1px solid #292929;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 25px;
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+}
+
+.tabs button {
+    flex: 1;
+    background: #222;
+    color: white;
+    border: 1px solid #333;
+    padding: 13px;
+    cursor: pointer;
+    border-radius: 6px;
+}
+
+.tabs button.active {
+    background: #e82127;
+    border-color: #e82127;
+}
+
+input {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #080808;
+    border: 1px solid #333;
+    border-radius: 6px;
+    color: white;
+    outline: none;
+}
+
+input:focus {
+    border-color: #e82127;
+}
+
+.main-btn {
+    width: 100%;
+    padding: 15px;
+    background: #e82127;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.main-btn:disabled {
+    opacity: .5;
+}
+
+.small-link {
+    display: block;
+    text-align: center;
+    margin-top: 18px;
+    color: #aaa;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.message {
+    padding: 13px;
+    margin-bottom: 18px;
+    border-radius: 6px;
+    display: none;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+.success {
+    background: #12351f;
+    color: #a8f0bd;
+}
+
+.error {
+    background: #401616;
+    color: #ffb3b3;
+}
+
+.dashboard {
+    display: none;
+}
+
+.order {
+    background: #191919;
+    border: 1px solid #303030;
+    padding: 20px;
+    border-radius: 9px;
+    margin-top: 15px;
+}
+
+.order h3 {
+    margin-bottom: 12px;
+}
+
+.order p {
+    color: #aaa;
+    margin: 8px 0;
+    font-size: 14px;
+}
+
+.status {
+    display: inline-block;
+    padding: 7px 12px;
+    background: #292929;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.logout {
+    background: transparent;
+    color: #e82127;
+    border: 1px solid #e82127;
+    padding: 10px 18px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    color: #666;
+    padding: 30px 15px;
+    font-size: 12px;
+    border-top: 1px solid #222;
+}
+
+@media(max-width:600px) {
+    .container {
+        margin-top: 25px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 26px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="logo">TESLA <span>INNOVATION</span></div>
+    <a href="index.html">← Back to Showroom</a>
+</header>
+
+<main class="container">
+
+    <section id="authSection">
+
+        <h1>Customer Portal</h1>
+        <p class="subtitle">
+            Access your account, manage your vehicle orders
+            and follow your delivery progress.
+        </p>
+
+        <div class="card">
+
+            <div class="message" id="message"></div>
+
+            <div class="tabs">
+                <button id="loginTab" class="active"
+                onclick="showForm('login')">Login</button>
+
+                <button id="registerTab"
+                onclick="showForm('register')">Create Account</button>
+            </div>
+
+            <form id="loginForm">
+
+                <input type="email" id="loginEmail"
+                placeholder="Email address" required>
+
+                <input type="password" id="loginPassword"
+                placeholder="Password" required>
+
+                <button class="main-btn" type="submit">
+                    LOG IN
+                </button>
+
+                <span class="small-link" onclick="forgotPassword()">
+                    Forgot your password?
+                </span>
+
+            </form>
+
+            <form id="registerForm" style="display:none;">
+
+                <input type="text" id="registerName"
+                placeholder="Full name" required>
+
+                <input type="email" id="registerEmail"
+                placeholder="Email address" required>
+
+                <input type="password" id="registerPassword"
+                placeholder="Create password (minimum 8 characters)"
+                minlength="8" required>
+
+                <button class="main-btn" type="submit">
+                    CREATE ACCOUNT
+                </button>
+
+            </form>
+
+        </div>
+    </section>
+
+
+    <section id="dashboardSection" class="dashboard">
+
+        <h1>Welcome to Your Dashboard</h1>
+
+        <p class="subtitle" id="customerEmail"></p>
+
+        <div class="card">
+            <h2>Your Vehicle Orders</h2>
+            <p class="subtitle">
+                View your order details and delivery progress.
+            </p>
+
+            <div id="ordersList">
+                Loading your orders...
+            </div>
+        </div>
+
+        <button class="logout" onclick="logout()">
+            LOG OUT
+        </button>
+
+    </section>
+
+</main>
+
+<footer>
+    TESLA Innovation © 2026<br><br>
+    Premium electric vehicle sales, vehicle sourcing
+    and international purchase enquiries.
+</footer>
+
+
+<script>
+const SUPABASE_URL =
+'https://dnmktpmvjzsxzmgizdcv.supabase.co';
+
+const SUPABASE_KEY =
+'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const messageBox = document.getElementById('message');
+
+function showMessage(text, type) {
+    messageBox.textContent = text;
+    messageBox.className = 'message ' + type;
+    messageBox.style.display = 'block';
+}
+
+function showForm(type) {
+
+    messageBox.style.display = 'none';
+
+    const login = type === 'login';
+
+    document.getElementById('loginForm').style.display =
+        login ? 'block' : 'none';
+
+    document.getElementById('registerForm').style.display =
+        login ? 'none' : 'block';
+
+    document.getElementById('loginTab').className =
+        login ? 'active' : '';
+
+    document.getElementById('registerTab').className =
+        login ? '' : 'active';
+}
+
+
+// CUSTOMER REGISTRATION
+
+document.getElementById('registerForm')
+.addEventListener('submit', async function(e) {
+
+    e.preventDefault();
+
+    const name = document.getElementById('registerName').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
+
+    const button = this.querySelector('button');
+    button.disabled = true;
+    button.textContent = 'CREATING ACCOUNT...';
+
+    try {
+
+        const { data, error } = await db.auth.signUp({
+
+            email: email,
+            password: password,
+
+            options: {
+                data: {
+                    full_name: name
+                },
+
+                emailRedirectTo:
+                window.location.origin +
+                window.location.pathname
+            }
+
+        });
+
+        if (error) throw error;
+
+        if (data.session) {
+
+            showMessage(
+                'Account created successfully. Welcome!',
+                'success'
+            );
+
+            await loadDashboard(data.session.user);
+
+        } else {
+
+            showMessage(
+                'Your account has been created. Please check your email and click the verification link before logging in.',
+                'success'
+            );
+
+            this.reset();
+        }
+
+    } catch(error) {
+
+        showMessage(error.message, 'error');
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = 'CREATE ACCOUNT';
+
+    }
+
+});
+
+
+// CUSTOMER LOGIN
+
+document.getElementById('loginForm')
+.addEventListener('submit', async function(e) {
+
+    e.preventDefault();
+
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+
+    const button = this.querySelector('button');
+    button.disabled = true;
+    button.textContent = 'LOGGING IN...';
+
+    try {
+
+        const { data, error } = await db.auth.signInWithPassword({
+            email,
+            password
+        });
+
+        if (error) throw error;
+
+        await loadDashboard(data.user);
+
+    } catch(error) {
+
+        showMessage(error.message, 'error');
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = 'LOG IN';
+
+    }
+
+});
+
+
+// PASSWORD RECOVERY
+
+async function forgotPassword() {
+
+    const email = document.getElementById('loginEmail').value.trim();
+
+    if (!email) {
+        showMessage(
+            'Enter your email address first.',
+            'error'
+        );
+        return;
+    }
+
+    const { error } = await db.auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin +
+        window.location.pathname
+    });
+
+    if (error) {
+        showMessage(error.message, 'error');
+    } else {
+        showMessage(
+            'Password recovery instructions have been sent to your email.',
+            'success'
+        );
+    }
+
+}
+
+
+// LOAD CUSTOMER DASHBOARD
+
+async function loadDashboard(user) {
+
+    document.getElementById('authSection').style.display = 'none';
+
+    document.getElementById('dashboardSection').style.display = 'block';
+
+    document.getElementById('customerEmail').textContent =
+        'Signed in as ' + user.email;
+
+    await loadOrders(user.id);
+
+}
+
+
+// LOAD ONLY THE CUSTOMER'S ORDERS
+
+async function loadOrders(customerId) {
+
+    const list = document.getElementById('ordersList');
+
+    list.textContent = 'Loading your orders...';
+
+    const { data, error } = await db
+        .from('customer_orders')
+        .select(`
+            id,
+            vehicle_name,
+            tracking_number,
+            payment_status,
+            order_status,
+            delivery_country,
+            shipping_carrier,
+            tracking_url,
+            estimated_delivery,
+            created_at
+        `)
+        .eq('customer_id', customerId)
+        .order('created_at', { ascending: false });
+
+    if (error) {
+
+        list.textContent =
+            'Unable to load your orders. Please try again later.';
+
+        console.error(error);
+        return;
+    }
+
+    if (!data || data.length === 0) {
+
+        list.innerHTML = `
+            <p style="color:#999;margin-top:20px;">
+                You currently have no vehicle orders linked to this account.
+            </p>
+        `;
+
+        return;
+    }
+
+    list.innerHTML = '';
+
+    data.forEach(order => {
+
+        const card = document.createElement('div');
+        card.className = 'order';
+
+        const title = document.createElement('h3');
+        title.textContent = order.vehicle_name || 'Vehicle order';
+
+        const fields = [
+            ['Order reference', order.id],
+            ['Payment status', order.payment_status],
+            ['Order status', order.order_status],
+            ['Delivery country', order.delivery_country],
+            ['Shipping carrier', order.shipping_carrier],
+            ['Tracking number', order.tracking_number],
+            ['Estimated delivery', order.estimated_delivery]
+        ];
+
+        card.appendChild(title);
+
+        fields.forEach(([label, value]) => {
+
+            if (!value) return;
+
+            const p = document.createElement('p');
+            p.textContent = label + ': ' + value;
+            card.appendChild(p);
+
+        });
+
+        const status = document.createElement('span');
+        status.className = 'status';
+        status.textContent = order.order_status || 'Status pending';
+
+        card.appendChild(status);
+
+        if (order.tracking_url) {
+
+            const link = document.createElement('a');
+
+            link.href = order.tracking_url;
+            link.target = '_blank';
+            link.rel = 'noopener noreferrer';
+            link.textContent = 'Track Shipment';
+
+            link.style.display = 'block';
+            link.style.color = '#e82127';
+            link.style.marginTop = '15px';
+
+            card.appendChild(link);
+
+        }
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+// LOG OUT
+
+async function logout() {
+
+    const { error } = await db.auth.signOut();
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    document.getElementById('dashboardSection').style.display = 'none';
+    document.getElementById('authSection').style.display = 'block';
+
+    showForm('login');
+
+}
+
+
+// RESTORE EXISTING LOGIN SESSION
+
+async function initialize() {
+
+    const { data, error } = await db.auth.getSession();
+
+    if (error) {
+        showMessage(error.message, 'error');
+        return;
+    }
+
+    if (data.session) {
+
+        await loadDashboard(data.session.user);
+
+    }
+
+}
+
+db.auth.onAuthStateChange((event, session) => {
+
+    if (event === 'PASSWORD_RECOVERY') {
+
+        showMessage(
+            'Password recovery verified. Password update will be added in the next security upgrade.',
+            'success'
+        );
+
+    }
+
+});
+
+initialize();
+
+</script>
+
+</body>
+</html>
