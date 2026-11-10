@@ -3,86 +3,299 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TESLA Innovation | Admin Dashboard</title>
+<meta name="theme-color" content="#080808">
+<title>TESLA Innovation | Admin Control Centre</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#080808;color:#fff;font-family:Arial,sans-serif;padding:20px}
-.container{max-width:1150px;margin:auto}
+
+body{
+  background:#080808;
+  color:#fff;
+  font-family:Arial,sans-serif;
+  padding:20px;
+}
+
+.container{max-width:1250px;margin:auto}
 h1,h2,h3{margin-bottom:15px}
 .brand{color:#e82127;font-weight:bold}
-.subtitle{color:#aaa;margin-bottom:25px}
-.panel{background:#151515;border:1px solid #292929;border-radius:12px;padding:22px;margin-bottom:22px}
-input,textarea,select{width:100%;padding:13px;margin:8px 0 15px;border:1px solid #444;border-radius:7px;background:#080808;color:white;font-size:15px}
+.subtitle{color:#aaa;margin-bottom:20px}
+.muted{color:#888}
+.hidden{display:none!important}
+
+.panel{
+  background:#151515;
+  border:1px solid #292929;
+  border-radius:12px;
+  padding:22px;
+  margin-bottom:22px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-bottom:25px;
+}
+
+input,textarea,select{
+  width:100%;
+  padding:13px;
+  margin:8px 0 15px;
+  border:1px solid #444;
+  border-radius:7px;
+  background:#080808;
+  color:white;
+  font-size:15px;
+}
+
 textarea{min-height:100px;resize:vertical}
 label{display:block;color:#ddd;font-size:14px;margin-top:8px}
 input[type=checkbox]{width:auto;margin-right:8px}
 input[type=file]{padding:10px}
-button{border:none;border-radius:7px;padding:12px 18px;margin:5px 4px 5px 0;background:#e82127;color:white;font-weight:bold;cursor:pointer}
+
+button{
+  border:none;
+  border-radius:7px;
+  padding:12px 18px;
+  margin:5px 4px 5px 0;
+  background:#e82127;
+  color:white;
+  font-weight:bold;
+  cursor:pointer;
+}
+
 button:hover{opacity:.85}
 button.secondary{background:#333}
 button.success{background:#168b48}
 button.danger{background:#a3151a}
 button:disabled{opacity:.5;cursor:not-allowed}
-.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+
+.tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:20px;
+}
+
 .tab-button{background:#292929}
 .tab-button.active{background:#e82127}
 .tab-content{display:none}
 .tab-content.active{display:block}
-.message{display:none;padding:12px;border-radius:7px;margin:10px 0 15px;background:#252525;color:#fff;overflow-wrap:anywhere}
+
+.message{
+  display:none;
+  padding:12px;
+  border-radius:7px;
+  margin:10px 0 15px;
+  background:#252525;
+  color:#fff;
+  overflow-wrap:anywhere;
+}
+
 .message.error,.message.success{display:block}
 .message.error{background:#4a1515;color:#ffbaba}
 .message.success{background:#123c25;color:#a8ffc6}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
-.vehicle-card,.offer-card,.order-card,.enquiry-card{background:#101010;border:1px solid #333;border-radius:10px;padding:15px;margin-bottom:14px}
-.vehicle-card img{width:100%;height:170px;object-fit:cover;border-radius:7px;margin-bottom:10px;background:#222}
-.vehicle-card p,.offer-card p,.order-card p,.enquiry-card p{color:#bbb;line-height:1.6;overflow-wrap:anywhere}
-.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:12px 0}
+
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  gap:12px;
+}
+
+/* DASHBOARD STATISTICS */
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  gap:14px;
+  margin:22px 0;
+}
+
+.stat-card{
+  background:linear-gradient(145deg,#202020,#101010);
+  border:1px solid #333;
+  border-radius:12px;
+  padding:20px;
+  min-height:120px;
+}
+
+.stat-card span{
+  color:#aaa;
+  font-size:13px;
+}
+
+.stat-card h3{
+  color:#e82127;
+  font-size:30px;
+  margin-top:15px;
+  margin-bottom:0;
+}
+
+.overview-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:20px;
+}
+
+/* MANAGEMENT CARDS */
+
+.vehicle-card,.offer-card,.order-card,.enquiry-card{
+  background:#101010;
+  border:1px solid #333;
+  border-radius:10px;
+  padding:15px;
+  margin-bottom:14px;
+}
+
+.vehicle-card img{
+  width:100%;
+  height:170px;
+  object-fit:cover;
+  border-radius:7px;
+  margin-bottom:10px;
+  background:#222;
+}
+
+.vehicle-card p,.offer-card p,.order-card p,.enquiry-card p{
+  color:#bbb;
+  line-height:1.7;
+  overflow-wrap:anywhere;
+}
+
+.preview-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
+  gap:10px;
+  margin:12px 0;
+}
+
 .preview-item{position:relative}
-.preview-item img{width:100%;height:100px;object-fit:cover;border-radius:7px}
-.preview-item button{position:absolute;top:3px;right:3px;padding:5px 8px;margin:0;font-size:12px}
-.muted{color:#888}
-.hidden{display:none!important}
-.topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:25px}
+.preview-item img{
+  width:100%;
+  height:100px;
+  object-fit:cover;
+  border-radius:7px;
+}
+
+.preview-item button{
+  position:absolute;
+  top:3px;
+  right:3px;
+  padding:5px 8px;
+  margin:0;
+  font-size:12px;
+}
+
 .order-card a{color:#ff5555;overflow-wrap:anywhere}
-@media(max-width:600px){body{padding:12px}.panel{padding:15px}button{padding:11px 13px}}
+
+@media(max-width:600px){
+  body{padding:12px}
+  .panel{padding:15px}
+  button{padding:11px 13px}
+  .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .stat-card{padding:15px}
+  .stat-card h3{font-size:25px}
+}
 </style>
 </head>
 
 <body>
 <div class="container">
 
-<div class="topbar">
+<header class="topbar">
   <div>
     <h1><span class="brand">TESLA</span> Innovation</h1>
     <p class="subtitle">Administrator Control Centre</p>
   </div>
-</div>
+</header>
+
+<!-- ADMIN LOGIN -->
 
 <section id="loginPanel" class="panel">
-  <h2>Admin Login</h2>
+  <h2>Administrator Login</h2>
   <p class="muted">Sign in with your authorised administrator account.</p>
 
-  <label for="loginEmail">Email address</label>
+  <label>Email Address</label>
   <input type="email" id="loginEmail" placeholder="Admin email">
 
-  <label for="loginPassword">Password</label>
+  <label>Password</label>
   <input type="password" id="loginPassword" placeholder="Password">
 
   <div id="loginMessage" class="message"></div>
+
   <button id="loginBtn" onclick="loginAdmin()">Sign In</button>
 </section>
 
+<!-- ADMIN DASHBOARD -->
+
 <section id="dashboard" class="hidden">
 
-<div class="topbar">
+<header class="topbar">
   <div>
     <h2>Admin Dashboard</h2>
-    <p class="muted">Manage vehicles, negotiations, enquiries and customer orders.</p>
+    <p class="muted">Manage your business from one place.</p>
   </div>
   <button class="secondary" onclick="logoutAdmin()">Logout</button>
+</header>
+
+<!-- OVERVIEW -->
+
+<div class="panel">
+  <h2>Dashboard Overview</h2>
+  <p class="muted">Your business at a glance.</p>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <span>Total Vehicles</span>
+      <h3 id="statVehicles">—</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Customer Orders</span>
+      <h3 id="statOrders">—</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Pending Negotiations</span>
+      <h3 id="statOffers">—</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Pending Enquiries</span>
+      <h3 id="statEnquiries">—</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Published Vehicles</span>
+      <h3 id="statPublished">—</h3>
+    </div>
+
+    <div class="stat-card">
+      <span>Completed Orders</span>
+      <h3 id="statCompleted">—</h3>
+    </div>
+
+  </div>
+
+  <div class="overview-actions">
+    <button onclick="showTab('vehiclesTab',null)">Manage Vehicles</button>
+    <button onclick="showTab('offersTab',null)">Negotiations</button>
+    <button onclick="showTab('enquiriesTab',null)">Enquiries</button>
+    <button onclick="showTab('ordersTab',null)">Customer Orders</button>
+  </div>
+
+  <div id="overviewMessage" class="message"></div>
+
+  <button class="secondary" onclick="loadOverview()">Refresh Statistics</button>
 </div>
+
+<!-- NAVIGATION -->
 
 <div class="tabs">
   <button class="tab-button active" onclick="showTab('vehiclesTab',this)">Vehicles</button>
@@ -92,6 +305,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <!-- VEHICLES -->
+
 <div id="vehiclesTab" class="tab-content active">
 
 <div class="panel">
@@ -101,13 +315,41 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <input type="hidden" id="vehicleId">
 
   <div class="grid">
-    <div><label>Vehicle Model</label><input id="model" placeholder="e.g. Model 3"></div>
-    <div><label>Variant</label><input id="variant" placeholder="e.g. Standard RWD"></div>
-    <div><label>Year</label><input id="year" type="number" placeholder="2026"></div>
-    <div><label>Selling Price (USD)</label><input id="sellingPrice" type="number" min="0" placeholder="36990"></div>
-    <div><label>Reference Price (USD)</label><input id="referencePrice" type="number" min="0" placeholder="39990"></div>
-    <div><label>Deposit Percentage (%)</label><input id="depositPercentage" type="number" min="0" max="100" value="30"></div>
-    <div><label>Stock Quantity</label><input id="stockQuantity" type="number" min="0" placeholder="1"></div>
+    <div>
+      <label>Vehicle Model</label>
+      <input id="model" placeholder="e.g. Model 3">
+    </div>
+
+    <div>
+      <label>Variant</label>
+      <input id="variant" placeholder="e.g. Standard RWD">
+    </div>
+
+    <div>
+      <label>Year</label>
+      <input id="year" type="number" placeholder="2026">
+    </div>
+
+    <div>
+      <label>Selling Price (USD)</label>
+      <input id="sellingPrice" type="number" min="0" placeholder="36990">
+    </div>
+
+    <div>
+      <label>Reference Price (USD)</label>
+      <input id="referencePrice" type="number" min="0" placeholder="39990">
+    </div>
+
+    <div>
+      <label>Deposit Percentage (%)</label>
+      <input id="depositPercentage" type="number" min="0" max="100" value="30">
+    </div>
+
+    <div>
+      <label>Stock Quantity</label>
+      <input id="stockQuantity" type="number" min="0" placeholder="1">
+    </div>
+
     <div>
       <label>Availability</label>
       <select id="availability">
@@ -120,15 +362,20 @@ button:disabled{opacity:.5;cursor:not-allowed}
   </div>
 
   <label>Vehicle Description</label>
-  <textarea id="description" placeholder="Write details about this vehicle..."></textarea>
+  <textarea id="description" placeholder="Vehicle details..."></textarea>
 
   <label>Upload Vehicle Photos</label>
   <input id="vehiclePhotos" type="file" accept="image/*" multiple>
+
   <div id="photoPreview" class="preview-grid"></div>
 
-  <label><input type="checkbox" id="published" checked> Publish this vehicle on the website</label>
+  <label>
+    <input type="checkbox" id="published" checked>
+    Publish this vehicle on the website
+  </label>
 
   <div id="vehicleMessage" class="message"></div>
+
   <button id="saveVehicleBtn" onclick="saveVehicle()">Save Vehicle</button>
   <button class="secondary" onclick="resetVehicleForm()">Clear Form</button>
 </div>
@@ -137,32 +384,35 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <h2>Vehicle Listings</h2>
   <div id="vehicleList"><p class="muted">Loading vehicles...</p></div>
 </div>
+
 </div>
 
 <!-- NEGOTIATIONS -->
+
 <div id="offersTab" class="tab-content">
   <div class="panel">
     <h2>Customer Negotiations</h2>
-    <p class="muted">Review customer offers and respond to negotiations.</p>
+    <p class="muted">Review offers and respond to negotiations.</p>
     <div id="offerList"><p class="muted">Loading negotiations...</p></div>
   </div>
 </div>
 
-<!-- PURCHASE ENQUIRIES -->
+<!-- ENQUIRIES -->
+
 <div id="enquiriesTab" class="tab-content">
   <div class="panel">
     <h2>Purchase Enquiries</h2>
-    <p class="muted">Review customer vehicle purchase enquiries and update their status.</p>
-    <div id="enquiryList"><p class="muted">Loading purchase enquiries...</p></div>
+    <p class="muted">Review vehicle purchase enquiries and update their status.</p>
+    <div id="enquiryList"><p class="muted">Loading enquiries...</p></div>
   </div>
 </div>
 
 <!-- CUSTOMER ORDERS -->
+
 <div id="ordersTab" class="tab-content">
 
 <div class="panel">
   <h2>Create Customer Order</h2>
-  <p class="muted">Create an order for a registered customer using their account email.</p>
 
   <label>Customer Email</label>
   <input id="orderCustomerEmail" type="email" placeholder="Customer registered email">
@@ -183,6 +433,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
         <option>Refunded</option>
       </select>
     </div>
+
     <div>
       <label>Order Status</label>
       <select id="orderStatus">
@@ -214,13 +465,14 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <textarea id="orderAdminNote" placeholder="Internal note for administrators..."></textarea>
 
   <div id="orderCreateMessage" class="message"></div>
+
   <button id="createOrderBtn" onclick="createCustomerOrder()">Create Order</button>
   <button class="secondary" onclick="resetOrderForm()">Clear Form</button>
 </div>
 
 <div class="panel">
   <h2>Customer Orders</h2>
-  <div id="orderList"><p class="muted">Loading customer orders...</p></div>
+  <div id="orderList"><p class="muted">Loading orders...</p></div>
 </div>
 
 </div>
@@ -228,14 +480,20 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <script>
+
 // ==========================================
 // SUPABASE CONNECTION
 // ==========================================
 
 const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
 
-const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const SUPABASE_ANON_KEY =
+"sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
 let currentUser = null;
 let vehicles = [];
@@ -248,97 +506,49 @@ let selectedFiles = [];
 // ==========================================
 
 function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g,char => ({
-    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  return String(value ?? "").replace(/[&<>"']/g, char => ({
+    "&":"&amp;",
+    "<":"&lt;",
+    ">":"&gt;",
+    '"':"&quot;",
+    "'":"&#039;"
   })[char]);
 }
 
 function showMessage(id,message,type="") {
   const el=document.getElementById(id);
   if(!el)return;
+
   el.textContent=message;
   el.className="message";
+
   if(type)el.classList.add(type);
 }
 
 function hideMessage(id) {
   const el=document.getElementById(id);
   if(!el)return;
+
   el.textContent="";
   el.className="message";
 }
 
 function formatMoney(value) {
   return new Intl.NumberFormat("en-US",{
-    style:"currency",currency:"USD",maximumFractionDigits:2
+    style:"currency",
+    currency:"USD",
+    maximumFractionDigits:2
   }).format(Number(value||0));
 }
 
 function formatDate(value) {
   if(!value)return "Not provided";
+
   const date=new Date(value);
-  return Number.isNaN(date.getTime()) ? escapeHTML(value) : date.toLocaleDateString();
-}
 
-// ==========================================
-// ORDER EMAIL NOTIFICATIONS
-// ==========================================
-
-async function sendOrderNotification(event, orderId) {
-  if (!orderId) {
-    return {
-      success: false,
-      message: "Order ID was not available."
-    };
-  }
-
-  try {
-    const { data, error } = await db.functions.invoke(
-      "send-order-notification",
-      {
-        body: {
-          event,
-          order_id: orderId
-        }
-      }
-    );
-
-    if (error) {
-      let details = error.message || "Notification failed.";
-
-      try {
-        if (error.context && typeof error.context.json === "function") {
-          const response = await error.context.json();
-          details = response.error || response.message || details;
-        }
-      } catch (_) {}
-
-      return {
-        success: false,
-        message: details
-      };
-    }
-
-    if (data?.error) {
-      return {
-        success: false,
-        message: data.error
-      };
-    }
-
-    return {
-      success: true,
-      message: "Notification request completed."
-    };
-
-  } catch (error) {
-    console.error("Order notification error:", error);
-
-    return {
-      success: false,
-      message: error.message || "Could not send notification."
-    };
-  }
+  return Number.isNaN(date.getTime())
+    ? escapeHTML(value)
+    : date.toLocaleDateString();
 }
 
 // ==========================================
@@ -357,11 +567,16 @@ async function loginAdmin() {
   }
 
   const button=document.getElementById("loginBtn");
+
   button.disabled=true;
   button.textContent="Signing in...";
 
   try {
-    const {data,error}=await db.auth.signInWithPassword({email,password});
+    const {data,error}=await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
     if(error)throw error;
 
     currentUser=data.user;
@@ -369,12 +584,15 @@ async function loginAdmin() {
     if(!await verifyAdmin()) {
       await db.auth.signOut();
       currentUser=null;
+
       throw new Error("This account is not authorised as an administrator.");
     }
 
     await openDashboard();
+
   } catch(error) {
     showMessage("loginMessage",error.message||"Login failed.","error");
+
   } finally {
     button.disabled=false;
     button.textContent="Sign In";
@@ -390,14 +608,15 @@ async function verifyAdmin() {
     .maybeSingle();
 
   if(error)throw error;
+
   return Boolean(data);
 }
 
 async function checkSession() {
   try {
     const {data,error}=await db.auth.getSession();
-    if(error)throw error;
 
+    if(error)throw error;
     if(!data.session)return;
 
     currentUser=data.session.user;
@@ -409,6 +628,7 @@ async function checkSession() {
     }
 
     await openDashboard();
+
   } catch(error) {
     console.error("Session check failed:",error);
   }
@@ -418,7 +638,10 @@ async function openDashboard() {
   document.getElementById("loginPanel").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
 
+  await loadOverview();
+
   await loadVehicles();
+
   await Promise.all([
     loadOffers(),
     loadEnquiries(),
@@ -428,10 +651,112 @@ async function openDashboard() {
 
 async function logoutAdmin() {
   await db.auth.signOut();
+
   currentUser=null;
+
   document.getElementById("dashboard").classList.add("hidden");
   document.getElementById("loginPanel").classList.remove("hidden");
+
   document.getElementById("loginPassword").value="";
+}
+
+// ==========================================
+// DASHBOARD OVERVIEW
+// ==========================================
+
+async function loadOverview() {
+
+  const ids=[
+    "statVehicles",
+    "statOrders",
+    "statOffers",
+    "statEnquiries",
+    "statPublished",
+    "statCompleted"
+  ];
+
+  ids.forEach(id=>{
+    document.getElementById(id).textContent="...";
+  });
+
+  hideMessage("overviewMessage");
+
+  try {
+
+    const [
+      vehiclesResult,
+      ordersResult,
+      offersResult,
+      enquiriesResult,
+      publishedResult,
+      completedResult
+    ]=await Promise.all([
+
+      db.from("vehicles")
+        .select("*",{count:"exact",head:true}),
+
+      db.from("customer_orders")
+        .select("*",{count:"exact",head:true}),
+
+      db.from("negotiations")
+        .select("*",{count:"exact",head:true})
+        .eq("status","pending"),
+
+      db.from("enquiries")
+        .select("*",{count:"exact",head:true})
+        .eq("status","Pending"),
+
+      db.from("vehicles")
+        .select("*",{count:"exact",head:true})
+        .eq("is_published",true),
+
+      db.from("customer_orders")
+        .select("*",{count:"exact",head:true})
+        .eq("order_status","Delivered")
+
+    ]);
+
+    const results=[
+      vehiclesResult,
+      ordersResult,
+      offersResult,
+      enquiriesResult,
+      publishedResult,
+      completedResult
+    ];
+
+    const failed=results.find(result=>result.error);
+
+    if(failed)throw failed.error;
+
+    const values={
+      statVehicles:vehiclesResult.count??0,
+      statOrders:ordersResult.count??0,
+      statOffers:offersResult.count??0,
+      statEnquiries:enquiriesResult.count??0,
+      statPublished:publishedResult.count??0,
+      statCompleted:completedResult.count??0
+    };
+
+    Object.entries(values).forEach(([id,value])=>{
+      document.getElementById(id).textContent=
+        Number(value).toLocaleString();
+    });
+
+  } catch(error) {
+
+    console.error("Dashboard statistics:",error);
+
+    ids.forEach(id=>{
+      document.getElementById(id).textContent="—";
+    });
+
+    showMessage(
+      "overviewMessage",
+      "Some statistics could not load. Check database permissions and status values.",
+      "error"
+    );
+  }
 }
 
 // ==========================================
@@ -439,10 +764,15 @@ async function logoutAdmin() {
 // ==========================================
 
 function showTab(tabId,button) {
-  document.querySelectorAll(".tab-content").forEach(tab=>tab.classList.remove("active"));
-  document.querySelectorAll(".tab-button").forEach(btn=>btn.classList.remove("active"));
+
+  document.querySelectorAll(".tab-content")
+    .forEach(tab=>tab.classList.remove("active"));
+
+  document.querySelectorAll(".tab-button")
+    .forEach(btn=>btn.classList.remove("active"));
 
   document.getElementById(tabId).classList.add("active");
+
   if(button)button.classList.add("active");
 
   if(tabId==="vehiclesTab")loadVehicles();
@@ -461,62 +791,87 @@ document.getElementById("vehiclePhotos").addEventListener("change",event=>{
 });
 
 function renderPreviews() {
+
   const preview=document.getElementById("photoPreview");
+
   preview.innerHTML="";
 
   existingImages.forEach(url=>{
+
     if(removedImages.includes(url))return;
 
     const item=document.createElement("div");
     item.className="preview-item";
+
     const img=document.createElement("img");
     img.src=url;
     img.alt="Vehicle photo";
+
     const btn=document.createElement("button");
     btn.type="button";
     btn.className="danger";
     btn.textContent="×";
+
     btn.onclick=()=>{
       removedImages.push(url);
       renderPreviews();
     };
+
     item.append(img,btn);
     preview.appendChild(item);
   });
 
   selectedFiles.forEach((file,index)=>{
+
     const item=document.createElement("div");
     item.className="preview-item";
+
     const img=document.createElement("img");
     img.src=URL.createObjectURL(file);
     img.alt="New vehicle photo";
+
     const btn=document.createElement("button");
     btn.type="button";
     btn.className="danger";
     btn.textContent="×";
+
     btn.onclick=()=>{
       selectedFiles.splice(index,1);
       renderPreviews();
     };
+
     item.append(img,btn);
     preview.appendChild(item);
   });
 }
 
 async function uploadPhotos(vehicleId) {
+
   const uploadedURLs=[];
 
   for(const file of selectedFiles) {
-    const extension=file.name.split(".").pop()||"jpg";
-    const fileName=vehicleId+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+extension;
 
-    const {error}=await db.storage.from("vehicle-images").upload(fileName,file,{
-      cacheControl:"3600",upsert:false
-    });
+    const extension=file.name.split(".").pop()||"jpg";
+
+    const fileName=
+      vehicleId+"/"+
+      Date.now()+"-"+
+      Math.random().toString(36).slice(2)+
+      "."+extension;
+
+    const {error}=await db.storage
+      .from("vehicle-images")
+      .upload(fileName,file,{
+        cacheControl:"3600",
+        upsert:false
+      });
 
     if(error)throw error;
 
-    const {data}=db.storage.from("vehicle-images").getPublicUrl(fileName);
+    const {data}=db.storage
+      .from("vehicle-images")
+      .getPublicUrl(fileName);
+
     uploadedURLs.push(data.publicUrl);
   }
 
@@ -528,46 +883,78 @@ async function uploadPhotos(vehicleId) {
 // ==========================================
 
 async function loadVehicles() {
+
   const list=document.getElementById("vehicleList");
+
   list.innerHTML="<p class='muted'>Loading vehicles...</p>";
 
   try {
+
     const {data,error}=await db.from("vehicles")
       .select("*")
       .order("created_at",{ascending:false});
 
     if(error)throw error;
+
     vehicles=data||[];
 
     if(!vehicles.length) {
-      list.innerHTML="<p class='muted'>No vehicles have been added yet.</p>";
+      list.innerHTML="<p class='muted'>No vehicles added yet.</p>";
       return;
     }
 
     list.innerHTML=vehicles.map(vehicle=>{
-      const images=Array.isArray(vehicle.image_urls)?vehicle.image_urls:[];
+
+      const images=Array.isArray(vehicle.image_urls)
+        ?vehicle.image_urls:[];
+
       const firstImage=images.length
-        ?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(vehicle.model)}">`:"";
+        ?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(vehicle.model)}">`
+        :"";
+
       const published=vehicle.is_published===true;
 
       return `
       <div class="vehicle-card">
+
         ${firstImage}
+
         <h3>${escapeHTML(vehicle.model||"Unnamed Vehicle")}</h3>
+
         <p><strong>Variant:</strong> ${escapeHTML(vehicle.variant||"Not specified")}</p>
+
         <p><strong>Year:</strong> ${escapeHTML(vehicle.year||"Not specified")}</p>
+
         <p><strong>Price:</strong> ${formatMoney(vehicle.selling_price)}</p>
+
         <p><strong>Availability:</strong> ${escapeHTML(vehicle.availability||"Not specified")}</p>
+
         <p><strong>Stock:</strong> ${escapeHTML(vehicle.stock_quantity??0)}</p>
+
         <p><strong>Publication:</strong> ${published?"Published":"Unpublished"}</p>
+
         <button onclick="editVehicle('${escapeHTML(vehicle.id)}')">Edit</button>
-        <button class="secondary" onclick="toggleVehiclePublication('${escapeHTML(vehicle.id)}',${!published})">${published?"Unpublish":"Publish"}</button>
-        <button class="danger" onclick="deleteVehicle('${escapeHTML(vehicle.id)}')">Delete</button>
+
+        <button class="secondary"
+          onclick="toggleVehiclePublication('${escapeHTML(vehicle.id)}',${!published})">
+          ${published?"Unpublish":"Publish"}
+        </button>
+
+        <button class="danger"
+          onclick="deleteVehicle('${escapeHTML(vehicle.id)}')">
+          Delete
+        </button>
+
       </div>`;
+
     }).join("");
+
   } catch(error) {
+
     console.error(error);
-    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+
+    list.innerHTML=
+      `<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
@@ -576,13 +963,17 @@ async function loadVehicles() {
 // ==========================================
 
 async function saveVehicle() {
+
   hideMessage("vehicleMessage");
 
   const model=document.getElementById("model").value.trim();
-  const price=Number(document.getElementById("sellingPrice").value);
+
+  const price=Number(
+    document.getElementById("sellingPrice").value
+  );
 
   if(!model) {
-    showMessage("vehicleMessage","Enter the vehicle model.","error");
+    showMessage("vehicleMessage","Enter vehicle model.","error");
     return;
   }
 
@@ -592,58 +983,111 @@ async function saveVehicle() {
   }
 
   const button=document.getElementById("saveVehicleBtn");
+
   button.disabled=true;
   button.textContent="Saving...";
 
   try {
+
     const editingId=document.getElementById("vehicleId").value;
+
     const vehicleId=editingId||crypto.randomUUID();
 
     const uploadedURLs=await uploadPhotos(vehicleId);
+
     const finalImages=[
       ...existingImages.filter(url=>!removedImages.includes(url)),
       ...uploadedURLs
     ];
 
     const payload={
+
       model,
+
       variant:document.getElementById("variant").value.trim(),
+
       year:Number(document.getElementById("year").value)||null,
+
       description:document.getElementById("description").value.trim(),
+
       selling_price:price,
-      reference_price:Number(document.getElementById("referencePrice").value)||null,
-      deposit_percentage:Number(document.getElementById("depositPercentage").value)||30,
-      stock_quantity:Number(document.getElementById("stockQuantity").value)||0,
+
+      reference_price:Number(
+        document.getElementById("referencePrice").value
+      )||null,
+
+      deposit_percentage:Number(
+        document.getElementById("depositPercentage").value
+      )||30,
+
+      stock_quantity:Number(
+        document.getElementById("stockQuantity").value
+      )||0,
+
       availability:document.getElementById("availability").value,
+
       image_urls:finalImages,
+
       is_published:document.getElementById("published").checked,
+
       updated_at:new Date().toISOString()
     };
 
     let result;
 
     if(editingId) {
-      result=await db.from("vehicles").update(payload).eq("id",editingId);
+
+      result=await db.from("vehicles")
+        .update(payload)
+        .eq("id",editingId);
+
     } else {
-      result=await db.from("vehicles").insert({id:vehicleId,...payload});
+
+      result=await db.from("vehicles")
+        .insert({
+          id:vehicleId,
+          ...payload
+        });
     }
 
     if(result.error)throw result.error;
 
-    showMessage("vehicleMessage",editingId?"Vehicle updated successfully.":"Vehicle added successfully.","success");
+    showMessage(
+      "vehicleMessage",
+      editingId?"Vehicle updated successfully.":"Vehicle added successfully.",
+      "success"
+    );
+
     resetVehicleForm();
-    await loadVehicles();
+
+    await Promise.all([
+      loadVehicles(),
+      loadOverview()
+    ]);
+
   } catch(error) {
+
     console.error(error);
-    showMessage("vehicleMessage",error.message||"Could not save vehicle.","error");
+
+    showMessage(
+      "vehicleMessage",
+      error.message||"Could not save vehicle.",
+      "error"
+    );
+
   } finally {
+
     button.disabled=false;
     button.textContent="Save Vehicle";
   }
 }
 
 function editVehicle(id) {
-  const vehicle=vehicles.find(item=>String(item.id)===String(id));
+
+  const vehicle=vehicles.find(
+    item=>String(item.id)===String(id)
+  );
+
   if(!vehicle)return alert("Vehicle not found.");
 
   document.getElementById("vehicleId").value=vehicle.id||"";
@@ -658,18 +1102,38 @@ function editVehicle(id) {
   document.getElementById("availability").value=vehicle.availability||"pre_order";
   document.getElementById("published").checked=vehicle.is_published===true;
 
-  existingImages=Array.isArray(vehicle.image_urls)?[...vehicle.image_urls]:[];
+  existingImages=Array.isArray(vehicle.image_urls)
+    ?[...vehicle.image_urls]:[];
+
   removedImages=[];
   selectedFiles=[];
+
   document.getElementById("vehiclePhotos").value="";
+
   renderPreviews();
 
-  document.getElementById("vehiclesTab").scrollIntoView({behavior:"smooth"});
-  showMessage("vehicleMessage","Editing vehicle: "+vehicle.model,"success");
+  document.getElementById("vehiclesTab")
+    .scrollIntoView({behavior:"smooth"});
+
+  showMessage(
+    "vehicleMessage",
+    "Editing vehicle: "+vehicle.model,
+    "success"
+  );
 }
 
 function resetVehicleForm() {
-  ["vehicleId","model","variant","year","description","sellingPrice","referencePrice","stockQuantity"].forEach(id=>{
+
+  [
+    "vehicleId",
+    "model",
+    "variant",
+    "year",
+    "description",
+    "sellingPrice",
+    "referencePrice",
+    "stockQuantity"
+  ].forEach(id=>{
     document.getElementById(id).value="";
   });
 
@@ -681,26 +1145,43 @@ function resetVehicleForm() {
   existingImages=[];
   removedImages=[];
   selectedFiles=[];
+
   renderPreviews();
+
   hideMessage("vehicleMessage");
 }
 
 async function toggleVehiclePublication(id,publish) {
-  const {error}=await db.from("vehicles").update({
-    is_published:publish,
-    updated_at:new Date().toISOString()
-  }).eq("id",id);
+
+  const {error}=await db.from("vehicles")
+    .update({
+      is_published:publish,
+      updated_at:new Date().toISOString()
+    })
+    .eq("id",id);
 
   if(error)return alert(error.message);
-  await loadVehicles();
+
+  await Promise.all([
+    loadVehicles(),
+    loadOverview()
+  ]);
 }
 
 async function deleteVehicle(id) {
+
   if(!confirm("Are you sure you want to delete this vehicle?"))return;
 
-  const {error}=await db.from("vehicles").delete().eq("id",id);
+  const {error}=await db.from("vehicles")
+    .delete()
+    .eq("id",id);
+
   if(error)return alert(error.message);
-  await loadVehicles();
+
+  await Promise.all([
+    loadVehicles(),
+    loadOverview()
+  ]);
 }
 
 // ==========================================
@@ -708,10 +1189,13 @@ async function deleteVehicle(id) {
 // ==========================================
 
 async function loadOffers() {
+
   const list=document.getElementById("offerList");
+
   list.innerHTML="<p class='muted'>Loading negotiations...</p>";
 
   try {
+
     const {data,error}=await db.from("negotiations")
       .select("*")
       .order("created_at",{ascending:false});
@@ -724,48 +1208,92 @@ async function loadOffers() {
     }
 
     list.innerHTML=data.map(offer=>`
+
       <div class="offer-card">
+
         <h3>${escapeHTML(offer.vehicle_id||"Vehicle Negotiation")}</h3>
+
         <p><strong>Customer:</strong> ${escapeHTML(offer.customer_name||"Not provided")}</p>
+
         <p><strong>Email:</strong> ${escapeHTML(offer.email||offer.customer_email||"Not provided")}</p>
+
         <p><strong>Phone:</strong> ${escapeHTML(offer.phone||offer.customer_phone||"Not provided")}</p>
+
         <p><strong>Offer:</strong> ${formatMoney(offer.proposed_budget)}</p>
+
         <p><strong>Message:</strong> ${escapeHTML(offer.customer_message||"No message")}</p>
+
         <p><strong>Status:</strong> ${escapeHTML(offer.status||"Pending")}</p>
+
         ${offer.counter_offer?`<p><strong>Counteroffer:</strong> ${formatMoney(offer.counter_offer)}</p>`:""}
-        <button class="success" onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">Accept</button>
-        <button class="secondary" onclick="makeCounter('${escapeHTML(offer.id)}')">Make Counteroffer</button>
-        <button class="danger" onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">Reject</button>
+
+        <button class="success"
+          onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">
+          Accept
+        </button>
+
+        <button class="secondary"
+          onclick="makeCounter('${escapeHTML(offer.id)}')">
+          Make Counteroffer
+        </button>
+
+        <button class="danger"
+          onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">
+          Reject
+        </button>
+
       </div>
+
     `).join("");
+
   } catch(error) {
+
     console.error(error);
-    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+
+    list.innerHTML=
+      `<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
 async function respondToOffer(id,status) {
+
   const {error}=await db.from("negotiations")
     .update({status})
     .eq("id",id);
 
   if(error)return alert(error.message);
-  await loadOffers();
+
+  await Promise.all([
+    loadOffers(),
+    loadOverview()
+  ]);
 }
 
 async function makeCounter(id) {
+
   const amount=prompt("Enter your counteroffer amount in USD:");
+
   if(amount===null)return;
 
   const counteroffer=Number(amount);
-  if(!Number.isFinite(counteroffer)||counteroffer<=0)return alert("Enter a valid amount.");
+
+  if(!Number.isFinite(counteroffer)||counteroffer<=0) {
+    return alert("Enter a valid amount.");
+  }
 
   const {error}=await db.from("negotiations")
-    .update({status:"countered",counter_offer:counteroffer})
+    .update({
+      status:"countered",
+      counter_offer:counteroffer
+    })
     .eq("id",id);
 
   if(error)return alert(error.message);
-  await loadOffers();
+
+  await Promise.all([
+    loadOffers(),
+    loadOverview()
+  ]);
 }
 
 // ==========================================
@@ -773,10 +1301,13 @@ async function makeCounter(id) {
 // ==========================================
 
 async function loadEnquiries() {
+
   const list=document.getElementById("enquiryList");
-  list.innerHTML="<p class='muted'>Loading purchase enquiries...</p>";
+
+  list.innerHTML="<p class='muted'>Loading enquiries...</p>";
 
   try {
+
     const {data,error}=await db.from("enquiries")
       .select("*")
       .order("created_at",{ascending:false});
@@ -789,36 +1320,75 @@ async function loadEnquiries() {
     }
 
     list.innerHTML=data.map(enquiry=>{
-      const vehicle=vehicles.find(item=>String(item.id)===String(enquiry.vehicle_id));
+
+      const vehicle=vehicles.find(
+        item=>String(item.id)===String(enquiry.vehicle_id)
+      );
 
       return `
+
       <div class="enquiry-card">
+
         <h3>${escapeHTML(vehicle?.model||"Vehicle Enquiry")}</h3>
+
         <p><strong>Customer:</strong> ${escapeHTML(enquiry.customer_name||"Not provided")}</p>
+
         <p><strong>Email:</strong> ${escapeHTML(enquiry.email||"Not provided")}</p>
+
         <p><strong>Phone:</strong> ${escapeHTML(enquiry.phone||"Not provided")}</p>
+
         <p><strong>Enquiry Type:</strong> ${escapeHTML(enquiry.enquiry_type||"Not specified")}</p>
-        <p><strong>Vehicle ID:</strong> ${escapeHTML(enquiry.vehicle_id||"Not provided")}</p>
+
         <p><strong>Preferred Colour:</strong> ${escapeHTML(enquiry.preferred_colour||"Not specified")}</p>
+
         <p><strong>Delivery Country:</strong> ${escapeHTML(enquiry.delivery_country||"Not specified")}</p>
+
         <p><strong>Message:</strong> ${escapeHTML(enquiry.message||"No message")}</p>
+
         <p><strong>Status:</strong> ${escapeHTML(enquiry.status||"Pending")}</p>
+
         <p><strong>Date:</strong> ${formatDate(enquiry.created_at)}</p>
-        <button onclick="updateEnquiryStatus('${escapeHTML(enquiry.id)}')">Update Status</button>
-      </div>`;
+
+        <button onclick="updateEnquiryStatus('${escapeHTML(enquiry.id)}')">
+          Update Status
+        </button>
+
+      </div>
+
+      `;
+
     }).join("");
+
   } catch(error) {
-    console.error("Enquiry loading error:",error);
-    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+
+    console.error(error);
+
+    list.innerHTML=
+      `<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
 async function updateEnquiryStatus(id) {
-  const status=prompt("Enter the new enquiry status:");
+
+  const status=prompt(
+    "Enter new status (Pending, Contacted, Processing, Completed, Cancelled):"
+  );
+
   if(status===null)return;
 
   const selectedStatus=status.trim();
-  if(!selectedStatus)return alert("Enter a status.");
+
+  const allowed=[
+    "Pending",
+    "Contacted",
+    "Processing",
+    "Completed",
+    "Cancelled"
+  ];
+
+  if(!allowed.includes(selectedStatus)) {
+    return alert("Invalid status.");
+  }
 
   const {error}=await db.from("enquiries")
     .update({status:selectedStatus})
@@ -826,8 +1396,67 @@ async function updateEnquiryStatus(id) {
 
   if(error)return alert(error.message);
 
-  alert("Enquiry status updated successfully.");
-  await loadEnquiries();
+  alert("Enquiry status updated.");
+
+  await Promise.all([
+    loadEnquiries(),
+    loadOverview()
+  ]);
+}
+
+// ==========================================
+// ORDER NOTIFICATIONS
+// ==========================================
+
+async function sendOrderNotification(event,orderId) {
+
+  if(!orderId) {
+    return {
+      success:false,
+      message:"Order ID unavailable."
+    };
+  }
+
+  try {
+
+    const {data,error}=await db.functions.invoke(
+      "send-order-notification",
+      {
+        body:{
+          event,
+          order_id:orderId
+        }
+      }
+    );
+
+    if(error) {
+      return {
+        success:false,
+        message:error.message||"Notification failed."
+      };
+    }
+
+    if(data?.error) {
+      return {
+        success:false,
+        message:data.error
+      };
+    }
+
+    return {
+      success:true,
+      message:"Notification request completed."
+    };
+
+  } catch(error) {
+
+    console.error(error);
+
+    return {
+      success:false,
+      message:error.message||"Notification failed."
+    };
+  }
 }
 
 // ==========================================
@@ -835,132 +1464,141 @@ async function updateEnquiryStatus(id) {
 // ==========================================
 
 async function createCustomerOrder() {
+
   hideMessage("orderCreateMessage");
 
-  const customerEmail=document.getElementById("orderCustomerEmail").value.trim();
-  const vehicleName=document.getElementById("orderVehicleName").value.trim();
+  const customerEmail=
+    document.getElementById("orderCustomerEmail").value.trim();
+
+  const vehicleName=
+    document.getElementById("orderVehicleName").value.trim();
 
   if(!customerEmail||!vehicleName) {
-    showMessage("orderCreateMessage","Customer email and vehicle name are required.","error");
+
+    showMessage(
+      "orderCreateMessage",
+      "Customer email and vehicle name are required.",
+      "error"
+    );
+
     return;
   }
 
   const button=document.getElementById("createOrderBtn");
+
   button.disabled=true;
   button.textContent="Creating Order...";
 
   try {
+
     const orderData={
+
       customerEmail,
+
       vehicleName,
-      tracking_number:document.getElementById("orderTrackingNumber").value.trim()||null,
-      payment_status:document.getElementById("orderPaymentStatus").value,
-      order_status:document.getElementById("orderStatus").value,
-      delivery_country:document.getElementById("orderCountry").value.trim(),
-      shipping_carrier:document.getElementById("orderCarrier").value.trim(),
-      tracking_url:document.getElementById("orderTrackingURL").value.trim(),
-      estimated_delivery:document.getElementById("orderDeliveryDate").value||null,
-      admin_note:document.getElementById("orderAdminNote").value.trim()
+
+      tracking_number:
+        document.getElementById("orderTrackingNumber").value.trim()||null,
+
+      payment_status:
+        document.getElementById("orderPaymentStatus").value,
+
+      order_status:
+        document.getElementById("orderStatus").value,
+
+      delivery_country:
+        document.getElementById("orderCountry").value.trim(),
+
+      shipping_carrier:
+        document.getElementById("orderCarrier").value.trim(),
+
+      tracking_url:
+        document.getElementById("orderTrackingURL").value.trim(),
+
+      estimated_delivery:
+        document.getElementById("orderDeliveryDate").value||null,
+
+      admin_note:
+        document.getElementById("orderAdminNote").value.trim()
     };
 
-    const {data,error}=await db.functions.invoke("create-customer-order-",{
-      body:orderData
-    });
+    const {data,error}=await db.functions.invoke(
+      "create-customer-order-",
+      {
+        body:orderData
+      }
+    );
 
-    if(error) {
-      let details=error.message||"Order creation failed.";
-      try {
-        if(error.context&&typeof error.context.json==="function") {
-          const response=await error.context.json();
-          details=response.error||response.message||details;
-        }
-      } catch(_){}
-      throw new Error(details);
-    }
+    if(error)throw error;
 
     if(data?.error)throw new Error(data.error);
 
-    let createdOrder =
-      data?.order ||
-      data?.customer_order ||
-      data ||
+    const createdOrder=
+      data?.order||
+      data?.customer_order||
+      data||
       {};
 
-    let orderId = createdOrder.id || null;
-    let trackingNumber =
-      createdOrder.tracking_number ||
-      orderData.tracking_number ||
-      null;
+    const orderId=createdOrder.id||null;
 
-    // Find the registered customer's account ID.
-    const {data:customerData,error:customerError}=await db.auth.admin
-      ? {data:null,error:new Error("Admin lookup is not available in the browser.")}
-      : {data:null,error:null};
+    const trackingNumber=
+      createdOrder.tracking_number||
+      orderData.tracking_number||
+      "Created successfully";
 
-    // The admin function response may include the customer ID.
-    const customerId =
-      createdOrder.customer_id ||
-      data?.customer_id ||
-      null;
-
-    // If the order ID was not returned, locate the latest matching order.
-    if (!orderId && customerId) {
-      let query = db.from("customer_orders")
-        .select("id,tracking_number")
-        .eq("customer_id",customerId)
-        .order("created_at",{ascending:false})
-        .limit(5);
-
-      if (trackingNumber) {
-        query = query.eq("tracking_number",trackingNumber);
-      }
-
-      const {data:foundOrders,error:lookupError}=await query;
-
-      if (!lookupError && foundOrders?.length) {
-        orderId=foundOrders[0].id;
-        trackingNumber=foundOrders[0].tracking_number || trackingNumber;
-      }
-    }
-
-    // Use a returned order ID if available. Never guess an ID.
     let notificationMessage="";
 
-    if (orderId) {
+    if(orderId) {
+
       const notification=await sendOrderNotification(
         "order_created",
         orderId
       );
 
       notificationMessage=notification.success
-        ? " Notification request submitted."
-        : " Email notification failed: "+notification.message;
+        ?" Notification requested."
+        :" Notification failed: "+notification.message;
+
     } else {
-      notificationMessage =
-        " Email notification was not triggered because the order ID was not returned by the order-creation function.";
+
+      notificationMessage=
+        " Email notification not triggered because the function did not return an order ID.";
     }
 
     showMessage(
       "orderCreateMessage",
-      "Order created successfully. Tracking number: "+
-      (trackingNumber||"Created successfully")+
+      "Order created successfully. Tracking: "+
+      trackingNumber+
       notificationMessage,
       "success"
     );
 
     resetOrderForm();
-    await loadOrders();
+
+    await Promise.all([
+      loadOrders(),
+      loadOverview()
+    ]);
 
   } catch(error) {
-    console.error("Create order error:",error);
-    showMessage("orderCreateMessage",error.message||"Could not create customer order.","error");
+
+    console.error(error);
+
+    showMessage(
+      "orderCreateMessage",
+      error.message||"Could not create customer order.",
+      "error"
+    );
+
   } finally {
+
     button.disabled=false;
     button.textContent="Create Order";
   }
 }
 
 function resetOrderForm() {
+
   document.getElementById("orderCustomerEmail").value="";
   document.getElementById("orderVehicleName").value="";
   document.getElementById("orderTrackingNumber").value="";
@@ -978,10 +1616,13 @@ function resetOrderForm() {
 // ==========================================
 
 async function loadOrders() {
+
   const list=document.getElementById("orderList");
-  list.innerHTML="<p class='muted'>Loading customer orders...</p>";
+
+  list.innerHTML="<p class='muted'>Loading orders...</p>";
 
   try {
+
     const {data,error}=await db.from("customer_orders")
       .select("*")
       .order("created_at",{ascending:false});
@@ -989,30 +1630,54 @@ async function loadOrders() {
     if(error)throw error;
 
     if(!data||!data.length) {
-      list.innerHTML="<p class='muted'>No customer orders have been created yet.</p>";
+      list.innerHTML="<p class='muted'>No customer orders yet.</p>";
       return;
     }
 
     list.innerHTML=data.map(order=>`
+
       <div class="order-card">
+
         <h3>${escapeHTML(order.vehicle_name||"Vehicle Order")}</h3>
+
         <p><strong>Customer ID:</strong> ${escapeHTML(order.customer_id||"Not available")}</p>
+
         <p><strong>Tracking Number:</strong> ${escapeHTML(order.tracking_number||"Not assigned")}</p>
+
         <p><strong>Payment:</strong> ${escapeHTML(order.payment_status||"Pending")}</p>
+
         <p><strong>Order Status:</strong> ${escapeHTML(order.order_status||"Processing")}</p>
+
         <p><strong>Country:</strong> ${escapeHTML(order.delivery_country||"Not provided")}</p>
+
         <p><strong>Carrier:</strong> ${escapeHTML(order.shipping_carrier||"Not assigned")}</p>
+
         <p><strong>Estimated Delivery:</strong> ${formatDate(order.estimated_delivery)}</p>
+
         <p><strong>Tracking URL:</strong>
-          ${order.tracking_url?`<a href="${escapeHTML(order.tracking_url)}" target="_blank" rel="noopener noreferrer">Open tracking</a>`:"Not provided"}
+          ${
+            order.tracking_url
+            ?`<a href="${escapeHTML(order.tracking_url)}" target="_blank" rel="noopener noreferrer">Open Tracking</a>`
+            :"Not provided"
+          }
         </p>
+
         <p><strong>Private Admin Note:</strong> ${escapeHTML(order.admin_note||"None")}</p>
-        <button onclick="editCustomerOrder('${escapeHTML(order.id)}')">Update Order</button>
+
+        <button onclick="editCustomerOrder('${escapeHTML(order.id)}')">
+          Update Order
+        </button>
+
       </div>
+
     `).join("");
+
   } catch(error) {
-    console.error("Load orders error:",error);
-    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
+
+    console.error(error);
+
+    list.innerHTML=
+      `<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
@@ -1021,6 +1686,7 @@ async function loadOrders() {
 // ==========================================
 
 async function editCustomerOrder(id) {
+
   const {data:order,error:fetchError}=await db.from("customer_orders")
     .select("*")
     .eq("id",id)
@@ -1032,54 +1698,108 @@ async function editCustomerOrder(id) {
     "Payment status:\nPending, Partially Paid, Paid, Refunded",
     order.payment_status||"Pending"
   );
+
   if(paymentStatus===null)return;
 
   const orderStatus=prompt(
     "Order status:\nOrder Received, Processing, Preparing for Shipment, Shipped, In Transit, Out for Delivery, Delivered, Cancelled",
     order.order_status||"Processing"
   );
+
   if(orderStatus===null)return;
 
-  const carrier=prompt("Shipping carrier:",order.shipping_carrier||"");
+  const carrier=prompt(
+    "Shipping carrier:",
+    order.shipping_carrier||""
+  );
+
   if(carrier===null)return;
 
-  const trackingURL=prompt("Tracking URL:",order.tracking_url||"");
+  const trackingURL=prompt(
+    "Tracking URL:",
+    order.tracking_url||""
+  );
+
   if(trackingURL===null)return;
 
-  const deliveryDate=prompt("Estimated delivery date (YYYY-MM-DD):",order.estimated_delivery||"");
+  const deliveryDate=prompt(
+    "Estimated delivery date (YYYY-MM-DD):",
+    order.estimated_delivery||""
+  );
+
   if(deliveryDate===null)return;
 
-  const adminNote=prompt("Private admin note:",order.admin_note||"");
+  const adminNote=prompt(
+    "Private admin note:",
+    order.admin_note||""
+  );
+
   if(adminNote===null)return;
 
-  const allowedPayments=["Pending","Partially Paid","Paid","Refunded"];
-  const allowedStatuses=[
-    "Order Received","Processing","Preparing for Shipment","Shipped",
-    "In Transit","Out for Delivery","Delivered","Cancelled"
+  const allowedPayments=[
+    "Pending",
+    "Partially Paid",
+    "Paid",
+    "Refunded"
   ];
 
-  if(!allowedPayments.includes(paymentStatus.trim()))return alert("Invalid payment status.");
-  if(!allowedStatuses.includes(orderStatus.trim()))return alert("Invalid order status.");
+  const allowedStatuses=[
+    "Order Received",
+    "Processing",
+    "Preparing for Shipment",
+    "Shipped",
+    "In Transit",
+    "Out for Delivery",
+    "Delivered",
+    "Cancelled"
+  ];
+
+  if(!allowedPayments.includes(paymentStatus.trim())) {
+    return alert("Invalid payment status.");
+  }
+
+  if(!allowedStatuses.includes(orderStatus.trim())) {
+    return alert("Invalid order status.");
+  }
 
   if(trackingURL.trim()) {
+
     try {
+
       const parsedURL=new URL(trackingURL.trim());
-      if(parsedURL.protocol!=="https:")return alert("Tracking links must use HTTPS.");
-    } catch(_){return alert("Enter a valid tracking URL.");}
+
+      if(parsedURL.protocol!=="https:") {
+        return alert("Tracking links must use HTTPS.");
+      }
+
+    } catch(_) {
+
+      return alert("Enter a valid tracking URL.");
+    }
   }
 
   const updateData={
+
     payment_status:paymentStatus.trim(),
+
     order_status:orderStatus.trim(),
+
     shipping_carrier:carrier.trim(),
+
     tracking_url:trackingURL.trim(),
+
     estimated_delivery:deliveryDate.trim()||null,
+
     admin_note:adminNote.trim(),
+
     updated_at:new Date().toISOString()
   };
 
-  const paymentChanged=(order.payment_status||"")!==updateData.payment_status;
-  const statusChanged=(order.order_status||"")!==updateData.order_status;
+  const paymentChanged=
+    (order.payment_status||"")!==updateData.payment_status;
+
+  const statusChanged=
+    (order.order_status||"")!==updateData.order_status;
 
   const {error}=await db.from("customer_orders")
     .update(updateData)
@@ -1087,28 +1807,50 @@ async function editCustomerOrder(id) {
 
   if(error)return alert(error.message);
 
-  const notificationProblems=[];
+  const problems=[];
 
   if(paymentChanged) {
-    const result=await sendOrderNotification("payment_updated",id);
-    if(!result.success)notificationProblems.push("Payment notification: "+result.message);
+
+    const result=await sendOrderNotification(
+      "payment_updated",
+      id
+    );
+
+    if(!result.success) {
+      problems.push("Payment notification: "+result.message);
+    }
   }
 
   if(statusChanged) {
-    const result=await sendOrderNotification("order_status_updated",id);
-    if(!result.success)notificationProblems.push("Order notification: "+result.message);
+
+    const result=await sendOrderNotification(
+      "order_status_updated",
+      id
+    );
+
+    if(!result.success) {
+      problems.push("Order notification: "+result.message);
+    }
   }
 
-  await loadOrders();
+  await Promise.all([
+    loadOrders(),
+    loadOverview()
+  ]);
 
-  if(notificationProblems.length) {
+  if(problems.length) {
+
     alert(
       "Order updated successfully, but some notifications failed:\n\n"+
-      notificationProblems.join("\n\n")
+      problems.join("\n\n")
     );
+
   } else if(paymentChanged||statusChanged) {
+
     alert("Order updated successfully. Notification requests submitted.");
+
   } else {
+
     alert("Customer order updated successfully.");
   }
 }
@@ -1118,9 +1860,13 @@ async function editCustomerOrder(id) {
 // ==========================================
 
 db.auth.onAuthStateChange(event=>{
+
   if(event==="SIGNED_OUT") {
+
     currentUser=null;
+
     document.getElementById("dashboard").classList.add("hidden");
+
     document.getElementById("loginPanel").classList.remove("hidden");
   }
 });
