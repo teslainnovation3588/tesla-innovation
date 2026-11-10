@@ -3,7 +3,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08090b">
-<meta name="description" content="TESLA Innovation — Premium electric vehicles, international vehicle sales and pre-order enquiries."><title>TESLA Innovation | Premium Electric Vehicles</title><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<meta name="description" content="TESLA Innovation — Premium electric vehicles, international vehicle sales and pre-order enquiries.">
+<title>TESLA Innovation | Premium Electric Vehicles</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
 :root{
 --bg:#08090b;
 --surface:#111317;
@@ -680,11 +682,13 @@ display:flex;
 flex-wrap:wrap;
 gap:20px;
 align-items:center;
+max-width:650px;
 }
 
 .footer-links a{
 font-size:12px;
 color:#aaa;
+transition:.3s;
 }
 
 .footer-links a:hover{
@@ -805,21 +809,27 @@ border-bottom:1px solid var(--border);
 
 .footer-content{flex-direction:column;}
 
+.footer-links{
+gap:15px;
+}
+
 }
 </style></head><body><header>
 <div class="container navbar"><a href="#home" class="logo">
 TESLA <span>INNOVATION</span>
 </a><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
 ☰
-</button><nav class="nav-links" id="navLinks">
-<a href="#home">Home</a>
+</button><nav class="nav-links" id="navLinks"><a href="#home">Home</a>
 <a href="#vehicles">Vehicles</a>
 <a href="#about">About</a>
 <a href="#negotiation">Negotiation</a>
-<a href="#contact">Contact</a><a
+<a href="#contact">Contact</a>
+
+<a
 href="customer.html"
 id="customerAccountLink"
 class="account-link"
+aria-label="Log in or create a customer account"
 
 «»
 
@@ -828,7 +838,8 @@ LOGIN / CREATE ACCOUNT
 
 <a href="#order" class="nav-cta">EXPLORE PURCHASE</a>
 
-</nav></div>
+</nav>
+</div>
 </header><section class="hero" id="home">
 <div class="container">
 <div class="hero-content"><div class="hero-label">PREMIUM ELECTRIC MOBILITY</div><h1>DRIVE THE <span>FUTURE.</span></h1><p class="hero-description">
@@ -856,15 +867,13 @@ Discover premium electric vehicles, explore available configurations and connect
 <p>
 Discover our vehicle collection, review catalogue prices and enquire about availability and international delivery.
 </p>
-</div><div class="vehicle-tools reveal">
-<input type="search" id="vehicleSearch" placeholder="Search vehicle models..." aria-label="Search vehicles"><select id="availabilityFilter" aria-label="Filter by availability">
+</div><div class="vehicle-tools reveal"><input type="search" id="vehicleSearch" placeholder="Search vehicle models..." aria-label="Search vehicles"><select id="availabilityFilter" aria-label="Filter by availability">
 <option value="all">All availability</option>
 <option value="in_stock">Available stock</option>
 <option value="limited_stock">Limited stock</option>
 <option value="pre_order">Pre-order</option>
 <option value="out_of_stock">Out of stock</option>
-</select>
-</div><div class="vehicle-grid" id="vehicleGrid">
+</select></div><div class="vehicle-grid" id="vehicleGrid">
 <div class="empty-message">Loading our vehicle collection...</div>
 </div><p class="form-note">
 Displayed prices are catalogue prices and must be confirmed before an order is accepted. Vehicle configuration, stock, taxes, import duties and international delivery costs are subject to confirmation.
@@ -876,8 +885,7 @@ src="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=c
 alt="Premium electric vehicle"
 loading="lazy"
 >
-</div><div class="about-content reveal">
-<div class="eyebrow">ABOUT OUR BUSINESS</div><h2>A BETTER WAY TO EXPLORE ELECTRIC MOBILITY.</h2><p>
+</div><div class="about-content reveal"><div class="eyebrow">ABOUT OUR BUSINESS</div><h2>A BETTER WAY TO EXPLORE ELECTRIC MOBILITY.</h2><p>
 TESLA Innovation is focused on premium electric vehicle sales, vehicle sourcing and international customer enquiries.
 </p><p>
 Our aim is to provide customers with clear vehicle information, transparent catalogue pricing and a structured purchase enquiry experience.
@@ -970,29 +978,43 @@ This form submits a purchase enquiry, not a completed purchase or payment. Final
 </p></div>
 </div>
 </section><section class="section contact-section" id="contact">
-<div class="container reveal"><div class="eyebrow">WE ARE HERE TO HELP</div>
-<h2>LET'S CONNECT.</h2><p>
+<div class="container reveal"><div class="eyebrow">WE ARE HERE TO HELP</div><h2>LET'S CONNECT.</h2><p>
 Have questions about a vehicle, international delivery, pricing or availability? Submit a purchase enquiry or budget proposal and our team can review your request.
 </p><a href="#order" class="btn btn-red" style="margin-top:25px;">
 MAKE AN ENQUIRY →
 </a></div>
-</section><footer>
-<div class="container"><div class="footer-content"><div>
-<div class="footer-brand">TESLA <span>INNOVATION</span></div>
-<p>
-Premium electric vehicle sales, vehicle sourcing and international purchase enquiries.
-</p>
-</div><div class="footer-links">
-<a href="#home">Home</a>
+</section><!-- UPDATED FOOTER --><footer>
+<div class="container"><div class="footer-content"><div><div class="footer-brand">
+TESLA <span>INNOVATION</span>
+</div><p>
+Premium electric vehicle sales, vehicle sourcing
+and international purchase enquiries.
+</p><p>
+Operating from the United States.
+</p></div><div class="footer-links"><a href="#home">Home</a>
+
 <a href="#vehicles">Vehicles</a>
+
 <a href="#about">About</a>
+
 <a href="#negotiation">Negotiation</a>
+
 <a href="#order">Purchase Enquiry</a>
+
 <a href="customer.html">Customer Portal</a>
-</div></div><div class="copyright">
-© 2026 TESLA Innovation. All rights reserved.
-<br>
-Premium Vehicles. Global Connections. Exceptional Experience.
+
+<a href="trust.html">Trust Center</a>
+
+<a href="privacy.html">Privacy Policy</a>
+
+<a href="terms.html">Terms of Service</a>
+
+<a href="mailto:teslainnovation65@outlook.com">
+Contact Support
+</a></div></div><div class="copyright">© 2026 TESLA Innovation. All rights reserved.
+
+<br>Premium Vehicles. Global Connections. Exceptional Experience.
+
 </div></div>
 </footer><script>
 
@@ -1065,13 +1087,7 @@ customerAccountLink.href = 'customer.html';
 
 }
 
-
-/* Check the current login session */
-
 updateCustomerNavigation();
-
-
-/* Update navigation when login state changes */
 
 db.auth.onAuthStateChange((event,session)=>{
 
