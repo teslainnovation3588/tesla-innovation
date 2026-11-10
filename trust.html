@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#08090b">
+
+<title>Trust Center | TESLA Innovation</title>
+
+<meta name="description" content="Learn about TESLA Innovation's vehicle enquiry process, customer information practices and purchasing transparency.">
+
+<style>
+:root{
+--bg:#08090b;
+--surface:#111317;
+--surface2:#191c22;
+--red:#e82127;
+--white:#fff;
+--muted:#a5a7ac;
+--border:rgba(255,255,255,.1);
+--green:#43d69a;
+}
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
+
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:var(--bg);
+color:var(--white);
+line-height:1.7;
+}
+
+a{
+text-decoration:none;
+color:inherit;
+}
+
+.container{
+width:min(1100px,90%);
+margin:auto;
+}
+
+header{
+background:rgba(8,9,11,.97);
+border-bottom:1px solid var(--border);
+}
+
+nav{
+min-height:75px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+}
+
+.logo{
+font-size:20px;
+font-weight:900;
+letter-spacing:2px;
+}
+
+.logo span{
+color:var(--red);
+}
+
+.nav-link{
+font-size:12px;
+color:#ccc;
+}
+
+.hero{
+padding:100px 0 85px;
+background:
+linear-gradient(90deg,rgba(0,0,0,.96),rgba(0,0,0,.7)),
+url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1800&q=85')
+center/cover;
+}
+
+.eyebrow{
+color:var(--red);
+font-size:11px;
+font-weight:bold;
+letter-spacing:4px;
+margin-bottom:15px;
+}
+
+.hero h1{
+font-size:clamp(38px,7vw,68px);
+line-height:1.1;
+margin-bottom:20px;
+}
+
+.hero h1 span{
+color:var(--red);
+}
+
+.hero p{
+max-width:650px;
+color:#ccc;
+font-size:15px;
+}
+
+.section{
+padding:75px 0;
+}
+
+.heading{
+margin-bottom:35px;
+}
+
+.heading h2{
+font-size:clamp(25px,4vw,36px);
+margin-bottom:12px;
+}
+
+.heading p{
+color:var(--muted);
+max-width:700px;
+font-size:14px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+}
+
+.card{
+background:var(--surface);
+border:1px solid var(--border);
+padding:27px;
+border-radius:6px;
+}
+
+.icon{
+font-size:27px;
+margin-bottom:15px;
+}
+
+.card h3{
+font-size:17px;
+margin-bottom:10px;
+}
+
+.card p{
+font-size:13px;
+color:var(--muted);
+}
+
+.highlight{
+background:#111317;
+border-left:3px solid var(--red);
+padding:25px;
+margin-top:25px;
+}
+
+.highlight h3{
+margin-bottom:10px;
+}
+
+.highlight p{
+font-size:13px;
+color:var(--muted);
+}
+
+.steps{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:18px;
+}
+
+.step{
+background:var(--surface);
+border:1px solid var(--border);
+padding:23px;
+border-radius:5px;
+}
+
+.step strong{
+display:block;
+color:var(--red);
+font-size:12px;
+letter-spacing:2px;
+margin-bottom:12px;
+}
+
+.step h3{
+font-size:16px;
+margin-bottom:8px;
+}
+
+.step p{
+font-size:12px;
+color:var(--muted);
+}
+
+.notice{
+background:#17191e;
+border:1px solid var(--border);
+padding:25px;
+border-radius:5px;
+margin-top:25px;
+}
+
+.notice p{
+color:var(--muted);
+font-size:13px;
+}
+
+.cta{
+text-align:center;
+background:#111317;
+}
+
+.cta h2{
+font-size:30px;
+margin-bottom:12px;
+}
+
+.cta p{
+color:var(--muted);
+font-size:14px;
+max-width:600px;
+margin:0 auto 25px;
+}
+
+.button{
+display:inline-block;
+background:var(--red);
+padding:14px 23px;
+border-radius:4px;
+font-size:12px;
+font-weight:bold;
+}
+
+.button:hover{
+background:#bd171d;
+}
+
+footer{
+background:#07080a;
+border-top:1px solid var(--border);
+padding:35px 0;
+}
+
+.footer-content{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:25px;
+}
+
+.footer-content p{
+color:var(--muted);
+font-size:12px;
+max-width:350px;
+margin-top:10px;
+}
+
+.footer-links{
+display:flex;
+flex-wrap:wrap;
+gap:18px;
+}
+
+.footer-links a{
+font-size:12px;
+color:#aaa;
+}
+
+.copyright{
+border-top:1px solid var(--border);
+margin-top:25px;
+padding-top:20px;
+text-align:center;
+font-size:11px;
+color:#777;
+}
+
+@media(max-width:700px){
+
+.grid,
+.steps{
+grid-template-columns:1fr;
+}
+
+.hero{
+padding:75px 0;
+}
+
+.section{
+padding:55px 0;
+}
+
+nav{
+min-height:65px;
+}
+
+.logo{
+font-size:16px;
+}
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="container">
+<nav>
+
+<a href="index.html" class="logo">
+TESLA <span>INNOVATION</span>
+</a>
+
+<a href="index.html" class="nav-link">
+← BACK TO SHOWROOM
+</a>
+
+</nav>
+</div>
+</header>
+
+<section class="hero">
+<div class="container">
+
+<div class="eyebrow">CUSTOMER CONFIDENCE</div>
+
+<h1>OUR COMMITMENT<br>
+TO <span>TRANSPARENCY.</span></h1>
+
+<p>
+At TESLA Innovation, we believe that vehicle purchasing should be clear,
+structured and supported by honest communication. Learn about our
+process, customer information practices and service commitments.
+</p>
+
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="heading">
+<div class="eyebrow">WHY TRUST US</div>
+<h2>A CLEARER CUSTOMER EXPERIENCE</h2>
+<p>
+We aim to give customers clear information before they make
+vehicle purchasing decisions.
+</p>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🚘</div>
+<h3>Vehicle Information</h3>
+<p>
+Explore vehicle models, catalogue prices, configurations and
+availability information before submitting an enquiry.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🌍</div>
+<h3>International Enquiries</h3>
+<p>
+Customers can submit vehicle enquiries and provide their
+preferred delivery destination for review.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📋</div>
+<h3>Purchase Transparency</h3>
+<p>
+Pricing, vehicle availability, delivery arrangements and
+payment terms must be confirmed before an order is accepted.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">👤</div>
+<h3>Customer Accounts</h3>
+<p>
+Registered customers can access their account and view
+available order information through the customer portal.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section class="section" style="background:#111317;">
+<div class="container">
+
+<div class="heading">
+<div class="eyebrow">HOW IT WORKS</div>
+<h2>YOUR PURCHASE JOURNEY</h2>
+<p>
+Our enquiry process is designed to help customers understand
+the next steps before making a purchase commitment.
+</p>
+</div>
+
+<div class="steps">
+
+<div class="step">
+<strong>STEP 01</strong>
+<h3>Explore Vehicles</h3>
+<p>
+Browse our catalogue and review available vehicle information
+and displayed prices.
+</p>
+</div>
+
+<div class="step">
+<strong>STEP 02</strong>
+<h3>Submit an Enquiry</h3>
+<p>
+Tell us your preferred vehicle, configuration and delivery
+destination.
+</p>
+</div>
+
+<div class="step">
+<strong>STEP 03</strong>
+<h3>Review Your Order</h3>
+<p>
+Our team can review your request and discuss confirmed
+pricing, availability, delivery and payment arrangements.
+</p>
+</div>
+
+</div>
+
+<div class="highlight">
+<h3>Important Purchasing Information</h3>
+<p>
+Submitting a purchase enquiry or negotiation offer does not
+automatically create a confirmed order, reserve a vehicle
+or constitute payment.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="section">
+<div class="container">
+
+<div class="heading">
+<div class="eyebrow">CUSTOMER PRIVACY</div>
+<h2>YOUR INFORMATION MATTERS</h2>
+<p>
+We recognise that customers trust us with personal information
+when submitting enquiries and creating accounts.
+</p>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<div class="icon">🔐</div>
+<h3>Account Protection</h3>
+<p>
+Customer account access uses Supabase authentication.
+Customers should keep their login credentials private
+and use a strong, unique password.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📁</div>
+<h3>Information Handling</h3>
+<p>
+Information submitted through our forms is used to review
+and respond to vehicle enquiries and provide relevant
+customer account services.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">🛡️</div>
+<h3>Responsible Data Practices</h3>
+<p>
+We aim to limit access to customer information to
+authorised administrative functions and relevant
+service operations.
+</p>
+</div>
+
+<div class="card">
+<div class="icon">📨</div>
+<h3>Customer Communication</h3>
+<p>
+Contact details may be used to respond to purchase enquiries,
+provide order-related information and communicate about
+customer requests.
+</p>
+</div>
+
+</div>
+
+<div class="notice">
+<p>
+Our privacy practices and applicable customer rights will be
+explained in the Privacy Policy. We will not publish claims
+about certifications, regulatory compliance or security
+standards that have not been independently established.
+</p>
+</div>
+
+</div>
+</section>
+
+<section class="section" style="background:#111317;">
+<div class="container">
+
+<div class="heading">
+<div class="eyebrow">SECURITY & SERVICE STATUS</div>
+<h2>HONESTY ABOUT OUR SERVICES</h2>
+<p>
+We believe customers should know what is available and what
+still requires confirmation.
+</p>
+</div>
+
+<div class="grid">
+
+<div class="card">
+<h3>Website Connection</h3>
+<p>
+This website is accessed through HTTPS. Customers should
+check for the secure connection indicator in their browser.
+</p>
+</div>
+
+<div class="card">
+<h3>Payment Arrangements</h3>
+<p>
+Online card payment processing is not currently advertised
+as an active service. Payment instructions must be confirmed
+through our authorised business representative, teslainnovation65@outlook.com
+</p>
+</div>
+
+<div class="card">
+<h3>Vehicle Availability</h3>
+<p>
+Displayed inventory and catalogue information are subject
+to confirmation before an order is accepted.
+</p>
+</div>
+
+<div class="card">
+<h3>Delivery Information</h3>
+<p>
+Shipping methods, costs, estimated delivery dates, taxes
+and import duties depend on the destination and order.
+</p>
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section class="section cta">
+<div class="container">
+
+<h2>HAVE QUESTIONS?</h2>
+
+<p>
+Contact our team for assistance with vehicle information,
+purchase enquiries and international delivery questions.
+</p>
+
+<a href="contact.html" class="button">
+CONTACT OUR TEAM →
+</a>
+
+</div>
+</section>
+
+<footer>
+<div class="container">
+
+<div class="footer-content">
+
+<div>
+<div class="logo">
+TESLA <span>INNOVATION</span>
+</div>
+
+<p>
+Premium electric vehicle sales, vehicle sourcing and
+international purchase enquiries.
+</p>
+</div>
+
+<div class="footer-links">
+<a href="index.html">Home</a>
+<a href="vehicles.html">Vehicles</a>
+<a href="customer.html">Customer Portal</a>
+<a href="contact.html">Contact</a>
+<a href="trust.html">Trust Center</a>
+</div>
+
+</div>
+
+<div class="copyright">
+© 2026 TESLA Innovation. All rights reserved.
+</div>
+
+</div>
+</footer>
+
+</body>
+</html>
