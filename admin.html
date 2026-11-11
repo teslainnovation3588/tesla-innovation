@@ -106,8 +106,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
   gap:12px;
 }
 
-/* DASHBOARD STATISTICS */
-
 .stats-grid{
   display:grid;
   grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
@@ -123,11 +121,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   min-height:120px;
 }
 
-.stat-card span{
-  color:#aaa;
-  font-size:13px;
-}
-
+.stat-card span{color:#aaa;font-size:13px}
 .stat-card h3{
   color:#e82127;
   font-size:30px;
@@ -142,9 +136,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   margin-top:20px;
 }
 
-/* MANAGEMENT CARDS */
-
-.vehicle-card,.offer-card,.order-card,.enquiry-card{
+.vehicle-card,.offer-card,.order-card,.enquiry-card,.chat-card{
   background:#101010;
   border:1px solid #333;
   border-radius:10px;
@@ -161,7 +153,8 @@ button:disabled{opacity:.5;cursor:not-allowed}
   background:#222;
 }
 
-.vehicle-card p,.offer-card p,.order-card p,.enquiry-card p{
+.vehicle-card p,.offer-card p,.order-card p,
+.enquiry-card p,.chat-card p{
   color:#bbb;
   line-height:1.7;
   overflow-wrap:anywhere;
@@ -193,6 +186,92 @@ button:disabled{opacity:.5;cursor:not-allowed}
 
 .order-card a{color:#ff5555;overflow-wrap:anywhere}
 
+/* LIVE CHAT */
+
+.chat-layout{
+  display:grid;
+  grid-template-columns:minmax(250px,0.85fr) minmax(0,1.5fr);
+  gap:15px;
+}
+
+.chat-list{
+  max-height:600px;
+  overflow-y:auto;
+}
+
+.chat-card{
+  cursor:pointer;
+  transition:.2s;
+}
+
+.chat-card:hover{border-color:#e82127}
+.chat-card.selected{border-color:#e82127;background:#241010}
+
+.chat-status{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#17452b;
+  color:#a8ffc6;
+  font-size:12px;
+  margin-top:7px;
+}
+
+.chat-status.closed{
+  background:#444;
+  color:#ccc;
+}
+
+.chat-messages{
+  height:390px;
+  overflow-y:auto;
+  background:#080808;
+  border:1px solid #292929;
+  border-radius:9px;
+  padding:12px;
+  margin:15px 0;
+}
+
+.chat-message{
+  max-width:85%;
+  padding:12px;
+  border-radius:10px;
+  margin:10px 0;
+  overflow-wrap:anywhere;
+}
+
+.chat-message.visitor{background:#173b29}
+.chat-message.admin{
+  background:#292929;
+  margin-left:auto;
+}
+
+.chat-message small{
+  display:block;
+  color:#aaa;
+  margin-top:8px;
+}
+
+.chat-reply{
+  display:flex;
+  flex-direction:column;
+}
+
+.chat-reply textarea{min-height:85px}
+
+.chat-header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:10px;
+}
+
+@media(max-width:750px){
+  .chat-layout{grid-template-columns:1fr}
+  .chat-list{max-height:280px}
+}
+
 @media(max-width:600px){
   body{padding:12px}
   .panel{padding:15px}
@@ -200,6 +279,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .stat-card{padding:15px}
   .stat-card h3{font-size:25px}
+  .chat-messages{height:330px}
 }
 </style>
 </head>
@@ -288,6 +368,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
     <button onclick="showTab('offersTab',null)">Negotiations</button>
     <button onclick="showTab('enquiriesTab',null)">Enquiries</button>
     <button onclick="showTab('ordersTab',null)">Customer Orders</button>
+    <button onclick="showTab('chatTab',null)">Live Chat</button>
   </div>
 
   <div id="overviewMessage" class="message"></div>
@@ -302,6 +383,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <button class="tab-button" onclick="showTab('offersTab',this)">Negotiations</button>
   <button class="tab-button" onclick="showTab('enquiriesTab',this)">Purchase Enquiries</button>
   <button class="tab-button" onclick="showTab('ordersTab',this)">Customer Orders</button>
+  <button class="tab-button" onclick="showTab('chatTab',this)">Live Chat</button>
 </div>
 
 <!-- VEHICLES -->
@@ -476,6 +558,100 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 </div>
+
+<!-- NEW LIVE CHAT CENTRE -->
+
+<div id="chatTab" class="tab-content">
+
+  <div class="panel">
+
+    <div class="chat-header">
+      <div>
+        <h2>Customer Live Chat</h2>
+        <p class="muted">Communicate directly with website customers.</p>
+      </div>
+
+      <button class="secondary" onclick="loadChatConversations()">
+        Refresh Chats
+      </button>
+    </div>
+
+    <div class="chat-layout">
+
+      <!-- CONVERSATION LIST -->
+
+      <div class="panel chat-list" style="margin:0;padding:12px">
+
+        <h3>Conversations</h3>
+
+        <div id="chatConversationList">
+          <p class="muted">Loading conversations...</p>
+        </div>
+
+      </div>
+
+      <!-- CHAT WINDOW -->
+
+      <div class="panel" style="margin:0">
+
+        <h3 id="activeChatTitle">Select a Conversation</h3>
+
+        <p id="activeChatEmail" class="muted">
+          Customer information will appear here.
+        </p>
+
+        <div id="adminChatMessages" class="chat-messages">
+
+          <p class="muted">
+            Select a customer conversation to view messages.
+          </p>
+
+        </div>
+
+        <div class="chat-reply">
+
+          <label>Your Reply</label>
+
+          <textarea
+            id="adminChatReply"
+            maxlength="2000"
+            placeholder="Write your message to the customer..."
+          ></textarea>
+
+          <button id="sendChatReplyBtn" onclick="sendAdminChatReply()">
+            Send Reply
+          </button>
+
+          <button
+            id="closeChatBtn"
+            class="danger"
+            onclick="closeAdminChat()"
+            disabled
+          >
+            Close Conversation
+          </button>
+
+          <button
+            id="reopenChatBtn"
+            class="success"
+            onclick="reopenAdminChat()"
+            disabled
+          >
+            Reopen Conversation
+          </button>
+
+        </div>
+
+        <div id="adminChatStatus" class="message"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
 </section>
 </div>
 
@@ -500,6 +676,13 @@ let vehicles = [];
 let existingImages = [];
 let removedImages = [];
 let selectedFiles = [];
+
+// LIVE CHAT VARIABLES
+
+let activeChatId = null;
+let activeChatStatus = null;
+let chatRefreshTimer = null;
+let chatRefreshRunning = false;
 
 // ==========================================
 // HELPERS
@@ -548,7 +731,7 @@ function formatDate(value) {
 
   return Number.isNaN(date.getTime())
     ? escapeHTML(value)
-    : date.toLocaleDateString();
+    : date.toLocaleString();
 }
 
 // ==========================================
@@ -639,17 +822,24 @@ async function openDashboard() {
   document.getElementById("dashboard").classList.remove("hidden");
 
   await loadOverview();
-
   await loadVehicles();
 
   await Promise.all([
     loadOffers(),
     loadEnquiries(),
-    loadOrders()
+    loadOrders(),
+    loadChatConversations()
   ]);
+
+  startChatRefresh();
 }
 
 async function logoutAdmin() {
+
+  stopChatRefresh();
+
+  activeChatId=null;
+
   await db.auth.signOut();
 
   currentUser=null;
@@ -779,6 +969,11 @@ function showTab(tabId,button) {
   if(tabId==="offersTab")loadOffers();
   if(tabId==="enquiriesTab")loadEnquiries();
   if(tabId==="ordersTab")loadOrders();
+
+  if(tabId==="chatTab") {
+    loadChatConversations();
+    if(activeChatId)loadAdminChatMessages();
+  }
 }
 
 // ==========================================
@@ -1856,12 +2051,458 @@ async function editCustomerOrder(id) {
 }
 
 // ==========================================
+// NEW: ADMIN LIVE CHAT CENTRE
+// ==========================================
+
+// LOAD CUSTOMER CONVERSATIONS
+
+async function loadChatConversations() {
+
+  if(!currentUser)return;
+
+  const list=document.getElementById("chatConversationList");
+
+  if(!list)return;
+
+  try {
+
+    const {data,error}=await db
+      .from("chat_conversations")
+      .select("*")
+      .order("last_message_at",{ascending:false});
+
+    if(error)throw error;
+
+    if(!data||!data.length) {
+
+      list.innerHTML=`
+        <p class="muted">
+          No customer conversations yet.
+        </p>
+      `;
+
+      return;
+    }
+
+    list.innerHTML=data.map(chat=>{
+
+      const selected=String(chat.id)===String(activeChatId);
+
+      return `
+
+        <div
+          class="chat-card ${selected?"selected":""}"
+          onclick="openAdminChat('${escapeHTML(chat.id)}')"
+        >
+
+          <h3>${escapeHTML(chat.visitor_name||"Customer")}</h3>
+
+          <p>${escapeHTML(chat.visitor_email||"No email")}</p>
+
+          <p>
+            Last activity:
+            ${formatDate(chat.last_message_at)}
+          </p>
+
+          <span class="chat-status ${chat.status==="closed"?"closed":""}">
+            ${escapeHTML(chat.status||"open")}
+          </span>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+  } catch(error) {
+
+    console.error("Chat conversations:",error);
+
+    list.innerHTML=`
+      <p class="message error">
+        ${escapeHTML(error.message)}
+      </p>
+    `;
+  }
+}
+
+
+// OPEN A CUSTOMER CONVERSATION
+
+async function openAdminChat(id) {
+
+  activeChatId=id;
+
+  hideMessage("adminChatStatus");
+
+  try {
+
+    const {data,error}=await db
+      .from("chat_conversations")
+      .select("*")
+      .eq("id",id)
+      .single();
+
+    if(error)throw error;
+
+    activeChatStatus=data.status;
+
+    document.getElementById("activeChatTitle").textContent=
+      data.visitor_name||"Customer";
+
+    document.getElementById("activeChatEmail").textContent=
+      data.visitor_email||"Email not provided";
+
+    updateChatButtons();
+
+    await loadAdminChatMessages();
+
+    await loadChatConversations();
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "adminChatStatus",
+      error.message||"Could not open conversation.",
+      "error"
+    );
+  }
+}
+
+
+// UPDATE CHAT BUTTONS
+
+function updateChatButtons() {
+
+  const closed=activeChatStatus==="closed";
+
+  document.getElementById("sendChatReplyBtn").disabled=
+    !activeChatId||closed;
+
+  document.getElementById("adminChatReply").disabled=
+    !activeChatId||closed;
+
+  document.getElementById("closeChatBtn").disabled=
+    !activeChatId||closed;
+
+  document.getElementById("reopenChatBtn").disabled=
+    !activeChatId||!closed;
+}
+
+
+// LOAD MESSAGES
+
+async function loadAdminChatMessages() {
+
+  if(!activeChatId||!currentUser)return;
+
+  const box=document.getElementById("adminChatMessages");
+
+  try {
+
+    const {data,error}=await db
+      .from("chat_messages")
+      .select("*")
+      .eq("conversation_id",activeChatId)
+      .order("created_at",{ascending:true});
+
+    if(error)throw error;
+
+    if(!data||!data.length) {
+
+      box.innerHTML=`
+        <p class="muted">
+          No messages yet. You can reply when the customer sends a message.
+        </p>
+      `;
+
+      return;
+    }
+
+    box.innerHTML=data.map(message=>{
+
+      const role=message.sender_role==="admin"
+        ?"admin":"visitor";
+
+      return `
+
+        <div class="chat-message ${role}">
+
+          <strong>
+            ${escapeHTML(message.sender_name||role)}
+          </strong>
+
+          <p>${escapeHTML(message.message)}</p>
+
+          <small>${formatDate(message.created_at)}</small>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+    box.scrollTop=box.scrollHeight;
+
+  } catch(error) {
+
+    console.error("Chat messages:",error);
+
+    box.innerHTML=`
+      <p class="message error">
+        ${escapeHTML(error.message)}
+      </p>
+    `;
+  }
+}
+
+
+// SEND ADMIN REPLY
+
+async function sendAdminChatReply() {
+
+  if(!activeChatId) {
+
+    showMessage(
+      "adminChatStatus",
+      "Select a customer conversation first.",
+      "error"
+    );
+
+    return;
+  }
+
+  if(activeChatStatus==="closed") {
+
+    showMessage(
+      "adminChatStatus",
+      "This conversation is closed. Reopen it before replying.",
+      "error"
+    );
+
+    return;
+  }
+
+  const input=document.getElementById("adminChatReply");
+
+  const message=input.value.trim();
+
+  if(!message)return;
+
+  if(message.length>2000) {
+
+    showMessage(
+      "adminChatStatus",
+      "Your reply cannot exceed 2,000 characters.",
+      "error"
+    );
+
+    return;
+  }
+
+  const button=document.getElementById("sendChatReplyBtn");
+
+  button.disabled=true;
+  button.textContent="Sending...";
+
+  try {
+
+    const {error}=await db
+      .from("chat_messages")
+      .insert({
+
+        conversation_id:activeChatId,
+
+        sender_role:"admin",
+
+        sender_name:"TESLA Innovation Support",
+
+        admin_user_id:currentUser.id,
+
+        message:message
+
+      });
+
+    if(error)throw error;
+
+    const {error:updateError}=await db
+      .from("chat_conversations")
+      .update({
+        last_message_at:new Date().toISOString()
+      })
+      .eq("id",activeChatId);
+
+    if(updateError)throw updateError;
+
+    input.value="";
+
+    showMessage(
+      "adminChatStatus",
+      "Your reply has been sent successfully.",
+      "success"
+    );
+
+    await loadAdminChatMessages();
+
+    await loadChatConversations();
+
+  } catch(error) {
+
+    console.error(error);
+
+    showMessage(
+      "adminChatStatus",
+      error.message||"Could not send your reply.",
+      "error"
+    );
+
+  } finally {
+
+    button.textContent="Send Reply";
+
+    updateChatButtons();
+  }
+}
+
+
+// CLOSE CONVERSATION
+
+async function closeAdminChat() {
+
+  if(!activeChatId)return;
+
+  if(!confirm("Close this customer conversation?"))return;
+
+  try {
+
+    const {error}=await db
+      .from("chat_conversations")
+      .update({
+        status:"closed",
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",activeChatId);
+
+    if(error)throw error;
+
+    activeChatStatus="closed";
+
+    updateChatButtons();
+
+    showMessage(
+      "adminChatStatus",
+      "Conversation closed successfully.",
+      "success"
+    );
+
+    await loadChatConversations();
+
+  } catch(error) {
+
+    showMessage(
+      "adminChatStatus",
+      error.message||"Could not close conversation.",
+      "error"
+    );
+  }
+}
+
+
+// REOPEN CONVERSATION
+
+async function reopenAdminChat() {
+
+  if(!activeChatId)return;
+
+  try {
+
+    const {error}=await db
+      .from("chat_conversations")
+      .update({
+        status:"open",
+        updated_at:new Date().toISOString()
+      })
+      .eq("id",activeChatId);
+
+    if(error)throw error;
+
+    activeChatStatus="open";
+
+    updateChatButtons();
+
+    showMessage(
+      "adminChatStatus",
+      "Conversation reopened successfully.",
+      "success"
+    );
+
+    await loadChatConversations();
+
+  } catch(error) {
+
+    showMessage(
+      "adminChatStatus",
+      error.message||"Could not reopen conversation.",
+      "error"
+    );
+  }
+}
+
+
+// AUTOMATIC CHAT REFRESH
+
+function startChatRefresh() {
+
+  stopChatRefresh();
+
+  chatRefreshTimer=setInterval(async()=>{
+
+    if(!currentUser||chatRefreshRunning)return;
+
+    chatRefreshRunning=true;
+
+    try {
+
+      await loadChatConversations();
+
+      if(activeChatId) {
+        await loadAdminChatMessages();
+      }
+
+    } finally {
+
+      chatRefreshRunning=false;
+    }
+
+  },5000);
+}
+
+
+function stopChatRefresh() {
+
+  if(chatRefreshTimer) {
+
+    clearInterval(chatRefreshTimer);
+
+    chatRefreshTimer=null;
+  }
+}
+
+
+// ==========================================
 // AUTH STATE CHANGES
 // ==========================================
 
 db.auth.onAuthStateChange(event=>{
 
   if(event==="SIGNED_OUT") {
+
+    stopChatRefresh();
+
+    activeChatId=null;
+    activeChatStatus=null;
 
     currentUser=null;
 
