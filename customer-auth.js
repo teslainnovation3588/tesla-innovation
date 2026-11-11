@@ -7,23 +7,58 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
 
+const RETURN_KEY = 'tesla_pending_customer_action';
+
 const db = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
 );
 
-const RETURN_KEY = 'tesla_pending_customer_action';
-
-const protectedPages = [
-    'purchase.html',
-    'negotiate.html',
-    'enquiry.html',
-    'contact.html'
-];
-
 const currentPage =
-    window.location.pathname.split('/').pop() || 'index.html';
+    location.pathname.split('/').pop() || 'index.html';
 
+
+// ------------------------------------
+// SAFE RETURN DESTINATION
+// ------------------------------------
+
+function safePath(path) {
+
+    try {
+
+        const url = new URL(path, location.origin);
+
+        if (url.origin !== location.origin) {
+            return 'index.html';
+        }
+
+        return url.pathname + url.search + url.hash;
+
+    } catch (_) {
+
+        return 'index.html';
+
+    }
+
+}
+
+
+function redirectToLogin(destination) {
+
+    const path = safePath(destination);
+
+    localStorage.setItem(RETURN_KEY, path);
+
+    location.href =
+        'customer.html?returnTo=' +
+        encodeURIComponent(path);
+
+}
+
+
+// ------------------------------------
+// CHECK CUSTOMER LOGIN
+// ------------------------------------
 
 async function getCustomer() {
 
@@ -36,38 +71,72 @@ async function getCustomer() {
 }
 
 
-function saveReturnPath(path) {
+// ------------------------------------
+// RESTORE REQUEST AFTER LOGIN
+// ------------------------------------
 
-    const target = new URL(path, window.location.origin);
+async function restoreRequest() {
 
-    if (target.origin !== window.location.origin) {
-        return;
-    }
+    if (currentPage !== 'customer.html') return;
 
-    localStorage.setItem(
-        RETURN_KEY,
-        target.pathname + target.search + target.hash
-    );
+    const user = await getCustomer();
 
-}
+    if (!user) return;
 
+    const saved =
+        localStorage.getItem(RETURN_KEY);
 
-function sendToLogin(returnPath) {
+    if (!saved) return;
 
-    saveReturnPath(returnPath);
+    localStorage.removeItem(RETURN_KEY);
 
-    window.location.href =
-        'customer.html?returnTo=' +
-        encodeURIComponent(returnPath);
+    location.replace(safePath(saved));
 
 }
 
 
-async function protectCurrentPage() {
+// Save return destination when opening Customer Portal.
 
-    if (!protectedPages.includes(currentPage)) {
-        return;
+if (currentPage === 'customer.html') {
+
+    const requested =
+        new URLSearchParams(location.search).get('returnTo');
+
+    if (requested) {
+
+        localStorage.setItem(
+            RETURN_KEY,
+            safePath(requested)
+        );
+
     }
+
+}
+
+
+// Watch for successful login or registration.
+
+db.auth.onAuthStateChange(function (event) {
+
+    if (
+        event === 'SIGNED_IN' ||
+        event === 'TOKEN_REFRESHED'
+    ) {
+
+        setTimeout(restoreRequest, 500);
+
+    }
+
+});
+
+
+// ------------------------------------
+// PROTECT PURCHASE PAGE
+// ------------------------------------
+
+async function protectPurchasePage() {
+
+    if (currentPage !== 'purchase.html') return;
 
     document.documentElement.style.visibility = 'hidden';
 
@@ -75,12 +144,11 @@ async function protectCurrentPage() {
 
     if (!user) {
 
-        const destination =
-            window.location.pathname +
-            window.location.search +
-            window.location.hash;
-
-        sendToLogin(destination);
+        redirectToLogin(
+            location.pathname +
+            location.search +
+            location.hash
+        );
 
         return;
 
@@ -90,201 +158,196 @@ async function protectCurrentPage() {
 
 }
 
-
-// Protect purchase, negotiation and enquiry pages.
-
-protectCurrentPage();
+protectPurchasePage();
 
 
-// Protect actions embedded on the public homepage.
+// ------------------------------------
+// PROTECT HOMEPAGE ACTIONS
+// ------------------------------------
 
-const bypassClicks = new WeakSet();
+document.addEventListener('click', async function (event) {
 
-document.addEventListener('click', async function(event) {
-
-    const link = event.target.closest(
-        'a[href="#negotiation"],' +
-        'a[href="#order"],' +
-        '#liveChatLauncher,' +
+    const button = event.target.closest(
+        'button[data-action], ' +
+        '#liveChatLauncher, ' +
         '#chatLauncher'
     );
 
-    if (!link) return;
+    const link = event.target.closest(
+        'a[href="#negotiation"], ' +
+        'a[href="#order"]'
+    );
 
-    if (bypassClicks.has(link)) {
-        bypassClicks.delete(link);
-        return;
+    const target = button || link;
+
+    if (!target) return;
+
+    let destination = null;
+
+    if (button && button.dataset.action === 'order') {
+
+        destination =
+            'purchase.html?vehicle=' +
+            encodeURIComponent(button.dataset.id);
+
     }
 
-    if (
-        currentPage !== 'index.html' &&
-        currentPage !== ''
+    else if (
+        button &&
+        button.dataset.action === 'negotiate'
     ) {
-        return;
+
+        destination =
+            'index.html?auth_vehicle=' +
+            encodeURIComponent(button.dataset.id) +
+            '#negotiation';
+
     }
 
-    event.preventDefault();
+    else if (
+        button &&
+        (
+            button.id === 'liveChatLauncher' ||
+            button.id === 'chatLauncher'
+        )
+    ) {
+
+        destination = 'index.html#livechat';
+
+    }
+
+    else if (link) {
+
+        destination =
+            'index.html' + link.getAttribute('href');
+
+    }
+
+    if (!destination) return;
 
     const user = await getCustomer();
 
     if (!user) {
 
-        let destination = window.location.pathname;
+        event.preventDefault();
+        event.stopImmediatePropagation();
 
-        if (link.matches('#liveChatLauncher, #chatLauncher')) {
-            destination += '#livechat';
-        } else {
-            destination += link.getAttribute('href');
-        }
-
-        sendToLogin(destination);
-
-        return;
+        redirectToLogin(destination);
 
     }
-
-    if (link.matches('#liveChatLauncher, #chatLauncher')) {
-
-        bypassClicks.add(link);
-
-        link.click();
-
-        return;
-
-    }
-
-    window.location.hash = link.getAttribute('href');
 
 }, true);
 
 
-// Protect forms on the homepage.
+// ------------------------------------
+// PROTECT CUSTOMER FORMS
+// ------------------------------------
 
-const protectedForms = [
-    'negotiationForm',
-    'orderForm'
-];
-
-const bypassForms = new WeakSet();
-
-document.addEventListener('submit', async function(event) {
+document.addEventListener('submit', async function (event) {
 
     const form = event.target;
 
-    if (!protectedForms.includes(form.id)) {
-        return;
-    }
+    const protectedForms = [
 
-    if (bypassForms.has(form)) {
-        bypassForms.delete(form);
-        return;
-    }
+        'negotiationForm',
+        'orderForm',
+        'purchaseForm',
+        'liveChatStartForm',
+        'chatStartForm',
+        'liveChatMessageForm',
+        'chatMessageForm'
 
-    event.preventDefault();
+    ];
+
+    if (!protectedForms.includes(form.id)) return;
 
     const user = await getCustomer();
 
     if (!user) {
 
-        const destination =
-            window.location.pathname +
-            (form.id === 'negotiationForm'
-                ? '#negotiation'
-                : '#order');
+        event.preventDefault();
+        event.stopImmediatePropagation();
 
-        sendToLogin(destination);
-
-        return;
+        redirectToLogin(
+            location.pathname +
+            location.search +
+            location.hash
+        );
 
     }
-
-    bypassForms.add(form);
-
-    form.requestSubmit();
 
 }, true);
 
 
-// Return customers to their pending action after login.
+// ------------------------------------
+// RESTORE NEGOTIATION VEHICLE
+// ------------------------------------
 
-async function restorePendingAction() {
+async function restoreNegotiation() {
 
-    if (currentPage === 'customer.html') {
+    if (currentPage !== 'index.html') return;
 
-        const user = await getCustomer();
+    const params = new URLSearchParams(location.search);
 
-        if (!user) return;
+    const vehicleId = params.get('auth_vehicle');
 
-        const pending =
-            localStorage.getItem(RETURN_KEY);
-
-        if (!pending) return;
-
-        localStorage.removeItem(RETURN_KEY);
-
-        const target = new URL(
-            pending,
-            window.location.origin
-        );
-
-        if (target.origin === window.location.origin) {
-
-            window.location.replace(
-                target.pathname +
-                target.search +
-                target.hash
-            );
-
-        }
-
-        return;
-
-    }
-
-
-    // After email verification, restore the requested action.
+    if (!vehicleId) return;
 
     const user = await getCustomer();
 
     if (!user) return;
 
-    const pending =
-        localStorage.getItem(RETURN_KEY);
+    params.delete('auth_vehicle');
 
-    if (!pending) return;
+    const cleanUrl =
+        location.pathname +
+        (params.toString() ? '?' + params.toString() : '') +
+        location.hash;
 
-    localStorage.removeItem(RETURN_KEY);
+    history.replaceState({}, '', cleanUrl);
 
-    const target = new URL(
-        pending,
-        window.location.origin
-    );
+    if (typeof window.negotiate === 'function') {
 
-    if (target.origin === window.location.origin) {
+        window.negotiate(vehicleId);
 
-        window.location.replace(
-            target.pathname +
-            target.search +
-            target.hash
-        );
+    } else {
+
+        const select = document.getElementById('negModel');
+
+        if (select) select.value = vehicleId;
+
+        document.getElementById('negotiation')
+            ?.scrollIntoView({ behavior: 'smooth' });
 
     }
 
 }
 
 
-restorePendingAction();
+// ------------------------------------
+// RESTORE LIVE CHAT
+// ------------------------------------
+
+async function restoreLiveChat() {
+
+    if (currentPage !== 'index.html') return;
+
+    if (location.hash !== '#livechat') return;
+
+    const user = await getCustomer();
+
+    if (!user) return;
+
+    document.getElementById('liveChatLauncher')?.click();
+
+}
 
 
-// Recheck after successful authentication.
+window.addEventListener('load', function () {
 
-db.auth.onAuthStateChange(function(event) {
+    restoreNegotiation();
 
-    if (event === 'SIGNED_IN') {
-
-        setTimeout(restorePendingAction, 300);
-
-    }
+    restoreLiveChat();
 
 });
 
