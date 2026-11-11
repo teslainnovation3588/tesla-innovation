@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090b">
+<title>Purchase Request | TESLA Innovation</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+--bg:#08090b;
+--panel:#111317;
+--panel2:#181b20;
+--red:#e82127;
+--white:#fff;
+--muted:#a5a7ac;
+--line:rgba(255,255,255,.12);
+--green:#43d69a
+}
+
+*{box-sizing:border-box}
+
+body{
+margin:0;
+background:var(--bg);
+color:var(--white);
+font:15px/1.65 Arial,Helvetica,sans-serif
+}
+
+a{color:inherit;text-decoration:none}
+
+.wrap{
+width:min(1050px,92%);
+margin:auto
+}
+
+header{
+background:#101114;
+border-bottom:1px solid var(--line);
+padding:18px 0
+}
+
+.brand{
+font-size:21px;
+font-weight:900;
+letter-spacing:2px
+}
+
+.brand span{color:var(--red)}
+
+.back{
+color:#ddd;
+font-size:13px
+}
+
+.layout{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:24px;
+padding:42px 0
+}
+
+.panel{
+background:var(--panel);
+border:1px solid var(--line);
+border-radius:10px;
+padding:24px
+}
+
+.eyebrow{
+color:var(--red);
+font-weight:bold;
+letter-spacing:3px;
+font-size:11px
+}
+
+h1{
+font-size:clamp(27px,5vw,40px);
+line-height:1.15;
+margin:9px 0 22px
+}
+
+.vehicle-image{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:7px;
+background:#222
+}
+
+.muted{color:var(--muted)}
+
+.vehicle-title{
+font-size:23px;
+margin:18px 0 2px
+}
+
+.variant{
+color:var(--muted);
+font-size:13px
+}
+
+.line{
+display:flex;
+justify-content:space-between;
+gap:12px;
+padding:12px 0;
+border-bottom:1px solid var(--line)
+}
+
+.line strong{text-align:right}
+
+.total{
+font-size:20px;
+font-weight:bold
+}
+
+.note{
+background:#1a1d22;
+border-left:3px solid var(--red);
+padding:14px;
+margin-top:18px;
+font-size:13px;
+color:#ddd
+}
+
+label{
+display:block;
+color:#ddd;
+font-size:12px;
+margin:13px 0 5px
+}
+
+input,select,textarea{
+width:100%;
+padding:13px;
+background:#08090b;
+border:1px solid #363a41;
+border-radius:5px;
+color:white;
+font:inherit
+}
+
+textarea{
+min-height:100px;
+resize:vertical
+}
+
+button{
+width:100%;
+margin-top:18px;
+padding:15px;
+background:var(--red);
+color:white;
+border:0;
+border-radius:5px;
+font-weight:bold;
+letter-spacing:.6px;
+cursor:pointer
+}
+
+button:disabled{
+opacity:.55;
+cursor:wait
+}
+
+.status{
+font-size:13px;
+margin-top:13px;
+overflow-wrap:anywhere
+}
+
+.support{
+font-size:13px;
+margin-top:16px
+}
+
+.support a{
+color:#ff656a;
+text-decoration:underline
+}
+
+.chat-launch{
+position:fixed;
+right:18px;
+bottom:18px;
+z-index:50;
+background:var(--red);
+color:#fff;
+border:0;
+border-radius:30px;
+padding:14px 20px;
+width:auto;
+box-shadow:0 8px 25px #0009
+}
+
+.chat-panel{
+display:none;
+position:fixed;
+right:16px;
+bottom:78px;
+width:min(360px,calc(100vw - 32px));
+height:min(480px,calc(100vh - 110px));
+z-index:51;
+background:#111317;
+border:1px solid #444;
+border-radius:12px;
+overflow:hidden;
+box-shadow:0 12px 40px #000b;
+flex-direction:column
+}
+
+.chat-panel.open{display:flex}
+
+.chat-head{
+padding:14px;
+background:#1b1d22;
+display:flex;
+justify-content:space-between;
+align-items:center
+}
+
+.chat-head button{
+width:auto;
+margin:0;
+padding:0 8px;
+background:none;
+font-size:24px
+}
+
+.chat-body{
+padding:14px;
+overflow:auto;
+flex:1
+}
+
+.chat-body input,
+.chat-compose textarea{
+margin:7px 0
+}
+
+.chat-compose{
+padding:12px;
+border-top:1px solid #333
+}
+
+.chat-compose textarea{min-height:55px}
+
+.bubble{
+max-width:85%;
+padding:10px 12px;
+margin:9px 0;
+border-radius:10px;
+background:#272b32;
+font-size:13px;
+overflow-wrap:anywhere
+}
+
+.bubble.visitor{
+background:#9f171d;
+margin-left:auto
+}
+
+.chat-error{
+color:#ff8888;
+font-size:12px
+}
+
+.chat-compose button,
+.chat-start button{
+margin-top:6px;
+padding:11px
+}
+
+.chat-time{
+display:block;
+font-size:10px;
+opacity:.7;
+margin-top:5px
+}
+
+footer{
+text-align:center;
+padding:25px;
+color:#777;
+font-size:11px;
+border-top:1px solid var(--line)
+}
+
+@media(max-width:760px){
+.layout{
+grid-template-columns:1fr;
+padding:24px 0
+}
+
+.panel{padding:18px}
+
+.vehicle-image{height:210px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap">
+<a class="brand" href="index.html">TESLA <span>INNOVATION</span></a>
+<a class="back" href="index.html#vehicles">← Back to vehicles</a>
+</div>
+</header>
+
+<main class="wrap">
+
+<div class="layout">
+
+<section class="panel">
+
+<div class="eyebrow">VEHICLE PURCHASE</div>
+
+<h1>Review your request</h1>
+
+<img id="vehicleImage" class="vehicle-image" alt="Selected vehicle">
+
+<h2 id="vehicleName" class="vehicle-title">Loading vehicle…</h2>
+
+<div id="vehicleVariant" class="variant"></div>
+
+<div class="line">
+<span>Vehicle subtotal</span>
+<strong id="subtotal">—</strong>
+</div>
+
+<div class="line">
+<span>Taxes / delivery / other fees</span>
+<strong>To be confirmed</strong>
+</div>
+
+<div class="line total">
+<span>Estimated subtotal</span>
+<strong id="total">—</strong>
+</div>
+
+<p class="muted" id="depositInfo" style="font-size:12px"></p>
+
+<div class="note">
+No payment is collected on this page. Final availability, taxes, delivery charges and payment instructions will be confirmed by our team before any payment is made.
+</div>
+
+<p class="support">
+For payment instructions, delivery details, or questions, contact
+<a href="mailto:teslainnovation65@outlook.com">teslainnovation65@outlook.com</a>
+or use the live chat.
+</p>
+
+</section>
+
+<section class="panel">
+
+<div class="eyebrow">CUSTOMER DETAILS</div>
+
+<h2 style="margin:8px 0 5px">Request a purchase follow-up</h2>
+
+<p class="muted" style="font-size:13px">
+Send your details to our Admin team. This is a purchase inquiry, not a confirmed order.
+</p>
+
+<form id="purchaseForm">
+
+<label for="fullName">Full name</label>
+<input id="fullName" maxlength="120" autocomplete="name" required>
+
+<label for="email">Email address</label>
+<input id="email" type="email" maxlength="254" autocomplete="email" required>
+
+<label for="phone">Phone number</label>
+<input id="phone" type="tel" maxlength="40" autocomplete="tel" required>
+
+<label for="contactMethod">Preferred contact method</label>
+<select id="contactMethod" required>
+<option value="">Choose contact method</option>
+<option>Email</option>
+<option>Phone call</option>
+<option>WhatsApp</option>
+</select>
+
+<label for="colour">Preferred colour / selected options (optional)</label>
+<input id="colour" maxlength="160" placeholder="Colour, configuration or options">
+
+<label for="country">Delivery country</label>
+<input id="country" maxlength="100" placeholder="Country for delivery" required>
+
+<label for="message">Additional message / special request</label>
+<textarea id="message" maxlength="1500" placeholder="Tell us anything else our team should know"></textarea>
+
+<button id="submitButton" type="submit">SUBMIT PURCHASE INQUIRY</button>
+
+<div id="formStatus" class="status" role="status" aria-live="polite"></div>
+
+</form>
+
+</section>
+
+</div>
+
+</main>
+
+<button class="chat-launch" id="chatLauncher" type="button">💬 LIVE CHAT</button>
+
+<section class="chat-panel" id="chatPanel" aria-label="Live chat">
+
+<div class="chat-head">
+<div>
+<strong>TESLA Innovation Support</strong>
+<div class="muted" style="font-size:11px">Customer live chat</div>
+</div>
+<button id="chatClose" type="button" aria-label="Close chat">×</button>
+</div>
+
+<div class="chat-body">
+
+<div id="chatRegistration">
+<p style="font-size:13px">Enter your details to chat with our team.</p>
+
+<form id="chatStartForm" class="chat-start">
+
+<input id="chatName" placeholder="Full name" maxlength="100" required>
+
+<input id="chatEmail" type="email" placeholder="Email address" maxlength="254" required>
+
+<button id="chatStartButton">START CHAT</button>
+
+<div id="chatStartError" class="chat-error"></div>
+
+</form>
+</div>
+
+<div id="chatConversation" style="display:none">
+
+<div id="chatStatus" class="muted" style="font-size:11px">Connected</div>
+
+<div id="chatMessages" aria-live="polite"></div>
+
+</div>
+
+</div>
+
+<div class="chat-compose" id="chatCompose" style="display:none">
+
+<form id="chatMessageForm">
+
+<textarea id="chatMessageInput" maxlength="2000" placeholder="Type your message…" required></textarea>
+
+<button id="chatSendButton">SEND MESSAGE</button>
+
+<div id="chatSendError" class="chat-error"></div>
+
+</form>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 TESLA Innovation. All rights reserved.
+</footer>
+
+<script>
+'use strict';
+
+const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
+
+const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+const $=id=>document.getElementById(id);
+
+const money=n=>'$'+Number(n||0).toLocaleString('en-US',{maximumFractionDigits:2})+' USD';
+
+let vehicle=null;
+
+const vehicleId=new URLSearchParams(location.search).get('vehicle');
+
+
+async function loadVehicle(){
+
+if(!vehicleId){
+
+$('vehicleName').textContent='No vehicle selected';
+
+$('formStatus').textContent='Please return to the vehicle collection and choose Buy Now.';
+
+$('submitButton').disabled=true;
+
+return;
+
+}
+
+try{
+
+const {data,error}=await db
+.from('vehicles')
+.select('*')
+.eq('id',vehicleId)
+.eq('is_published',true)
+.single();
+
+if(error)throw error;
+
+vehicle=data;
+
+$('vehicleName').textContent=vehicle.model||'Selected vehicle';
+
+$('vehicleVariant').textContent=vehicle.variant||'Premium electric vehicle';
+
+const image=Array.isArray(vehicle.image_urls)&&vehicle.image_urls[0]
+?vehicle.image_urls[0]
+:'';
+
+$('vehicleImage').src=image||'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85';
+
+$('subtotal').textContent=money(vehicle.selling_price);
+
+$('total').textContent=money(vehicle.selling_price);
+
+const pct=Number(vehicle.deposit_percentage??30);
+
+$('depositInfo').textContent=`Indicative deposit reference: ${pct}% (${money(Number(vehicle.selling_price||0)*pct/100)}). This is not a payment request; the team will confirm the actual amount and instructions.`;
+
+}catch(e){
+
+console.error(e);
+
+$('vehicleName').textContent='Vehicle unavailable';
+
+$('formStatus').textContent='This vehicle could not be loaded. It may no longer be published. Please return to the vehicle collection.';
+
+$('submitButton').disabled=true;
+
+}
+
+}
+
+
+$('purchaseForm').addEventListener('submit',async e=>{
+
+e.preventDefault();
+
+if(!vehicle)return;
+
+const button=$('submitButton');
+
+button.disabled=true;
+
+button.textContent='SUBMITTING…';
+
+$('formStatus').textContent='';
+
+const contact=$('contactMethod').value;
+
+const extra=[
+
+`Preferred contact method: ${contact}`,
+
+`Selected options / colour: ${$('colour').value.trim()||'Not specified'}`,
+
+`Purchase subtotal displayed: ${money(vehicle.selling_price)}`,
+
+`Additional request: ${$('message').value.trim()||'None'}`
+
+].join('\n');
+
+const payload={
+
+vehicle_id:vehicle.id,
+
+customer_name:$('fullName').value.trim(),
+
+email:$('email').value.trim(),
+
+phone:$('phone').value.trim(),
+
+enquiry_type:'Buy Now Purchase Request',
+
+preferred_colour:$('colour').value.trim(),
+
+delivery_country:$('country').value.trim(),
+
+message:extra
+
+};
+
+try{
+
+const {error}=await db.from('enquiries').insert(payload);
+
+if(error)throw error;
+
+$('formStatus').style.color='#43d69a';
+
+$('formStatus').textContent='Your purchase inquiry has been received by TESLA Innovation. Our Admin team will review it and contact you using your preferred method.';
+
+$('purchaseForm').reset();
+
+}catch(err){
+
+console.error('Purchase inquiry error:',err);
+
+$('formStatus').style.color='#ff7777';
+
+$('formStatus').textContent='We could not submit your inquiry: '+err.message;
+
+}finally{
+
+button.disabled=false;
+
+button.textContent='SUBMIT PURCHASE INQUIRY';
+
+}
+
+});
+
+
+// Existing customer-live-chat Edge Function
+
+const CHAT_URL=SUPABASE_URL+'/functions/v1/customer-live-chat';
+
+const CHAT_KEY='tesla_innovation_live_chat';
+
+let chatSession=null,chatTimer=null,chatLoading=false,chatSending=false;
+
+try{
+
+const saved=JSON.parse(localStorage.getItem(CHAT_KEY)||'null');
+
+if(saved?.conversation_id&&saved?.visitor_token)chatSession=saved;
+
+}catch(_){
+
+localStorage.removeItem(CHAT_KEY);
+
+}
+
+
+async function chatRequest(payload){
+
+const r=await fetch(CHAT_URL,{
+
+method:'POST',
+
+headers:{
+
+'Content-Type':'application/json',
+
+'apikey':SUPABASE_KEY,
+
+'Authorization':'Bearer '+SUPABASE_KEY
+
+},
+
+body:JSON.stringify(payload)
+
+});
+
+const d=await r.json().catch(()=>null);
+
+if(!r.ok||!d||d.success===false)
+
+throw new Error(d?.error||d?.message||'Chat connection failed.');
+
+return d;
+
+}
+
+
+function openChat(){
+
+$('chatPanel').classList.add('open');
+
+if(chatSession)showChat();
+
+}
+
+
+function closeChat(){
+
+$('chatPanel').classList.remove('open');
+
+}
+
+
+$('chatLauncher').addEventListener('click',openChat);
+
+$('chatClose').addEventListener('click',closeChat);
+
+
+$('chatStartForm').addEventListener('submit',async e=>{
+
+e.preventDefault();
+
+const b=$('chatStartButton');
+
+b.disabled=true;
+
+b.textContent='CONNECTING…';
+
+$('chatStartError').textContent='';
+
+try{
+
+const name=$('chatName').value.trim();
+
+const email=$('chatEmail').value.trim();
+
+const d=await chatRequest({action:'start',name,email});
+
+if(!d.conversation?.id||!d.visitor_token)
+
+throw new Error('Chat server did not return a valid session.');
+
+chatSession={
+
+conversation_id:d.conversation.id,
+
+visitor_token:d.visitor_token,
+
+name,
+
+email
+
+};
+
+localStorage.setItem(CHAT_KEY,JSON.stringify(chatSession));
+
+showChat();
+
+}catch(err){
+
+$('chatStartError').textContent=err.message;
+
+}finally{
+
+b.disabled=false;
+
+b.textContent='START CHAT';
+
+}
+
+});
+
+
+function showChat(){
+
+$('chatRegistration').style.display='none';
+
+$('chatConversation').style.display='block';
+
+$('chatCompose').style.display='block';
+
+loadChatHistory();
+
+if(chatTimer)clearInterval(chatTimer);
+
+chatTimer=setInterval(()=>{
+
+if($('chatPanel').classList.contains('open'))loadChatHistory();
+
+},5000);
+
+}
+
+
+async function loadChatHistory(){
+
+if(!chatSession||chatLoading)return;
+
+chatLoading=true;
+
+try{
+
+const d=await chatRequest({
+
+action:'history',
+
+conversation_id:chatSession.conversation_id,
+
+visitor_token:chatSession.visitor_token
+
+});
+
+$('chatMessages').replaceChildren();
+
+(d.messages||[]).forEach(m=>{
+
+const bubble=document.createElement('div');
+
+bubble.className='bubble '+(m.sender_role==='visitor'?'visitor':'admin');
+
+bubble.append(document.createTextNode(m.message||''));
+
+const time=document.createElement('span');
+
+time.className='chat-time';
+
+time.textContent=m.created_at?new Date(m.created_at).toLocaleString():'';
+
+bubble.append(time);
+
+$('chatMessages').append(bubble);
+
+});
+
+$('chatStatus').textContent='Connected to customer support.';
+
+}catch(err){
+
+$('chatStatus').textContent='Reconnecting… '+err.message;
+
+}finally{
+
+chatLoading=false;
+
+}
+
+}
+
+
+$('chatMessageForm').addEventListener('submit',async e=>{
+
+e.preventDefault();
+
+if(!chatSession||chatSending)return;
+
+const message=$('chatMessageInput').value.trim();
+
+if(!message)return;
+
+chatSending=true;
+
+$('chatSendButton').disabled=true;
+
+$('chatSendError').textContent='';
+
+try{
+
+await chatRequest({
+
+action:'send',
+
+conversation_id:chatSession.conversation_id,
+
+visitor_token:chatSession.visitor_token,
+
+message,
+
+name:chatSession.name
+
+});
+
+$('chatMessageInput').value='';
+
+await loadChatHistory();
+
+}catch(err){
+
+$('chatSendError').textContent=err.message;
+
+}finally{
+
+chatSending=false;
+
+$('chatSendButton').disabled=false;
+
+}
+
+});
+
+
+loadVehicle();
+
+if(chatSession){
+
+$('chatPanel').classList.add('open');
+
+showChat();
+
+}
+
+</script>
+
+</body>
+</html>
