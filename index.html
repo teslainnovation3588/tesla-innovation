@@ -17,16 +17,9 @@
 --green:#43d69a;
 }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
+*{margin:0;padding:0;box-sizing:border-box}
 
-html{
-scroll-behavior:smooth;
-scroll-padding-top:90px;
-}
+html{scroll-behavior:smooth;scroll-padding-top:90px}
 
 body{
 font-family:Arial,Helvetica,sans-serif;
@@ -36,27 +29,11 @@ line-height:1.6;
 overflow-x:hidden;
 }
 
-a{
-text-decoration:none;
-color:inherit;
-}
-
-button,input,select,textarea{
-font:inherit;
-}
-
-button{
-cursor:pointer;
-}
-
-.container{
-width:min(1200px,90%);
-margin:auto;
-}
-
-.section{
-padding:100px 0;
-}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+.container{width:min(1200px,90%);margin:auto}
+.section{padding:100px 0}
 
 /* NAVIGATION */
 
@@ -84,15 +61,9 @@ letter-spacing:2px;
 white-space:nowrap;
 }
 
-.logo span{
-color:var(--red);
-}
+.logo span,.footer-brand span{color:var(--red)}
 
-.nav-links{
-display:flex;
-align-items:center;
-gap:25px;
-}
+.nav-links{display:flex;align-items:center;gap:25px}
 
 .nav-links a{
 color:#c6c7ca;
@@ -100,9 +71,7 @@ font-size:13px;
 transition:.3s;
 }
 
-.nav-links a:hover{
-color:var(--red);
-}
+.nav-links a:hover{color:var(--red)}
 
 .account-link{
 border:1px solid rgba(232,33,39,.65);
@@ -114,10 +83,7 @@ letter-spacing:.5px;
 white-space:nowrap;
 }
 
-.account-link:hover{
-background:var(--red);
-color:white!important;
-}
+.account-link:hover{background:var(--red);color:white!important}
 
 .nav-cta{
 background:var(--red);
@@ -128,10 +94,7 @@ font-weight:bold;
 transition:.3s;
 }
 
-.nav-cta:hover{
-background:#bd171d;
-transform:translateY(-2px);
-}
+.nav-cta:hover{background:#bd171d;transform:translateY(-2px)}
 
 .menu-toggle{
 display:none;
@@ -152,22 +115,12 @@ display:flex;
 align-items:center;
 overflow:hidden;
 background:
-linear-gradient(
-90deg,
-rgba(0,0,0,.95),
-rgba(0,0,0,.67),
-rgba(0,0,0,.18)
-),
+linear-gradient(90deg,rgba(0,0,0,.95),rgba(0,0,0,.67),rgba(0,0,0,.18)),
 url('https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=2000&q=90')
 center/cover no-repeat;
 }
 
-.hero-content{
-max-width:850px;
-padding:100px 0;
-position:relative;
-z-index:2;
-}
+.hero-content{max-width:850px;padding:100px 0;position:relative;z-index:2}
 
 .hero-label{
 display:inline-block;
@@ -186,9 +139,7 @@ font-weight:900;
 margin-bottom:25px;
 }
 
-.hero h1 span{
-color:var(--red);
-}
+.hero h1 span{color:var(--red)}
 
 .hero-description{
 max-width:620px;
@@ -197,12 +148,7 @@ font-size:16px;
 line-height:1.9;
 }
 
-.hero-buttons{
-display:flex;
-flex-wrap:wrap;
-gap:15px;
-margin-top:35px;
-}
+.hero-buttons{display:flex;flex-wrap:wrap;gap:15px;margin-top:35px}
 
 .btn{
 display:inline-flex;
@@ -217,100 +163,32 @@ border:none;
 transition:.3s;
 }
 
-.btn-red{
-background:var(--red);
-color:white;
-}
-
-.btn-red:hover{
-background:#bd171d;
-transform:translateY(-3px);
-}
-
-.btn-outline{
-border:1px solid rgba(255,255,255,.5);
-color:white;
-background:transparent;
-}
-
-.btn-outline:hover{
-background:white;
-color:black;
-}
+.btn-red{background:var(--red);color:white}
+.btn-red:hover{background:#bd171d;transform:translateY(-3px)}
+.btn-outline{border:1px solid rgba(255,255,255,.5);color:white;background:transparent}
+.btn-outline:hover{background:white;color:black}
 
 /* FEATURES */
 
-.features{
-background:#111317;
-border-top:1px solid var(--border);
-border-bottom:1px solid var(--border);
-}
-
-.feature-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-}
-
-.feature{
-padding:28px 15px;
-text-align:center;
-border-right:1px solid var(--border);
-}
-
-.feature:last-child{
-border-right:none;
-}
-
-.feature strong{
-display:block;
-font-size:14px;
-margin-bottom:5px;
-}
-
-.feature p{
-color:var(--muted);
-font-size:12px;
-}
+.features{background:#111317;border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.feature{padding:28px 15px;text-align:center;border-right:1px solid var(--border)}
+.feature:last-child{border-right:none}
+.feature strong{display:block;font-size:14px;margin-bottom:5px}
+.feature p{color:var(--muted);font-size:12px}
 
 /* SECTION HEADINGS */
 
-.section-heading{
-margin-bottom:45px;
-}
-
-.eyebrow{
-color:var(--red);
-font-size:11px;
-font-weight:bold;
-letter-spacing:4px;
-margin-bottom:12px;
-}
-
-.section-heading h2{
-font-size:clamp(29px,5vw,43px);
-font-weight:900;
-letter-spacing:-1px;
-margin-bottom:12px;
-}
-
-.section-heading p{
-color:var(--muted);
-font-size:14px;
-max-width:650px;
-line-height:1.9;
-}
+.section-heading{margin-bottom:45px}
+.eyebrow{color:var(--red);font-size:11px;font-weight:bold;letter-spacing:4px;margin-bottom:12px}
+.section-heading h2{font-size:clamp(29px,5vw,43px);font-weight:900;letter-spacing:-1px;margin-bottom:12px}
+.section-heading p{color:var(--muted);font-size:14px;max-width:650px;line-height:1.9}
 
 /* VEHICLE FILTERS */
 
-.vehicle-tools{
-display:flex;
-flex-wrap:wrap;
-gap:12px;
-margin-bottom:30px;
-}
+.vehicle-tools{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:30px}
 
-.vehicle-tools input,
-.vehicle-tools select{
+.vehicle-tools input,.vehicle-tools select{
 flex:1;
 min-width:180px;
 padding:14px;
@@ -321,22 +199,12 @@ border-radius:4px;
 outline:none;
 }
 
-.vehicle-tools input:focus,
-.vehicle-tools select:focus{
-border-color:var(--red);
-}
-
-.vehicle-tools select option{
-background:#111;
-}
+.vehicle-tools input:focus,.vehicle-tools select:focus{border-color:var(--red)}
+.vehicle-tools select option{background:#111}
 
 /* VEHICLE GRID */
 
-.vehicle-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:25px;
-}
+.vehicle-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:25px}
 
 .vehicle-card{
 background:var(--surface);
@@ -352,23 +220,9 @@ border-color:rgba(232,33,39,.6);
 box-shadow:0 18px 45px rgba(0,0,0,.35);
 }
 
-.vehicle-image{
-height:230px;
-position:relative;
-overflow:hidden;
-background:#17191e;
-}
-
-.vehicle-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-transition:.5s;
-}
-
-.vehicle-card:hover .vehicle-image img{
-transform:scale(1.06);
-}
+.vehicle-image{height:230px;position:relative;overflow:hidden;background:#17191e}
+.vehicle-image img{width:100%;height:100%;object-fit:cover;transition:.5s}
+.vehicle-card:hover .vehicle-image img{transform:scale(1.06)}
 
 .stock-badge{
 position:absolute;
@@ -381,52 +235,19 @@ font-weight:bold;
 background:rgba(0,0,0,.85);
 }
 
-.stock-in{color:var(--green);}
-.stock-limited{color:#ffcf65;}
-.stock-pre{color:#8ecbff;}
-.stock-out{color:#ff7777;}
+.stock-in{color:var(--green)}
+.stock-limited{color:#ffcf65}
+.stock-pre{color:#8ecbff}
+.stock-out{color:#ff7777}
 
-.vehicle-info{
-padding:23px;
-}
+.vehicle-info{padding:23px}
+.vehicle-info h3{font-size:23px;margin-bottom:5px}
+.vehicle-variant{color:var(--muted);font-size:12px;margin-bottom:15px}
+.vehicle-price{font-size:27px;font-weight:900;color:white;margin-bottom:13px}
+.vehicle-price small{font-size:11px;color:var(--muted);font-weight:normal}
+.vehicle-description{font-size:12px;color:var(--muted);line-height:1.8;min-height:55px}
 
-.vehicle-info h3{
-font-size:23px;
-margin-bottom:5px;
-}
-
-.vehicle-variant{
-color:var(--muted);
-font-size:12px;
-margin-bottom:15px;
-}
-
-.vehicle-price{
-font-size:27px;
-font-weight:900;
-color:white;
-margin-bottom:13px;
-}
-
-.vehicle-price small{
-font-size:11px;
-color:var(--muted);
-font-weight:normal;
-}
-
-.vehicle-description{
-font-size:12px;
-color:var(--muted);
-line-height:1.8;
-min-height:55px;
-}
-
-.vehicle-buttons{
-display:flex;
-gap:9px;
-margin-top:20px;
-}
-
+.vehicle-buttons{display:flex;gap:9px;margin-top:20px}
 .vehicle-buttons button{
 flex:1;
 padding:13px 8px;
@@ -436,19 +257,9 @@ font-size:10px;
 font-weight:bold;
 }
 
-.buy-button{
-background:var(--red);
-color:white;
-}
-
-.negotiate-button{
-background:#e6e6e6;
-color:#111;
-}
-
-.vehicle-buttons button:hover{
-opacity:.8;
-}
+.buy-button{background:var(--red);color:white}
+.negotiate-button{background:#e6e6e6;color:#111}
+.vehicle-buttons button:hover{opacity:.8}
 
 .empty-message{
 grid-column:1/-1;
@@ -461,108 +272,28 @@ border-radius:5px;
 
 /* ABOUT */
 
-.about-section{
-background:#111317;
-}
-
-.about-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:60px;
-align-items:center;
-}
-
-.about-image{
-height:400px;
-border-radius:6px;
-overflow:hidden;
-}
-
-.about-image img{
-width:100%;
-height:100%;
-object-fit:cover;
-}
-
-.about-content h2{
-font-size:37px;
-line-height:1.2;
-margin-bottom:20px;
-}
-
-.about-content p{
-font-size:14px;
-color:var(--muted);
-line-height:2;
-margin-bottom:17px;
-}
-
-.about-points{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:15px;
-margin-top:25px;
-}
-
-.about-point{
-padding:17px;
-background:#1a1d22;
-border:1px solid var(--border);
-border-radius:4px;
-}
-
-.about-point strong{
-display:block;
-font-size:13px;
-margin-bottom:5px;
-}
-
-.about-point span{
-font-size:11px;
-color:var(--muted);
-}
+.about-section{background:#111317}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.about-image{height:400px;border-radius:6px;overflow:hidden}
+.about-image img{width:100%;height:100%;object-fit:cover}
+.about-content h2{font-size:37px;line-height:1.2;margin-bottom:20px}
+.about-content p{font-size:14px;color:var(--muted);line-height:2;margin-bottom:17px}
+.about-points{display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-top:25px}
+.about-point{padding:17px;background:#1a1d22;border:1px solid var(--border);border-radius:4px}
+.about-point strong{display:block;font-size:13px;margin-bottom:5px}
+.about-point span{font-size:11px;color:var(--muted)}
 
 /* FORMS */
 
-.form-section{
-background:var(--bg);
-}
+.form-section{background:var(--bg)}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:35px;align-items:start}
+.form-panel{background:var(--surface);border:1px solid var(--border);padding:30px;border-radius:6px}
+.form-panel h3{font-size:21px;margin-bottom:8px}
+.form-panel>p{font-size:12px;color:var(--muted);margin-bottom:22px}
 
-.form-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:35px;
-align-items:start;
-}
+form label{display:block;font-size:11px;color:#ccc;margin-top:13px}
 
-.form-panel{
-background:var(--surface);
-border:1px solid var(--border);
-padding:30px;
-border-radius:6px;
-}
-
-.form-panel h3{
-font-size:21px;
-margin-bottom:8px;
-}
-
-.form-panel>p{
-font-size:12px;
-color:var(--muted);
-margin-bottom:22px;
-}
-
-form label{
-display:block;
-font-size:11px;
-color:#ccc;
-margin-top:13px;
-}
-
-form input,
-form select,
-form textarea{
+form input,form select,form textarea{
 width:100%;
 padding:14px;
 margin-top:7px;
@@ -573,20 +304,9 @@ border-radius:3px;
 outline:none;
 }
 
-form input:focus,
-form select:focus,
-form textarea:focus{
-border-color:var(--red);
-}
-
-form select option{
-background:#111;
-}
-
-form textarea{
-min-height:100px;
-resize:vertical;
-}
+form input:focus,form select:focus,form textarea:focus{border-color:var(--red)}
+form select option{background:#111}
+form textarea{min-height:100px;resize:vertical}
 
 form button{
 width:100%;
@@ -601,146 +321,150 @@ font-size:12px;
 letter-spacing:1px;
 }
 
-form button:hover{
-background:#bd171d;
-}
+form button:hover{background:#bd171d}
+form button:disabled{opacity:.5;cursor:not-allowed}
 
-form button:disabled{
-opacity:.5;
-cursor:not-allowed;
-}
-
-.form-note{
-font-size:11px;
-color:#888;
-line-height:1.8;
-margin-top:15px;
-}
-
-.form-result{
-margin-top:15px;
-font-size:12px;
-line-height:1.7;
-}
+.form-note{font-size:11px;color:#888;line-height:1.8;margin-top:15px}
+.form-result{margin-top:15px;font-size:12px;line-height:1.7}
 
 /* CONTACT */
 
-.contact-section{
-background:#111317;
-text-align:center;
-}
-
-.contact-section h2{
-font-size:35px;
-margin-bottom:15px;
-}
-
-.contact-section p{
-max-width:650px;
-margin:auto;
-color:var(--muted);
-font-size:14px;
-line-height:1.9;
-}
+.contact-section{background:#111317;text-align:center}
+.contact-section h2{font-size:35px;margin-bottom:15px}
+.contact-section p{max-width:650px;margin:auto;color:var(--muted);font-size:14px;line-height:1.9}
 
 /* FOOTER */
 
-footer{
-background:#07080a;
-border-top:1px solid var(--border);
-padding:45px 0 25px;
-}
-
-.footer-content{
-display:flex;
-justify-content:space-between;
-gap:30px;
-flex-wrap:wrap;
-padding-bottom:30px;
-}
-
-.footer-brand{
-font-size:20px;
-font-weight:900;
-letter-spacing:2px;
-}
-
-.footer-brand span{
-color:var(--red);
-}
-
-.footer-content p{
-font-size:12px;
-color:var(--muted);
-margin-top:10px;
-max-width:350px;
-line-height:1.9;
-}
-
-.footer-links{
-display:flex;
-flex-wrap:wrap;
-gap:20px;
-align-items:center;
-max-width:650px;
-}
-
-.footer-links a{
-font-size:12px;
-color:#aaa;
-transition:.3s;
-}
-
-.footer-links a:hover{
-color:var(--red);
-}
-
-.copyright{
-border-top:1px solid var(--border);
-padding-top:20px;
-text-align:center;
-font-size:11px;
-color:#777;
-}
+footer{background:#07080a;border-top:1px solid var(--border);padding:45px 0 25px}
+.footer-content{display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap;padding-bottom:30px}
+.footer-brand{font-size:20px;font-weight:900;letter-spacing:2px}
+.footer-content p{font-size:12px;color:var(--muted);margin-top:10px;max-width:350px;line-height:1.9}
+.footer-links{display:flex;flex-wrap:wrap;gap:20px;align-items:center;max-width:650px}
+.footer-links a{font-size:12px;color:#aaa;transition:.3s}
+.footer-links a:hover{color:var(--red)}
+.copyright{border-top:1px solid var(--border);padding-top:20px;text-align:center;font-size:11px;color:#777}
 
 /* ANIMATIONS */
 
-.reveal{
-opacity:0;
-transform:translateY(25px);
-transition:opacity .7s ease,transform .7s ease;
+.reveal{opacity:0;transform:translateY(25px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* CUSTOMER LIVE CHAT */
+
+.live-chat-launcher{
+position:fixed;
+right:22px;
+bottom:22px;
+z-index:9998;
+background:var(--red);
+color:white;
+border:0;
+border-radius:50px;
+padding:16px 23px;
+font-size:13px;
+font-weight:bold;
+box-shadow:0 8px 30px rgba(0,0,0,.4);
+cursor:pointer;
 }
 
-.reveal.visible{
-opacity:1;
-transform:translateY(0);
+.live-chat-launcher:hover{background:#bd171d}
+
+.live-chat-panel{
+position:fixed;
+right:22px;
+bottom:88px;
+width:min(370px,calc(100vw - 30px));
+height:500px;
+max-height:calc(100vh - 120px);
+background:#111317;
+border:1px solid rgba(255,255,255,.15);
+border-radius:12px;
+z-index:9999;
+display:none;
+flex-direction:column;
+overflow:hidden;
+box-shadow:0 15px 50px rgba(0,0,0,.6);
 }
+
+.live-chat-panel.open{display:flex}
+
+.live-chat-header{
+background:#181b20;
+padding:17px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid var(--border);
+}
+
+.live-chat-header strong{font-size:14px}
+
+.live-chat-header button{
+background:none;
+border:0;
+color:white;
+font-size:25px;
+padding:0 5px;
+width:auto;
+margin:0;
+}
+
+.live-chat-subtitle{font-size:10px;color:var(--muted)}
+.live-chat-body{flex:1;overflow-y:auto;padding:15px}
+
+.live-chat-form input,.live-chat-compose textarea{
+width:100%;
+padding:12px;
+margin-bottom:10px;
+background:#08090b;
+border:1px solid #30343b;
+border-radius:5px;
+color:white;
+font-size:14px;
+}
+
+.live-chat-form button,.live-chat-compose button{
+width:100%;
+padding:13px;
+background:var(--red);
+border:0;
+border-radius:4px;
+color:white;
+font-weight:bold;
+margin-top:5px;
+}
+
+.live-chat-message{
+max-width:85%;
+padding:11px 13px;
+margin-bottom:12px;
+border-radius:10px;
+font-size:12px;
+line-height:1.6;
+overflow-wrap:anywhere;
+}
+
+.live-chat-message.visitor{margin-left:auto;background:#e82127;color:white}
+.live-chat-message.admin{margin-right:auto;background:#252a32;color:white}
+.live-chat-time{display:block;font-size:9px;opacity:.7;margin-top:5px}
+
+.live-chat-compose{padding:12px;border-top:1px solid var(--border)}
+.live-chat-compose textarea{min-height:55px;max-height:100px;resize:vertical;margin-bottom:7px}
+.live-chat-status{font-size:11px;color:var(--muted);margin-bottom:10px}
+.live-chat-error{font-size:11px;color:#ff7777;margin-top:8px}
 
 /* RESPONSIVE */
 
 @media(max-width:950px){
-.vehicle-grid{
-grid-template-columns:repeat(2,1fr);
-}
-
-.about-grid{
-gap:30px;
-}
+.vehicle-grid{grid-template-columns:repeat(2,1fr)}
+.about-grid{gap:30px}
 }
 
 @media(max-width:700px){
-
-.container{width:91%;}
-
-.section{padding:70px 0;}
-
-.navbar{
-min-height:70px;
-flex-wrap:wrap;
-}
-
-.menu-toggle{display:block;}
-
+.container{width:91%}
+.section{padding:70px 0}
+.navbar{min-height:70px;flex-wrap:wrap}
+.menu-toggle{display:block}
 .nav-links{
 display:none;
 width:100%;
@@ -749,174 +473,122 @@ align-items:stretch;
 gap:0;
 padding:10px 0 18px;
 }
-
-.nav-links.open{display:flex;}
-
-.nav-links a{
-padding:13px 5px;
-border-bottom:1px solid var(--border);
-}
-
-.nav-links .account-link{
-text-align:center;
-margin-top:8px;
-padding:13px;
-}
-
-.nav-links .nav-cta{
-display:block;
-text-align:center;
-margin-top:10px;
-}
-
-.hero{
-min-height:600px;
-background-position:58% center;
-}
-
-.hero-content{padding:80px 0;}
-
-.hero h1{letter-spacing:-2px;}
-
-.hero-description{font-size:14px;}
-
-.feature-grid{grid-template-columns:1fr;}
-
-.feature{
-border-right:none;
-border-bottom:1px solid var(--border);
-}
-
-.vehicle-grid{grid-template-columns:1fr;}
-
-.vehicle-image{height:240px;}
-
-.about-grid,
-.form-grid{grid-template-columns:1fr;}
-
-.about-image{height:270px;}
-
-.about-content h2{font-size:30px;}
-
-.about-points{grid-template-columns:1fr 1fr;}
-
-.vehicle-tools{flex-direction:column;}
-
-.vehicle-tools input,
-.vehicle-tools select{width:100%;}
-
-.form-panel{padding:22px;}
-
-.footer-content{flex-direction:column;}
-
-.footer-links{
-gap:15px;
-}
-
+.nav-links.open{display:flex}
+.nav-links a{padding:13px 5px;border-bottom:1px solid var(--border)}
+.nav-links .account-link{text-align:center;margin-top:8px;padding:13px}
+.nav-links .nav-cta{display:block;text-align:center;margin-top:10px}
+.hero{min-height:600px;background-position:58% center}
+.hero-content{padding:80px 0}
+.hero h1{letter-spacing:-2px}
+.hero-description{font-size:14px}
+.feature-grid{grid-template-columns:1fr}
+.feature{border-right:none;border-bottom:1px solid var(--border)}
+.vehicle-grid{grid-template-columns:1fr}
+.vehicle-image{height:240px}
+.about-grid,.form-grid{grid-template-columns:1fr}
+.about-image{height:270px}
+.about-content h2{font-size:30px}
+.about-points{grid-template-columns:1fr 1fr}
+.vehicle-tools{flex-direction:column}
+.vehicle-tools input,.vehicle-tools select{width:100%}
+.form-panel{padding:22px}
+.footer-content{flex-direction:column}
+.footer-links{gap:15px}
+.live-chat-panel{right:10px;bottom:78px;width:calc(100vw - 20px);height:65vh}
+.live-chat-launcher{right:15px;bottom:15px}
 }
 </style></head><body><header>
-<div class="container navbar"><a href="#home" class="logo">
-TESLA <span>INNOVATION</span>
-</a><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">
-☰
-</button><nav class="nav-links" id="navLinks"><a href="#home">Home</a>
+<div class="container navbar">
+<a href="#home" class="logo">TESLA <span>INNOVATION</span></a><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+
+<nav class="nav-links" id="navLinks">
+<a href="#home">Home</a>
 <a href="#vehicles">Vehicles</a>
 <a href="#about">About</a>
 <a href="#negotiation">Negotiation</a>
-<a href="#contact">Contact</a>
-
-<a
-href="customer.html"
-id="customerAccountLink"
-class="account-link"
-aria-label="Log in or create a customer account"
-
-«»
-
+<a href="#contact">Contact</a><a href="customer.html" id="customerAccountLink" class="account-link" aria-label="Log in or create a customer account">
 LOGIN / CREATE ACCOUNT
-</a>
-
-<a href="#order" class="nav-cta">EXPLORE PURCHASE</a>
+</a><a href="#order" class="nav-cta">EXPLORE PURCHASE</a>
 
 </nav>
 </div>
 </header><section class="hero" id="home">
 <div class="container">
-<div class="hero-content"><div class="hero-label">PREMIUM ELECTRIC MOBILITY</div><h1>DRIVE THE <span>FUTURE.</span></h1><p class="hero-description">
+<div class="hero-content">
+<div class="hero-label">PREMIUM ELECTRIC MOBILITY</div>
+<h1>DRIVE THE <span>FUTURE.</span></h1>
+<p class="hero-description">
 Discover premium electric vehicles, explore available configurations and connect with our team for international vehicle purchase and pre-order enquiries.
-</p><div class="hero-buttons">
+</p>
+<div class="hero-buttons">
 <a href="#vehicles" class="btn btn-red">EXPLORE VEHICLES →</a>
 <a href="#contact" class="btn btn-outline">CONTACT OUR TEAM</a>
-</div></div>
+</div>
+</div>
 </div>
 </section><section class="features">
-<div class="container feature-grid"><div class="feature">
+<div class="container feature-grid">
+<div class="feature">
 <strong>PREMIUM VEHICLE COLLECTION</strong>
 <p>Explore our electric vehicle catalogue.</p>
-</div><div class="feature">
+</div>
+<div class="feature">
 <strong>INTERNATIONAL ENQUIRIES</strong>
 <p>Connect with our team across markets.</p>
-</div><div class="feature">
+</div>
+<div class="feature">
 <strong>PERSONALISED OFFERS</strong>
 <p>Submit your preferred vehicle budget.</p>
-</div></div>
+</div>
+</div>
 </section><section class="section" id="vehicles">
-<div class="container"><div class="section-heading reveal">
+<div class="container">
+<div class="section-heading reveal">
 <div class="eyebrow">THE COLLECTION</div>
 <h2>EXPLORE OUR VEHICLES</h2>
-<p>
-Discover our vehicle collection, review catalogue prices and enquire about availability and international delivery.
-</p>
-</div><div class="vehicle-tools reveal"><input type="search" id="vehicleSearch" placeholder="Search vehicle models..." aria-label="Search vehicles"><select id="availabilityFilter" aria-label="Filter by availability">
+<p>Discover our vehicle collection, review catalogue prices and enquire about availability and international delivery.</p>
+</div><div class="vehicle-tools reveal">
+<input type="search" id="vehicleSearch" placeholder="Search vehicle models..." aria-label="Search vehicles">
+<select id="availabilityFilter" aria-label="Filter by availability">
 <option value="all">All availability</option>
 <option value="in_stock">Available stock</option>
 <option value="limited_stock">Limited stock</option>
 <option value="pre_order">Pre-order</option>
 <option value="out_of_stock">Out of stock</option>
-</select></div><div class="vehicle-grid" id="vehicleGrid">
+</select>
+</div><div class="vehicle-grid" id="vehicleGrid">
 <div class="empty-message">Loading our vehicle collection...</div>
 </div><p class="form-note">
 Displayed prices are catalogue prices and must be confirmed before an order is accepted. Vehicle configuration, stock, taxes, import duties and international delivery costs are subject to confirmation.
-</p></div>
+</p>
+</div>
 </section><section class="section about-section" id="about">
-<div class="container about-grid"><div class="about-image reveal">
-<img
-src="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1200&q=85"
-alt="Premium electric vehicle"
-loading="lazy"
->
-</div><div class="about-content reveal"><div class="eyebrow">ABOUT OUR BUSINESS</div><h2>A BETTER WAY TO EXPLORE ELECTRIC MOBILITY.</h2><p>
-TESLA Innovation is focused on premium electric vehicle sales, vehicle sourcing and international customer enquiries.
-</p><p>
-Our aim is to provide customers with clear vehicle information, transparent catalogue pricing and a structured purchase enquiry experience.
-</p><div class="about-points"><div class="about-point">
-<strong>VEHICLE OPTIONS</strong>
-<span>Explore available models.</span>
-</div><div class="about-point">
-<strong>GLOBAL CONNECTIONS</strong>
-<span>International enquiries.</span>
-</div><div class="about-point">
-<strong>PERSONALISED SERVICE</strong>
-<span>Individual purchase support.</span>
-</div><div class="about-point">
-<strong>PRICE NEGOTIATION</strong>
-<span>Submit your preferred budget.</span>
-</div></div>
+<div class="container about-grid">
+<div class="about-image reveal">
+<img src="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1200&q=85" alt="Premium electric vehicle" loading="lazy">
+</div><div class="about-content reveal">
+<div class="eyebrow">ABOUT OUR BUSINESS</div>
+<h2>A BETTER WAY TO EXPLORE ELECTRIC MOBILITY.</h2>
+<p>TESLA Innovation is focused on premium electric vehicle sales, vehicle sourcing and international customer enquiries.</p>
+<p>Our aim is to provide customers with clear vehicle information, transparent catalogue pricing and a structured purchase enquiry experience.</p><div class="about-points">
+<div class="about-point"><strong>VEHICLE OPTIONS</strong><span>Explore available models.</span></div>
+<div class="about-point"><strong>GLOBAL CONNECTIONS</strong><span>International enquiries.</span></div>
+<div class="about-point"><strong>PERSONALISED SERVICE</strong><span>Individual purchase support.</span></div>
+<div class="about-point"><strong>PRICE NEGOTIATION</strong><span>Submit your preferred budget.</span></div>
+</div>
 </div>
 </div>
 </section><section class="section form-section" id="negotiation">
-<div class="container"><div class="section-heading reveal">
+<div class="container">
+<div class="section-heading reveal">
 <div class="eyebrow">PERSONALISED VEHICLE OFFERS</div>
 <h2>MAKE YOUR OFFER</h2>
-<p>
-Have a preferred budget? Tell us what you are looking to spend and submit your proposal for review.
-</p>
-</div><div class="form-panel reveal" style="max-width:700px;margin:auto;"><h3>Vehicle Budget Negotiation</h3>
-<p>Submit your preferred vehicle and proposed budget.</p><form id="negotiationForm"><label for="negModel">Select vehicle</label>
-<select id="negModel" required>
-
-<option value="">Choose vehicle</option>
-</select><label for="budget">Your proposed budget (USD)</label>
+<p>Have a preferred budget? Tell us what you are looking to spend and submit your proposal for review.</p>
+</div><div class="form-panel reveal" style="max-width:700px;margin:auto;">
+<h3>Vehicle Budget Negotiation</h3>
+<p>Submit your preferred vehicle and proposed budget.</p><form id="negotiationForm">
+<label for="negModel">Select vehicle</label>
+<select id="negModel" required><option value="">Choose vehicle</option></select><label for="budget">Your proposed budget (USD)</label>
 <input id="budget" type="number" min="1" step="0.01" placeholder="Enter your budget" required>
 
 <label for="negName">Full name</label>
@@ -934,21 +606,20 @@ Have a preferred budget? Tell us what you are looking to spend and submit your p
 
 </form><div class="form-result" id="negResult" aria-live="polite"></div><p class="form-note">
 Submitting an offer does not guarantee acceptance or reserve a vehicle. All proposals are subject to review and confirmation.
-</p></div>
+</p>
+</div>
 </div>
 </section><section class="section form-section" id="order">
-<div class="container"><div class="section-heading reveal">
+<div class="container">
+<div class="section-heading reveal">
 <div class="eyebrow">START YOUR JOURNEY</div>
 <h2>VEHICLE PURCHASE ENQUIRY</h2>
-<p>
-Tell us your preferred vehicle, configuration and delivery destination. Our team can review your enquiry and provide further information.
-</p>
-</div><div class="form-panel reveal" style="max-width:700px;margin:auto;"><h3>Start Your Vehicle Enquiry</h3>
-<p>Complete the details below to submit your request.</p><form id="orderForm"><label for="orderModel">Preferred vehicle</label>
-<select id="orderModel" required>
-
-<option value="">Choose vehicle</option>
-</select><label for="orderName">Full name</label>
+<p>Tell us your preferred vehicle, configuration and delivery destination. Our team can review your enquiry and provide further information.</p>
+</div><div class="form-panel reveal" style="max-width:700px;margin:auto;">
+<h3>Start Your Vehicle Enquiry</h3>
+<p>Complete the details below to submit your request.</p><form id="orderForm">
+<label for="orderModel">Preferred vehicle</label>
+<select id="orderModel" required><option value="">Choose vehicle</option></select><label for="orderName">Full name</label>
 <input id="orderName" type="text" placeholder="Your full name" required>
 
 <label for="orderEmail">Email address</label>
@@ -975,47 +646,68 @@ Tell us your preferred vehicle, configuration and delivery destination. Our team
 
 </form><div class="form-result" id="orderResult" aria-live="polite"></div><p class="form-note">
 This form submits a purchase enquiry, not a completed purchase or payment. Final pricing, vehicle availability, delivery and payment arrangements must be confirmed first.
-</p></div>
+</p>
+</div>
 </div>
 </section><section class="section contact-section" id="contact">
-<div class="container reveal"><div class="eyebrow">WE ARE HERE TO HELP</div><h2>LET'S CONNECT.</h2><p>
-Have questions about a vehicle, international delivery, pricing or availability? Submit a purchase enquiry or budget proposal and our team can review your request.
-</p><a href="#order" class="btn btn-red" style="margin-top:25px;">
-MAKE AN ENQUIRY →
-</a></div>
-</section><!-- UPDATED FOOTER --><footer>
-<div class="container"><div class="footer-content"><div><div class="footer-brand">
-TESLA <span>INNOVATION</span>
-</div><p>
-Premium electric vehicle sales, vehicle sourcing
-and international purchase enquiries.
-</p><p>
-Operating from the United States.
-</p></div><div class="footer-links"><a href="#home">Home</a>
-
+<div class="container reveal">
+<div class="eyebrow">WE ARE HERE TO HELP</div>
+<h2>LET'S CONNECT.</h2>
+<p>Have questions about a vehicle, international delivery, pricing or availability? Submit a purchase enquiry or budget proposal and our team can review your request.</p>
+<a href="#order" class="btn btn-red" style="margin-top:25px;">MAKE AN ENQUIRY →</a>
+</div>
+</section><!-- CUSTOMER LIVE CHAT --><button type="button" class="live-chat-launcher" id="liveChatLauncher" aria-label="Open customer live chat">
+💬 LIVE CHAT
+</button><div class="live-chat-panel" id="liveChatPanel" aria-label="Customer live chat">
+<div class="live-chat-header">
+<div>
+<strong>TESLA Innovation Support</strong>
+<div class="live-chat-subtitle">We're here to assist you.</div>
+</div>
+<button type="button" id="liveChatClose" aria-label="Close live chat">×</button>
+</div><div class="live-chat-body" id="liveChatBody"><div id="liveChatRegistration">
+<p style="font-size:13px;margin-bottom:15px;">
+Welcome! Please enter your details to start a conversation with our team.
+</p><form class="live-chat-form" id="liveChatStartForm">
+<input type="text" id="liveChatName" placeholder="Your full name" maxlength="100" autocomplete="name" required>
+<input type="email" id="liveChatEmail" placeholder="Your email address" maxlength="254" autocomplete="email" required>
+<button type="submit" id="liveChatStartButton">START CONVERSATION</button>
+<div class="live-chat-error" id="liveChatStartError" aria-live="polite"></div>
+</form>
+</div><div id="liveChatConversation" style="display:none;">
+<div class="live-chat-status" id="liveChatStatus">Connected to customer support.</div>
+<div id="liveChatMessages" aria-live="polite"></div>
+</div></div><div class="live-chat-compose" id="liveChatCompose" style="display:none;">
+<form id="liveChatMessageForm">
+<textarea id="liveChatMessageInput" placeholder="Type your message..." maxlength="2000" required></textarea>
+<button type="submit" id="liveChatSendButton">SEND MESSAGE</button>
+<div class="live-chat-error" id="liveChatSendError" aria-live="polite"></div>
+</form>
+</div>
+</div><!-- FOOTER --><footer>
+<div class="container">
+<div class="footer-content">
+<div>
+<div class="footer-brand">TESLA <span>INNOVATION</span></div>
+<p>Premium electric vehicle sales, vehicle sourcing and international purchase enquiries.</p>
+<p>Operating from the United States.</p>
+</div><div class="footer-links">
+<a href="#home">Home</a>
 <a href="#vehicles">Vehicles</a>
-
 <a href="#about">About</a>
-
 <a href="#negotiation">Negotiation</a>
-
 <a href="#order">Purchase Enquiry</a>
-
 <a href="customer.html">Customer Portal</a>
-
 <a href="trust.html">Trust Center</a>
-
 <a href="privacy.html">Privacy Policy</a>
-
 <a href="terms.html">Terms of Service</a>
-
-<a href="mailto:teslainnovation65@outlook.com">
-Contact Support
-</a></div></div><div class="copyright">© 2026 TESLA Innovation. All rights reserved.
-
+<a href="mailto:teslainnovation65@outlook.com">Contact Support</a>
+</div>
+</div><div class="copyright">
+© 2026 TESLA Innovation. All rights reserved.
 <br>Premium Vehicles. Global Connections. Exceptional Experience.
-
-</div></div>
+</div>
+</div>
 </footer><script>
 
 /* =====================================
@@ -1044,45 +736,23 @@ document.getElementById('customerAccountLink');
 async function updateCustomerNavigation(){
 
 try{
-
 const {data,error} = await db.auth.getSession();
-
 if(error) throw error;
 
 if(data.session){
-
 customerAccountLink.textContent = 'MY DASHBOARD';
-
 customerAccountLink.href = 'customer.html';
-
-customerAccountLink.setAttribute(
-'aria-label',
-'Open your customer dashboard'
-);
-
+customerAccountLink.setAttribute('aria-label','Open your customer dashboard');
 }else{
-
-customerAccountLink.textContent =
-'LOGIN / CREATE ACCOUNT';
-
+customerAccountLink.textContent = 'LOGIN / CREATE ACCOUNT';
 customerAccountLink.href = 'customer.html';
-
-customerAccountLink.setAttribute(
-'aria-label',
-'Log in or create a customer account'
-);
-
+customerAccountLink.setAttribute('aria-label','Log in or create a customer account');
 }
 
 }catch(error){
-
 console.error('Customer session check failed:',error);
-
-customerAccountLink.textContent =
-'LOGIN / CREATE ACCOUNT';
-
+customerAccountLink.textContent = 'LOGIN / CREATE ACCOUNT';
 customerAccountLink.href = 'customer.html';
-
 }
 
 }
@@ -1090,13 +760,9 @@ customerAccountLink.href = 'customer.html';
 updateCustomerNavigation();
 
 db.auth.onAuthStateChange((event,session)=>{
-
 if(event==='SIGNED_IN' || event==='SIGNED_OUT' || event==='TOKEN_REFRESHED'){
-
 updateCustomerNavigation();
-
 }
-
 });
 
 
@@ -1105,26 +771,14 @@ updateCustomerNavigation();
 ===================================== */
 
 const fallbackImages = {
-
-'Model 3':
-'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85',
-
-'Model Y':
-'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=1000&q=85',
-
-'Model S':
-'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1000&q=85',
-
-'Model X':
-'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=85',
-
-'Cybertruck':
-'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=1000&q=85'
-
+'Model 3':'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85',
+'Model Y':'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=1000&q=85',
+'Model S':'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1000&q=85',
+'Model X':'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=85',
+'Cybertruck':'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=1000&q=85'
 };
 
 let vehicles = [];
-
 let activeAvailability = 'all';
 
 
@@ -1133,9 +787,7 @@ let activeAvailability = 'all';
 ===================================== */
 
 function escapeHTML(value){
-
 return String(value ?? '').replace(/[&<>"']/g,function(char){
-
 return {
 '&':'&amp;',
 '<':'&lt;',
@@ -1143,9 +795,7 @@ return {
 '"':'&quot;',
 "'":'&#39;'
 }[char];
-
 });
-
 }
 
 
@@ -1153,34 +803,21 @@ return {
    MOBILE NAVIGATION
 ===================================== */
 
-const menuToggle =
-document.getElementById('menuToggle');
-
-const navLinks =
-document.getElementById('navLinks');
+const menuToggle = document.getElementById('menuToggle');
+const navLinks = document.getElementById('navLinks');
 
 menuToggle.addEventListener('click',function(){
-
 const opened = navLinks.classList.toggle('open');
-
 menuToggle.setAttribute('aria-expanded',opened);
-
 menuToggle.textContent = opened ? '×' : '☰';
-
 });
 
 navLinks.querySelectorAll('a').forEach(link=>{
-
 link.addEventListener('click',()=>{
-
 navLinks.classList.remove('open');
-
 menuToggle.setAttribute('aria-expanded','false');
-
 menuToggle.textContent='☰';
-
 });
-
 });
 
 
@@ -1191,9 +828,7 @@ menuToggle.textContent='☰';
 async function loadVehicles(){
 
 const grid = document.getElementById('vehicleGrid');
-
-grid.innerHTML =
-'<div class="empty-message">Loading our vehicle collection...</div>';
+grid.innerHTML = '<div class="empty-message">Loading our vehicle collection...</div>';
 
 try{
 
@@ -1208,27 +843,17 @@ if(error) throw error;
 vehicles = data || [];
 
 if(vehicles.length===0){
-
-grid.innerHTML =
-'<div class="empty-message">No vehicles are currently published.</div>';
-
+grid.innerHTML = '<div class="empty-message">No vehicles are currently published.</div>';
 populateVehicleOptions();
-
 return;
-
 }
 
 populateVehicleOptions();
-
 renderVehicles();
 
 }catch(error){
-
 console.error('Vehicle loading error:',error);
-
-grid.innerHTML =
-'<div class="empty-message">Our vehicle collection is temporarily unavailable. Please try again later.</div>';
-
+grid.innerHTML = '<div class="empty-message">Our vehicle collection is temporarily unavailable. Please try again later.</div>';
 }
 
 }
@@ -1250,16 +875,13 @@ out_of_stock:'CURRENTLY UNAVAILABLE'
 };
 
 return {
-
 label:labels[status] || 'ENQUIRE FOR AVAILABILITY',
-
 className:{
 in_stock:'stock-in',
 limited_stock:'stock-limited',
 pre_order:'stock-pre',
 out_of_stock:'stock-out'
 }[status] || 'stock-pre'
-
 };
 
 }
@@ -1279,17 +901,12 @@ document.getElementById('vehicleSearch').value.toLowerCase().trim();
 let filtered = vehicles.filter(vehicle=>{
 
 const matchesSearch =
-
 (vehicle.model || '').toLowerCase().includes(search) ||
-
 (vehicle.variant || '').toLowerCase().includes(search) ||
-
 (vehicle.description || '').toLowerCase().includes(search);
 
 const matchesAvailability =
-
 activeAvailability==='all' ||
-
 vehicle.availability===activeAvailability;
 
 return matchesSearch && matchesAvailability;
@@ -1297,89 +914,56 @@ return matchesSearch && matchesAvailability;
 });
 
 if(filtered.length===0){
-
-grid.innerHTML =
-'<div class="empty-message">No vehicles match your search.</div>';
-
+grid.innerHTML = '<div class="empty-message">No vehicles match your search.</div>';
 return;
-
 }
 
 grid.innerHTML='';
 
 filtered.forEach(vehicle=>{
 
-const images = Array.isArray(vehicle.image_urls)
-? vehicle.image_urls
-: [];
+const images = Array.isArray(vehicle.image_urls) ? vehicle.image_urls : [];
 
 const image = images[0] ||
-
 fallbackImages[vehicle.model] ||
-
 fallbackImages['Model 3'];
 
-const price = Number(vehicle.selling_price || 0)
-.toLocaleString('en-US');
-
+const price = Number(vehicle.selling_price || 0).toLocaleString('en-US');
 const availability = getAvailability(vehicle);
 
 const card = document.createElement('article');
-
 card.className='vehicle-card';
 
 card.innerHTML=`
 
 <div class="vehicle-image">
-
 <img
 src="${escapeHTML(image)}"
 alt="${escapeHTML(vehicle.model)}"
 loading="lazy"
 onerror="this.onerror=null;this.src='${fallbackImages['Model 3']}';"
 >
-
 <span class="stock-badge ${availability.className}">
 ${availability.label}
 </span>
-
 </div>
 
 <div class="vehicle-info">
-
 <h3>${escapeHTML(vehicle.model)}</h3>
-
-<div class="vehicle-variant">
-${escapeHTML(vehicle.variant || 'Premium Electric Vehicle')}
-</div>
-
-<div class="vehicle-price">
-$${price}
-<small>USD</small>
-</div>
-
+<div class="vehicle-variant">${escapeHTML(vehicle.variant || 'Premium Electric Vehicle')}</div>
+<div class="vehicle-price">$${price} <small>USD</small></div>
 <p class="vehicle-description">
 ${escapeHTML(vehicle.description || 'Discover this premium electric vehicle. Contact our team for specifications and availability.')}
 </p>
 
 <div class="vehicle-buttons">
-
-<button
-class="buy-button"
-data-action="order"
-data-id="${escapeHTML(vehicle.id)}"
->
-${vehicle.availability==='out_of_stock'?'ENQUIRE':'BUY / PRE-ORDER'}
+<button class="buy-button" data-action="order" data-id="${escapeHTML(vehicle.id)}">
+${vehicle.availability==='out_of_stock'?'ENQUIRE':'BUY NOW'}
 </button>
 
-<button
-class="negotiate-button"
-data-action="negotiate"
-data-id="${escapeHTML(vehicle.id)}"
->
+<button class="negotiate-button" data-action="negotiate" data-id="${escapeHTML(vehicle.id)}">
 NEGOTIATE
 </button>
-
 </div>
 </div>
 `;
@@ -1399,18 +983,12 @@ document.getElementById('vehicleGrid')
 .addEventListener('click',function(e){
 
 const button = e.target.closest('button[data-action]');
-
 if(!button) return;
 
 const id = button.dataset.id;
 
-if(button.dataset.action==='order'){
-order(id);
-}
-
-if(button.dataset.action==='negotiate'){
-negotiate(id);
-}
+if(button.dataset.action==='order') order(id);
+if(button.dataset.action==='negotiate') negotiate(id);
 
 });
 
@@ -1424,11 +1002,8 @@ document.getElementById('vehicleSearch')
 
 document.getElementById('availabilityFilter')
 .addEventListener('change',function(){
-
 activeAvailability=this.value;
-
 renderVehicles();
-
 });
 
 
@@ -1438,37 +1013,24 @@ renderVehicles();
 
 function populateVehicleOptions(){
 
-const orderSelect =
-document.getElementById('orderModel');
+const orderSelect = document.getElementById('orderModel');
+const negSelect = document.getElementById('negModel');
 
-const negSelect =
-document.getElementById('negModel');
-
-orderSelect.innerHTML =
-'<option value="">Choose vehicle</option>';
-
-negSelect.innerHTML =
-'<option value="">Choose vehicle</option>';
+orderSelect.innerHTML = '<option value="">Choose vehicle</option>';
+negSelect.innerHTML = '<option value="">Choose vehicle</option>';
 
 vehicles.forEach(vehicle=>{
 
-const label =
-vehicle.model + ' - ' + (vehicle.variant || '');
+const label = vehicle.model + ' - ' + (vehicle.variant || '');
 
 const option1=document.createElement('option');
-
 option1.value=vehicle.id;
-
 option1.textContent=label;
-
 orderSelect.appendChild(option1);
 
 const option2=document.createElement('option');
-
 option2.value=vehicle.id;
-
 option2.textContent=label;
-
 negSelect.appendChild(option2);
 
 });
@@ -1481,12 +1043,8 @@ negSelect.appendChild(option2);
 ===================================== */
 
 function order(vehicleId){
-
 document.getElementById('orderModel').value=vehicleId;
-
-document.getElementById('order')
-.scrollIntoView({behavior:'smooth'});
-
+document.getElementById('order').scrollIntoView({behavior:'smooth'});
 }
 
 
@@ -1495,12 +1053,8 @@ document.getElementById('order')
 ===================================== */
 
 function negotiate(vehicleId){
-
 document.getElementById('negModel').value=vehicleId;
-
-document.getElementById('negotiation')
-.scrollIntoView({behavior:'smooth'});
-
+document.getElementById('negotiation').scrollIntoView({behavior:'smooth'});
 }
 
 
@@ -1514,65 +1068,41 @@ document.getElementById('orderForm')
 e.preventDefault();
 
 const button=this.querySelector('button[type="submit"]');
-
 const result=document.getElementById('orderResult');
 
 button.disabled=true;
-
 button.textContent='SUBMITTING...';
-
 result.textContent='';
 
 const data={
-
 vehicle_id:document.getElementById('orderModel').value,
-
 customer_name:document.getElementById('orderName').value.trim(),
-
 email:document.getElementById('orderEmail').value.trim(),
-
 phone:document.getElementById('orderPhone').value.trim(),
-
 enquiry_type:document.getElementById('orderType').value,
-
 preferred_colour:document.getElementById('orderColour').value.trim(),
-
 delivery_country:document.getElementById('orderCountry').value.trim(),
-
 message:document.getElementById('orderMessage').value.trim()
-
 };
 
 try{
 
-const {error}=await db
-.from('enquiries')
-.insert(data);
-
+const {error}=await db.from('enquiries').insert(data);
 if(error) throw error;
 
 result.style.color='#43d69a';
-
-result.textContent=
-'Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';
-
+result.textContent='Your enquiry has been submitted successfully. Thank you for contacting TESLA Innovation!';
 this.reset();
 
 }catch(error){
 
 console.error('Enquiry error:',error);
-
 result.style.color='#ff7777';
-
-result.textContent=
-'We could not submit your enquiry: '+error.message;
+result.textContent='We could not submit your enquiry: '+error.message;
 
 }finally{
-
 button.disabled=false;
-
 button.textContent='SEND PURCHASE ENQUIRY';
-
 }
 
 });
@@ -1588,66 +1118,400 @@ document.getElementById('negotiationForm')
 e.preventDefault();
 
 const button=this.querySelector('button[type="submit"]');
-
 const result=document.getElementById('negResult');
 
 button.disabled=true;
-
 button.textContent='SUBMITTING...';
-
 result.textContent='';
 
 const data={
-
 vehicle_id:document.getElementById('negModel').value,
-
 customer_name:document.getElementById('negName').value.trim(),
-
 customer_email:document.getElementById('negEmail').value.trim(),
-
 customer_phone:document.getElementById('negPhone').value.trim(),
-
 proposed_budget:Number(document.getElementById('budget').value),
-
 currency:'USD',
-
 customer_message:document.getElementById('negMessage').value.trim()
-
 };
 
 try{
 
-const {error}=await db
-.from('negotiations')
-.insert(data);
-
+const {error}=await db.from('negotiations').insert(data);
 if(error) throw error;
 
 result.style.color='#43d69a';
-
-result.textContent=
-'Your budget offer has been submitted successfully. Our team will review your proposal.';
-
+result.textContent='Your budget offer has been submitted successfully. Our team will review your proposal.';
 this.reset();
 
 }catch(error){
 
 console.error('Negotiation error:',error);
-
 result.style.color='#ff7777';
+result.textContent='We could not submit your offer: '+error.message;
 
-result.textContent=
-'We could not submit your offer: '+error.message;
+}finally{
+button.disabled=false;
+button.textContent='SUBMIT MY OFFER';
+}
+
+});
+
+
+/* =====================================
+   CUSTOMER LIVE CHAT SYSTEM
+===================================== */
+
+const CHAT_FUNCTION_URL =
+SUPABASE_URL + '/functions/v1/customer-live-chat';
+
+const CHAT_STORAGE_KEY =
+'tesla_innovation_live_chat';
+
+let chatSession = null;
+let chatPolling = null;
+let chatSending = false;
+let chatHistoryLoading = false;
+
+const chatLauncher = document.getElementById('liveChatLauncher');
+const chatPanel = document.getElementById('liveChatPanel');
+const chatClose = document.getElementById('liveChatClose');
+const chatMessages = document.getElementById('liveChatMessages');
+const chatRegistration = document.getElementById('liveChatRegistration');
+const chatConversation = document.getElementById('liveChatConversation');
+const chatCompose = document.getElementById('liveChatCompose');
+
+const chatStartError = document.getElementById('liveChatStartError');
+const chatSendError = document.getElementById('liveChatSendError');
+
+
+/* OPEN AND CLOSE CHAT */
+
+function openLiveChat(){
+chatPanel.classList.add('open');
+
+if(chatSession){
+showCustomerChat();
+}
+}
+
+function closeLiveChat(){
+chatPanel.classList.remove('open');
+}
+
+chatLauncher.addEventListener('click',openLiveChat);
+chatClose.addEventListener('click',closeLiveChat);
+
+
+/* RESTORE PREVIOUS CUSTOMER SESSION */
+
+try{
+
+const savedChat = localStorage.getItem(CHAT_STORAGE_KEY);
+
+if(savedChat){
+
+const parsedChat = JSON.parse(savedChat);
+
+if(
+parsedChat &&
+parsedChat.conversation_id &&
+parsedChat.visitor_token
+){
+chatSession = parsedChat;
+}else{
+localStorage.removeItem(CHAT_STORAGE_KEY);
+}
+
+}
+
+}catch(error){
+
+console.error('Chat session restore error:',error);
+chatSession=null;
+
+}
+
+
+/* SEND REQUEST TO EDGE FUNCTION */
+
+async function customerChatRequest(payload){
+
+const response = await fetch(CHAT_FUNCTION_URL,{
+method:'POST',
+headers:{
+'Content-Type':'application/json',
+'apikey':SUPABASE_KEY,
+'Authorization':'Bearer '+SUPABASE_KEY
+},
+body:JSON.stringify(payload)
+});
+
+let result;
+
+try{
+result=await response.json();
+}catch(error){
+throw new Error('The chat server returned an invalid response.');
+}
+
+if(!response.ok || result.success===false){
+throw new Error(result.error || result.message || 'Chat request failed.');
+}
+
+return result;
+
+}
+
+
+/* START A NEW CONVERSATION */
+
+document.getElementById('liveChatStartForm')
+.addEventListener('submit',async function(e){
+
+e.preventDefault();
+
+const button=document.getElementById('liveChatStartButton');
+
+const name=document.getElementById('liveChatName').value.trim();
+const email=document.getElementById('liveChatEmail').value.trim();
+
+chatStartError.textContent='';
+
+if(!name || !email){
+chatStartError.textContent='Please enter your name and email address.';
+return;
+}
+
+button.disabled=true;
+button.textContent='CONNECTING...';
+
+try{
+
+const result=await customerChatRequest({
+action:'start',
+name:name,
+email:email
+});
+
+if(
+!result.conversation ||
+!result.conversation.id ||
+!result.visitor_token
+){
+throw new Error('The chat server did not return a valid session.');
+}
+
+chatSession={
+conversation_id:result.conversation.id,
+visitor_token:result.visitor_token,
+name:name,
+email:email
+};
+
+localStorage.setItem(
+CHAT_STORAGE_KEY,
+JSON.stringify(chatSession)
+);
+
+showCustomerChat();
+
+}catch(error){
+
+console.error('Chat start error:',error);
+
+chatStartError.textContent=
+'Unable to start the conversation. '+error.message;
 
 }finally{
 
 button.disabled=false;
-
-button.textContent='SUBMIT MY OFFER';
+button.textContent='START CONVERSATION';
 
 }
 
 });
+
+
+/* DISPLAY CHAT INTERFACE */
+
+function showCustomerChat(){
+
+if(!chatSession) return;
+
+chatRegistration.style.display='none';
+chatConversation.style.display='block';
+chatCompose.style.display='block';
+
+document.getElementById('liveChatStatus').textContent=
+'Connected to customer support.';
+
+loadCustomerChatHistory();
+startCustomerChatPolling();
+
+}
+
+
+/* DISPLAY CHAT MESSAGES SAFELY */
+
+function renderCustomerMessages(messages){
+
+chatMessages.innerHTML='';
+
+if(!messages || messages.length===0){
+
+const empty=document.createElement('p');
+empty.style.cssText='font-size:12px;color:#999;';
+empty.textContent='No messages yet. Send us a message to get started.';
+chatMessages.appendChild(empty);
+
+return;
+
+}
+
+messages.forEach(message=>{
+
+const bubble=document.createElement('div');
+
+bubble.className=
+'live-chat-message '+
+(message.sender_role==='visitor'?'visitor':'admin');
+
+const messageText=document.createElement('div');
+messageText.textContent=message.message || '';
+
+bubble.appendChild(messageText);
+
+const time=document.createElement('span');
+time.className='live-chat-time';
+
+time.textContent=message.created_at
+?new Date(message.created_at).toLocaleString()
+:'';
+
+bubble.appendChild(time);
+chatMessages.appendChild(bubble);
+
+});
+
+chatMessages.scrollTop=chatMessages.scrollHeight;
+
+}
+
+
+/* LOAD CUSTOMER CHAT HISTORY */
+
+async function loadCustomerChatHistory(){
+
+if(!chatSession || chatHistoryLoading) return;
+
+chatHistoryLoading=true;
+
+try{
+
+const result=await customerChatRequest({
+action:'history',
+conversation_id:chatSession.conversation_id,
+visitor_token:chatSession.visitor_token
+});
+
+renderCustomerMessages(result.messages || []);
+
+document.getElementById('liveChatStatus').textContent=
+'Connected to customer support.';
+
+}catch(error){
+
+console.error('Chat history error:',error);
+
+document.getElementById('liveChatStatus').textContent=
+'Unable to refresh messages. Please try again.';
+
+}finally{
+
+chatHistoryLoading=false;
+
+}
+
+}
+
+
+/* SEND CUSTOMER MESSAGE */
+
+document.getElementById('liveChatMessageForm')
+.addEventListener('submit',async function(e){
+
+e.preventDefault();
+
+if(!chatSession || chatSending) return;
+
+const input=document.getElementById('liveChatMessageInput');
+const button=document.getElementById('liveChatSendButton');
+
+const message=input.value.trim();
+
+if(!message) return;
+
+chatSending=true;
+button.disabled=true;
+button.textContent='SENDING...';
+chatSendError.textContent='';
+
+try{
+
+await customerChatRequest({
+action:'send',
+conversation_id:chatSession.conversation_id,
+visitor_token:chatSession.visitor_token,
+message:message,
+name:chatSession.name
+});
+
+input.value='';
+
+await loadCustomerChatHistory();
+
+}catch(error){
+
+console.error('Message sending error:',error);
+
+chatSendError.textContent=
+'Message could not be sent. '+error.message;
+
+}finally{
+
+chatSending=false;
+button.disabled=false;
+button.textContent='SEND MESSAGE';
+
+}
+
+});
+
+
+/* AUTOMATIC MESSAGE REFRESH */
+
+function startCustomerChatPolling(){
+
+if(chatPolling){
+clearInterval(chatPolling);
+}
+
+chatPolling=setInterval(()=>{
+
+if(chatSession && chatPanel.classList.contains('open')){
+loadCustomerChatHistory();
+}
+
+},5000);
+
+}
+
+
+/* RESTORE CHAT WHEN PAGE OPENS */
+
+if(chatSession){
+showCustomerChat();
+}
 
 
 /* =====================================
@@ -1659,11 +1523,8 @@ const observer = new IntersectionObserver(entries=>{
 entries.forEach(entry=>{
 
 if(entry.isIntersecting){
-
 entry.target.classList.add('visible');
-
 observer.unobserve(entry.target);
-
 }
 
 });
@@ -1671,9 +1532,7 @@ observer.unobserve(entry.target);
 },{threshold:.12});
 
 document.querySelectorAll('.reveal').forEach(element=>{
-
 observer.observe(element);
-
 });
 
 
