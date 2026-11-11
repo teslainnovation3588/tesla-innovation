@@ -9,78 +9,59 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
-:root{
---bg:#08090b;
---panel:#111317;
---panel2:#181b20;
---red:#e82127;
---white:#fff;
---muted:#a5a7ac;
---line:rgba(255,255,255,.12);
---green:#43d69a
-}
-
-*{box-sizing:border-box}
+*{box-sizing:border-box;margin:0;padding:0}
 
 body{
-margin:0;
-background:var(--bg);
-color:var(--white);
-font:15px/1.65 Arial,Helvetica,sans-serif
+background:#08090b;
+color:#fff;
+font-family:Arial,sans-serif;
+line-height:1.6
 }
 
-a{color:inherit;text-decoration:none}
-
-.wrap{
-width:min(1050px,92%);
-margin:auto
-}
+.wrap{width:92%;max-width:1050px;margin:auto}
 
 header{
 background:#101114;
-border-bottom:1px solid var(--line);
+border-bottom:1px solid #333;
 padding:18px 0
 }
 
 .brand{
 font-size:21px;
 font-weight:900;
-letter-spacing:2px
+letter-spacing:2px;
+text-decoration:none;
+color:white
 }
 
-.brand span{color:var(--red)}
+.brand span{color:#e82127}
 
-.back{
-color:#ddd;
-font-size:13px
-}
+.back{color:#ddd;text-decoration:none;font-size:13px}
 
 .layout{
 display:grid;
 grid-template-columns:1fr 1fr;
 gap:24px;
-padding:42px 0
+padding:40px 0
 }
 
 .panel{
-background:var(--panel);
-border:1px solid var(--line);
+background:#111317;
+border:1px solid #333;
 border-radius:10px;
 padding:24px
 }
 
 .eyebrow{
-color:var(--red);
+color:#e82127;
 font-weight:bold;
 letter-spacing:3px;
 font-size:11px
 }
 
-h1{
-font-size:clamp(27px,5vw,40px);
-line-height:1.15;
-margin:9px 0 22px
-}
+h1{font-size:34px;margin:10px 0 22px}
+
+.muted{color:#aaa;font-size:13px}
 
 .vehicle-image{
 width:100%;
@@ -90,36 +71,25 @@ border-radius:7px;
 background:#222
 }
 
-.muted{color:var(--muted)}
+.vehicle-title{font-size:23px;margin-top:18px}
 
-.vehicle-title{
-font-size:23px;
-margin:18px 0 2px
-}
-
-.variant{
-color:var(--muted);
-font-size:13px
-}
+.variant{color:#aaa;font-size:13px}
 
 .line{
 display:flex;
 justify-content:space-between;
 gap:12px;
 padding:12px 0;
-border-bottom:1px solid var(--line)
+border-bottom:1px solid #333
 }
 
 .line strong{text-align:right}
 
-.total{
-font-size:20px;
-font-weight:bold
-}
+.total{font-size:20px;font-weight:bold}
 
 .note{
 background:#1a1d22;
-border-left:3px solid var(--red);
+border-left:3px solid #e82127;
 padding:14px;
 margin-top:18px;
 font-size:13px;
@@ -128,9 +98,9 @@ color:#ddd
 
 label{
 display:block;
-color:#ddd;
 font-size:12px;
-margin:13px 0 5px
+margin:13px 0 5px;
+color:#ddd
 }
 
 input,select,textarea{
@@ -143,57 +113,37 @@ color:white;
 font:inherit
 }
 
-textarea{
-min-height:100px;
-resize:vertical
-}
+textarea{min-height:100px}
 
 button{
 width:100%;
 margin-top:18px;
 padding:15px;
-background:var(--red);
+background:#e82127;
 color:white;
 border:0;
 border-radius:5px;
 font-weight:bold;
-letter-spacing:.6px;
 cursor:pointer
 }
 
-button:disabled{
-opacity:.55;
-cursor:wait
-}
+button:disabled{opacity:.5}
 
-.status{
-font-size:13px;
-margin-top:13px;
-overflow-wrap:anywhere
-}
+.status{font-size:13px;margin-top:13px}
 
-.support{
-font-size:13px;
-margin-top:16px
-}
+.support{font-size:13px;margin-top:16px}
 
-.support a{
-color:#ff656a;
-text-decoration:underline
-}
+.support a{color:#ff656a}
 
 .chat-launch{
 position:fixed;
 right:18px;
 bottom:18px;
 z-index:50;
-background:var(--red);
-color:#fff;
-border:0;
+width:auto;
 border-radius:30px;
 padding:14px 20px;
-width:auto;
-box-shadow:0 8px 25px #0009
+background:#e82127
 }
 
 .chat-panel{
@@ -208,7 +158,6 @@ background:#111317;
 border:1px solid #444;
 border-radius:12px;
 overflow:hidden;
-box-shadow:0 12px 40px #000b;
 flex-direction:column
 }
 
@@ -230,16 +179,7 @@ background:none;
 font-size:24px
 }
 
-.chat-body{
-padding:14px;
-overflow:auto;
-flex:1
-}
-
-.chat-body input,
-.chat-compose textarea{
-margin:7px 0
-}
+.chat-body{padding:14px;overflow:auto;flex:1}
 
 .chat-compose{
 padding:12px;
@@ -263,17 +203,6 @@ background:#9f171d;
 margin-left:auto
 }
 
-.chat-error{
-color:#ff8888;
-font-size:12px
-}
-
-.chat-compose button,
-.chat-start button{
-margin-top:6px;
-padding:11px
-}
-
 .chat-time{
 display:block;
 font-size:10px;
@@ -281,28 +210,50 @@ opacity:.7;
 margin-top:5px
 }
 
+.chat-error{color:#ff8888;font-size:12px}
+
 footer{
 text-align:center;
 padding:25px;
 color:#777;
 font-size:11px;
-border-top:1px solid var(--line)
+border-top:1px solid #333
 }
+
+#authLoading{
+position:fixed;
+inset:0;
+z-index:100;
+background:#08090b;
+display:flex;
+align-items:center;
+justify-content:center;
+text-align:center;
+padding:25px
+}
+
+.auth-box{max-width:400px}
+
+.auth-box h2{margin-bottom:10px}
+
+.auth-box a{color:#ff656a}
 
 @media(max-width:760px){
-.layout{
-grid-template-columns:1fr;
-padding:24px 0
-}
-
+.layout{grid-template-columns:1fr;padding:24px 0}
 .panel{padding:18px}
-
 .vehicle-image{height:210px}
 }
 </style>
 </head>
 
 <body>
+
+<div id="authLoading">
+<div class="auth-box">
+<h2>Checking your account...</h2>
+<p class="muted">Please wait while we verify your TESLA Innovation customer account.</p>
+</div>
+</div>
 
 <header>
 <div class="wrap" style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap">
@@ -323,7 +274,7 @@ padding:24px 0
 
 <img id="vehicleImage" class="vehicle-image" alt="Selected vehicle">
 
-<h2 id="vehicleName" class="vehicle-title">Loading vehicle…</h2>
+<h2 id="vehicleName" class="vehicle-title">Loading vehicle...</h2>
 
 <div id="vehicleVariant" class="variant"></div>
 
@@ -342,16 +293,16 @@ padding:24px 0
 <strong id="total">—</strong>
 </div>
 
-<p class="muted" id="depositInfo" style="font-size:12px"></p>
+<p id="depositInfo" class="muted" style="margin-top:12px"></p>
 
 <div class="note">
-No payment is collected on this page. Final availability, taxes, delivery charges and payment instructions will be confirmed by our team before any payment is made.
+No payment is collected on this page. Final availability, taxes, delivery charges and payment instructions will be confirmed by our team before payment.
 </div>
 
 <p class="support">
-For payment instructions, delivery details, or questions, contact
+For assistance, contact
 <a href="mailto:teslainnovation65@outlook.com">teslainnovation65@outlook.com</a>
-or use the live chat.
+or use Live Chat.
 </p>
 
 </section>
@@ -360,24 +311,24 @@ or use the live chat.
 
 <div class="eyebrow">CUSTOMER DETAILS</div>
 
-<h2 style="margin:8px 0 5px">Request a purchase follow-up</h2>
+<h2 style="margin:8px 0 5px">Purchase follow-up</h2>
 
-<p class="muted" style="font-size:13px">
-Send your details to our Admin team. This is a purchase inquiry, not a confirmed order.
+<p class="muted">
+Your customer account is required to submit a purchase inquiry.
 </p>
 
 <form id="purchaseForm">
 
-<label for="fullName">Full name</label>
+<label>Full name</label>
 <input id="fullName" maxlength="120" autocomplete="name" required>
 
-<label for="email">Email address</label>
+<label>Email address</label>
 <input id="email" type="email" maxlength="254" autocomplete="email" required>
 
-<label for="phone">Phone number</label>
+<label>Phone number</label>
 <input id="phone" type="tel" maxlength="40" autocomplete="tel" required>
 
-<label for="contactMethod">Preferred contact method</label>
+<label>Preferred contact method</label>
 <select id="contactMethod" required>
 <option value="">Choose contact method</option>
 <option>Email</option>
@@ -385,45 +336,47 @@ Send your details to our Admin team. This is a purchase inquiry, not a confirmed
 <option>WhatsApp</option>
 </select>
 
-<label for="colour">Preferred colour / selected options (optional)</label>
-<input id="colour" maxlength="160" placeholder="Colour, configuration or options">
+<label>Preferred colour / selected options</label>
+<input id="colour" maxlength="160">
 
-<label for="country">Delivery country</label>
-<input id="country" maxlength="100" placeholder="Country for delivery" required>
+<label>Delivery country</label>
+<input id="country" maxlength="100" required>
 
-<label for="message">Additional message / special request</label>
-<textarea id="message" maxlength="1500" placeholder="Tell us anything else our team should know"></textarea>
+<label>Additional request</label>
+<textarea id="message" maxlength="1500"></textarea>
 
-<button id="submitButton" type="submit">SUBMIT PURCHASE INQUIRY</button>
+<button id="submitButton" type="submit">
+SUBMIT PURCHASE INQUIRY
+</button>
 
-<div id="formStatus" class="status" role="status" aria-live="polite"></div>
+<div id="formStatus" class="status" role="status"></div>
 
 </form>
 
 </section>
-
 </div>
-
 </main>
 
-<button class="chat-launch" id="chatLauncher" type="button">💬 LIVE CHAT</button>
+<button class="chat-launch" id="chatLauncher" type="button">
+💬 LIVE CHAT
+</button>
 
-<section class="chat-panel" id="chatPanel" aria-label="Live chat">
+<section class="chat-panel" id="chatPanel">
 
 <div class="chat-head">
 <div>
 <strong>TESLA Innovation Support</strong>
-<div class="muted" style="font-size:11px">Customer live chat</div>
+<div class="muted">Customer live chat</div>
 </div>
-<button id="chatClose" type="button" aria-label="Close chat">×</button>
+<button id="chatClose" type="button">×</button>
 </div>
 
 <div class="chat-body">
 
 <div id="chatRegistration">
-<p style="font-size:13px">Enter your details to chat with our team.</p>
+<p class="muted">Connect with customer support.</p>
 
-<form id="chatStartForm" class="chat-start">
+<form id="chatStartForm">
 
 <input id="chatName" placeholder="Full name" maxlength="100" required>
 
@@ -437,11 +390,8 @@ Send your details to our Admin team. This is a purchase inquiry, not a confirmed
 </div>
 
 <div id="chatConversation" style="display:none">
-
-<div id="chatStatus" class="muted" style="font-size:11px">Connected</div>
-
-<div id="chatMessages" aria-live="polite"></div>
-
+<div id="chatStatus" class="muted">Connected</div>
+<div id="chatMessages"></div>
 </div>
 
 </div>
@@ -450,7 +400,7 @@ Send your details to our Admin team. This is a purchase inquiry, not a confirmed
 
 <form id="chatMessageForm">
 
-<textarea id="chatMessageInput" maxlength="2000" placeholder="Type your message…" required></textarea>
+<textarea id="chatMessageInput" maxlength="2000" placeholder="Type your message..." required></textarea>
 
 <button id="chatSendButton">SEND MESSAGE</button>
 
@@ -459,7 +409,6 @@ Send your details to our Admin team. This is a purchase inquiry, not a confirmed
 </form>
 
 </div>
-
 </section>
 
 <footer>
@@ -469,28 +418,76 @@ Send your details to our Admin team. This is a purchase inquiry, not a confirmed
 <script>
 'use strict';
 
-const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
+const SUPABASE_URL =
+'https://dnmktpmvjzsxzmgizdcv.supabase.co';
 
-const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+const SUPABASE_KEY =
+'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
 
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+const db = window.supabase.createClient(
+SUPABASE_URL,
+SUPABASE_KEY
+);
 
-const $=id=>document.getElementById(id);
+const $ = id => document.getElementById(id);
 
-const money=n=>'$'+Number(n||0).toLocaleString('en-US',{maximumFractionDigits:2})+' USD';
+const RETURN_KEY = 'tesla_pending_customer_action';
 
-let vehicle=null;
+let customer = null;
+let vehicle = null;
+let chatSession = null;
+let chatTimer = null;
+let chatLoading = false;
+let chatSending = false;
 
-const vehicleId=new URLSearchParams(location.search).get('vehicle');
+const vehicleId =
+new URLSearchParams(location.search).get('vehicle');
 
+const money = n =>
+'$' + Number(n || 0).toLocaleString('en-US',
+{maximumFractionDigits:2}) + ' USD';
+
+
+// ==================================
+// CUSTOMER AUTHENTICATION
+// ==================================
+
+async function checkCustomer(){
+
+const {data,error} = await db.auth.getUser();
+
+if(error || !data.user){
+
+const destination =
+location.pathname + location.search + location.hash;
+
+localStorage.setItem(RETURN_KEY,destination);
+
+location.replace(
+'customer.html?returnTo=' +
+encodeURIComponent(destination)
+);
+
+return false;
+
+}
+
+customer = data.user;
+
+return true;
+
+}
+
+
+// ==================================
+// LOAD VEHICLE
+// ==================================
 
 async function loadVehicle(){
 
 if(!vehicleId){
 
 $('vehicleName').textContent='No vehicle selected';
-
-$('formStatus').textContent='Please return to the vehicle collection and choose Buy Now.';
 
 $('submitButton').disabled=true;
 
@@ -515,11 +512,14 @@ $('vehicleName').textContent=vehicle.model||'Selected vehicle';
 
 $('vehicleVariant').textContent=vehicle.variant||'Premium electric vehicle';
 
-const image=Array.isArray(vehicle.image_urls)&&vehicle.image_urls[0]
+const image =
+Array.isArray(vehicle.image_urls) &&
+vehicle.image_urls.length
 ?vehicle.image_urls[0]
 :'';
 
-$('vehicleImage').src=image||'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85';
+$('vehicleImage').src=image||
+'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85';
 
 $('subtotal').textContent=money(vehicle.selling_price);
 
@@ -527,26 +527,34 @@ $('total').textContent=money(vehicle.selling_price);
 
 const pct=Number(vehicle.deposit_percentage??30);
 
-$('depositInfo').textContent=`Indicative deposit reference: ${pct}% (${money(Number(vehicle.selling_price||0)*pct/100)}). This is not a payment request; the team will confirm the actual amount and instructions.`;
+$('depositInfo').textContent=
+`Indicative deposit reference: ${pct}% (${money(Number(vehicle.selling_price||0)*pct/100)}). This is not a payment request.`;
 
-}catch(e){
+}catch(error){
 
-console.error(e);
+console.error(error);
 
 $('vehicleName').textContent='Vehicle unavailable';
 
-$('formStatus').textContent='This vehicle could not be loaded. It may no longer be published. Please return to the vehicle collection.';
-
 $('submitButton').disabled=true;
 
-}
+$('formStatus').textContent=
+'Unable to load this vehicle. Please return to the vehicle collection.';
 
 }
 
+}
 
-$('purchaseForm').addEventListener('submit',async e=>{
+
+// ==================================
+// PURCHASE SUBMISSION
+// ==================================
+
+$('purchaseForm').addEventListener('submit',async function(e){
 
 e.preventDefault();
+
+if(!await checkCustomer())return;
 
 if(!vehicle)return;
 
@@ -554,21 +562,19 @@ const button=$('submitButton');
 
 button.disabled=true;
 
-button.textContent='SUBMITTING…';
-
-$('formStatus').textContent='';
-
-const contact=$('contactMethod').value;
+button.textContent='SUBMITTING...';
 
 const extra=[
 
-`Preferred contact method: ${contact}`,
+'Customer ID: '+customer.id,
 
-`Selected options / colour: ${$('colour').value.trim()||'Not specified'}`,
+'Preferred contact: '+$('contactMethod').value,
 
-`Purchase subtotal displayed: ${money(vehicle.selling_price)}`,
+'Selected options: '+$('colour').value.trim(),
 
-`Additional request: ${$('message').value.trim()||'None'}`
+'Displayed subtotal: '+money(vehicle.selling_price),
+
+'Additional request: '+$('message').value.trim()
 
 ].join('\n');
 
@@ -594,23 +600,27 @@ message:extra
 
 try{
 
-const {error}=await db.from('enquiries').insert(payload);
+const {error}=await db
+.from('enquiries')
+.insert(payload);
 
 if(error)throw error;
 
 $('formStatus').style.color='#43d69a';
 
-$('formStatus').textContent='Your purchase inquiry has been received by TESLA Innovation. Our Admin team will review it and contact you using your preferred method.';
+$('formStatus').textContent=
+'Your purchase inquiry has been received. Our Admin team will review it and contact you.';
 
 $('purchaseForm').reset();
 
-}catch(err){
+}catch(error){
 
-console.error('Purchase inquiry error:',err);
+console.error(error);
 
 $('formStatus').style.color='#ff7777';
 
-$('formStatus').textContent='We could not submit your inquiry: '+err.message;
+$('formStatus').textContent=
+'Submission failed: '+error.message;
 
 }finally{
 
@@ -623,19 +633,26 @@ button.textContent='SUBMIT PURCHASE INQUIRY';
 });
 
 
-// Existing customer-live-chat Edge Function
+// ==================================
+// LIVE CHAT
+// ==================================
 
-const CHAT_URL=SUPABASE_URL+'/functions/v1/customer-live-chat';
+const CHAT_URL =
+SUPABASE_URL+'/functions/v1/customer-live-chat';
 
-const CHAT_KEY='tesla_innovation_live_chat';
+const CHAT_KEY =
+'tesla_innovation_live_chat';
 
-let chatSession=null,chatTimer=null,chatLoading=false,chatSending=false;
 
 try{
 
-const saved=JSON.parse(localStorage.getItem(CHAT_KEY)||'null');
+const saved=JSON.parse(
+localStorage.getItem(CHAT_KEY)||'null'
+);
 
-if(saved?.conversation_id&&saved?.visitor_token)chatSession=saved;
+if(saved?.conversation_id && saved?.visitor_token){
+chatSession=saved;
+}
 
 }catch(_){
 
@@ -646,7 +663,15 @@ localStorage.removeItem(CHAT_KEY);
 
 async function chatRequest(payload){
 
-const r=await fetch(CHAT_URL,{
+const {data:{session}}=await db.auth.getSession();
+
+if(!session){
+
+throw new Error('Please log in to use Live Chat.');
+
+}
+
+const response=await fetch(CHAT_URL,{
 
 method:'POST',
 
@@ -656,7 +681,7 @@ headers:{
 
 'apikey':SUPABASE_KEY,
 
-'Authorization':'Bearer '+SUPABASE_KEY
+'Authorization':'Bearer '+session.access_token
 
 },
 
@@ -664,13 +689,15 @@ body:JSON.stringify(payload)
 
 });
 
-const d=await r.json().catch(()=>null);
+const data=await response.json().catch(()=>null);
 
-if(!r.ok||!d||d.success===false)
+if(!response.ok || !data || data.success===false){
 
-throw new Error(d?.error||d?.message||'Chat connection failed.');
+throw new Error(data?.error||'Chat connection failed.');
 
-return d;
+}
+
+return data;
 
 }
 
@@ -691,60 +718,83 @@ $('chatPanel').classList.remove('open');
 }
 
 
-$('chatLauncher').addEventListener('click',openChat);
+$('chatLauncher').addEventListener('click',async()=>{
+
+if(!await checkCustomer())return;
+
+openChat();
+
+});
 
 $('chatClose').addEventListener('click',closeChat);
 
 
-$('chatStartForm').addEventListener('submit',async e=>{
+$('chatStartForm').addEventListener('submit',async function(e){
 
 e.preventDefault();
 
-const b=$('chatStartButton');
+if(!await checkCustomer())return;
 
-b.disabled=true;
+const button=$('chatStartButton');
 
-b.textContent='CONNECTING…';
+button.disabled=true;
 
-$('chatStartError').textContent='';
+button.textContent='CONNECTING...';
 
 try{
 
 const name=$('chatName').value.trim();
 
-const email=$('chatEmail').value.trim();
+const email=customer.email;
 
-const d=await chatRequest({action:'start',name,email});
+const result=await chatRequest({
 
-if(!d.conversation?.id||!d.visitor_token)
-
-throw new Error('Chat server did not return a valid session.');
-
-chatSession={
-
-conversation_id:d.conversation.id,
-
-visitor_token:d.visitor_token,
+action:'start',
 
 name,
 
-email
+email,
+
+customer_id:customer.id
+
+});
+
+if(!result.conversation?.id || !result.visitor_token){
+
+throw new Error('The chat server did not return a valid session.');
+
+}
+
+chatSession={
+
+conversation_id:result.conversation.id,
+
+visitor_token:result.visitor_token,
+
+name,
+
+email,
+
+customer_id:customer.id
 
 };
 
-localStorage.setItem(CHAT_KEY,JSON.stringify(chatSession));
+localStorage.setItem(
+CHAT_KEY,
+JSON.stringify(chatSession)
+);
 
 showChat();
 
-}catch(err){
+}catch(error){
 
-$('chatStartError').textContent=err.message;
+$('chatStartError').textContent=error.message;
 
 }finally{
 
-b.disabled=false;
+button.disabled=false;
 
-b.textContent='START CHAT';
+button.textContent='START CHAT';
 
 }
 
@@ -765,7 +815,11 @@ if(chatTimer)clearInterval(chatTimer);
 
 chatTimer=setInterval(()=>{
 
-if($('chatPanel').classList.contains('open'))loadChatHistory();
+if($('chatPanel').classList.contains('open')){
+
+loadChatHistory();
+
+}
 
 },5000);
 
@@ -774,37 +828,45 @@ if($('chatPanel').classList.contains('open'))loadChatHistory();
 
 async function loadChatHistory(){
 
-if(!chatSession||chatLoading)return;
+if(!chatSession || chatLoading)return;
 
 chatLoading=true;
 
 try{
 
-const d=await chatRequest({
+const result=await chatRequest({
 
 action:'history',
 
 conversation_id:chatSession.conversation_id,
 
-visitor_token:chatSession.visitor_token
+visitor_token:chatSession.visitor_token,
+
+customer_id:customer.id
 
 });
 
 $('chatMessages').replaceChildren();
 
-(d.messages||[]).forEach(m=>{
+(result.messages||[]).forEach(message=>{
 
 const bubble=document.createElement('div');
 
-bubble.className='bubble '+(m.sender_role==='visitor'?'visitor':'admin');
+bubble.className='bubble '+(
+message.sender_role==='visitor'?'visitor':'admin'
+);
 
-bubble.append(document.createTextNode(m.message||''));
+bubble.append(
+document.createTextNode(message.message||'')
+);
 
 const time=document.createElement('span');
 
 time.className='chat-time';
 
-time.textContent=m.created_at?new Date(m.created_at).toLocaleString():'';
+time.textContent=message.created_at
+?new Date(message.created_at).toLocaleString()
+:'';
 
 bubble.append(time);
 
@@ -812,11 +874,11 @@ $('chatMessages').append(bubble);
 
 });
 
-$('chatStatus').textContent='Connected to customer support.';
+}catch(error){
 
-}catch(err){
+$('chatStatus').textContent='Reconnecting...';
 
-$('chatStatus').textContent='Reconnecting… '+err.message;
+console.error(error);
 
 }finally{
 
@@ -827,11 +889,13 @@ chatLoading=false;
 }
 
 
-$('chatMessageForm').addEventListener('submit',async e=>{
+$('chatMessageForm').addEventListener('submit',async function(e){
 
 e.preventDefault();
 
-if(!chatSession||chatSending)return;
+if(!await checkCustomer())return;
+
+if(!chatSession || chatSending)return;
 
 const message=$('chatMessageInput').value.trim();
 
@@ -840,8 +904,6 @@ if(!message)return;
 chatSending=true;
 
 $('chatSendButton').disabled=true;
-
-$('chatSendError').textContent='';
 
 try{
 
@@ -853,9 +915,11 @@ conversation_id:chatSession.conversation_id,
 
 visitor_token:chatSession.visitor_token,
 
+customer_id:customer.id,
+
 message,
 
-name:chatSession.name
+name:customer.email
 
 });
 
@@ -863,9 +927,9 @@ $('chatMessageInput').value='';
 
 await loadChatHistory();
 
-}catch(err){
+}catch(error){
 
-$('chatSendError').textContent=err.message;
+$('chatSendError').textContent=error.message;
 
 }finally{
 
@@ -878,15 +942,35 @@ $('chatSendButton').disabled=false;
 });
 
 
-loadVehicle();
+// ==================================
+// INITIALIZE PAGE
+// ==================================
 
-if(chatSession){
+async function initialize(){
 
-$('chatPanel').classList.add('open');
+const authenticated=await checkCustomer();
 
-showChat();
+if(!authenticated)return;
+
+$('authLoading').style.display='none';
+
+await loadVehicle();
+
+if(chatSession && chatSession.customer_id===customer.id){
+
+openChat();
+
+}else{
+
+chatSession=null;
+
+localStorage.removeItem(CHAT_KEY);
 
 }
+
+}
+
+initialize();
 
 </script>
 
