@@ -1,11 +1,14 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08090b">
 <meta name="description" content="TESLA Innovation — Premium electric vehicles, international vehicle sales and pre-order enquiries.">
 <title>TESLA Innovation | Premium Electric Vehicles</title>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><style>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
 :root{
 --bg:#08090b;
 --surface:#111317;
@@ -497,22 +500,31 @@ padding:10px 0 18px;
 .live-chat-panel{right:10px;bottom:78px;width:calc(100vw - 20px);height:65vh}
 .live-chat-launcher{right:15px;bottom:15px}
 }
-</style></head><body><header>
+</style>
+</head>
+
+<body>
+
+<header>
 <div class="container navbar">
-<a href="#home" class="logo">TESLA <span>INNOVATION</span></a><button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
+<a href="#home" class="logo">TESLA <span>INNOVATION</span></a>
+<button class="menu-toggle" id="menuToggle" aria-label="Open navigation" aria-expanded="false">☰</button>
 
 <nav class="nav-links" id="navLinks">
 <a href="#home">Home</a>
 <a href="#vehicles">Vehicles</a>
 <a href="#about">About</a>
 <a href="#negotiation">Negotiation</a>
-<a href="#contact">Contact</a><a href="customer.html" id="customerAccountLink" class="account-link" aria-label="Log in or create a customer account">
+<a href="#contact">Contact</a>
+<a href="customer.html" id="customerAccountLink" class="account-link" aria-label="Log in or create a customer account">
 LOGIN / CREATE ACCOUNT
-</a><a href="#order" class="nav-cta">EXPLORE PURCHASE</a>
-
+</a>
+<a href="#order" class="nav-cta">EXPLORE PURCHASE</a>
 </nav>
 </div>
-</header><section class="hero" id="home">
+</header>
+
+<section class="hero" id="home">
 <div class="container">
 <div class="hero-content">
 <div class="hero-label">PREMIUM ELECTRIC MOBILITY</div>
@@ -526,7 +538,9 @@ Discover premium electric vehicles, explore available configurations and connect
 </div>
 </div>
 </div>
-</section><section class="features">
+</section>
+
+<section class="features">
 <div class="container feature-grid">
 <div class="feature">
 <strong>PREMIUM VEHICLE COLLECTION</strong>
@@ -541,13 +555,17 @@ Discover premium electric vehicles, explore available configurations and connect
 <p>Submit your preferred vehicle budget.</p>
 </div>
 </div>
-</section><section class="section" id="vehicles">
+</section>
+
+<section class="section" id="vehicles">
 <div class="container">
 <div class="section-heading reveal">
 <div class="eyebrow">THE COLLECTION</div>
 <h2>EXPLORE OUR VEHICLES</h2>
 <p>Discover our vehicle collection, review catalogue prices and enquire about availability and international delivery.</p>
-</div><div class="vehicle-tools reveal">
+</div>
+
+<div class="vehicle-tools reveal">
 <input type="search" id="vehicleSearch" placeholder="Search vehicle models..." aria-label="Search vehicles">
 <select id="availabilityFilter" aria-label="Filter by availability">
 <option value="all">All availability</option>
@@ -556,21 +574,31 @@ Discover premium electric vehicles, explore available configurations and connect
 <option value="pre_order">Pre-order</option>
 <option value="out_of_stock">Out of stock</option>
 </select>
-</div><div class="vehicle-grid" id="vehicleGrid">
+</div>
+
+<div class="vehicle-grid" id="vehicleGrid">
 <div class="empty-message">Loading our vehicle collection...</div>
-</div><p class="form-note">
+</div>
+
+<p class="form-note">
 Displayed prices are catalogue prices and must be confirmed before an order is accepted. Vehicle configuration, stock, taxes, import duties and international delivery costs are subject to confirmation.
 </p>
 </div>
-</section><section class="section about-section" id="about">
+</section>
+
+<section class="section about-section" id="about">
 <div class="container about-grid">
 <div class="about-image reveal">
 <img src="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1200&q=85" alt="Premium electric vehicle" loading="lazy">
-</div><div class="about-content reveal">
+</div>
+
+<div class="about-content reveal">
 <div class="eyebrow">ABOUT OUR BUSINESS</div>
 <h2>A BETTER WAY TO EXPLORE ELECTRIC MOBILITY.</h2>
 <p>TESLA Innovation is focused on premium electric vehicle sales, vehicle sourcing and international customer enquiries.</p>
-<p>Our aim is to provide customers with clear vehicle information, transparent catalogue pricing and a structured purchase enquiry experience.</p><div class="about-points">
+<p>Our aim is to provide customers with clear vehicle information, transparent catalogue pricing and a structured purchase enquiry experience.</p>
+
+<div class="about-points">
 <div class="about-point"><strong>VEHICLE OPTIONS</strong><span>Explore available models.</span></div>
 <div class="about-point"><strong>GLOBAL CONNECTIONS</strong><span>International enquiries.</span></div>
 <div class="about-point"><strong>PERSONALISED SERVICE</strong><span>Individual purchase support.</span></div>
@@ -578,17 +606,25 @@ Displayed prices are catalogue prices and must be confirmed before an order is a
 </div>
 </div>
 </div>
-</section><section class="section form-section" id="negotiation">
+</section>
+
+<section class="section form-section" id="negotiation">
 <div class="container">
 <div class="section-heading reveal">
 <div class="eyebrow">PERSONALISED VEHICLE OFFERS</div>
 <h2>MAKE YOUR OFFER</h2>
 <p>Have a preferred budget? Tell us what you are looking to spend and submit your proposal for review.</p>
-</div><div class="form-panel reveal" style="max-width:700px;margin:auto;">
+</div>
+
+<div class="form-panel reveal" style="max-width:700px;margin:auto;">
 <h3>Vehicle Budget Negotiation</h3>
-<p>Submit your preferred vehicle and proposed budget.</p><form id="negotiationForm">
+<p>Submit your preferred vehicle and proposed budget.</p>
+
+<form id="negotiationForm">
 <label for="negModel">Select vehicle</label>
-<select id="negModel" required><option value="">Choose vehicle</option></select><label for="budget">Your proposed budget (USD)</label>
+<select id="negModel" required><option value="">Choose vehicle</option></select>
+
+<label for="budget">Your proposed budget (USD)</label>
 <input id="budget" type="number" min="1" step="0.01" placeholder="Enter your budget" required>
 
 <label for="negName">Full name</label>
@@ -601,25 +637,37 @@ Displayed prices are catalogue prices and must be confirmed before an order is a
 <input id="negPhone" type="tel" placeholder="Your phone number" required>
 
 <label for="negMessage">Additional message</label>
+<textarea id="negMessage" placeholder="Tell us about your preferred configuration or offer."></textarea>
 
-<textarea id="negMessage" placeholder="Tell us about your preferred configuration or offer."></textarea><button type="submit">SUBMIT MY OFFER</button>
+<button type="submit">SUBMIT MY OFFER</button>
+</form>
 
-</form><div class="form-result" id="negResult" aria-live="polite"></div><p class="form-note">
+<div class="form-result" id="negResult" aria-live="polite"></div>
+
+<p class="form-note">
 Submitting an offer does not guarantee acceptance or reserve a vehicle. All proposals are subject to review and confirmation.
 </p>
 </div>
 </div>
-</section><section class="section form-section" id="order">
+</section>
+
+<section class="section form-section" id="order">
 <div class="container">
 <div class="section-heading reveal">
 <div class="eyebrow">START YOUR JOURNEY</div>
 <h2>VEHICLE PURCHASE ENQUIRY</h2>
 <p>Tell us your preferred vehicle, configuration and delivery destination. Our team can review your enquiry and provide further information.</p>
-</div><div class="form-panel reveal" style="max-width:700px;margin:auto;">
+</div>
+
+<div class="form-panel reveal" style="max-width:700px;margin:auto;">
 <h3>Start Your Vehicle Enquiry</h3>
-<p>Complete the details below to submit your request.</p><form id="orderForm">
+<p>Complete the details below to submit your request.</p>
+
+<form id="orderForm">
 <label for="orderModel">Preferred vehicle</label>
-<select id="orderModel" required><option value="">Choose vehicle</option></select><label for="orderName">Full name</label>
+<select id="orderModel" required><option value="">Choose vehicle</option></select>
+
+<label for="orderName">Full name</label>
 <input id="orderName" type="text" placeholder="Your full name" required>
 
 <label for="orderEmail">Email address</label>
@@ -630,68 +678,97 @@ Submitting an offer does not guarantee acceptance or reserve a vehicle. All prop
 
 <label for="orderType">Purchase preference</label>
 <select id="orderType" required>
-
 <option value="">Choose preference</option>
 <option value="Existing stock">Existing stock</option>
 <option value="Pre-order">Pre-order</option>
-</select><label for="orderColour">Preferred vehicle colour</label>
+</select>
+
+<label for="orderColour">Preferred vehicle colour</label>
 <input id="orderColour" type="text" placeholder="Preferred colour" required>
 
 <label for="orderCountry">Delivery country</label>
 <input id="orderCountry" type="text" placeholder="Delivery country" required>
 
 <label for="orderMessage">Additional requirements</label>
+<textarea id="orderMessage" placeholder="Additional message or vehicle requirements"></textarea>
 
-<textarea id="orderMessage" placeholder="Additional message or vehicle requirements"></textarea><button type="submit">SEND PURCHASE ENQUIRY</button>
+<button type="submit">SEND PURCHASE ENQUIRY</button>
+</form>
 
-</form><div class="form-result" id="orderResult" aria-live="polite"></div><p class="form-note">
+<div class="form-result" id="orderResult" aria-live="polite"></div>
+
+<p class="form-note">
 This form submits a purchase enquiry, not a completed purchase or payment. Final pricing, vehicle availability, delivery and payment arrangements must be confirmed first.
 </p>
 </div>
 </div>
-</section><section class="section contact-section" id="contact">
+</section>
+
+<section class="section contact-section" id="contact">
 <div class="container reveal">
 <div class="eyebrow">WE ARE HERE TO HELP</div>
 <h2>LET'S CONNECT.</h2>
 <p>Have questions about a vehicle, international delivery, pricing or availability? Submit a purchase enquiry or budget proposal and our team can review your request.</p>
 <a href="#order" class="btn btn-red" style="margin-top:25px;">MAKE AN ENQUIRY →</a>
 </div>
-</section><!-- CUSTOMER LIVE CHAT --><button type="button" class="live-chat-launcher" id="liveChatLauncher" aria-label="Open customer live chat">
+</section>
+
+<!-- CUSTOMER LIVE CHAT -->
+
+<button type="button" class="live-chat-launcher" id="liveChatLauncher" aria-label="Open customer live chat">
 💬 LIVE CHAT
-</button><div class="live-chat-panel" id="liveChatPanel" aria-label="Customer live chat">
+</button>
+
+<div class="live-chat-panel" id="liveChatPanel" aria-label="Customer live chat">
 <div class="live-chat-header">
 <div>
 <strong>TESLA Innovation Support</strong>
 <div class="live-chat-subtitle">We're here to assist you.</div>
 </div>
 <button type="button" id="liveChatClose" aria-label="Close live chat">×</button>
-</div><div class="live-chat-body" id="liveChatBody"><div id="liveChatRegistration">
+</div>
+
+<div class="live-chat-body" id="liveChatBody">
+<div id="liveChatRegistration">
 <p style="font-size:13px;margin-bottom:15px;">
 Welcome! Please enter your details to start a conversation with our team.
-</p><form class="live-chat-form" id="liveChatStartForm">
+</p>
+
+<form class="live-chat-form" id="liveChatStartForm">
 <input type="text" id="liveChatName" placeholder="Your full name" maxlength="100" autocomplete="name" required>
 <input type="email" id="liveChatEmail" placeholder="Your email address" maxlength="254" autocomplete="email" required>
 <button type="submit" id="liveChatStartButton">START CONVERSATION</button>
 <div class="live-chat-error" id="liveChatStartError" aria-live="polite"></div>
 </form>
-</div><div id="liveChatConversation" style="display:none;">
+</div>
+
+<div id="liveChatConversation" style="display:none;">
 <div class="live-chat-status" id="liveChatStatus">Connected to customer support.</div>
 <div id="liveChatMessages" aria-live="polite"></div>
-</div></div><div class="live-chat-compose" id="liveChatCompose" style="display:none;">
+</div>
+</div>
+
+<div class="live-chat-compose" id="liveChatCompose" style="display:none;">
 <form id="liveChatMessageForm">
 <textarea id="liveChatMessageInput" placeholder="Type your message..." maxlength="2000" required></textarea>
 <button type="submit" id="liveChatSendButton">SEND MESSAGE</button>
 <div class="live-chat-error" id="liveChatSendError" aria-live="polite"></div>
 </form>
 </div>
-</div><!-- FOOTER --><footer>
+</div>
+
+<!-- FOOTER -->
+
+<footer>
 <div class="container">
 <div class="footer-content">
 <div>
 <div class="footer-brand">TESLA <span>INNOVATION</span></div>
 <p>Premium electric vehicle sales, vehicle sourcing and international purchase enquiries.</p>
 <p>Operating from the United States.</p>
-</div><div class="footer-links">
+</div>
+
+<div class="footer-links">
 <a href="#home">Home</a>
 <a href="#vehicles">Vehicles</a>
 <a href="#about">About</a>
@@ -703,12 +780,16 @@ Welcome! Please enter your details to start a conversation with our team.
 <a href="terms.html">Terms of Service</a>
 <a href="mailto:teslainnovation65@outlook.com">Contact Support</a>
 </div>
-</div><div class="copyright">
+</div>
+
+<div class="copyright">
 © 2026 TESLA Innovation. All rights reserved.
 <br>Premium Vehicles. Global Connections. Exceptional Experience.
 </div>
 </div>
-</footer><script>
+</footer>
+
+<script>
 
 /* =====================================
    SUPABASE CONNECTION
@@ -958,7 +1039,7 @@ ${escapeHTML(vehicle.description || 'Discover this premium electric vehicle. Con
 
 <div class="vehicle-buttons">
 <button class="buy-button" data-action="order" data-id="${escapeHTML(vehicle.id)}">
-${vehicle.availability==='out_of_stock'?'ENQUIRE':'BUY NOW'}
+BUY NOW
 </button>
 
 <button class="negotiate-button" data-action="negotiate" data-id="${escapeHTML(vehicle.id)}">
@@ -1039,12 +1120,14 @@ negSelect.appendChild(option2);
 
 
 /* =====================================
-   BUY BUTTON
+   BUY NOW BUTTON
 ===================================== */
 
 function order(vehicleId){
-document.getElementById('orderModel').value=vehicleId;
-document.getElementById('order').scrollIntoView({behavior:'smooth'});
+
+window.location.href =
+'purchase.html?vehicle=' + encodeURIComponent(vehicleId);
+
 }
 
 
@@ -1389,6 +1472,7 @@ time.textContent=message.created_at
 :'';
 
 bubble.appendChild(time);
+
 chatMessages.appendChild(bubble);
 
 });
@@ -1542,5 +1626,6 @@ observer.observe(element);
 
 loadVehicles();
 
-</script></body>
+</script>
+</body>
 </html>
