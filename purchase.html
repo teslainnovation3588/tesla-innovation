@@ -356,8 +356,9 @@ const SUPABASE_URL =
 const SUPABASE_KEY =
 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
 
+// TEST CHECKOUT FUNCTION
 const CHECKOUT_URL =
-SUPABASE_URL + '/functions/v1/stripe-checkout';
+SUPABASE_URL + '/functions/v1/stripe-checkout-test';
 
 const db = window.supabase.createClient(
 SUPABASE_URL,
@@ -545,7 +546,7 @@ updatePaymentAmount
 
 
 // ==================================
-// START STRIPE CHECKOUT
+// START STRIPE TEST CHECKOUT
 // ==================================
 
 $('purchaseForm').addEventListener(
@@ -569,7 +570,7 @@ button.textContent='CONNECTING TO STRIPE...';
 status.style.color='#aaa';
 
 status.textContent=
-'Preparing your secure payment session...';
+'Preparing your secure test payment session...';
 
 try{
 
@@ -636,7 +637,7 @@ if(!response.ok){
 
 throw new Error(
 result.error ||
-'Unable to start secure payment.'
+'Unable to start secure test payment.'
 );
 
 }
@@ -652,13 +653,13 @@ throw new Error(
 status.style.color='#43d69a';
 
 status.textContent=
-'Secure checkout created. Redirecting to Stripe...';
+'Test checkout created. Redirecting to Stripe...';
 
 window.location.assign(result.checkout_url);
 
 }catch(error){
 
-console.error('Checkout error:',error);
+console.error('Test checkout error:',error);
 
 status.style.color='#ff7777';
 
