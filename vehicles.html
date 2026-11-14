@@ -1,387 +1,1197 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vehicles | TESLA Innovation</title>
-<meta name="description" content="Explore premium Tesla vehicles, pricing and availability at TESLA Innovation."><style>
-:root{--red:#e82127;--bg:#080808;--panel:#141414;--muted:#aaa;--white:#fff}
+<meta name="theme-color" content="#08090b">
+<meta name="description" content="Explore Tesla, MG, Geely, GAC and BYD vehicles at TESLA Innovation. Browse prices, specifications and availability.">
+<title>Vehicle Inventory | TESLA Innovation</title>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+:root{
+ --bg:#08090b;
+ --panel:#111318;
+ --panel2:#181b21;
+ --line:#292d35;
+ --red:#e82127;
+ --white:#fff;
+ --muted:#a1a6b0;
+ --green:#39c98a;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--white);font-family:Arial,Helvetica,sans-serif}
-a{color:inherit;text-decoration:none}
-
-header{min-height:76px;padding:0 7%;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #252525;background:#080808;position:sticky;top:0;z-index:10}
-.logo{font-size:19px;font-weight:900;letter-spacing:2px}
+body{
+ background:var(--bg);
+ color:var(--white);
+ font-family:Arial,Helvetica,sans-serif;
+}
+a{text-decoration:none;color:inherit}
+button,input,select{font:inherit}
+header{
+ position:sticky;
+ top:0;
+ z-index:100;
+ min-height:76px;
+ padding:0 6%;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:20px;
+ background:#08090bf2;
+ border-bottom:1px solid var(--line);
+ backdrop-filter:blur(15px);
+}
+.logo{
+ font-size:19px;
+ font-weight:900;
+ letter-spacing:2px;
+ white-space:nowrap;
+}
 .logo span{color:var(--red)}
-nav{display:flex;gap:23px;font-size:12px;font-weight:bold;flex-wrap:wrap}
+nav{
+ display:flex;
+ align-items:center;
+ gap:20px;
+ flex-wrap:wrap;
+}
+nav a{
+ font-size:11px;
+ font-weight:bold;
+ color:#c9cbd0;
+}
 nav a:hover,nav a.active{color:var(--red)}
-
-.hero{padding:75px 7% 45px;text-align:center;background:radial-gradient(ellipse at top,#292020 0%,#080808 65%)}
-.eyebrow{color:var(--red);font-size:11px;font-weight:bold;letter-spacing:4px;margin-bottom:17px}
-h1{font-size:clamp(36px,7vw,66px);letter-spacing:-2px;margin-bottom:15px}
-.hero p{color:var(--muted);max-width:600px;margin:auto;line-height:1.7;font-size:14px}
-
-.toolbar{padding:25px 7%;display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-input,select{background:#151515;border:1px solid #333;color:white;padding:13px 15px;border-radius:5px;outline:none}
-input:focus,select:focus{border-color:var(--red)}
-.toolbar input{flex:1;min-width:190px}
-.toolbar select{min-width:160px}
-.count{padding:0 7%;color:#999;font-size:12px}
-
-.grid{padding:22px 7% 75px;display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:22px}
-.card{background:var(--panel);border:1px solid #252525;border-radius:9px;overflow:hidden;transition:.3s}
-.card:hover{transform:translateY(-5px);border-color:var(--red);box-shadow:0 15px 35px #0008}
-
-.photo{height:220px;background:#202020;position:relative;overflow:hidden}
-.photo img{width:100%;height:100%;object-fit:cover;display:block}
-.photo-placeholder{height:100%;display:flex;align-items:center;justify-content:center;color:#888;font-size:13px}
-
+.menu-button{
+ display:none;
+ background:none;
+ border:1px solid var(--line);
+ color:white;
+ padding:9px 12px;
+ border-radius:5px;
+}
+.hero{
+ padding:75px 6% 45px;
+ text-align:center;
+ background:
+ radial-gradient(ellipse at 50% 0%,#452024 0%,#171014 32%,#08090b 75%);
+}
+.eyebrow{
+ color:#ff555a;
+ font-size:10px;
+ font-weight:bold;
+ letter-spacing:4px;
+ margin-bottom:17px;
+}
+h1{
+ font-size:clamp(35px,6vw,65px);
+ letter-spacing:-2px;
+ margin-bottom:15px;
+}
+.hero p{
+ max-width:690px;
+ margin:auto;
+ color:var(--muted);
+ line-height:1.8;
+ font-size:14px;
+}
+.brand-strip{
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:10px;
+ padding:25px 5%;
+ border-bottom:1px solid var(--line);
+}
+.brand-button{
+ border:1px solid #373b44;
+ background:#111318;
+ color:#ddd;
+ padding:11px 20px;
+ border-radius:30px;
+ cursor:pointer;
+ font-size:11px;
+ font-weight:bold;
+ transition:.2s;
+}
+.brand-button:hover,.brand-button.active{
+ background:var(--red);
+ border-color:var(--red);
+ color:white;
+}
+.search-section{
+ padding:30px 6% 15px;
+}
+.search-section h2{
+ font-size:20px;
+ margin-bottom:8px;
+}
+.search-section p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.6;
+}
+.filters{
+ padding:20px 6%;
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ gap:12px;
+}
+.filters input,.filters select{
+ width:100%;
+ min-width:0;
+ padding:14px;
+ background:#14171d;
+ color:white;
+ border:1px solid #30343d;
+ border-radius:5px;
+ outline:none;
+}
+.filters input:focus,.filters select:focus{
+ border-color:var(--red);
+}
+.filters option{background:#111}
+.filter-actions{
+ padding:0 6% 22px;
+ display:flex;
+ justify-content:space-between;
+ align-items:center;
+ gap:12px;
+ flex-wrap:wrap;
+}
+.clear-button{
+ background:transparent;
+ border:1px solid #555;
+ color:white;
+ padding:10px 15px;
+ border-radius:5px;
+ cursor:pointer;
+ font-size:11px;
+}
+.clear-button:hover{border-color:var(--red)}
+.results{
+ color:var(--muted);
+ font-size:12px;
+}
+.collection{
+ padding:15px 6% 75px;
+ display:grid;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ gap:20px;
+}
+.card{
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:10px;
+ overflow:hidden;
+ transition:.25s;
+}
+.card:hover{
+ transform:translateY(-4px);
+ border-color:#666;
+ box-shadow:0 15px 35px #0007;
+}
+.photo{
+ height:220px;
+ position:relative;
+ background:#1b1e25;
+ overflow:hidden;
+}
+.photo img{
+ width:100%;
+ height:100%;
+ object-fit:cover;
+ display:block;
+}
+.photo-placeholder{
+ display:flex;
+ position:absolute;
+ inset:0;
+ align-items:center;
+ justify-content:center;
+ color:#888;
+ font-size:12px;
+}
+.photo-placeholder[hidden]{display:none}
 .gallery-arrow{
-position:absolute;top:50%;transform:translateY(-50%);
-width:35px;height:35px;border:0;border-radius:50%;
-background:#000b;color:white;font-size:22px;cursor:pointer;
-display:flex;align-items:center;justify-content:center;
+ position:absolute;
+ top:50%;
+ transform:translateY(-50%);
+ width:35px;
+ height:35px;
+ border:0;
+ border-radius:50%;
+ background:#000b;
+ color:white;
+ cursor:pointer;
+ font-size:22px;
+ z-index:2;
 }
 .gallery-arrow:hover{background:var(--red)}
 .gallery-prev{left:10px}
 .gallery-next{right:10px}
-
 .gallery-counter{
-position:absolute;right:10px;bottom:10px;
-background:#000b;padding:6px 10px;border-radius:20px;
-font-size:11px;color:white
+ position:absolute;
+ right:10px;
+ bottom:10px;
+ background:#000b;
+ padding:6px 10px;
+ border-radius:20px;
+ font-size:10px;
 }
-
-.thumbnails{display:flex;gap:6px;padding:9px;background:#101010;overflow-x:auto}
+.card-top{
+ position:absolute;
+ top:12px;
+ left:12px;
+ z-index:3;
+ display:flex;
+ gap:6px;
+ flex-wrap:wrap;
+ max-width:80%;
+}
+.badge{
+ background:#262a32;
+ color:white;
+ padding:7px 9px;
+ border-radius:4px;
+ font-size:9px;
+ font-weight:bold;
+ text-transform:uppercase;
+ letter-spacing:.5px;
+}
+.badge.available{background:#123d2d;color:#74e7ad}
+.badge.limited{background:#483611;color:#ffd47b}
+.badge.preorder{background:#35213d;color:#e5a7ff}
+.badge.unavailable{background:#491d20;color:#ff999d}
+.thumbnails{
+ display:flex;
+ gap:6px;
+ padding:8px;
+ overflow-x:auto;
+ background:#0d0f13;
+}
 .thumbnail{
-width:48px;height:38px;flex-shrink:0;object-fit:cover;
-border:2px solid transparent;border-radius:3px;cursor:pointer;
-opacity:.65
+ width:48px;
+ height:38px;
+ flex-shrink:0;
+ object-fit:cover;
+ border:2px solid transparent;
+ border-radius:3px;
+ cursor:pointer;
+ opacity:.6;
 }
-.thumbnail.active{border-color:var(--red);opacity:1}
-
-.details{padding:21px}
-.badge{display:inline-block;background:#321416;color:#ff6267;padding:6px 9px;border-radius:3px;font-size:9px;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
-.details h2{font-size:21px;margin-bottom:7px}
-.variant{color:#aaa;font-size:12px;margin-bottom:18px}
-.price{font-size:23px;font-weight:800;margin-bottom:7px}
-.deposit{font-size:11px;color:#999;margin-bottom:20px}
-.actions{display:flex;gap:9px;flex-wrap:wrap}
-.btn{flex:1;min-width:75px;text-align:center;padding:12px 8px;border-radius:4px;font-size:11px;font-weight:bold;border:1px solid var(--red);transition:.2s}
-.btn.primary{background:var(--red);color:white}
-.btn:hover{background:#b9151b;border-color:#b9151b}
-
-.empty{grid-column:1/-1;text-align:center;padding:50px 15px;color:#aaa;line-height:1.8}
-footer{border-top:1px solid #252525;padding:30px 7%;text-align:center;color:#888;font-size:11px;line-height:2}
-footer a{color:white}
-
+.thumbnail.active{
+ border-color:var(--red);
+ opacity:1;
+}
+.card-content{padding:20px}
+.make-label{
+ color:#ff666b;
+ font-size:10px;
+ font-weight:bold;
+ letter-spacing:2px;
+ margin-bottom:9px;
+}
+.card h2{
+ font-size:21px;
+ margin-bottom:7px;
+}
+.variant{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.6;
+ min-height:35px;
+}
+.specs{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:9px;
+ margin:17px 0;
+ padding:13px 0;
+ border-top:1px solid var(--line);
+ border-bottom:1px solid var(--line);
+}
+.spec{
+ font-size:11px;
+ color:var(--muted);
+ line-height:1.7;
+}
+.spec strong{
+ display:block;
+ color:white;
+ font-size:12px;
+}
+.price{
+ font-size:25px;
+ font-weight:900;
+ margin-bottom:7px;
+}
+.deposit{
+ font-size:11px;
+ color:var(--muted);
+ margin-bottom:17px;
+}
+.card-actions{
+ display:grid;
+ grid-template-columns:1fr 1fr;
+ gap:8px;
+}
+.btn{
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ min-height:42px;
+ padding:10px;
+ border:1px solid var(--red);
+ border-radius:5px;
+ font-size:10px;
+ font-weight:bold;
+ cursor:pointer;
+ transition:.2s;
+}
+.btn.primary{
+ background:var(--red);
+ color:white;
+}
+.btn:hover{
+ background:#b9181e;
+ border-color:#b9181e;
+}
+.btn.secondary{
+ border-color:#555;
+ background:transparent;
+}
+.btn.secondary:hover{border-color:var(--red)}
+.card-extras{
+ display:flex;
+ justify-content:space-between;
+ gap:10px;
+ margin-top:14px;
+}
+.text-action{
+ border:0;
+ background:none;
+ color:#aaa;
+ cursor:pointer;
+ font-size:10px;
+}
+.text-action:hover{color:white}
+.empty{
+ grid-column:1/-1;
+ text-align:center;
+ padding:65px 20px;
+ background:var(--panel);
+ border:1px solid var(--line);
+ border-radius:8px;
+ color:var(--muted);
+ line-height:2;
+}
+.loading{
+ grid-column:1/-1;
+ text-align:center;
+ padding:60px 15px;
+ color:var(--muted);
+}
+.compare-bar{
+ position:fixed;
+ z-index:90;
+ bottom:15px;
+ left:50%;
+ transform:translateX(-50%);
+ width:min(600px,94%);
+ padding:13px 16px;
+ display:none;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ background:#20242c;
+ border:1px solid #454b56;
+ border-radius:8px;
+ box-shadow:0 10px 35px #000b;
+}
+.compare-bar.show{display:flex}
+.compare-bar span{font-size:11px}
+.compare-bar button{
+ background:var(--red);
+ border:0;
+ color:white;
+ padding:10px 13px;
+ border-radius:4px;
+ font-size:10px;
+ font-weight:bold;
+ cursor:pointer;
+}
+footer{
+ border-top:1px solid var(--line);
+ padding:40px 6%;
+ background:#090a0d;
+}
+.footer-inner{
+ display:grid;
+ grid-template-columns:2fr 1fr 1fr;
+ gap:35px;
+ max-width:1200px;
+ margin:auto;
+}
+.footer-brand p{
+ color:var(--muted);
+ font-size:12px;
+ line-height:1.9;
+ max-width:390px;
+ margin-top:13px;
+}
+.footer-column h3{
+ font-size:12px;
+ margin-bottom:15px;
+}
+.footer-column a{
+ display:block;
+ color:var(--muted);
+ font-size:11px;
+ margin:11px 0;
+}
+.footer-column a:hover{color:white}
+.copyright{
+ text-align:center;
+ color:#747984;
+ font-size:10px;
+ margin-top:35px;
+ padding-top:20px;
+ border-top:1px solid var(--line);
+ line-height:1.8;
+}
+@media(max-width:950px){
+ .collection{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .filters{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
 @media(max-width:650px){
-header{height:auto;padding:18px 5%;align-items:flex-start;gap:15px;flex-direction:column}
-nav{gap:13px}
-.hero{padding-top:55px}
-.toolbar{padding:20px 5%}
-.grid{padding:20px 5% 55px;grid-template-columns:1fr}
-.count{padding:0 5%}
-.photo{height:230px}
+ header{
+  min-height:68px;
+  padding:15px 5%;
+  flex-wrap:wrap;
+ }
+ .menu-button{display:block}
+ nav{
+  display:none;
+  width:100%;
+  padding:10px 0;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:17px;
+ }
+ nav.open{display:flex}
+ .hero{padding:55px 5% 35px}
+ .brand-strip{gap:8px;padding:20px 4%}
+ .brand-button{padding:10px 13px;font-size:10px}
+ .search-section{padding:25px 5% 10px}
+ .filters{padding:15px 5%;grid-template-columns:1fr 1fr}
+ .filter-actions{padding:0 5% 20px}
+ .collection{padding:15px 5% 65px;grid-template-columns:1fr}
+ .photo{height:235px}
+ .footer-inner{grid-template-columns:1fr 1fr}
+ .footer-brand{grid-column:1/-1}
 }
-</style></head><body><header>
-<a class="logo" href="index.html">TESLA <span>INNOVATION</span></a>
-<nav>
-<a href="index.html">HOME</a>
-<a class="active" href="vehicles.html">VEHICLES</a>
-<a href="energy.html">ENERGY</a>
-<a href="negotiate.html">NEGOTIATE</a>
-<a href="enquiry.html">ENQUIRIES</a>
-<a href="account.html">MY ACCOUNT</a>
-<a href="contact.html">CONTACT</a>
-</nav>
-</header><section class="hero">
-<div class="eyebrow">THE VEHICLE COLLECTION</div>
-<h1>FIND YOUR <span style="color:#e82127">NEXT DRIVE.</span></h1>
-<p>Explore our premium Tesla collection. Discover vehicle specifications, current prices and availability, and take the next step towards your new vehicle.</p>
-</section><section class="toolbar">
-<input id="search" type="search" placeholder="Search Tesla models...">
-<select id="availability">
-<option value="">All availability</option>
-<option value="in_stock">In stock</option>
-<option value="limited_stock">Limited stock</option>
-<option value="pre_order">Pre-order</option>
-<option value="out_of_stock">Out of stock</option>
-</select>
-<select id="sort">
-<option value="default">Sort by: Featured</option>
-<option value="low">Price: Low to high</option>
-<option value="high">Price: High to low</option>
-</select>
-</section><div class="count" id="count">Loading vehicle collection...</div><section class="grid" id="vehicles">
-<div class="empty">Connecting to our vehicle collection...</div>
-</section><footer>
-<strong>TESLA INNOVATION</strong><br>
-Premium Vehicles. Global Connections. Exceptional Experience.<br>
-<a href="energy.html">Explore Energy</a> &nbsp; | &nbsp;
-<a href="contact.html">Contact our team</a> &nbsp; | &nbsp;
-<a href="index.html">Return home</a>
-</footer><script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+@media(max-width:380px){
+ .filters{grid-template-columns:1fr}
+ .card-actions{grid-template-columns:1fr}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+ <a class="logo" href="index.html">TESLA <span>INNOVATION</span></a>
+ <button class="menu-button" id="menuButton" type="button">MENU ☰</button>
+ <nav id="mainNav">
+  <a href="index.html">HOME</a>
+  <a class="active" href="vehicles.html">INVENTORY</a>
+  <a href="energy.html">ENERGY</a>
+  <a href="negotiate.html">NEGOTIATE</a>
+  <a href="enquiry.html">ENQUIRIES</a>
+  <a href="account.html">MY ACCOUNT</a>
+  <a href="contact.html">CONTACT</a>
+ </nav>
+</header>
+
+<section class="hero">
+ <div class="eyebrow">THE GLOBAL VEHICLE COLLECTION</div>
+ <h1>FIND YOUR <span style="color:#e82127">NEXT DRIVE.</span></h1>
+ <p>
+  Explore an international collection of premium vehicles.
+  Discover Tesla, MG, Geely, GAC and BYD models, compare
+  available options and take the next step towards your vehicle.
+ </p>
+</section>
+
+<div class="brand-strip" id="brandStrip">
+ <button class="brand-button active" data-brand="">ALL BRANDS</button>
+ <button class="brand-button" data-brand="Tesla">TESLA</button>
+ <button class="brand-button" data-brand="MG">MG</button>
+ <button class="brand-button" data-brand="Geely">GEELY</button>
+ <button class="brand-button" data-brand="GAC">GAC</button>
+ <button class="brand-button" data-brand="BYD">BYD</button>
+</div>
+
+<section class="search-section">
+ <h2>Explore the inventory</h2>
+ <p>Search vehicles and narrow your results using the filters below.</p>
+</section>
+
+<section class="filters">
+ <input id="search" type="search" placeholder="Search make, model or variant">
+
+ <select id="availability">
+  <option value="">All availability</option>
+  <option value="in_stock">In stock</option>
+  <option value="limited_stock">Limited stock</option>
+  <option value="pre_order">Available for pre-order</option>
+  <option value="out_of_stock">Out of stock</option>
+ </select>
+
+ <select id="condition">
+  <option value="">All conditions</option>
+  <option value="new">New</option>
+  <option value="used">Used</option>
+  <option value="certified">Certified pre-owned</option>
+ </select>
+
+ <select id="fuel">
+  <option value="">All fuel types</option>
+  <option value="electric">Electric</option>
+  <option value="hybrid">Hybrid</option>
+  <option value="plug-in hybrid">Plug-in hybrid</option>
+  <option value="petrol">Petrol</option>
+  <option value="diesel">Diesel</option>
+ </select>
+
+ <input id="minPrice" type="number" min="0" placeholder="Minimum price (USD)">
+ <input id="maxPrice" type="number" min="0" placeholder="Maximum price (USD)">
+
+ <select id="year">
+  <option value="">All model years</option>
+  <option value="2026">2026</option>
+  <option value="2025">2025</option>
+  <option value="2024">2024</option>
+  <option value="2023">2023</option>
+  <option value="2022">2022</option>
+  <option value="2021">2021</option>
+ </select>
+
+ <select id="sort">
+  <option value="featured">Sort: Featured</option>
+  <option value="low">Price: Low to high</option>
+  <option value="high">Price: High to low</option>
+  <option value="newest">Newest listings</option>
+  <option value="year">Year: Newest first</option>
+ </select>
+</section>
+
+<div class="filter-actions">
+ <div class="results" id="count">Loading inventory...</div>
+ <button class="clear-button" id="clearFilters" type="button">CLEAR FILTERS</button>
+</div>
+
+<section class="collection" id="vehicles">
+ <div class="loading">Connecting to the TESLA Innovation inventory...</div>
+</section>
+
+<div class="compare-bar" id="compareBar">
+ <span id="compareText">0 vehicles selected</span>
+ <button id="compareButton" type="button">COMPARE</button>
+ <button id="clearCompare" type="button">CLEAR</button>
+</div>
+
+<footer>
+ <div class="footer-inner">
+  <div class="footer-brand">
+   <a class="logo" href="index.html">TESLA <span>INNOVATION</span></a>
+   <p>
+    Premium Vehicles. Global Connections. Exceptional Experience.
+    Discover an international vehicle collection and connect
+    directly with our team.
+   </p>
+  </div>
+
+  <div class="footer-column">
+   <h3>EXPLORE</h3>
+   <a href="vehicles.html">Vehicle inventory</a>
+   <a href="energy.html">Energy solutions</a>
+   <a href="configure.html">Vehicle configuration</a>
+   <a href="negotiate.html">Make an offer</a>
+  </div>
+
+  <div class="footer-column">
+   <h3>SUPPORT</h3>
+   <a href="contact.html">Contact us</a>
+   <a href="enquiry.html">Vehicle enquiries</a>
+   <a href="account.html">Customer account</a>
+   <a href="privacy.html">Privacy policy</a>
+   <a href="terms.html">Terms and conditions</a>
+  </div>
+ </div>
+
+ <div class="copyright">
+  © <span id="yearNow"></span> TESLA Innovation. All rights reserved.<br>
+  Vehicle prices and availability are subject to confirmation.
+ </div>
+</footer>
+
+<script>
 const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
-const SUPABASE_KEY = "sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
-const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_KEY = "sb_publishable_80ZPvReXfDaw0UhD8724XQ_Vz2xcrbj";
+
+const db = window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
 
 let allVehicles = [];
+let selectedBrand = "";
+let comparedVehicles = [];
 
-function money(value,currency="USD"){
-return new Intl.NumberFormat("en-US",{
-style:"currency",
-currency:currency||"USD",
-maximumFractionDigits:0
-}).format(Number(value)||0);
+const savedVehiclesKey = "teslaInnovationSavedVehicles";
+
+function getSavedVehicles(){
+ try{
+  return JSON.parse(localStorage.getItem(savedVehiclesKey)||"[]");
+ }catch(error){
+  return [];
+ }
 }
 
-function availabilityLabel(value){
-const labels={
-in_stock:"In Stock",
-limited_stock:"Limited Stock",
-pre_order:"Available for Pre-order",
-out_of_stock:"Out of Stock"
-};
-return labels[value]||"Contact for Availability";
+function saveSavedVehicles(items){
+ localStorage.setItem(savedVehiclesKey,JSON.stringify(items));
 }
 
 function escapeHTML(value){
-return String(value).replace(/[&<>"']/g,char=>({
-"&":"&amp;",
-"<":"&lt;",
-">":"&gt;",
-'"':"&quot;",
-"'":"&#39;"
-}[char]));
+ return String(value ?? "").replace(/[&<>"']/g,char=>({
+  "&":"&amp;",
+  "<":"&lt;",
+  ">":"&gt;",
+  '"':"&quot;",
+  "'":"&#39;"
+ }[char]));
 }
 
-function getVehicleImages(car){
-let images=[];
-let source=car.image_urls ?? car.image_url;
+function money(value,currency="USD"){
+ const amount = Number(value)||0;
+ const code = String(currency||"USD").toUpperCase();
 
-if(Array.isArray(source)){
-images=source;
-}
-else if(typeof source==="string" && source.trim()){
-try{
-const parsed=JSON.parse(source);
-images=Array.isArray(parsed)?parsed:[parsed];
-}catch{
-images=[source];
-}
-}
-
-return [...new Set(
-images.filter(url=>typeof url==="string" && url.trim())
-)];
+ try{
+  return new Intl.NumberFormat("en-US",{
+   style:"currency",
+   currency:code,
+   maximumFractionDigits:0
+  }).format(amount);
+ }catch(error){
+  return "$"+amount.toLocaleString("en-US");
+ }
 }
 
-function createGallery(car){
-const images=getVehicleImages(car);
-const galleryId="gallery-"+car.id;
+function getBrand(car){
+ const explicit = String(car.brand||car.make||"").trim();
 
-if(!images.length){
-return `
-<div class="photo">
-<div class="photo-placeholder">VEHICLE IMAGE COMING SOON</div>
-</div>`;
+ if(explicit){
+  const lower = explicit.toLowerCase();
+  if(lower.includes("tesla"))return "Tesla";
+  if(lower==="mg"||lower.includes("motor"))return "MG";
+  if(lower.includes("geely"))return "Geely";
+  if(lower.includes("gac"))return "GAC";
+  if(lower.includes("byd"))return "BYD";
+  return explicit;
+ }
+
+ const text = (
+  String(car.model||"")+" "+
+  String(car.variant||"")+" "+
+  String(car.description||"")
+ ).toLowerCase();
+
+ if(text.includes("tesla")||
+    /model\s*[3ysx]/i.test(text)||
+    text.includes("cybertruck"))return "Tesla";
+
+ if(/\bmg\b/i.test(text))return "MG";
+ if(text.includes("geely"))return "Geely";
+ if(text.includes("gac"))return "GAC";
+ if(text.includes("byd"))return "BYD";
+
+ return "Other";
 }
 
-const firstImage=escapeHTML(images[0]);
+function getImages(car){
+ let source = car.image_urls ?? car.image_url;
+ let images = [];
 
-return `
-<div class="photo" id="${galleryId}">
-<img class="main-gallery-image"
-src="${firstImage}"
-alt="${escapeHTML(car.model)}"
-loading="lazy"
-onerror="this.style.display='none';this.parentElement.querySelector('.photo-placeholder').style.display='flex';">
+ if(Array.isArray(source)){
+  images = source;
+ }else if(typeof source==="string"&&source.trim()){
+  try{
+   const parsed=JSON.parse(source);
+   images=Array.isArray(parsed)?parsed:[parsed];
+  }catch(error){
+   images=[source];
+  }
+ }
 
-<div class="photo-placeholder" style="display:none;position:absolute;inset:0">
-Image unavailable
-</div>
-
-${images.length>1?`
-<button class="gallery-arrow gallery-prev" type="button"
-onclick="changeImage('${galleryId}',-1)">‹</button>
-
-<button class="gallery-arrow gallery-next" type="button"
-onclick="changeImage('${galleryId}',1)">›</button>
-
-<div class="gallery-counter">
-<span class="current-image">1</span> / ${images.length}
-</div>
-`:""}
-</div>
-
-${images.length>1?`
-<div class="thumbnails">
-${images.map((url,index)=>`
-<img
-class="thumbnail ${index===0?'active':''}"
-src="${escapeHTML(url)}"
-alt="${escapeHTML(car.model)} photo ${index+1}"
-onclick="selectImage('${galleryId}',${index})"
-loading="lazy">
-`).join("")}
-</div>
-`:""}
-`;
+ return [...new Set(images.filter(item=>
+  typeof item==="string"&&item.trim()
+ ))];
 }
 
-function changeImage(galleryId,direction){
-const gallery=document.getElementById(galleryId);
-if(!gallery)return;
+function getField(car,fields){
+ for(const field of fields){
+  if(car[field]!==undefined&&car[field]!==null&&car[field]!==""){
+   return car[field];
+  }
+ }
+ return "";
+}
 
-const thumbnails=gallery.parentElement.querySelectorAll(".thumbnail");
-const images=Array.from(thumbnails).map(item=>item.src);
+function getAvailabilityLabel(value){
+ const labels={
+  in_stock:"IN STOCK",
+  limited_stock:"LIMITED STOCK",
+  pre_order:"PRE-ORDER",
+  out_of_stock:"OUT OF STOCK"
+ };
+ return labels[value]||"CONTACT FOR AVAILABILITY";
+}
 
-if(!images.length)return;
+function getAvailabilityClass(value){
+ const classes={
+  in_stock:"available",
+  limited_stock:"limited",
+  pre_order:"preorder",
+  out_of_stock:"unavailable"
+ };
+ return classes[value]||"";
+}
 
-let current=Number(gallery.dataset.current||0);
-current=(current+direction+images.length)%images.length;
+function matchesCondition(car,selected){
+ if(!selected)return true;
 
-selectImage(galleryId,current);
+ const value=String(getField(car,["condition","vehicle_condition"])).toLowerCase();
+
+ if(!value)return false;
+ return value.includes(selected);
+}
+
+function matchesFuel(car,selected){
+ if(!selected)return true;
+
+ const value=String(getField(car,["fuel_type","fuel","powertrain"])).toLowerCase();
+
+ if(!value)return false;
+
+ if(selected==="electric"){
+  return value.includes("electric")||value==="ev";
+ }
+
+ if(selected==="plug-in hybrid"){
+  return value.includes("plug-in")||value.includes("phev");
+ }
+
+ return value.includes(selected);
+}
+
+function createGallery(car,index){
+ const images=getImages(car);
+ const galleryId="gallery-"+index;
+
+ if(!images.length){
+  return `
+   <div class="photo">
+    <div class="photo-placeholder">VEHICLE IMAGE NOT AVAILABLE</div>
+   </div>
+  `;
+ }
+
+ return `
+  <div class="photo" id="${galleryId}" data-current="0">
+   <div class="card-top">
+    <span class="badge">${escapeHTML(getBrand(car))}</span>
+   </div>
+
+   <img
+    class="main-image"
+    src="${escapeHTML(images[0])}"
+    alt="${escapeHTML(car.model)}"
+    loading="lazy"
+    onerror="this.style.display='none';this.parentElement.querySelector('.photo-placeholder').hidden=false;"
+   >
+
+   <div class="photo-placeholder" hidden>Image unavailable</div>
+
+   ${images.length>1?`
+    <button class="gallery-arrow gallery-prev" type="button"
+     onclick="changeImage('${galleryId}',-1)" aria-label="Previous image">‹</button>
+    <button class="gallery-arrow gallery-next" type="button"
+     onclick="changeImage('${galleryId}',1)" aria-label="Next image">›</button>
+    <div class="gallery-counter">
+     <span class="image-number">1</span> / ${images.length}
+    </div>
+   `:""}
+  </div>
+
+  ${images.length>1?`
+   <div class="thumbnails">
+    ${images.map((url,i)=>`
+     <img
+      class="thumbnail ${i===0?"active":""}"
+      src="${escapeHTML(url)}"
+      alt="Vehicle photo ${i+1}"
+      loading="lazy"
+      onclick="selectImage('${galleryId}',${i})"
+     >
+    `).join("")}
+   </div>
+  `:""}
+ `;
 }
 
 function selectImage(galleryId,index){
-const gallery=document.getElementById(galleryId);
-if(!gallery)return;
+ const gallery=document.getElementById(galleryId);
+ if(!gallery)return;
 
-const card=gallery.parentElement;
-const thumbnails=card.querySelectorAll(".thumbnail");
-const mainImage=gallery.querySelector(".main-gallery-image");
-const counter=gallery.querySelector(".current-image");
+ const card=gallery.parentElement;
+ const thumbnails=card.querySelectorAll(".thumbnail");
+ const mainImage=gallery.querySelector(".main-image");
 
-if(!thumbnails.length||!mainImage)return;
-if(index<0||index>=thumbnails.length)return;
+ if(!thumbnails.length||!mainImage)return;
+ if(index<0||index>=thumbnails.length)return;
 
-mainImage.src=thumbnails[index].src;
-gallery.dataset.current=index;
+ mainImage.src=thumbnails[index].src;
+ gallery.dataset.current=index;
 
-thumbnails.forEach((thumbnail,i)=>{
-thumbnail.classList.toggle("active",i===index);
-});
+ thumbnails.forEach((item,i)=>{
+  item.classList.toggle("active",i===index);
+ });
 
-if(counter)counter.textContent=index+1;
+ const counter=gallery.querySelector(".image-number");
+ if(counter)counter.textContent=index+1;
+}
+
+function changeImage(galleryId,direction){
+ const gallery=document.getElementById(galleryId);
+ if(!gallery)return;
+
+ const thumbnails=gallery.parentElement.querySelectorAll(".thumbnail");
+ if(!thumbnails.length)return;
+
+ let current=Number(gallery.dataset.current||0);
+ current=(current+direction+thumbnails.length)%thumbnails.length;
+
+ selectImage(galleryId,current);
+}
+
+function toggleSaved(id){
+ const saved=getSavedVehicles();
+ const key=String(id);
+ const index=saved.indexOf(key);
+
+ if(index>=0){
+  saved.splice(index,1);
+ }else{
+  saved.push(key);
+ }
+
+ saveSavedVehicles(saved);
+ renderVehicles();
+}
+
+function toggleCompare(id){
+ const key=String(id);
+ const index=comparedVehicles.indexOf(key);
+
+ if(index>=0){
+  comparedVehicles.splice(index,1);
+ }else{
+  if(comparedVehicles.length>=3){
+   alert("You can compare up to three vehicles at a time.");
+   return;
+  }
+  comparedVehicles.push(key);
+ }
+
+ updateCompareBar();
+ renderVehicles();
+}
+
+function updateCompareBar(){
+ const bar=document.getElementById("compareBar");
+ const text=document.getElementById("compareText");
+
+ text.textContent=comparedVehicles.length+" vehicle(s) selected for comparison";
+ bar.classList.toggle("show",comparedVehicles.length>0);
+}
+
+function compareSelected(){
+ if(comparedVehicles.length<2){
+  alert("Select at least two vehicles to compare.");
+  return;
+ }
+
+ const chosen=allVehicles.filter(car=>
+  comparedVehicles.includes(String(car.id))
+ );
+
+ const report=chosen.map(car=>{
+  return [
+   car.model||"Vehicle",
+   "Brand: "+getBrand(car),
+   "Variant: "+(car.variant||"Not specified"),
+   "Year: "+(car.year||"Not specified"),
+   "Price: "+money(car.selling_price,car.currency),
+   "Availability: "+getAvailabilityLabel(car.availability)
+  ].join("\n");
+ }).join("\n\n-------------------------\n\n");
+
+ alert("VEHICLE COMPARISON\n\n"+report);
 }
 
 function renderVehicles(){
-const search=document.getElementById("search").value.toLowerCase().trim();
-const availability=document.getElementById("availability").value;
-const sort=document.getElementById("sort").value;
+ const search=document.getElementById("search").value.toLowerCase().trim();
+ const availability=document.getElementById("availability").value;
+ const condition=document.getElementById("condition").value;
+ const fuel=document.getElementById("fuel").value;
+ const minPrice=Number(document.getElementById("minPrice").value)||0;
+ const maxPrice=Number(document.getElementById("maxPrice").value)||Infinity;
+ const year=document.getElementById("year").value;
+ const sort=document.getElementById("sort").value;
 
-let list=allVehicles.filter(car=>{
-const matchesSearch=(
-(car.model||"")+" "+
-(car.variant||"")+" "+
-(car.year||"")
-).toLowerCase().includes(search);
+ let list=allVehicles.filter(car=>{
+  const brand=getBrand(car);
 
-const matchesAvailability=!availability||car.availability===availability;
-return matchesSearch&&matchesAvailability;
-});
+  const searchText=[
+   brand,
+   car.model,
+   car.variant,
+   car.year,
+   car.description
+  ].join(" ").toLowerCase();
 
-if(sort==="low"){
-list.sort((a,b)=>Number(a.selling_price)-Number(b.selling_price));
-}
+  const matchesSearch=searchText.includes(search);
+  const matchesBrand=!selectedBrand||brand.toLowerCase()===selectedBrand.toLowerCase();
+  const matchesAvailability=!availability||car.availability===availability;
+  const price=Number(car.selling_price)||0;
+  const matchesPrice=price>=minPrice&&price<=maxPrice;
+  const matchesYear=!year||String(car.year)===year;
 
-if(sort==="high"){
-list.sort((a,b)=>Number(b.selling_price)-Number(a.selling_price));
-}
+  return matchesSearch&&matchesBrand&&matchesAvailability&&
+   matchesPrice&&matchesYear&&matchesCondition(car,condition)&&
+   matchesFuel(car,fuel);
+ });
 
-document.getElementById("count").textContent=list.length+" vehicle(s) found";
-const container=document.getElementById("vehicles");
+ if(sort==="low"){
+  list.sort((a,b)=>Number(a.selling_price)-Number(b.selling_price));
+ }
+ if(sort==="high"){
+  list.sort((a,b)=>Number(b.selling_price)-Number(a.selling_price));
+ }
+ if(sort==="year"){
+  list.sort((a,b)=>Number(b.year)-Number(a.year));
+ }
+ if(sort==="newest"){
+  list.sort((a,b)=>new Date(b.created_at||0)-new Date(a.created_at||0));
+ }
 
-if(!list.length){
-container.innerHTML='<div class="empty">No vehicles match your search.<br>Try changing your filters.</div>';
-return;
-}
+ document.getElementById("count").textContent=
+  list.length+" vehicle(s) found";
 
-container.innerHTML=list.map(car=>{
-const stock=car.availability||"";
-const unavailable=stock==="out_of_stock";
-const deposit=Number(car.deposit_percentage??30);
-const depositAmount=Number(car.selling_price||0)*deposit/100;
+ const container=document.getElementById("vehicles");
 
-return `
-<article class="card">
+ if(!list.length){
+  container.innerHTML=`
+   <div class="empty">
+    <h3>No matching vehicles found.</h3>
+    <p>Try changing your search or filters.</p>
+   </div>
+  `;
+  return;
+ }
 
-${createGallery(car)}
+ const saved=getSavedVehicles();
 
-<div class="details">
+ container.innerHTML=list.map(car=>{
+  const originalIndex=allVehicles.indexOf(car);
+  const id=String(car.id);
+  const brand=getBrand(car);
+  const stock=car.availability||"";
+  const unavailable=stock==="out_of_stock";
+  const deposit=Number(car.deposit_percentage??30);
+  const price=Number(car.selling_price)||0;
+  const depositAmount=price*deposit/100;
 
-<span class="badge">${availabilityLabel(stock)}</span>
+  const mileage=getField(car,["mileage","mileage_km"]);
+  const fuelValue=getField(car,["fuel_type","fuel"]);
+  const transmission=getField(car,["transmission"]);
+  const conditionValue=getField(car,["condition","vehicle_condition"]);
 
-<h2>${escapeHTML(car.model||"Tesla Vehicle")}</h2>
+  return `
+   <article class="card">
+    ${createGallery(car,originalIndex)}
 
-<div class="variant">
-${escapeHTML(car.variant||"Premium Electric Vehicle")}
-${car.year?" · "+escapeHTML(String(car.year)):""}
-</div>
+    <div class="card-content">
+     <div class="make-label">${escapeHTML(brand)}</div>
 
-<div class="price">
-${money(car.selling_price,car.currency)}
-</div>
+     <h2>${escapeHTML(car.model||"Premium Vehicle")}</h2>
 
-<div class="deposit">
-${deposit}% deposit: ${money(depositAmount,car.currency)}
-</div>
+     <div class="variant">
+      ${escapeHTML(car.variant||"Premium vehicle")}
+      ${car.year?" · "+escapeHTML(car.year):""}
+     </div>
 
-<div class="actions">
+     <div style="margin-top:12px">
+      <span class="badge ${getAvailabilityClass(stock)}">
+       ${getAvailabilityLabel(stock)}
+      </span>
+     </div>
 
-<a class="btn primary"
-href="configure.html?id=${encodeURIComponent(car.id)}">
-Configure
-</a>
+     <div class="specs">
+      <div class="spec">
+       MODEL YEAR
+       <strong>${escapeHTML(car.year||"Not specified")}</strong>
+      </div>
+      <div class="spec">
+       CONDITION
+       <strong>${escapeHTML(conditionValue||"Not specified")}</strong>
+      </div>
+      <div class="spec">
+       FUEL TYPE
+       <strong>${escapeHTML(fuelValue||"Not specified")}</strong>
+      </div>
+      <div class="spec">
+       TRANSMISSION
+       <strong>${escapeHTML(transmission||"Not specified")}</strong>
+      </div>
+      <div class="spec">
+       MILEAGE
+       <strong>${escapeHTML(mileage||"Not specified")}</strong>
+      </div>
+      <div class="spec">
+       STOCK
+       <strong>${escapeHTML(getAvailabilityLabel(stock))}</strong>
+      </div>
+     </div>
 
-<a class="btn"
-href="enquiry.html?vehicle=${encodeURIComponent(car.id)}">
-${unavailable?"Enquire":"Pre-order / Buy"}
-</a>
+     <div class="price">${money(price,car.currency)}</div>
 
-<a class="btn"
-href="negotiate.html?vehicle=${encodeURIComponent(car.id)}">
-Negotiate
-</a>
+     <div class="deposit">
+      ${deposit}% estimated deposit:
+      ${money(depositAmount,car.currency)}
+     </div>
 
-</div>
-</div>
-</article>
-`;
-}).join("");
+     <div class="card-actions">
+      <a class="btn primary"
+       href="configure.html?id=${encodeURIComponent(id)}">
+       VIEW / CONFIGURE
+      </a>
+
+      <a class="btn"
+       href="enquiry.html?vehicle=${encodeURIComponent(id)}">
+       ${unavailable?"ENQUIRE":"BUY / PRE-ORDER"}
+      </a>
+
+      <a class="btn secondary"
+       href="negotiate.html?vehicle=${encodeURIComponent(id)}">
+       NEGOTIATE PRICE
+      </a>
+
+      <a class="btn secondary"
+       href="contact.html">
+       CONTACT TEAM
+      </a>
+     </div>
+
+     <div class="card-extras">
+      <button class="text-action" type="button"
+       onclick="toggleSaved('${escapeHTML(id)}')">
+       ${saved.includes(id)?"♥ SAVED":"♡ SAVE VEHICLE"}
+      </button>
+
+      <button class="text-action" type="button"
+       onclick="toggleCompare('${escapeHTML(id)}')">
+       ${comparedVehicles.includes(id)?"✓ SELECTED":"＋ COMPARE"}
+      </button>
+     </div>
+    </div>
+   </article>
+  `;
+ }).join("");
 }
 
 async function loadVehicles(){
-const container=document.getElementById("vehicles");
+ const container=document.getElementById("vehicles");
 
-try{
-const {data,error}=await db.from("vehicles")
-.select("*")
-.eq("is_published",true)
-.order("created_at",{ascending:true});
+ try{
+  const {data,error}=await db
+   .from("vehicles")
+   .select("*")
+   .eq("is_published",true)
+   .order("created_at",{ascending:false});
 
-if(error)throw error;
+  if(error)throw error;
 
-allVehicles=data||[];
-renderVehicles();
+  allVehicles=data||[];
+  renderVehicles();
 
-}catch(error){
-console.error("Vehicle loading error:",error);
-document.getElementById("count").textContent="Vehicle collection";
+ }catch(error){
+  console.error("Inventory loading error:",error);
 
-container.innerHTML=`
-<div class="empty">
-We could not load the vehicle collection right now.<br>
-Please refresh the page or contact our team.
-</div>`;
+  document.getElementById("count").textContent="Inventory unavailable";
+
+  container.innerHTML=`
+   <div class="empty">
+    <h3>We could not load the vehicle inventory.</h3>
+    <p>Please refresh the page or contact our team.</p>
+   </div>
+  `;
+ }
 }
-}
 
-document.getElementById("search").addEventListener("input",renderVehicles);
-document.getElementById("availability").addEventListener("change",renderVehicles);
-document.getElementById("sort").addEventListener("change",renderVehicles);
+document.querySelectorAll(".filters input,.filters select").forEach(element=>{
+ element.addEventListener("input",renderVehicles);
+ element.addEventListener("change",renderVehicles);
+});
+
+document.getElementById("clearFilters").addEventListener("click",()=>{
+ document.querySelectorAll(".filters input").forEach(input=>input.value="");
+ document.querySelectorAll(".filters select").forEach(select=>select.value="");
+ selectedBrand="";
+ document.querySelectorAll(".brand-button").forEach(button=>{
+  button.classList.toggle("active",button.dataset.brand==="");
+ });
+ renderVehicles();
+});
+
+document.getElementById("brandStrip").addEventListener("click",event=>{
+ const button=event.target.closest(".brand-button");
+ if(!button)return;
+
+ selectedBrand=button.dataset.brand||"";
+
+ document.querySelectorAll(".brand-button").forEach(item=>{
+  item.classList.toggle("active",item===button);
+ });
+
+ renderVehicles();
+});
+
+document.getElementById("compareButton").addEventListener("click",compareSelected);
+
+document.getElementById("clearCompare").addEventListener("click",()=>{
+ comparedVehicles=[];
+ updateCompareBar();
+ renderVehicles();
+});
+
+document.getElementById("menuButton").addEventListener("click",()=>{
+ document.getElementById("mainNav").classList.toggle("open");
+});
+
+document.getElementById("yearNow").textContent=new Date().getFullYear();
 
 loadVehicles();
-</script></body>
+</script>
+
+</body>
 </html>
