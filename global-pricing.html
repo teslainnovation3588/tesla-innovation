@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090b">
+<title>Global Pricing | TESLA Innovation</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#08090b;color:#fff;font-family:Arial,sans-serif;padding:18px}
+.container{max-width:1100px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap;margin:15px 0 25px}
+h1{font-size:25px}
+h1 span{color:#e82127}
+h2{font-size:19px;margin-bottom:15px}
+p{color:#a5a5a5;font-size:13px;line-height:1.7}
+.panel{background:#14171d;border:1px solid #30343d;border-radius:10px;padding:20px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+label{display:block;font-size:12px;color:#ddd;margin:10px 0 6px}
+input,select,textarea{
+ width:100%;padding:13px;background:#090b0f;color:white;
+ border:1px solid #3b414b;border-radius:5px;font-size:14px;
+}
+textarea{min-height:90px;resize:vertical}
+button{padding:12px 16px;border:0;border-radius:5px;background:#e82127;color:white;font-weight:bold;cursor:pointer;margin:6px 5px 0 0}
+button.secondary{background:#343a44}
+button.green{background:#168b52}
+button.danger{background:#9e2025}
+button:disabled{opacity:.5}
+.message{display:none;padding:12px;border-radius:5px;margin:12px 0;font-size:13px}
+.message.show{display:block}
+.message.success{background:#123c25;color:#a8ffc6}
+.message.error{background:#4a1515;color:#ffbaba}
+.vehicle{background:#0b0d11;border:1px solid #30343d;padding:16px;border-radius:8px;margin:12px 0}
+.vehicle h3{margin-bottom:8px}
+.vehicle p{margin:5px 0}
+.price{font-size:22px;font-weight:bold;color:#fff;margin:10px 0}
+.badge{display:inline-block;background:#292f39;padding:6px 9px;border-radius:4px;font-size:10px}
+.note{border-left:3px solid #e82127;padding:10px 13px;margin:15px 0;background:#201719}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.small{font-size:11px;color:#999}
+@media(max-width:600px){
+ body{padding:11px}
+ .panel{padding:15px}
+ .grid{grid-template-columns:1fr}
+ h1{font-size:21px}
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+ <div>
+  <h1><span>TESLA</span> Innovation</h1>
+  <p>Global Pricing & Vehicle Management Centre</p>
+ </div>
+ <button class="secondary" onclick="location.href='admin.html'">MAIN ADMIN</button>
+</header>
+
+<section id="loginPanel" class="panel">
+ <h2>Administrator Authentication</h2>
+ <p>Sign in with your authorised TESLA Innovation administrator account.</p>
+
+ <label>Email</label>
+ <input id="email" type="email" placeholder="Administrator email">
+
+ <label>Password</label>
+ <input id="password" type="password" placeholder="Password">
+
+ <div id="loginMessage" class="message"></div>
+ <button id="loginButton" onclick="login()">SIGN IN</button>
+</section>
+
+<section id="dashboard" style="display:none">
+
+ <div class="panel">
+  <h2>Global Currency Rules</h2>
+  <div class="note">
+   <p><strong>Chinese vehicle brands:</strong> MG, Geely, GAC and BYD should normally be listed in Chinese Yuan (CNY).</p>
+   <p><strong>Tesla:</strong> Use USD when the original price is quoted in US Dollars.</p>
+   <p><strong>Important:</strong> Always select the actual currency of the price supplied to you. Do not convert the original amount before entering it.</p>
+  </div>
+  <p>International display conversion is handled by the vehicle inventory page. The original listing price remains stored in the vehicle record.</p>
+ </div>
+
+ <div class="panel">
+  <h2 id="formTitle">Add New Vehicle</h2>
+
+  <input type="hidden" id="vehicleId">
+
+  <div class="grid">
+   <div>
+    <label>Vehicle Brand</label>
+    <select id="brand" onchange="applyBrandCurrency()">
+     <option value="Tesla">Tesla</option>
+     <option value="MG">MG</option>
+     <option value="Geely">Geely</option>
+     <option value="GAC">GAC</option>
+     <option value="BYD">BYD</option>
+     <option value="Other">Other</option>
+    </select>
+   </div>
+
+   <div>
+    <label>Original Listing Currency</label>
+    <select id="currency">
+     <option value="CNY">CNY — Chinese Yuan (¥)</option>
+     <option value="USD">USD — US Dollar ($)</option>
+     <option value="NGN">NGN — Nigerian Naira (₦)</option>
+     <option value="GBP">GBP — British Pound (£)</option>
+     <option value="EUR">EUR — Euro (€)</option>
+     <option value="AED">AED — UAE Dirham</option>
+     <option value="CAD">CAD — Canadian Dollar</option>
+     <option value="AUD">AUD — Australian Dollar</option>
+     <option value="JPY">JPY — Japanese Yen</option>
+     <option value="ZAR">ZAR — South African Rand</option>
+    </select>
+   </div>
+
+   <div>
+    <label>Vehicle Model</label>
+    <input id="model" placeholder="e.g. BYD Seal">
+   </div>
+
+   <div>
+    <label>Variant</label>
+    <input id="variant" placeholder="e.g. Premium AWD">
+   </div>
+
+   <div>
+    <label>Model Year</label>
+    <input id="year" type="number" placeholder="2026">
+   </div>
+
+   <div>
+    <label>Selling Price — Original Currency</label>
+    <input id="sellingPrice" type="number" min="0" step="0.01" placeholder="Enter original price">
+   </div>
+
+   <div>
+    <label>Reference Price — Original Currency</label>
+    <input id="referencePrice" type="number" min="0" step="0.01" placeholder="Optional">
+   </div>
+
+   <div>
+    <label>Deposit Percentage (%)</label>
+    <input id="deposit" type="number" min="0" max="100" value="30">
+   </div>
+
+   <div>
+    <label>Stock Quantity</label>
+    <input id="stock" type="number" min="0" value="0">
+   </div>
+
+   <div>
+    <label>Availability</label>
+    <select id="availability">
+     <option value="pre_order">Pre-order</option>
+     <option value="in_stock">In stock</option>
+     <option value="limited_stock">Limited stock</option>
+     <option value="out_of_stock">Out of stock</option>
+    </select>
+   </div>
+  </div>
+
+  <label>Vehicle Description</label>
+  <textarea id="description" placeholder="Vehicle specifications, features and details..."></textarea>
+
+  <label>Vehicle Image URLs (one URL per line)</label>
+  <textarea id="images" placeholder="https://example.com/photo1.jpg&#10;https://example.com/photo2.jpg"></textarea>
+  <p class="small">For photo uploads from your phone gallery, continue using the existing main Admin Vehicle Management page.</p>
+
+  <label style="display:flex;align-items:center;gap:9px">
+   <input type="checkbox" id="published" checked style="width:auto">
+   Publish vehicle on public website
+  </label>
+
+  <div id="formMessage" class="message"></div>
+
+  <div class="actions">
+   <button id="saveButton" onclick="saveVehicle()">SAVE VEHICLE</button>
+   <button class="secondary" onclick="resetForm()">CLEAR FORM</button>
+  </div>
+ </div>
+
+ <div class="panel">
+  <h2>Existing Vehicle Inventory</h2>
+  <p>Edit prices, currencies, availability and publication status.</p>
+  <button class="secondary" onclick="loadVehicles()">REFRESH INVENTORY</button>
+  <div id="vehicleList"><p>Loading inventory...</p></div>
+ </div>
+
+ <button class="danger" onclick="logout()">SIGN OUT</button>
+</section>
+</div>
+
+<script>
+const SUPABASE_URL="https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const SUPABASE_KEY="sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let currentUser=null;
+let vehicles=[];
+
+function safe(value){
+ return String(value??"").replace(/[&<>"']/g,c=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
+ }[c]));
+}
+
+function message(id,text,type){
+ const el=document.getElementById(id);
+ el.textContent=text;
+ el.className="message show "+type;
+}
+
+function clearMessage(id){
+ const el=document.getElementById(id);
+ el.textContent="";
+ el.className="message";
+}
+
+function money(value,currency){
+ try{
+  return new Intl.NumberFormat("en-US",{
+   style:"currency",
+   currency:currency,
+   maximumFractionDigits:2
+  }).format(Number(value)||0);
+ }catch(e){
+  return currency+" "+Number(value||0).toLocaleString();
+ }
+}
+
+function applyBrandCurrency(){
+ const brand=document.getElementById("brand").value;
+ const currency=document.getElementById("currency");
+
+ if(["MG","Geely","GAC","BYD"].includes(brand)){
+  currency.value="CNY";
+ }else if(brand==="Tesla"){
+  currency.value="USD";
+ }
+}
+
+async function verifyAdmin(){
+ if(!currentUser)return false;
+
+ const {data,error}=await db.from("admin_users")
+  .select("user_id")
+  .eq("user_id",currentUser.id)
+  .maybeSingle();
+
+ if(error)throw error;
+ return Boolean(data);
+}
+
+async function login(){
+ clearMessage("loginMessage");
+
+ const email=document.getElementById("email").value.trim();
+ const password=document.getElementById("password").value;
+
+ if(!email||!password){
+  message("loginMessage","Enter your email and password.","error");
+  return;
+ }
+
+ const button=document.getElementById("loginButton");
+ button.disabled=true;
+ button.textContent="SIGNING IN...";
+
+ try{
+  const {data,error}=await db.auth.signInWithPassword({email,password});
+  if(error)throw error;
+
+  currentUser=data.user;
+
+  if(!await verifyAdmin()){
+   await db.auth.signOut();
+   currentUser=null;
+   throw new Error("This account is not authorised as an administrator.");
+  }
+
+  document.getElementById("loginPanel").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+
+  await loadVehicles();
+
+ }catch(error){
+  message("loginMessage",error.message||"Login failed.","error");
+ }finally{
+  button.disabled=false;
+  button.textContent="SIGN IN";
+ }
+}
+
+async function checkSession(){
+ try{
+  const {data,error}=await db.auth.getSession();
+  if(error)throw error;
+  if(!data.session)return;
+
+  currentUser=data.session.user;
+
+  if(!await verifyAdmin()){
+   await db.auth.signOut();
+   currentUser=null;
+   return;
+  }
+
+  document.getElementById("loginPanel").style.display="none";
+  document.getElementById("dashboard").style.display="block";
+  await loadVehicles();
+
+ }catch(error){
+  console.error(error);
+ }
+}
+
+async function logout(){
+ await db.auth.signOut();
+ currentUser=null;
+ document.getElementById("dashboard").style.display="none";
+ document.getElementById("loginPanel").style.display="block";
+ document.getElementById("password").value="";
+}
+
+async function loadVehicles(){
+ const list=document.getElementById("vehicleList");
+ list.innerHTML="<p>Loading inventory...</p>";
+
+ try{
+  const {data,error}=await db.from("vehicles")
+   .select("*")
+   .order("created_at",{ascending:false});
+
+  if(error)throw error;
+
+  vehicles=data||[];
+
+  if(!vehicles.length){
+   list.innerHTML="<p>No vehicles have been added yet.</p>";
+   return;
+  }
+
+  list.innerHTML=vehicles.map(vehicle=>{
+   const currency=vehicle.currency||"USD";
+
+   return `
+    <div class="vehicle">
+     <h3>${safe(vehicle.model||"Vehicle")}</h3>
+     <p>Variant: ${safe(vehicle.variant||"Not specified")}</p>
+     <p>Year: ${safe(vehicle.year||"Not specified")}</p>
+     <div class="price">${money(vehicle.selling_price,currency)}</div>
+     <p>Original currency: <strong>${safe(currency)}</strong></p>
+     <p>Brand: ${safe(detectBrand(vehicle))}</p>
+     <p>Availability: ${safe(vehicle.availability||"Not specified")}</p>
+     <p>Stock: ${safe(vehicle.stock_quantity??0)}</p>
+     <p>Publication: ${vehicle.is_published?"Published":"Unpublished"}</p>
+
+     <div class="actions">
+      <button onclick="editVehicle('${safe(vehicle.id)}')">EDIT</button>
+      <button class="secondary" onclick="togglePublish('${safe(vehicle.id)}',${!vehicle.is_published})">
+       ${vehicle.is_published?"UNPUBLISH":"PUBLISH"}
+      </button>
+     </div>
+    </div>
+   `;
+  }).join("");
+
+ }catch(error){
+  list.innerHTML="<p>"+safe(error.message)+"</p>";
+ }
+}
+
+function detectBrand(vehicle){
+ const text=(String(vehicle.model||"")+" "+String(vehicle.variant||"")+" "+String(vehicle.description||"")).toLowerCase();
+
+ if(text.includes("tesla")||/model\s*[3ysx]/i.test(text)||text.includes("cybertruck"))return "Tesla";
+ if(/\bmg\b/i.test(text))return "MG";
+ if(text.includes("geely"))return "Geely";
+ if(text.includes("gac"))return "GAC";
+ if(text.includes("byd"))return "BYD";
+
+ return "Other";
+}
+
+function editVehicle(id){
+ const vehicle=vehicles.find(v=>String(v.id)===String(id));
+ if(!vehicle)return alert("Vehicle not found.");
+
+ document.getElementById("vehicleId").value=vehicle.id;
+ document.getElementById("brand").value=detectBrand(vehicle);
+ document.getElementById("currency").value=vehicle.currency||"USD";
+ document.getElementById("model").value=vehicle.model||"";
+ document.getElementById("variant").value=vehicle.variant||"";
+ document.getElementById("year").value=vehicle.year||"";
+ document.getElementById("sellingPrice").value=vehicle.selling_price||"";
+ document.getElementById("referencePrice").value=vehicle.reference_price||"";
+ document.getElementById("deposit").value=vehicle.deposit_percentage??30;
+ document.getElementById("stock").value=vehicle.stock_quantity??0;
+ document.getElementById("availability").value=vehicle.availability||"pre_order";
+ document.getElementById("description").value=vehicle.description||"";
+ document.getElementById("images").value=Array.isArray(vehicle.image_urls)?vehicle.image_urls.join("\n"):"";
+ document.getElementById("published").checked=vehicle.is_published===true;
+
+ document.getElementById("formTitle").textContent="Edit Vehicle";
+ clearMessage("formMessage");
+
+ window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function saveVehicle(){
+ clearMessage("formMessage");
+
+ const id=document.getElementById("vehicleId").value;
+ const model=document.getElementById("model").value.trim();
+ const price=Number(document.getElementById("sellingPrice").value);
+ const currency=document.getElementById("currency").value;
+ const deposit=Number(document.getElementById("deposit").value);
+
+ if(!model){
+  message("formMessage","Enter the vehicle model.","error");
+  return;
+ }
+
+ if(!Number.isFinite(price)||price<=0){
+  message("formMessage","Enter a valid selling price.","error");
+  return;
+ }
+
+ if(!Number.isFinite(deposit)||deposit<0||deposit>100){
+  message("formMessage","Deposit must be between 0 and 100 percent.","error");
+  return;
+ }
+
+ const button=document.getElementById("saveButton");
+ button.disabled=true;
+ button.textContent="SAVING...";
+
+ try{
+  const payload={
+   model:model,
+   variant:document.getElementById("variant").value.trim(),
+   year:Number(document.getElementById("year").value)||null,
+   description:document.getElementById("description").value.trim(),
+   selling_price:price,
+   reference_price:Number(document.getElementById("referencePrice").value)||null,
+   currency:currency,
+   deposit_percentage:deposit,
+   stock_quantity:Number(document.getElementById("stock").value)||0,
+   availability:document.getElementById("availability").value,
+   image_urls:document.getElementById("images").value.split("\n").map(x=>x.trim()).filter(Boolean),
+   is_published:document.getElementById("published").checked,
+   updated_at:new Date().toISOString()
+  };
+
+  let result;
+
+  if(id){
+   result=await db.from("vehicles").update(payload).eq("id",id);
+  }else{
+   result=await db.from("vehicles").insert(payload);
+  }
+
+  if(result.error)throw result.error;
+
+  message("formMessage",id?"Vehicle updated successfully.":"Vehicle added successfully.","success");
+
+  resetForm();
+  await loadVehicles();
+
+ }catch(error){
+  message("formMessage",error.message||"Could not save vehicle.","error");
+ }finally{
+  button.disabled=false;
+  button.textContent="SAVE VEHICLE";
+ }
+}
+
+function resetForm(){
+ [
+  "vehicleId","model","variant","year","sellingPrice",
+  "referencePrice","stock","description","images"
+ ].forEach(id=>document.getElementById(id).value="");
+
+ document.getElementById("brand").value="Tesla";
+ document.getElementById("currency").value="USD";
+ document.getElementById("deposit").value="30";
+ document.getElementById("availability").value="pre_order";
+ document.getElementById("published").checked=true;
+ document.getElementById("formTitle").textContent="Add New Vehicle";
+}
+
+async function togglePublish(id,published){
+ const {error}=await db.from("vehicles")
+  .update({is_published:published,updated_at:new Date().toISOString()})
+  .eq("id",id);
+
+ if(error)return alert(error.message);
+ await loadVehicles();
+}
+
+checkSession();
+</script>
+</body>
+</html>
