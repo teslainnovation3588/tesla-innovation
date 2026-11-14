@@ -4,113 +4,2411 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#08090b">
-<meta name="description" content="TESLA Innovation — Premium electric vehicles, international vehicle sales and pre-order enquiries.">
-<title>TESLA Innovation | Premium Electric Vehicles</title>
+<meta name="description" content="TESLA Innovation — Explore Tesla, MG, Geely, GAC and BYD vehicles. Discover vehicle availability, pricing and international purchase options.">
+<title>TESLA Innovation | Global Automotive Collection</title>
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 :root{
---bg:#08090b;
---surface:#111317;
---surface2:#181b20;
---red:#e82127;
---white:#ffffff;
---muted:#a5a7ac;
---border:rgba(255,255,255,.10);
---green:#43d69a;
+    --bg:#08090b;
+    --surface:#111317;
+    --surface2:#191c22;
+    --red:#e82127;
+    --white:#fff;
+    --muted:#a5a7ac;
+    --border:rgba(255,255,255,.10);
+    --green:#43d69a;
 }
 
-*{margin:0;padding:0;box-sizing:border-box}
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-html{scroll-behavior:smooth;scroll-padding-top:90px}
+html{
+    scroll-behavior:smooth;
+    scroll-padding-top:100px;
+}
 
 body{
-font-family:Arial,Helvetica,sans-serif;
-background:var(--bg);
-color:var(--white);
-line-height:1.6;
-overflow-x:hidden;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--white);
+    line-height:1.6;
+    overflow-x:hidden;
 }
 
-a{text-decoration:none;color:inherit}
-button,input,select,textarea{font:inherit}
-button{cursor:pointer}
-.container{width:min(1200px,90%);margin:auto}
-.section{padding:100px 0}
+a{
+    color:inherit;
+    text-decoration:none;
+}
 
-/* NAVIGATION */
+button,input,select,textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.container{
+    width:min(1200px,92%);
+    margin:auto;
+}
+
+.section{
+    padding:85px 0;
+}
+
+/* HEADER */
 
 header{
-position:sticky;
-top:0;
-z-index:1000;
-background:rgba(8,9,11,.94);
-backdrop-filter:blur(18px);
-border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(8,9,11,.96);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid var(--border);
 }
 
 .navbar{
-min-height:78px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:25px;
+    min-height:75px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:20px;
 }
 
 .logo{
-font-size:22px;
-font-weight:900;
-letter-spacing:2px;
-white-space:nowrap;
+    font-size:21px;
+    font-weight:900;
+    letter-spacing:1.5px;
+    white-space:nowrap;
 }
 
-.logo span,.footer-brand span{color:var(--red)}
+.logo span{
+    color:var(--red);
+}
 
-.nav-links{display:flex;align-items:center;gap:25px}
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
 
 .nav-links a{
-color:#c6c7ca;
-font-size:13px;
-transition:.3s;
+    font-size:12px;
+    color:#d0d0d0;
+    transition:.2s;
 }
 
-.nav-links a:hover{color:var(--red)}
+.nav-links a:hover{
+    color:var(--red);
+}
 
 .account-link{
-border:1px solid rgba(232,33,39,.65);
-padding:10px 13px;
-border-radius:4px;
-font-size:11px!important;
-font-weight:bold;
-letter-spacing:.5px;
-white-space:nowrap;
+    border:1px solid var(--red);
+    padding:10px 12px;
+    border-radius:4px;
+    font-weight:bold;
 }
-
-.account-link:hover{background:var(--red);color:white!important}
 
 .nav-cta{
-background:var(--red);
-padding:12px 19px;
-border-radius:4px;
-font-size:12px;
-font-weight:bold;
-transition:.3s;
+    background:var(--red);
+    color:white!important;
+    padding:11px 15px;
+    border-radius:4px;
+    font-weight:bold;
 }
 
-.nav-cta:hover{background:#bd171d;transform:translateY(-2px)}
-
 .menu-toggle{
-display:none;
-background:none;
-border:1px solid var(--border);
-color:white;
-padding:8px 12px;
-border-radius:4px;
-font-size:21px;
+    display:none;
+    color:white;
+    background:none;
+    border:1px solid var(--border);
+    border-radius:4px;
+    padding:7px 12px;
+    font-size:22px;
 }
 
 /* HERO */
 
+.hero{
+    min-height:650px;
+    display:flex;
+    align-items:center;
+    position:relative;
+    background:
+    linear-gradient(90deg,rgba(0,0,0,.94),rgba(0,0,0,.68),rgba(0,0,0,.25)),
+    url("https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=2000&q=85")
+    center/cover no-repeat;
+}
+
+.hero-content{
+    max-width:800px;
+    padding:90px 0;
+}
+
+.eyebrow{
+    color:var(--red);
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:4px;
+    margin-bottom:15px;
+}
+
+.hero h1{
+    font-size:clamp(43px,8vw,88px);
+    line-height:1.05;
+    letter-spacing:-3px;
+    font-weight:900;
+    margin-bottom:22px;
+}
+
+.hero h1 span{
+    color:var(--red);
+}
+
+.hero-description{
+    max-width:620px;
+    color:#ddd;
+    font-size:15px;
+    line-height:1.9;
+}
+
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:12px;
+    margin-top:30px;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px 22px;
+    border-radius:4px;
+    font-size:11px;
+    font-weight:bold;
+    letter-spacing:1px;
+    border:0;
+}
+
+.btn-red{
+    background:var(--red);
+    color:white;
+}
+
+.btn-outline{
+    border:1px solid white;
+    color:white;
+    background:transparent;
+}
+
+/* GLOBAL SEARCH */
+
+.search-section{
+    position:relative;
+    margin-top:-45px;
+    z-index:5;
+}
+
+.search-panel{
+    background:#15181d;
+    border:1px solid var(--border);
+    border-radius:8px;
+    padding:25px;
+    box-shadow:0 15px 45px rgba(0,0,0,.35);
+}
+
+.search-panel h2{
+    font-size:19px;
+    margin-bottom:16px;
+}
+
+.search-grid{
+    display:grid;
+    grid-template-columns:2fr repeat(3,1fr);
+    gap:12px;
+}
+
+.search-grid input,
+.search-grid select,
+.filter-grid input,
+.filter-grid select{
+    width:100%;
+    min-width:0;
+    padding:13px;
+    color:white;
+    background:#08090b;
+    border:1px solid #30343b;
+    border-radius:4px;
+    outline:none;
+}
+
+.search-grid input:focus,
+.search-grid select:focus,
+.filter-grid input:focus,
+.filter-grid select:focus{
+    border-color:var(--red);
+}
+
+select option{
+    background:#111317;
+    color:white;
+}
+
+.search-submit{
+    width:100%;
+    margin-top:12px;
+    padding:13px;
+    background:var(--red);
+    color:white;
+    border:0;
+    border-radius:4px;
+    font-weight:bold;
+}
+
+/* TRUST STRIP */
+
+.trust-strip{
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    background:#111317;
+    margin-top:45px;
+}
+
+.trust-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.trust-item{
+    padding:23px 12px;
+    text-align:center;
+    border-right:1px solid var(--border);
+}
+
+.trust-item:last-child{
+    border:0;
+}
+
+.trust-item strong{
+    display:block;
+    font-size:12px;
+}
+
+.trust-item span{
+    color:var(--muted);
+    font-size:11px;
+}
+
+/* SECTION HEADINGS */
+
+.section-heading{
+    margin-bottom:35px;
+}
+
+.section-heading h2{
+    font-size:clamp(27px,5vw,42px);
+    line-height:1.2;
+    margin-bottom:12px;
+}
+
+.section-heading p{
+    max-width:700px;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.9;
+}
+
+/* BRANDS */
+
+.brands-section{
+    padding:65px 0;
+}
+
+.brand-grid{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+}
+
+.brand-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:25px 12px;
+    text-align:center;
+    border-radius:6px;
+    transition:.25s;
+}
+
+.brand-card:hover{
+    border-color:var(--red);
+    transform:translateY(-4px);
+}
+
+.brand-card strong{
+    display:block;
+    font-size:18px;
+    letter-spacing:1px;
+}
+
+.brand-card span{
+    color:var(--muted);
+    font-size:10px;
+}
+
+/* INVENTORY */
+
+.inventory-section{
+    background:#0c0e11;
+}
+
+.inventory-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.inventory-count{
+    color:var(--muted);
+    font-size:12px;
+}
+
+.filter-panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    padding:20px;
+    border-radius:6px;
+    margin-bottom:25px;
+}
+
+.filter-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+}
+
+.filter-label{
+    display:block;
+    font-size:10px;
+    color:var(--muted);
+    margin-bottom:6px;
+}
+
+.filter-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+
+.clear-filters{
+    background:transparent;
+    border:1px solid var(--border);
+    color:white;
+    padding:10px 15px;
+    border-radius:4px;
+    font-size:11px;
+}
+
+.vehicle-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:22px;
+}
+
+.vehicle-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:7px;
+    overflow:hidden;
+    transition:.3s;
+}
+
+.vehicle-card:hover{
+    transform:translateY(-5px);
+    border-color:rgba(232,33,39,.7);
+}
+
+.vehicle-image{
+    height:230px;
+    background:#191c22;
+    position:relative;
+    overflow:hidden;
+}
+
+.vehicle-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.stock-badge{
+    position:absolute;
+    top:13px;
+    left:13px;
+    background:rgba(0,0,0,.85);
+    padding:7px 10px;
+    font-size:9px;
+    font-weight:bold;
+    border-radius:3px;
+}
+
+.stock-in{color:var(--green)}
+.stock-limited{color:#ffcf65}
+.stock-pre{color:#8ecbff}
+.stock-out{color:#ff7777}
+
+.brand-badge{
+    position:absolute;
+    top:13px;
+    right:13px;
+    background:var(--red);
+    padding:6px 9px;
+    font-size:9px;
+    font-weight:bold;
+    border-radius:3px;
+}
+
+.vehicle-info{
+    padding:20px;
+}
+
+.vehicle-info h3{
+    font-size:21px;
+    margin-bottom:4px;
+}
+
+.vehicle-variant{
+    font-size:11px;
+    color:var(--muted);
+    margin-bottom:12px;
+}
+
+.vehicle-price{
+    font-size:25px;
+    font-weight:900;
+    margin-bottom:12px;
+}
+
+.vehicle-price small{
+    font-size:10px;
+    color:var(--muted);
+}
+
+.vehicle-specs{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    padding:12px 0;
+    border-top:1px solid var(--border);
+    border-bottom:1px solid var(--border);
+    font-size:10px;
+    color:#bbb;
+}
+
+.vehicle-description{
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.8;
+    margin-top:13px;
+    min-height:40px;
+}
+
+.vehicle-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:17px;
+}
+
+.vehicle-buttons button{
+    padding:12px 6px;
+    border:0;
+    border-radius:3px;
+    font-size:10px;
+    font-weight:bold;
+}
+
+.buy-button{
+    background:var(--red);
+    color:white;
+}
+
+.compare-button{
+    background:#252a32;
+    color:white;
+}
+
+.card-secondary{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin-top:12px;
+}
+
+.card-secondary button{
+    background:none;
+    border:0;
+    color:#bbb;
+    font-size:10px;
+}
+
+.card-secondary button:hover{
+    color:var(--red);
+}
+
+.empty-message{
+    grid-column:1/-1;
+    padding:45px 20px;
+    text-align:center;
+    color:var(--muted);
+    background:var(--surface);
+    border-radius:5px;
+}
+
+/* PROMOTIONS */
+
+.promo-section{
+    background:#111317;
+}
+
+.promo-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.promo-card{
+    padding:25px;
+    background:#191c22;
+    border:1px solid var(--border);
+    border-radius:6px;
+}
+
+.promo-card h3{
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.promo-card p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+}
+
+/* BUYING PATHS */
+
+.path-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.path-card{
+    padding:25px;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:6px;
+}
+
+.path-card h3{
+    font-size:17px;
+    margin-bottom:10px;
+}
+
+.path-card p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.8;
+}
+
+.path-card a{
+    display:inline-block;
+    margin-top:18px;
+    color:#ff555b;
+    font-size:11px;
+    font-weight:bold;
+}
+
+/* ABOUT */
+
+.about-section{
+    background:#111317;
+}
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:45px;
+    align-items:center;
+}
+
+.about-image{
+    height:370px;
+    border-radius:6px;
+    overflow:hidden;
+}
+
+.about-image img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.about-content h2{
+    font-size:34px;
+    line-height:1.2;
+    margin-bottom:18px;
+}
+
+.about-content p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:2;
+    margin-bottom:14px;
+}
+
+/* CONTACT */
+
+.contact-section{
+    text-align:center;
+}
+
+.contact-section p{
+    max-width:650px;
+    margin:auto;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.9;
+}
+
+/* FOOTER */
+
+footer{
+    background:#060709;
+    border-top:1px solid var(--border);
+    padding:40px 0 20px;
+}
+
+.footer-content{
+    display:flex;
+    justify-content:space-between;
+    gap:25px;
+    flex-wrap:wrap;
+    padding-bottom:25px;
+}
+
+.footer-brand{
+    font-size:20px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.footer-brand span{
+    color:var(--red);
+}
+
+.footer-content p{
+    max-width:350px;
+    color:var(--muted);
+    font-size:11px;
+    line-height:1.9;
+    margin-top:10px;
+}
+
+.footer-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:17px;
+    align-items:center;
+}
+
+.footer-links a{
+    color:#aaa;
+    font-size:11px;
+}
+
+.copyright{
+    border-top:1px solid var(--border);
+    padding-top:18px;
+    text-align:center;
+    color:#777;
+    font-size:10px;
+}
+
+/* COMPARE BAR */
+
+.compare-bar{
+    display:none;
+    position:fixed;
+    bottom:15px;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(600px,94%);
+    z-index:1100;
+    background:#20242b;
+    border:1px solid var(--red);
+    padding:13px;
+    border-radius:7px;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    box-shadow:0 10px 35px rgba(0,0,0,.5);
+}
+
+.compare-bar.visible{
+    display:flex;
+}
+
+.compare-bar span{
+    font-size:11px;
+}
+
+.compare-bar button{
+    padding:9px 12px;
+    border:0;
+    border-radius:3px;
+    background:var(--red);
+    color:white;
+    font-size:10px;
+    font-weight:bold;
+}
+
+/* COMPARE MODAL */
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    background:rgba(0,0,0,.85);
+    padding:20px;
+    overflow-y:auto;
+}
+
+.modal.open{
+    display:block;
+}
+
+.modal-content{
+    max-width:900px;
+    margin:50px auto;
+    background:#111317;
+    border:1px solid var(--border);
+    border-radius:7px;
+    padding:25px;
+}
+
+.modal-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.modal-header button{
+    color:white;
+    background:none;
+    border:0;
+    font-size:25px;
+}
+
+.compare-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:12px;
+}
+
+.compare-table th,
+.compare-table td{
+    padding:13px;
+    border:1px solid var(--border);
+    text-align:left;
+}
+
+.compare-table th{
+    background:#1c2026;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:950px){
+    .vehicle-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .search-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .filter-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .nav-links{
+        gap:12px;
+    }
+}
+
+@media(max-width:700px){
+    .container{
+        width:92%;
+    }
+
+    .section{
+        padding:65px 0;
+    }
+
+    .navbar{
+        min-height:68px;
+        flex-wrap:wrap;
+    }
+
+    .menu-toggle{
+        display:block;
+    }
+
+    .nav-links{
+        display:none;
+        width:100%;
+        flex-direction:column;
+        align-items:stretch;
+        gap:0;
+        padding-bottom:15px;
+    }
+
+    .nav-links.open{
+        display:flex;
+    }
+
+    .nav-links a{
+        padding:12px 4px;
+        border-bottom:1px solid var(--border);
+    }
+
+    .nav-links .account-link,
+    .nav-links .nav-cta{
+        text-align:center;
+        margin-top:10px;
+    }
+
+    .hero{
+        min-height:550px;
+        background-position:60% center;
+    }
+
+    .hero h1{
+        letter-spacing:-2px;
+    }
+
+    .search-section{
+        margin-top:-25px;
+    }
+
+    .search-grid{
+        grid-template-columns:1fr;
+    }
+
+    .trust-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .trust-item:nth-child(2){
+        border-right:0;
+    }
+
+    .brand-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .brand-card:last-child{
+        grid-column:1/-1;
+    }
+
+    .filter-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .vehicle-grid{
+        grid-template-columns:1fr;
+    }
+
+    .vehicle-image{
+        height:245px;
+    }
+
+    .promo-grid,
+    .path-grid,
+    .about-grid{
+        grid-template-columns:1fr;
+    }
+
+    .about-image{
+        height:260px;
+    }
+
+    .about-content h2{
+        font-size:29px;
+    }
+
+    .footer-content{
+        flex-direction:column;
+    }
+
+    .compare-table{
+        font-size:10px;
+    }
+
+    .compare-table th,
+    .compare-table td{
+        padding:8px 5px;
+    }
+}
+
+@media(max-width:390px){
+    .filter-grid{
+        grid-template-columns:1fr;
+    }
+
+    .vehicle-buttons{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="container navbar">
+
+        <a href="#home" class="logo">
+            TESLA <span>INNOVATION</span>
+        </a>
+
+        <button class="menu-toggle" id="menuToggle"
+        aria-label="Open navigation"
+        aria-expanded="false">☰</button>
+
+        <nav class="nav-links" id="navLinks">
+            <a href="#vehicles">Inventory</a>
+            <a href="#brands">Brands</a>
+            <a href="#vehicles">New Vehicles</a>
+            <a href="#vehicles">Pre-orders</a>
+            <a href="#finance">Finance</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+
+            <a href="customer.html"
+            id="customerAccountLink"
+            class="account-link">LOGIN / ACCOUNT</a>
+
+            <a href="#vehicles" class="nav-cta">EXPLORE CARS</a>
+        </nav>
+
+    </div>
+</header>
+
+<main>
+
+<section class="hero" id="home">
+    <div class="container">
+        <div class="hero-content">
+
+            <div class="eyebrow">
+                GLOBAL AUTOMOTIVE COLLECTION
+            </div>
+
+            <h1>
+                DRIVE THE <span>FUTURE.</span>
+            </h1>
+
+            <p class="hero-description">
+                Discover premium vehicles from Tesla and leading
+                Chinese automotive manufacturers. Explore vehicle
+                options, compare models and begin your international
+                purchase journey with TESLA Innovation.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#vehicles" class="btn btn-red">
+                    BROWSE INVENTORY →
+                </a>
+
+                <a href="#contact" class="btn btn-outline">
+                    CONTACT OUR TEAM
+                </a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<section class="search-section">
+    <div class="container">
+
+        <div class="search-panel">
+
+            <h2>Find Your Next Vehicle</h2>
+
+            <div class="search-grid">
+
+                <input
+                    type="search"
+                    id="globalSearch"
+                    placeholder="Search make, model or vehicle..."
+                    aria-label="Search vehicle inventory"
+                >
+
+                <select id="quickMake">
+                    <option value="all">All manufacturers</option>
+                    <option value="Tesla">Tesla</option>
+                    <option value="MG">MG</option>
+                    <option value="Geely">Geely</option>
+                    <option value="GAC">GAC</option>
+                    <option value="BYD">BYD</option>
+                </select>
+
+                <select id="quickPrice">
+                    <option value="all">Any price</option>
+                    <option value="0-30000">Under $30,000</option>
+                    <option value="30000-50000">$30,000 - $50,000</option>
+                    <option value="50000-100000">$50,000 - $100,000</option>
+                    <option value="100000-999999999">Above $100,000</option>
+                </select>
+
+                <select id="quickAvailability">
+                    <option value="all">All availability</option>
+                    <option value="in_stock">In stock</option>
+                    <option value="limited_stock">Limited stock</option>
+                    <option value="pre_order">Pre-order</option>
+                </select>
+
+            </div>
+
+            <button class="search-submit" id="searchSubmit">
+                SEARCH VEHICLES
+            </button>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="trust-strip">
+    <div class="container trust-grid">
+
+        <div class="trust-item">
+            <strong>FIVE VEHICLE BRANDS</strong>
+            <span>One showroom</span>
+        </div>
+
+        <div class="trust-item">
+            <strong>GLOBAL SOURCING</strong>
+            <span>International vehicle options</span>
+        </div>
+
+        <div class="trust-item">
+            <strong>PERSONALISED SUPPORT</strong>
+            <span>Customer assistance</span>
+        </div>
+
+        <div class="trust-item">
+            <strong>TRANSPARENT ENQUIRIES</strong>
+            <span>Clear purchase information</span>
+        </div>
+
+    </div>
+</section>
+
+<section class="brands-section" id="brands">
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="eyebrow">OUR AUTOMOTIVE COLLECTION</div>
+            <h2>EXPLORE OUR BRANDS</h2>
+            <p>
+                Explore our selected vehicle manufacturers and
+                discover available models in the TESLA Innovation
+                showroom.
+            </p>
+        </div>
+
+        <div class="brand-grid">
+
+            <a href="#vehicles" class="brand-card" data-brand-link="Tesla">
+                <strong>TESLA</strong>
+                <span>Electric mobility</span>
+            </a>
+
+            <a href="#vehicles" class="brand-card" data-brand-link="MG">
+                <strong>MG</strong>
+                <span>Modern automotive</span>
+            </a>
+
+            <a href="#vehicles" class="brand-card" data-brand-link="Geely">
+                <strong>GEELY</strong>
+                <span>Global mobility</span>
+            </a>
+
+            <a href="#vehicles" class="brand-card" data-brand-link="GAC">
+                <strong>GAC</strong>
+                <span>Automotive innovation</span>
+            </a>
+
+            <a href="#vehicles" class="brand-card" data-brand-link="BYD">
+                <strong>BYD</strong>
+                <span>Electric and hybrid vehicles</span>
+            </a>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section inventory-section" id="vehicles">
+    <div class="container">
+
+        <div class="inventory-top">
+            <div class="section-heading">
+                <div class="eyebrow">THE COLLECTION</div>
+                <h2>VEHICLE INVENTORY</h2>
+                <p>
+                    Browse published vehicles, explore specifications
+                    and check availability.
+                </p>
+            </div>
+
+            <div class="inventory-count" id="inventoryCount">
+                Loading inventory...
+            </div>
+        </div>
+
+        <div class="filter-panel">
+
+            <div class="filter-grid">
+
+                <div>
+                    <label class="filter-label" for="filterMake">
+                        MANUFACTURER
+                    </label>
+                    <select id="filterMake">
+                        <option value="all">All manufacturers</option>
+                        <option value="Tesla">Tesla</option>
+                        <option value="MG">MG</option>
+                        <option value="Geely">Geely</option>
+                        <option value="GAC">GAC</option>
+                        <option value="BYD">BYD</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="filter-label" for="filterCondition">
+                        VEHICLE CONDITION
+                    </label>
+                    <select id="filterCondition">
+                        <option value="all">All vehicles</option>
+                        <option value="new">New</option>
+                        <option value="used">Used</option>
+                        <option value="certified">Certified</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="filter-label" for="filterAvailability">
+                        AVAILABILITY
+                    </label>
+                    <select id="filterAvailability">
+                        <option value="all">All availability</option>
+                        <option value="in_stock">In stock</option>
+                        <option value="limited_stock">Limited stock</option>
+                        <option value="pre_order">Pre-order</option>
+                        <option value="out_of_stock">Unavailable</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="filter-label" for="filterFuel">
+                        FUEL TYPE
+                    </label>
+                    <select id="filterFuel">
+                        <option value="all">All fuel types</option>
+                        <option value="electric">Electric</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="petrol">Petrol</option>
+                        <option value="diesel">Diesel</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="filter-label" for="minPrice">
+                        MINIMUM PRICE (USD)
+                    </label>
+                    <input type="number" id="minPrice"
+                    placeholder="Minimum price">
+                </div>
+
+                <div>
+                    <label class="filter-label" for="maxPrice">
+                        MAXIMUM PRICE (USD)
+                    </label>
+                    <input type="number" id="maxPrice"
+                    placeholder="Maximum price">
+                </div>
+
+                <div>
+                    <label class="filter-label" for="filterYear">
+                        MODEL YEAR
+                    </label>
+                    <select id="filterYear">
+                        <option value="all">All years</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="filter-label" for="sortVehicles">
+                        SORT VEHICLES
+                    </label>
+                    <select id="sortVehicles">
+                        <option value="newest">Newest first</option>
+                        <option value="price-low">Price: Low to high</option>
+                        <option value="price-high">Price: High to low</option>
+                        <option value="year">Year: Newest first</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="filter-actions">
+                <span class="inventory-count" id="filterCount">
+                    All published vehicles
+                </span>
+
+                <button class="clear-filters" id="clearFilters">
+                    CLEAR FILTERS
+                </button>
+            </div>
+
+        </div>
+
+        <div class="vehicle-grid" id="vehicleGrid">
+            <div class="empty-message">
+                Loading vehicle inventory...
+            </div>
+        </div>
+
+        <p style="font-size:10px;color:#888;margin-top:22px;line-height:1.8;">
+            Displayed prices and availability are subject to confirmation.
+            Taxes, import duties, registration and delivery costs may apply.
+            Final purchase terms must be confirmed before payment.
+        </p>
+
+    </div>
+</section>
+
+<section class="section promo-section" id="promotions">
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="eyebrow">CUSTOMER OPPORTUNITIES</div>
+            <h2>YOUR VEHICLE JOURNEY</h2>
+            <p>
+                Explore different ways to begin your vehicle purchase.
+            </p>
+        </div>
+
+        <div class="promo-grid">
+
+            <div class="promo-card">
+                <h3>Vehicle Reservations</h3>
+                <p>
+                    Express interest in a selected vehicle and
+                    discuss reservation arrangements with our team.
+                </p>
+            </div>
+
+            <div class="promo-card">
+                <h3>International Sourcing</h3>
+                <p>
+                    Request information about vehicle models,
+                    configurations and international availability.
+                </p>
+            </div>
+
+            <div class="promo-card">
+                <h3>Personalised Offers</h3>
+                <p>
+                    Discuss your preferred budget and vehicle
+                    requirements with our sales team.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section" id="finance">
+    <div class="container">
+
+        <div class="section-heading">
+            <div class="eyebrow">PURCHASE OPTIONS</div>
+            <h2>CHOOSE YOUR NEXT STEP</h2>
+            <p>
+                Whether you are ready to purchase or still comparing
+                options, our team can help you understand the process.
+            </p>
+        </div>
+
+        <div class="path-grid">
+
+            <div class="path-card">
+                <h3>Purchase Enquiry</h3>
+                <p>
+                    Tell us which vehicle you want and where
+                    you would like it delivered.
+                </p>
+                <a href="purchase.html">START PURCHASE →</a>
+            </div>
+
+            <div class="path-card">
+                <h3>Vehicle Negotiation</h3>
+                <p>
+                    Discuss your preferred budget and request
+                    a personalised vehicle offer.
+                </p>
+                <a href="customer.html">CUSTOMER ACCOUNT →</a>
+            </div>
+
+            <div class="path-card">
+                <h3>Customer Account</h3>
+                <p>
+                    Access your customer portal to manage
+                    your vehicle purchase journey.
+                </p>
+                <a href="customer.html">OPEN CUSTOMER PORTAL →</a>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section about-section" id="about">
+    <div class="container about-grid">
+
+        <div class="about-image">
+            <img
+                src="https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1200&q=85"
+                alt="Premium vehicle"
+                loading="lazy"
+            >
+        </div>
+
+        <div class="about-content">
+
+            <div class="eyebrow">ABOUT TESLA INNOVATION</div>
+
+            <h2>PREMIUM VEHICLES. GLOBAL CONNECTIONS.</h2>
+
+            <p>
+                TESLA Innovation is building an international
+                automotive sales platform focused on vehicle
+                discovery, sourcing and customer purchase support.
+            </p>
+
+            <p>
+                Our showroom brings together Tesla and selected
+                Chinese automotive brands, including MG, Geely,
+                GAC and BYD.
+            </p>
+
+            <p>
+                Customers can explore vehicle options, review
+                published information and contact our team
+                directly about purchase arrangements.
+            </p>
+
+        </div>
+
+    </div>
+</section>
+
+<section class="section contact-section" id="contact">
+    <div class="container">
+
+        <div class="eyebrow">WE ARE HERE TO HELP</div>
+
+        <h2>LET'S FIND YOUR NEXT VEHICLE.</h2>
+
+        <p>
+            Have questions about vehicle availability, pricing,
+            international sourcing or delivery? Contact our team
+            and tell us what you are looking for.
+        </p>
+
+        <div class="hero-buttons" style="justify-content:center;">
+            <a href="mailto:teslainnovation65@outlook.com"
+            class="btn btn-red">
+                EMAIL OUR TEAM
+            </a>
+
+            <a href="customer.html"
+            class="btn btn-outline">
+                CUSTOMER PORTAL
+            </a>
+        </div>
+
+    </div>
+</section>
+
+</main>
+
+<footer>
+    <div class="container">
+
+        <div class="footer-content">
+
+            <div>
+                <div class="footer-brand">
+                    TESLA <span>INNOVATION</span>
+                </div>
+
+                <p>
+                    Premium vehicles, international sourcing
+                    and customer purchase support.
+                </p>
+            </div>
+
+            <div class="footer-links">
+                <a href="#home">Home</a>
+                <a href="#vehicles">Inventory</a>
+                <a href="#brands">Brands</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+                <a href="customer.html">Customer Portal</a>
+                <a href="trust.html">Trust Center</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="terms.html">Terms of Service</a>
+                <a href="mailto:teslainnovation65@outlook.com">Support</a>
+            </div>
+
+        </div>
+
+        <div class="copyright">
+            © 2026 TESLA Innovation. All rights reserved.
+            <br>
+            Premium Vehicles. Global Connections. Exceptional Experience.
+        </div>
+
+    </div>
+</footer>
+
+<div class="compare-bar" id="compareBar">
+    <span id="compareCount">0 vehicles selected</span>
+    <button id="openCompare">COMPARE</button>
+    <button id="clearCompare">CLEAR</button>
+</div>
+
+<div class="modal" id="compareModal">
+    <div class="modal-content">
+
+        <div class="modal-header">
+            <h2>Vehicle Comparison</h2>
+            <button id="closeCompare" aria-label="Close comparison">×</button>
+        </div>
+
+        <div id="compareContent"></div>
+
+    </div>
+</div>
+
+<script>
+/* =========================================
+   SUPABASE CONNECTION
+========================================= */
+
+const SUPABASE_URL =
+'https://dnmktpmvjzsxzmgizdcv.supabase.co';
+
+const SUPABASE_KEY =
+'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+
+const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+/* =========================================
+   SAFE DISPLAY
+========================================= */
+
+function escapeHTML(value){
+    return String(value ?? '').replace(/[&<>"']/g,char=>{
+        return {
+            '&':'&amp;',
+            '<':'&lt;',
+            '>':'&gt;',
+            '"':'&quot;',
+            "'":'&#39;'
+        }[char];
+    });
+}
+
+/* =========================================
+   CUSTOMER ACCOUNT NAVIGATION
+========================================= */
+
+const customerAccountLink =
+document.getElementById('customerAccountLink');
+
+async function updateCustomerNavigation(){
+
+    try{
+
+        const {data,error} = await db.auth.getSession();
+
+        if(error) throw error;
+
+        if(data.session){
+            customerAccountLink.textContent='MY DASHBOARD';
+        }else{
+            customerAccountLink.textContent='LOGIN / CREATE ACCOUNT';
+        }
+
+    }catch(error){
+
+        console.error('Account check:',error);
+
+    }
+
+}
+
+updateCustomerNavigation();
+
+db.auth.onAuthStateChange(()=>{
+    updateCustomerNavigation();
+});
+
+/* =========================================
+   MOBILE MENU
+========================================= */
+
+const menuToggle =
+document.getElementById('menuToggle');
+
+const navLinks =
+document.getElementById('navLinks');
+
+menuToggle.addEventListener('click',()=>{
+
+    const opened=navLinks.classList.toggle('open');
+
+    menuToggle.textContent=opened?'×':'☰';
+
+    menuToggle.setAttribute(
+        'aria-expanded',
+        String(opened)
+    );
+
+});
+
+navLinks.querySelectorAll('a').forEach(link=>{
+
+    link.addEventListener('click',()=>{
+        navLinks.classList.remove('open');
+        menuToggle.textContent='☰';
+        menuToggle.setAttribute('aria-expanded','false');
+    });
+
+});
+
+/* =========================================
+   INVENTORY DATA
+========================================= */
+
+const fallbackImages = {
+
+    'Model 3':
+    'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85',
+
+    'Model Y':
+    'https://images.unsplash.com/photo-1617469767053-d3b523a0b982?auto=format&fit=crop&w=1000&q=85',
+
+    'Model S':
+    'https://images.unsplash.com/photo-1561580125-028ee3bd62eb?auto=format&fit=crop&w=1000&q=85',
+
+    'Model X':
+    'https://images.unsplash.com/photo-1617788138017-80ad40651399?auto=format&fit=crop&w=1000&q=85',
+
+    'Cybertruck':
+    'https://images.unsplash.com/photo-1677759987701-8e6b0c7c0e8e?auto=format&fit=crop&w=1000&q=85'
+
+};
+
+let vehicles=[];
+let comparison=[];
+let savedVehicles=JSON.parse(
+    localStorage.getItem('teslaInnovationSavedVehicles') || '[]'
+);
+
+/* =========================================
+   DETERMINE VEHICLE BRAND
+========================================= */
+
+function getBrand(vehicle){
+
+    const suppliedBrand=String(
+        vehicle.brand || vehicle.make || ''
+    ).trim();
+
+    if(suppliedBrand){
+        const normalized=suppliedBrand.toLowerCase();
+
+        if(normalized.includes('tesla')) return 'Tesla';
+        if(normalized==='mg' || normalized.includes('motor')) {
+            if(normalized.includes('mg')) return 'MG';
+        }
+        if(normalized.includes('geely')) return 'Geely';
+        if(normalized.includes('gac')) return 'GAC';
+        if(normalized.includes('byd')) return 'BYD';
+    }
+
+    const text=(
+        String(vehicle.model || '')+' '+
+        String(vehicle.variant || '')
+    ).toLowerCase();
+
+    if(
+        text.includes('tesla') ||
+        /model\s*[3ysx]/i.test(text) ||
+        text.includes('cybertruck')
+    ){
+        return 'Tesla';
+    }
+
+    if(/\bmg\b/i.test(text)) return 'MG';
+    if(text.includes('geely')) return 'Geely';
+    if(/\bgac\b/i.test(text)) return 'GAC';
+    if(/\bbyd\b/i.test(text)) return 'BYD';
+
+    return 'Other';
+}
+
+/* =========================================
+   AVAILABILITY
+========================================= */
+
+function getAvailability(vehicle){
+
+    const status=vehicle.availability || 'pre_order';
+
+    const labels={
+        in_stock:'AVAILABLE STOCK',
+        limited_stock:'LIMITED STOCK',
+        pre_order:'PRE-ORDER',
+        out_of_stock:'CURRENTLY UNAVAILABLE'
+    };
+
+    const classes={
+        in_stock:'stock-in',
+        limited_stock:'stock-limited',
+        pre_order:'stock-pre',
+        out_of_stock:'stock-out'
+    };
+
+    return {
+        label:labels[status] || 'ENQUIRE FOR AVAILABILITY',
+        className:classes[status] || 'stock-pre'
+    };
+
+}
+
+/* =========================================
+   LOAD INVENTORY
+========================================= */
+
+async function loadVehicles(){
+
+    const grid=document.getElementById('vehicleGrid');
+
+    grid.innerHTML=
+    '<div class="empty-message">Loading vehicle inventory...</div>';
+
+    try{
+
+        const {data,error}=await db
+            .from('vehicles')
+            .select('*')
+            .eq('is_published',true)
+            .order('created_at',{ascending:false});
+
+        if(error) throw error;
+
+        vehicles=data || [];
+
+        populateYearFilter();
+
+        renderVehicles();
+
+    }catch(error){
+
+        console.error('Inventory error:',error);
+
+        grid.innerHTML=
+        '<div class="empty-message">Vehicle inventory is temporarily unavailable. Please try again later.</div>';
+
+        document.getElementById('inventoryCount').textContent=
+        'Inventory unavailable';
+
+    }
+
+}
+
+/* =========================================
+   YEAR FILTER
+========================================= */
+
+function populateYearFilter(){
+
+    const select=document.getElementById('filterYear');
+
+    const years=[...new Set(
+        vehicles
+        .map(v=>Number(v.year))
+        .filter(y=>y>1900)
+    )].sort((a,b)=>b-a);
+
+    select.innerHTML='<option value="all">All years</option>';
+
+    years.forEach(year=>{
+
+        const option=document.createElement('option');
+
+        option.value=String(year);
+        option.textContent=String(year);
+
+        select.appendChild(option);
+
+    });
+
+}
+
+/* =========================================
+   FILTER INVENTORY
+========================================= */
+
+function getFilteredVehicles(){
+
+    const search=(
+        document.getElementById('globalSearch').value ||
+        ''
+    ).toLowerCase().trim();
+
+    const make=document.getElementById('filterMake').value;
+
+    const availability=
+    document.getElementById('filterAvailability').value;
+
+    const condition=
+    document.getElementById('filterCondition').value;
+
+    const fuel=
+    document.getElementById('filterFuel').value;
+
+    const minPrice=Number(
+        document.getElementById('minPrice').value
+    ) || 0;
+
+    const maxPrice=Number(
+        document.getElementById('maxPrice').value
+    ) || Infinity;
+
+    const year=document.getElementById('filterYear').value;
+
+    let filtered=vehicles.filter(vehicle=>{
+
+        const brand=getBrand(vehicle);
+
+        const model=String(vehicle.model || '').toLowerCase();
+
+        const variant=String(vehicle.variant || '').toLowerCase();
+
+        const description=String(
+            vehicle.description || ''
+        ).toLowerCase();
+
+        const matchesSearch=
+        !search ||
+        brand.toLowerCase().includes(search) ||
+        model.includes(search) ||
+        variant.includes(search) ||
+        description.includes(search);
+
+        const matchesMake=
+        make==='all' || brand===make;
+
+        const matchesAvailability=
+        availability==='all' ||
+        vehicle.availability===availability;
+
+        const price=Number(vehicle.selling_price || 0);
+
+        const matchesPrice=
+        price>=minPrice && price<=maxPrice;
+
+        const matchesYear=
+        year==='all' ||
+        String(vehicle.year || '')===year;
+
+        const vehicleCondition=String(
+            vehicle.condition || 'new'
+        ).toLowerCase();
+
+        const matchesCondition=
+        condition==='all' ||
+        vehicleCondition===condition;
+
+        const vehicleFuel=String(
+            vehicle.fuel_type || vehicle.fuel || ''
+        ).toLowerCase();
+
+        const matchesFuel=
+        fuel==='all' ||
+        vehicleFuel===fuel;
+
+        return matchesSearch &&
+        matchesMake &&
+        matchesAvailability &&
+        matchesPrice &&
+        matchesYear &&
+        matchesCondition &&
+        matchesFuel;
+
+    });
+
+    const sort=document.getElementById('sortVehicles').value;
+
+    if(sort==='price-low'){
+        filtered.sort((a,b)=>
+            Number(a.selling_price || 0)-
+            Number(b.selling_price || 0)
+        );
+    }
+
+    if(sort==='price-high'){
+        filtered.sort((a,b)=>
+            Number(b.selling_price || 0)-
+            Number(a.selling_price || 0)
+        );
+    }
+
+    if(sort==='year'){
+        filtered.sort((a,b)=>
+            Number(b.year || 0)-Number(a.year || 0)
+        );
+    }
+
+    if(sort==='newest'){
+        filtered.sort((a,b)=>
+            new Date(b.created_at || 0)-
+            new Date(a.created_at || 0)
+        );
+    }
+
+    return filtered;
+
+}
+
+/* =========================================
+   RENDER VEHICLES
+========================================= */
+
+function renderVehicles(){
+
+    const grid=document.getElementById('vehicleGrid');
+
+    const filtered=getFilteredVehicles();
+
+    document.getElementById('inventoryCount').textContent=
+    vehicles.length+' published vehicle(s)';
+
+    document.getElementById('filterCount').textContent=
+    filtered.length+' matching vehicle(s)';
+
+    grid.innerHTML='';
+
+    if(filtered.length===0){
+
+        grid.innerHTML=
+        '<div class="empty-message">No published vehicles match these filters. Try changing your search.</div>';
+
+        return;
+
+    }
+
+    filtered.forEach(vehicle=>{
+
+        const images=Array.isArray(vehicle.image_urls)
+        ?vehicle.image_urls:[];
+
+        const image=images[0] ||
+        fallbackImages[vehicle.model] ||
+        '';
+
+        const brand=getBrand(vehicle);
+
+        const availability=getAvailability(vehicle);
+
+        const price=Number(
+            vehicle.selling_price || 0
+        );
+
+        const formattedPrice=price>0
+        ?'$'+price.toLocaleString('en-US')
+        :'Contact for price';
+
+        const specs=[];
+
+        if(vehicle.year) specs.push(vehicle.year);
+
+        if(vehicle.mileage!==undefined && vehicle.mileage!==null){
+            specs.push(Number(vehicle.mileage).toLocaleString()+' mi');
+        }
+
+        if(vehicle.fuel_type || vehicle.fuel){
+            specs.push(vehicle.fuel_type || vehicle.fuel);
+        }
+
+        if(vehicle.transmission){
+            specs.push(vehicle.transmission);
+        }
+
+        const card=document.createElement('article');
+
+        card.className='vehicle-card';
+
+        card.innerHTML=`
+
+            <div class="vehicle-image">
+
+                ${image?`
+                <img
+                    src="${escapeHTML(image)}"
+                    alt="${escapeHTML(brand+' '+vehicle.model)}"
+                    loading="lazy"
+                >
+                `:''}
+
+                <span class="stock-badge ${availability.className}">
+                    ${availability.label}
+                </span>
+
+                <span class="brand-badge">
+                    ${escapeHTML(brand)}
+                </span>
+
+            </div>
+
+            <div class="vehicle-info">
+
+                <h3>${escapeHTML(vehicle.model)}</h3>
+
+                <div class="vehicle-variant">
+                    ${escapeHTML(vehicle.variant || brand+' vehicle')}
+                </div>
+
+                <div class="vehicle-price">
+                    ${formattedPrice}
+                    ${price>0?'<small>USD</small>':''}
+                </div>
+
+                <div class="vehicle-specs">
+                    ${specs.length
+                    ?specs.map(s=>'<span>'+escapeHTML(s)+'</span>').join('')
+                    :'<span>Specifications available on request</span>'}
+                </div>
+
+                <p class="vehicle-description">
+                    ${escapeHTML(vehicle.description || 'Contact our team for full specifications and availability.')}
+                </p>
+
+                <div class="vehicle-buttons">
+
+                    <button
+                        class="buy-button"
+                        data-action="buy"
+                        data-id="${escapeHTML(vehicle.id)}">
+                        VIEW / BUY
+                    </button>
+
+                    <button
+                        class="compare-button"
+                        data-action="compare"
+                        data-id="${escapeHTML(vehicle.id)}">
+                        COMPARE
+                    </button>
+
+                </div>
+
+                <div class="card-secondary">
+
+                    <button
+                        data-action="save"
+                        data-id="${escapeHTML(vehicle.id)}">
+                        ${savedVehicles.includes(vehicle.id)
+                        ?'♥ SAVED':'♡ SAVE VEHICLE'}
+                    </button>
+
+                    <button
+                        data-action="negotiate"
+                        data-id="${escapeHTML(vehicle.id)}">
+                        ENQUIRE / NEGOTIATE
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+/* =========================================
+   FILTER EVENTS
+========================================= */
+
+const filterIds=[
+    'globalSearch',
+    'filterMake',
+    'filterAvailability',
+    'filterCondition',
+    'filterFuel',
+    'minPrice',
+    'maxPrice',
+    'filterYear',
+    'sortVehicles'
+];
+
+filterIds.forEach(id=>{
+
+    const element=document.getElementById(id);
+
+    element.addEventListener('input',renderVehicles);
+
+    element.addEventListener('change',renderVehicles);
+
+});
+
+/* =========================================
+   QUICK SEARCH
+========================================= */
+
+document.getElementById('searchSubmit')
+.addEventListener('click',()=>{
+
+    document.getElementById('filterMake').value=
+    document.getElementById('quickMake').value;
+
+    document.getElementById('filterAvailability').value=
+    document.getElementById('quickAvailability').value;
+
+    const price=document.getElementById('quickPrice').value;
+
+    if(price==='all'){
+
+        document.getElementById('minPrice').value='';
+        document.getElementById('maxPrice').value='';
+
+    }else{
+
+        const parts=price.split('-');
+
+        document.getElementById('minPrice').value=parts[0];
+        document.getElementById('maxPrice').value=parts[1];
+
+    }
+
+    renderVehicles();
+
+    document.getElementById('vehicles').scrollIntoView({
+        behavior:'smooth'
+    });
+
+});
+
+document.getElementById('globalSearch')
+.addEventListener('keydown',event=>{
+
+    if(event.key==='Enter'){
+        document.getElementById('searchSubmit').click();
+    }
+
+});
+
+/* =========================================
+   BRAND SHORTCUTS
+========================================= */
+
+document.querySelectorAll('[data-brand-link]')
+.forEach(link=>{
+
+    link.addEventListener('click',()=>{
+
+        const brand=link.dataset.brandLink;
+
+        document.getElementById('filterMake').value=brand;
+
+        renderVehicles();
+
+    });
+
+});
+
+/* =========================================
+   CLEAR FILTERS
+========================================= */
+
+document.getElementById('clearFilters')
+.addEventListener('click',()=>{
+
+    document.getElementById('globalSearch').value='';
+
+    document.getElementById('quickMake').value='all';
+
+    document.getElementById('quickPrice').value='all';
+
+    document.getElementById('quickAvailability').value='all';
+
+    document.getElementById('filterMake').value='all';
+
+    document.getElementById('filterCondition').value='all';
+
+    document.getElementById('filterAvailability').value='all';
+
+    document.getElementById('filterFuel').value='all';
+
+    document.getElementById('minPrice').value='';
+
+    document.getElementById('maxPrice').value='';
+
+    document.getElementById('filterYear').value='all';
+
+    document.getElementById('sortVehicles').value='newest';
+
+    renderVehicles();
+
+});
+
+/* =========================================
+   VEHICLE ACTIONS
+========================================= */
+
+document.getElementById('vehicleGrid')
+.addEventListener('click',event=>{
+
+    const button=event.target.closest('button[data-action]');
+
+    if(!button) return;
+
+    const id=button.dataset.id;
+
+    const vehicle=vehicles.find(v=>String(v.id)===String(id));
+
+    if(!vehicle) return;
+
+    const action=button.dataset.action;
+
+    if(action==='buy'){
+
+        window.location.href=
+        'purchase.html?vehicle='+encodeURIComponent(id);
+
+    }
+
+    if(action==='negotiate'){
+
+        window.location.href=
+        'customer.html';
+
+    }
+
+    if(action==='save'){
+
+        if(savedVehicles.includes(id)){
+
+            savedVehicles=savedVehicles.filter(item=>item!==id);
+
+        }else{
+
+            savedVehicles.push(id);
+
+        }
+
+        localStorage.setItem(
+            'teslaInnovationSavedVehicles',
+            JSON.stringify(savedVehicles)
+        );
+
+        renderVehicles();
+
+    }
+
+    if(action==='compare'){
+
+        if(comparison.includes(id)){
+
+            comparison=comparison.filter(item=>item!==id);
+
+        }else if(comparison.length>=3){
+
+            alert('You can compare up to three vehicles at a time.');
+
+            return;
+
+        }else{
+
+            comparison.push(id);
+
+        }
+
+        updateCompareBar();
+
+        renderVehicles();
+
+    }
+
+});
+
+/* =========================================
+   VEHICLE COMPARISON
+========================================= */
+
+const compareBar=document.getElementById('compareBar');
+
+function updateCompareBar(){
+
+    document.getElementById('compareCount').textContent=
+    comparison.length+' vehicle(s) selected';
+
+    compareBar.classList.toggle(
+        'visible',
+        comparison.length>0
+    );
+
+}
+
+document.getElementById('clearCompare')
+.addEventListener('click',()=>{
+
+    comparison=[];
+
+    updateCompareBar();
+
+    renderVehicles();
+
+});
+
+document.getElementById('openCompare')
+.addEventListener('click',()=>{
+
+    if(comparison.length<2){
+
+        alert('Select at least two vehicles to compare.');
+
+        return;
+
+    }
+
+    const selected=vehicles.filter(v=>
+        comparison.includes(String(v.id))
+    );
+
+    const rows=[
+        ['Manufacturer',v=>getBrand(v)],
+        ['Model',v=>v.model],
+        ['Variant',v=>v.variant || 'Not specified'],
+        ['Year',v=>v.year || 'Not specified'],
+        ['Price',v=>v.selling_price
+            ?'$'+Number(v.selling_price).toLocaleString()
+            :'Contact for price'],
+        ['Availability',v=>getAvailability(v).label],
+        ['Fuel type',v=>v.fuel_type || v.fuel || 'Not specified'],
+        ['Transmission',v=>v.transmission || 'Not specified'],
+        ['Mileage',v=>v.mileage!==undefined
+            ?Number(v.mileage).toLocaleString()
+            :'Not specified']
+    ];
+
+    let html='<div style="overflow-x:auto;"><table class="compare-table">';
+
+    html+='<tr><th>Specification</th>';
+
+    selected.forEach(v=>{
+        html+='<th>'+escapeHTML(v.model)+'</th>';
+    });
+
+    html+='</tr>';
+
+    rows.forEach(row=>{
+
+        html+='<tr><th>'+escapeHTML(row[0])+'</th>';
+
+        selected.forEach(v=>{
+            html+='<td>'+escapeHTML(row[1](v))+'</td>';
+        });
+
+        html+='</tr>';
+
+    });
+
+    html+='</table></div>';
+
+    document.getElementById('compareContent').innerHTML=html;
+
+    document.getElementById('compareModal').classList.add('open');
+
+});
+
+document.getElementById('closeCompare')
+.addEventListener('click',()=>{
+    document.getElementById('compareModal').classList.remove('open');
+});
+
+document.getElementById('compareModal')
+.addEventListener('click',event=>{
+
+    if(event.target.id==='compareModal'){
+        event.currentTarget.classList.remove('open');
+    }
+
+});
+
+/* =========================================
+   START WEBSITE
+========================================= */
+
+loadVehicles();
+
+</script>
+
+<script src="customer-auth.js"></script>
+
+</body>
+</html>
 .hero{
 min-height:690px;
 position:relative;
