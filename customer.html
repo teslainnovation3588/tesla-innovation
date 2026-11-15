@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080808">
+<meta name="description" content="TESLA Innovation Customer Portal. Manage your vehicle orders and track international deliveries.">
 <title>Customer Portal | TESLA Innovation</title>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -55,7 +56,7 @@ h1{
 
 .subtitle{
     color:#999;
-    margin-bottom:30px;
+    margin-bottom:25px;
     line-height:1.6;
 }
 
@@ -145,7 +146,7 @@ input:focus{border-color:#e82127}
     margin-top:15px;
 }
 
-.order h3{margin-bottom:12px}
+.order h3{margin-bottom:12px;font-size:18px}
 
 .order p{
     color:#aaa;
@@ -183,6 +184,59 @@ input:focus{border-color:#e82127}
     line-height:1.5;
 }
 
+.dashboard-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin:20px 0 25px;
+}
+
+.action-link{
+    display:inline-block;
+    padding:13px 19px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:13px;
+    font-weight:bold;
+    text-align:center;
+}
+
+.track-action{
+    background:#e82127;
+    color:#fff;
+}
+
+.vehicle-action{
+    background:#292929;
+    color:#fff;
+    border:1px solid #444;
+}
+
+.order-link{
+    display:inline-block;
+    margin-top:15px;
+    padding:11px 15px;
+    background:#e82127;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.carrier-link{
+    display:inline-block;
+    margin-top:12px;
+    color:#ff6268;
+    font-size:13px;
+}
+
+.empty-state{
+    color:#999;
+    padding:18px 0;
+    font-size:14px;
+}
+
 footer{
     text-align:center;
     color:#666;
@@ -195,6 +249,7 @@ footer{
     .container{margin-top:25px}
     .card{padding:20px}
     h1{font-size:26px}
+    .dashboard-actions a{flex:1}
 }
 </style>
 </head>
@@ -208,13 +263,15 @@ footer{
 
 <main class="container">
 
+    <!-- CUSTOMER AUTHENTICATION -->
+
     <section id="authSection">
 
         <h1>Customer Portal</h1>
 
         <p class="subtitle">
             Access your account, manage your vehicle orders
-            and follow your delivery progress.
+            and follow your international delivery progress.
         </p>
 
         <div class="return-notice" id="returnNotice">
@@ -304,8 +361,11 @@ footer{
             </form>
 
         </div>
+
     </section>
 
+
+    <!-- CUSTOMER DASHBOARD -->
 
     <section id="dashboardSection" class="dashboard">
 
@@ -313,12 +373,27 @@ footer{
 
         <p class="subtitle" id="customerEmail"></p>
 
+        <div class="dashboard-actions">
+
+            <a href="tracking.html"
+               class="action-link track-action">
+                TRACK MY ORDERS →
+            </a>
+
+            <a href="vehicles.html"
+               class="action-link vehicle-action">
+                EXPLORE VEHICLES
+            </a>
+
+        </div>
+
         <div class="card">
 
             <h2>Your Vehicle Orders</h2>
 
             <p class="subtitle">
-                View your order details and delivery progress.
+                View your purchase information, payment status
+                and delivery progress.
             </p>
 
             <div id="ordersList">
@@ -337,7 +412,7 @@ footer{
 
 <footer>
     TESLA Innovation © 2026<br><br>
-    Premium electric vehicle sales, vehicle sourcing
+    Premium vehicle sales, vehicle sourcing
     and international purchase enquiries.
 </footer>
 
@@ -359,10 +434,10 @@ const db = window.supabase.createClient(
 const RETURN_KEY = 'tesla_pending_customer_action';
 
 const messageBox = document.getElementById('message');
-
 const returnNotice = document.getElementById('returnNotice');
 
 let redirecting = false;
+let currentCustomer = null;
 
 
 /* =====================================
@@ -464,7 +539,6 @@ function redirectToPendingAction(){
     if(!safePath){
 
         localStorage.removeItem(RETURN_KEY);
-
         return false;
 
     }
@@ -528,11 +602,7 @@ async function completeLogin(user){
 
     if(!user) return;
 
-    /*
-       If the customer came from Buy Now,
-       Negotiation, Enquiry or Live Chat,
-       return them to that destination.
-    */
+    currentCustomer = user;
 
     if(redirectToPendingAction()){
         return;
@@ -564,7 +634,6 @@ document.getElementById('registerForm')
     const button = this.querySelector('button');
 
     button.disabled = true;
-
     button.textContent = 'CREATING ACCOUNT...';
 
     try{
@@ -619,7 +688,6 @@ document.getElementById('registerForm')
     }finally{
 
         button.disabled = false;
-
         button.textContent = 'CREATE ACCOUNT';
 
     }
@@ -645,7 +713,6 @@ document.getElementById('loginForm')
     const button = this.querySelector('button');
 
     button.disabled = true;
-
     button.textContent = 'LOGGING IN...';
 
     try{
@@ -668,7 +735,6 @@ document.getElementById('loginForm')
     }finally{
 
         button.disabled = false;
-
         button.textContent = 'LOG IN';
 
     }
@@ -729,6 +795,8 @@ async function forgotPassword(){
 
 async function loadDashboard(user){
 
+    currentCustomer = user;
+
     document.getElementById('authSection').style.display = 'none';
 
     document.getElementById('dashboardSection').style.display = 'block';
@@ -737,6 +805,25 @@ async function loadDashboard(user){
         'Signed in as ' + user.email;
 
     await loadOrders(user.id);
+
+}
+
+
+/* =====================================
+   SAFE ELEMENT CREATION
+===================================== */
+
+function createTextElement(tag,className,text){
+
+    const element = document.createElement(tag);
+
+    if(className){
+        element.className = className;
+    }
+
+    element.textContent = text;
+
+    return element;
 
 }
 
@@ -781,17 +868,21 @@ async function loadOrders(customerId){
 
     if(!data || data.length === 0){
 
-        list.innerHTML = `
-            <p style="color:#999;margin-top:20px;">
-                You currently have no vehicle orders linked to this account.
-            </p>
-        `;
+        list.replaceChildren();
+
+        list.appendChild(
+            createTextElement(
+                'p',
+                'empty-state',
+                'You currently have no vehicle orders linked to this account.'
+            )
+        );
 
         return;
 
     }
 
-    list.innerHTML = '';
+    list.replaceChildren();
 
     data.forEach(order=>{
 
@@ -799,12 +890,14 @@ async function loadOrders(customerId){
 
         card.className = 'order';
 
-        const title = document.createElement('h3');
-
-        title.textContent =
-            order.vehicle_name || 'Vehicle order';
+        const title = createTextElement(
+            'h3',
+            '',
+            order.vehicle_name || 'Vehicle order'
+        );
 
         card.appendChild(title);
+
 
         const fields = [
 
@@ -828,42 +921,82 @@ async function loadOrders(customerId){
 
             if(!value) return;
 
-            const p = document.createElement('p');
-
-            p.textContent = label + ': ' + value;
+            const p = createTextElement(
+                'p',
+                '',
+                label + ': ' + value
+            );
 
             card.appendChild(p);
 
         });
 
-        const status = document.createElement('span');
 
-        status.className = 'status';
-
-        status.textContent =
-            order.order_status || 'Status pending';
+        const status = createTextElement(
+            'span',
+            'status',
+            order.order_status || 'Status pending'
+        );
 
         card.appendChild(status);
 
+
+        /*
+          Dedicated full tracking page.
+          The tracking page independently checks
+          the signed-in customer's order access.
+        */
+
+        const trackingButton = document.createElement('a');
+
+        trackingButton.href = 'tracking.html';
+
+        trackingButton.className = 'order-link';
+
+        trackingButton.textContent = 'VIEW FULL DELIVERY TRACKING →';
+
+        card.appendChild(trackingButton);
+
+
+        /*
+          External carrier tracking link.
+          Only HTTP and HTTPS URLs are accepted.
+        */
+
         if(order.tracking_url){
 
-            const link = document.createElement('a');
+            try{
 
-            link.href = order.tracking_url;
+                const carrierURL = new URL(order.tracking_url);
 
-            link.target = '_blank';
+                if(
+                    carrierURL.protocol === 'https:' ||
+                    carrierURL.protocol === 'http:'
+                ){
 
-            link.rel = 'noopener noreferrer';
+                    const link = document.createElement('a');
 
-            link.textContent = 'Track Shipment';
+                    link.href = carrierURL.href;
 
-            link.style.display = 'block';
+                    link.target = '_blank';
 
-            link.style.color = '#e82127';
+                    link.rel = 'noopener noreferrer';
 
-            link.style.marginTop = '15px';
+                    link.className = 'carrier-link';
 
-            card.appendChild(link);
+                    link.textContent = 'OPEN SHIPPING CARRIER TRACKING ↗';
+
+                    link.style.display = 'block';
+
+                    card.appendChild(link);
+
+                }
+
+            }catch(error){
+
+                console.warn('Invalid carrier tracking URL.');
+
+            }
 
         }
 
@@ -889,6 +1022,8 @@ async function logout(){
         return;
 
     }
+
+    currentCustomer = null;
 
     document.getElementById('dashboardSection').style.display = 'none';
 
@@ -941,10 +1076,22 @@ db.auth.onAuthStateChange((event,session)=>{
 
     }
 
+    if(event === 'SIGNED_OUT'){
+
+        currentCustomer = null;
+
+        document.getElementById('dashboardSection').style.display = 'none';
+
+        document.getElementById('authSection').style.display = 'block';
+
+    }
+
 });
 
 
-/* START CUSTOMER PORTAL */
+/* =====================================
+   START CUSTOMER PORTAL
+===================================== */
 
 initialize();
 
