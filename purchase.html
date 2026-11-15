@@ -25,7 +25,7 @@ h1{font-size:30px;margin:10px 0 22px}
 .vehicle-title{font-size:23px;margin-top:18px}
 .variant{color:#aaa;font-size:13px}
 .line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #333}
-.line strong{text-align:right}
+.line strong{text-align:right;overflow-wrap:anywhere}
 .total{font-size:19px;font-weight:bold}
 .note{background:#1a1d22;border-left:3px solid #e82127;padding:14px;margin-top:18px;font-size:13px;color:#ddd}
 label{display:block;font-size:12px;margin:13px 0 5px;color:#ddd}
@@ -38,14 +38,19 @@ textarea{min-height:75px}
 .payment-option small{display:block;color:#aaa;font-size:12px;margin-top:3px}
 button{width:100%;margin-top:18px;padding:15px;background:#e82127;color:white;border:0;border-radius:5px;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
-.status{font-size:13px;margin-top:13px}
+.status{font-size:13px;margin-top:13px;overflow-wrap:anywhere}
 .support{font-size:13px;margin-top:16px}
 .support a{color:#ff656a}
 .security{font-size:12px;color:#aaa;margin-top:13px}
 footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px solid #333}
 #authLoading{position:fixed;inset:0;z-index:100;background:#08090b;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}
 .auth-box{max-width:400px}
-@media(max-width:760px){.layout{grid-template-columns:1fr;padding:24px 0}.panel{padding:18px}.vehicle-image{height:210px}}
+.currency-caption{font-size:11px;color:#999;margin-top:7px}
+@media(max-width:760px){
+ .layout{grid-template-columns:1fr;padding:24px 0}
+ .panel{padding:18px}
+ .vehicle-image{height:210px}
+}
 </style>
 </head>
 
@@ -114,6 +119,10 @@ footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px s
   <option value="CHF">Swiss Franc (CHF)</option>
   <option value="SGD">Singapore Dollar (SGD)</option>
  </select>
+
+ <p class="currency-caption" id="rateStatus">
+  Preparing exchange rates...
+ </p>
 
  <div class="note">
   Converted prices are estimates based on exchange rates. Your vehicle's original listing currency remains unchanged. Final pricing, taxes, delivery and payment arrangements will be confirmed before payment.
@@ -199,7 +208,6 @@ footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px s
 
 const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
 const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
-
 const CHECKOUT_URL=SUPABASE_URL+'/functions/v1/stripe-checkout-test';
 
 const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
@@ -209,59 +217,133 @@ let customer=null;
 let vehicle=null;
 let rates={};
 let rateLoaded=false;
+let rateRequestNumber=0;
 
 const vehicleId=new URLSearchParams(location.search).get('vehicle');
 
 function getCurrency(car){
  if(car.currency)return String(car.currency).toUpperCase();
 
- const text=((car.model||'')+' '+(car.variant||'')+' '+(car.description||'')).toLowerCase();
+ const text=(
+  (car.model||'')+' '+
+  (car.variant||'')+' '+
+  (car.description||'')
+ ).toLowerCase();
 
  if(/\b(mg|geely|gac|byd)\b/.test(text))return 'CNY';
+
  return 'USD';
 }
 
 function formatMoney(value,currency){
+ const code=String(currency||'USD').toUpperCase();
+
  try{
   return new Intl.NumberFormat('en-US',{
    style:'currency',
-   currency:currency,
+   currency:code,
    maximumFractionDigits:2
   }).format(Number(value)||0);
- }catch(e){
-  return Number(value||0).toLocaleString()+' '+currency;
+ }catch(error){
+  return Number(value||0).toLocaleString()+' '+code;
  }
 }
 
+/*
+ Use the same currency preference as vehicles.html.
+ The second key supports the earlier checkout preference.
+*/
+function getSavedCurrency(){
+ return localStorage.getItem('teslaDisplayCurrency')||
+        localStorage.getItem('tesla_display_currency')||
+        'NGN';
+}
+
+function saveCurrencyPreference(currency){
+ localStorage.setItem('teslaDisplayCurrency',currency);
+ localStorage.setItem('tesla_display_currency',currency);
+}
+
+/* CUSTOMER AUTHENTICATION */
+async function checkCustomer(){
+ const {data,error}=await db.auth.getUser();
+
+ if(error||!data.user){
+  const destination=location.pathname+location.search+location.hash;
+
+  localStorage.setItem(
+   'tesla_pending_customer_action',
+   destination
+  );
+
+  location.replace(
+   'customer.html?returnTo='+encodeURIComponent(destination)
+  );
+
+  return false;
+ }
+
+ customer=data.user;
+ $('email').value=customer.email||'';
+
+ return true;
+}
+
+/* EXCHANGE RATES */
 async function loadRates(){
+ if(!vehicle)return;
+
+ const requestNumber=++rateRequestNumber;
  const target=$('displayCurrency').value;
  const base=getCurrency(vehicle);
+
+ rateLoaded=false;
+ rates={};
 
  if(target===base){
   rates[target]=1;
   rateLoaded=true;
+  $('rateStatus').textContent='Original and display currencies are the same.';
   updatePrices();
   return;
  }
 
+ $('rateStatus').textContent='Updating exchange rates...';
+
  try{
-  const response=await fetch('https://open.er-api.com/v6/latest/'+base);
+  const response=await fetch(
+   'https://open.er-api.com/v6/latest/'+encodeURIComponent(base),
+   {cache:'no-store'}
+  );
+
   const data=await response.json();
 
-  if(!response.ok||data.result!=='success')throw new Error('Exchange rate unavailable');
+  if(!response.ok||data.result!=='success'||!data.rates){
+   throw new Error('Exchange-rate data unavailable.');
+  }
 
-  rates=data.rates||{};
+  if(requestNumber!==rateRequestNumber)return;
+
+  rates=data.rates;
   rateLoaded=true;
+
+  $('rateStatus').textContent=
+   'Exchange rates loaded. Converted prices are estimates.';
+
   updatePrices();
 
  }catch(error){
+  if(requestNumber!==rateRequestNumber)return;
+
   console.warn('Exchange rate error:',error);
+
   rateLoaded=false;
-  $('localPrice').textContent='Rate unavailable';
-  $('total').textContent=formatMoney(vehicle.selling_price,base);
-  $('payableAmount').textContent=formatMoney(
-   getPayableAmount(),base
-  );
+  rates={};
+
+  $('rateStatus').textContent=
+   'Exchange rate unavailable. Original listing prices are shown instead.';
+
+  updatePrices();
  }
 }
 
@@ -270,19 +352,28 @@ function convert(value){
  const target=$('displayCurrency').value;
 
  if(base===target)return Number(value)||0;
- if(!rateLoaded||!rates[target])return null;
 
- return (Number(value)||0)*rates[target];
+ if(!rateLoaded||!Number.isFinite(Number(rates[target]))){
+  return null;
+ }
+
+ return (Number(value)||0)*Number(rates[target]);
 }
 
+/* PAYMENT CALCULATIONS */
 function getPayableAmount(){
  if(!vehicle)return 0;
 
  const price=Number(vehicle.selling_price)||0;
  const percentage=Number(vehicle.deposit_percentage??30);
- const choice=document.querySelector('input[name="paymentChoice"]:checked')?.value;
 
- return choice==='full'?price:price*percentage/100;
+ const choice=document.querySelector(
+  'input[name="paymentChoice"]:checked'
+ )?.value;
+
+ return choice==='full'
+  ?price
+  :price*percentage/100;
 }
 
 function updatePrices(){
@@ -290,6 +381,7 @@ function updatePrices(){
 
  const base=getCurrency(vehicle);
  const target=$('displayCurrency').value;
+
  const price=Number(vehicle.selling_price)||0;
  const percentage=Number(vehicle.deposit_percentage??30);
  const deposit=price*percentage/100;
@@ -300,19 +392,33 @@ function updatePrices(){
  const convertedDeposit=convert(deposit);
  const convertedPayable=convert(getPayableAmount());
 
+ $('depositTitle').textContent=
+  percentage+'% Initial Deposit';
+
  if(convertedPrice===null){
   $('localPrice').textContent='Exchange rate unavailable';
   $('total').textContent=formatMoney(price,base);
-  $('payableAmount').textContent=formatMoney(getPayableAmount(),base);
+  $('payableAmount').textContent=
+   formatMoney(getPayableAmount(),base);
+
+  $('depositDescription').textContent=
+   'Deposit: '+formatMoney(deposit,base)+
+   '. Remaining balance: '+formatMoney(price-deposit,base);
+
+  $('paymentNotice').textContent=
+   'The original price is displayed in '+base+
+   '. Local currency conversion is temporarily unavailable. Final payment arrangements must be confirmed.';
+
   return;
  }
 
  $('localPrice').textContent=formatMoney(convertedPrice,target);
  $('total').textContent=formatMoney(convertedPrice,target);
- $('payableAmount').textContent=
-  convertedPayable===null?'—':formatMoney(convertedPayable,target);
 
- $('depositTitle').textContent=percentage+'% Initial Deposit';
+ $('payableAmount').textContent=
+  convertedPayable===null
+   ?'—'
+   :formatMoney(convertedPayable,target);
 
  $('depositDescription').textContent=
   'Estimated deposit: '+formatMoney(convertedDeposit,target)+
@@ -322,32 +428,17 @@ function updatePrices(){
  const isUSD=base==='USD';
 
  $('paymentNotice').textContent=isUSD
-  ?'The displayed local amount is an estimate. The existing Stripe test checkout uses USD. Final charges and arrangements must be confirmed.'
-  :'This vehicle is listed in '+base+'. The converted amount is an estimate. Our team must confirm the final payment currency and amount before payment.';
+  ?'Your original vehicle price is in USD. The existing Stripe test checkout uses USD. Any displayed local currency conversion is an estimate.'
+  :'This vehicle is listed in '+base+'. The converted amount is an estimate. Our team must confirm the final payment currency and amount before payment. No non-USD Stripe payment is initiated here.';
 }
 
-async function checkCustomer(){
- const {data,error}=await db.auth.getUser();
-
- if(error||!data.user){
-  const destination=location.pathname+location.search+location.hash;
-
-  localStorage.setItem('tesla_pending_customer_action',destination);
-
-  location.replace('customer.html?returnTo='+encodeURIComponent(destination));
-  return false;
- }
-
- customer=data.user;
- $('email').value=customer.email||'';
- return true;
-}
-
+/* LOAD VEHICLE */
 async function loadVehicle(){
  if(!vehicleId){
   $('vehicleName').textContent='No vehicle selected';
   $('submitButton').disabled=true;
-  $('formStatus').textContent='Return to the vehicle collection and select a vehicle.';
+  $('formStatus').textContent=
+   'Return to the vehicle collection and select a vehicle.';
   return;
  }
 
@@ -367,43 +458,51 @@ async function loadVehicle(){
   $('vehicleVariant').textContent=vehicle.variant||'Premium vehicle';
 
   const image=Array.isArray(vehicle.image_urls)&&vehicle.image_urls.length
-   ?vehicle.image_urls[0]:'';
+   ?vehicle.image_urls[0]
+   :'';
 
   $('vehicleImage').src=image||
    'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85';
 
-  const base=getCurrency(vehicle);
+  $('displayCurrency').value=getSavedCurrency();
 
-  $('displayCurrency').value=
-   localStorage.getItem('tesla_display_currency')||'NGN';
-
-  if(!$('displayCurrency').querySelector('option[value="'+$('displayCurrency').value+'"]')){
+  if(!$('displayCurrency').querySelector(
+   'option[value="'+$('displayCurrency').value+'"]'
+  )){
    $('displayCurrency').value='NGN';
   }
-
-  $('originalPrice').textContent=formatMoney(vehicle.selling_price,base);
 
   await loadRates();
 
  }catch(error){
   console.error(error);
+
   $('vehicleName').textContent='Vehicle unavailable';
   $('submitButton').disabled=true;
-  $('formStatus').textContent='Unable to load this vehicle. Please return to the vehicle collection.';
+
+  $('formStatus').textContent=
+   'Unable to load this vehicle. Please return to the vehicle collection.';
  }
 }
 
+/* CURRENCY SELECTOR */
 $('displayCurrency').addEventListener('change',()=>{
- localStorage.setItem('tesla_display_currency',$('displayCurrency').value);
+ const currency=$('displayCurrency').value;
+
+ saveCurrencyPreference(currency);
  loadRates();
 });
 
-document.querySelectorAll('input[name="paymentChoice"]').forEach(input=>{
+/* PAYMENT METHOD SELECTOR */
+document.querySelectorAll(
+ 'input[name="paymentChoice"]'
+).forEach(input=>{
  input.addEventListener('change',updatePrices);
 });
 
-$('purchaseForm').addEventListener('submit',async e=>{
- e.preventDefault();
+/* SUBMIT PURCHASE */
+$('purchaseForm').addEventListener('submit',async event=>{
+ event.preventDefault();
 
  if(!await checkCustomer())return;
  if(!vehicle)return;
@@ -413,30 +512,38 @@ $('purchaseForm').addEventListener('submit',async e=>{
  const base=getCurrency(vehicle);
 
  /*
-  * The existing Stripe test checkout is not assumed
-  * to support CNY or other original listing currencies.
-  */
+ Existing Stripe test checkout is only used
+ for vehicles whose original listing currency is USD.
+ */
  if(base!=='USD'){
   status.style.color='#ffcc66';
   status.textContent=
-   'Your vehicle is listed in '+base+'. Please contact customer support to confirm the final payment currency and payment arrangements. No payment has been taken.';
+   'Your vehicle is listed in '+base+
+   '. Please contact customer support to confirm the final payment currency and arrangements. No payment has been taken.';
   return;
  }
 
  button.disabled=true;
  button.textContent='CONNECTING...';
+
  status.style.color='#aaa';
  status.textContent='Preparing your secure test payment session...';
 
  try{
-  const {data:{session},error:sessionError}=await db.auth.getSession();
+  const {
+   data:{session},
+   error:sessionError
+  }=await db.auth.getSession();
 
   if(sessionError||!session){
-   throw new Error('Your login session has expired. Please sign in again.');
+   throw new Error(
+    'Your login session has expired. Please sign in again.'
+   );
   }
 
-  const paymentChoice=
-   document.querySelector('input[name="paymentChoice"]:checked')?.value;
+  const paymentChoice=document.querySelector(
+   'input[name="paymentChoice"]:checked'
+  )?.value;
 
   const payload={
    vehicle_id:vehicle.id,
@@ -460,11 +567,15 @@ $('purchaseForm').addEventListener('submit',async e=>{
   const result=await response.json();
 
   if(!response.ok){
-   throw new Error(result.error||'Unable to start secure test payment.');
+   throw new Error(
+    result.error||'Unable to start secure test payment.'
+   );
   }
 
   if(!result.success||!result.checkout_url){
-   throw new Error('Stripe did not return a valid checkout address.');
+   throw new Error(
+    'Stripe did not return a valid checkout address.'
+   );
   }
 
   status.style.color='#43d69a';
@@ -474,15 +585,19 @@ $('purchaseForm').addEventListener('submit',async e=>{
 
  }catch(error){
   console.error(error);
+
   status.style.color='#ff7777';
   status.textContent=error.message;
+
   button.disabled=false;
   button.textContent='CONTINUE TO PAYMENT';
  }
 });
 
+/* INITIALIZE */
 async function initialize(){
  const authenticated=await checkCustomer();
+
  if(!authenticated)return;
 
  $('authLoading').style.display='none';
