@@ -9,278 +9,70 @@
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  background:#080808;
-  color:#fff;
-  font-family:Arial,sans-serif;
-  padding:20px;
-}
-
+body{background:#080808;color:#fff;font-family:Arial,sans-serif;padding:20px}
 .container{max-width:1250px;margin:auto}
 h1,h2,h3{margin-bottom:15px}
 .brand{color:#e82127;font-weight:bold}
 .subtitle{color:#aaa;margin-bottom:20px}
 .muted{color:#888}
 .hidden{display:none!important}
-
-.panel{
-  background:#151515;
-  border:1px solid #292929;
-  border-radius:12px;
-  padding:22px;
-  margin-bottom:22px;
-}
-
-.topbar{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:12px;
-  margin-bottom:25px;
-}
-
-input,textarea,select{
-  width:100%;
-  padding:13px;
-  margin:8px 0 15px;
-  border:1px solid #444;
-  border-radius:7px;
-  background:#080808;
-  color:white;
-  font-size:15px;
-}
-
+.panel{background:#151515;border:1px solid #292929;border-radius:12px;padding:22px;margin-bottom:22px}
+.topbar{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:25px}
+input,textarea,select{width:100%;padding:13px;margin:8px 0 15px;border:1px solid #444;border-radius:7px;background:#080808;color:white;font-size:15px}
 textarea{min-height:100px;resize:vertical}
 label{display:block;color:#ddd;font-size:14px;margin-top:8px}
 input[type=checkbox]{width:auto;margin-right:8px}
 input[type=file]{padding:10px}
-
-button{
-  border:none;
-  border-radius:7px;
-  padding:12px 18px;
-  margin:5px 4px 5px 0;
-  background:#e82127;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
-}
-
-button:hover{opacity:.85}
-button.secondary{background:#333}
+button,.action-link{display:inline-block;border:none;border-radius:7px;padding:12px 18px;margin:5px 4px 5px 0;background:#e82127;color:white;font-weight:bold;cursor:pointer;text-decoration:none;font-size:13px}
+button:hover,.action-link:hover{opacity:.85}
+button.secondary,.action-link.secondary{background:#333}
 button.success{background:#168b48}
 button.danger{background:#a3151a}
 button:disabled{opacity:.5;cursor:not-allowed}
-
-.tabs{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-bottom:20px;
-}
-
+.tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
 .tab-button{background:#292929}
 .tab-button.active{background:#e82127}
 .tab-content{display:none}
 .tab-content.active{display:block}
-
-.message{
-  display:none;
-  padding:12px;
-  border-radius:7px;
-  margin:10px 0 15px;
-  background:#252525;
-  color:#fff;
-  overflow-wrap:anywhere;
-}
-
+.message{display:none;padding:12px;border-radius:7px;margin:10px 0 15px;background:#252525;color:#fff;overflow-wrap:anywhere}
 .message.error,.message.success{display:block}
 .message.error{background:#4a1515;color:#ffbaba}
 .message.success{background:#123c25;color:#a8ffc6}
-
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-  gap:12px;
-}
-
-.stats-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:14px;
-  margin:22px 0;
-}
-
-.stat-card{
-  background:linear-gradient(145deg,#202020,#101010);
-  border:1px solid #333;
-  border-radius:12px;
-  padding:20px;
-  min-height:120px;
-}
-
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:22px 0}
+.stat-card{background:linear-gradient(145deg,#202020,#101010);border:1px solid #333;border-radius:12px;padding:20px;min-height:120px}
 .stat-card span{color:#aaa;font-size:13px}
-.stat-card h3{
-  color:#e82127;
-  font-size:30px;
-  margin-top:15px;
-  margin-bottom:0;
-}
-
-.overview-actions{
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-  margin-top:20px;
-}
-
-.vehicle-card,.offer-card,.order-card,.enquiry-card,.chat-card{
-  background:#101010;
-  border:1px solid #333;
-  border-radius:10px;
-  padding:15px;
-  margin-bottom:14px;
-}
-
-.vehicle-card img{
-  width:100%;
-  height:170px;
-  object-fit:cover;
-  border-radius:7px;
-  margin-bottom:10px;
-  background:#222;
-}
-
-.vehicle-card p,.offer-card p,.order-card p,
-.enquiry-card p,.chat-card p{
-  color:#bbb;
-  line-height:1.7;
-  overflow-wrap:anywhere;
-}
-
-.preview-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(110px,1fr));
-  gap:10px;
-  margin:12px 0;
-}
-
+.stat-card h3{color:#e82127;font-size:30px;margin-top:15px;margin-bottom:0}
+.overview-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.vehicle-card,.offer-card,.order-card,.enquiry-card,.chat-card{background:#101010;border:1px solid #333;border-radius:10px;padding:15px;margin-bottom:14px}
+.vehicle-card img{width:100%;height:170px;object-fit:cover;border-radius:7px;margin-bottom:10px;background:#222}
+.vehicle-card p,.offer-card p,.order-card p,.enquiry-card p,.chat-card p{color:#bbb;line-height:1.7;overflow-wrap:anywhere}
+.preview-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:10px;margin:12px 0}
 .preview-item{position:relative}
-.preview-item img{
-  width:100%;
-  height:100px;
-  object-fit:cover;
-  border-radius:7px;
-}
-
-.preview-item button{
-  position:absolute;
-  top:3px;
-  right:3px;
-  padding:5px 8px;
-  margin:0;
-  font-size:12px;
-}
-
+.preview-item img{width:100%;height:100px;object-fit:cover;border-radius:7px}
+.preview-item button{position:absolute;top:3px;right:3px;padding:5px 8px;margin:0;font-size:12px}
 .order-card a{color:#ff5555;overflow-wrap:anywhere}
-
-/* LIVE CHAT */
-
-.chat-layout{
-  display:grid;
-  grid-template-columns:minmax(250px,0.85fr) minmax(0,1.5fr);
-  gap:15px;
-}
-
-.chat-list{
-  max-height:600px;
-  overflow-y:auto;
-}
-
-.chat-card{
-  cursor:pointer;
-  transition:.2s;
-}
-
+.chat-layout{display:grid;grid-template-columns:minmax(250px,.85fr) minmax(0,1.5fr);gap:15px}
+.chat-list{max-height:600px;overflow-y:auto}
+.chat-card{cursor:pointer;transition:.2s}
 .chat-card:hover{border-color:#e82127}
 .chat-card.selected{border-color:#e82127;background:#241010}
-
-.chat-status{
-  display:inline-block;
-  padding:5px 9px;
-  border-radius:20px;
-  background:#17452b;
-  color:#a8ffc6;
-  font-size:12px;
-  margin-top:7px;
-}
-
-.chat-status.closed{
-  background:#444;
-  color:#ccc;
-}
-
-.chat-messages{
-  height:390px;
-  overflow-y:auto;
-  background:#080808;
-  border:1px solid #292929;
-  border-radius:9px;
-  padding:12px;
-  margin:15px 0;
-}
-
-.chat-message{
-  max-width:85%;
-  padding:12px;
-  border-radius:10px;
-  margin:10px 0;
-  overflow-wrap:anywhere;
-}
-
+.chat-status{display:inline-block;padding:5px 9px;border-radius:20px;background:#17452b;color:#a8ffc6;font-size:12px;margin-top:7px}
+.chat-status.closed{background:#444;color:#ccc}
+.chat-messages{height:390px;overflow-y:auto;background:#080808;border:1px solid #292929;border-radius:9px;padding:12px;margin:15px 0}
+.chat-message{max-width:85%;padding:12px;border-radius:10px;margin:10px 0;overflow-wrap:anywhere}
 .chat-message.visitor{background:#173b29}
-.chat-message.admin{
-  background:#292929;
-  margin-left:auto;
-}
-
-.chat-message small{
-  display:block;
-  color:#aaa;
-  margin-top:8px;
-}
-
-.chat-reply{
-  display:flex;
-  flex-direction:column;
-}
-
+.chat-message.admin{background:#292929;margin-left:auto}
+.chat-message small{display:block;color:#aaa;margin-top:8px}
+.chat-reply{display:flex;flex-direction:column}
 .chat-reply textarea{min-height:85px}
-
-.chat-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:10px;
-}
-
-@media(max-width:750px){
-  .chat-layout{grid-template-columns:1fr}
-  .chat-list{max-height:280px}
-}
-
-@media(max-width:600px){
-  body{padding:12px}
-  .panel{padding:15px}
-  button{padding:11px 13px}
-  .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .stat-card{padding:15px}
-  .stat-card h3{font-size:25px}
-  .chat-messages{height:330px}
-}
+.chat-header{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px}
+.quick-link-panel{border:1px solid #3a2525;background:linear-gradient(135deg,#211010,#111);border-radius:12px;padding:20px;margin-bottom:20px}
+.quick-link-panel h3{color:#fff}
+.quick-link-panel p{color:#aaa;line-height:1.6}
+.badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#292929;color:#ddd;font-size:12px;margin:4px 0}
+@media(max-width:750px){.chat-layout{grid-template-columns:1fr}.chat-list{max-height:280px}}
+@media(max-width:600px){body{padding:12px}.panel{padding:15px}button,.action-link{padding:11px 13px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-card{padding:15px}.stat-card h3{font-size:25px}.chat-messages{height:330px}}
 </style>
 </head>
 
@@ -295,7 +87,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </header>
 
 <!-- ADMIN LOGIN -->
-
 <section id="loginPanel" class="panel">
   <h2>Administrator Login</h2>
   <p class="muted">Sign in with your authorised administrator account.</p>
@@ -307,12 +98,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <input type="password" id="loginPassword" placeholder="Password">
 
   <div id="loginMessage" class="message"></div>
-
   <button id="loginBtn" onclick="loginAdmin()">Sign In</button>
 </section>
 
 <!-- ADMIN DASHBOARD -->
-
 <section id="dashboard" class="hidden">
 
 <header class="topbar">
@@ -323,44 +112,36 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <button class="secondary" onclick="logoutAdmin()">Logout</button>
 </header>
 
-<!-- OVERVIEW -->
+<!-- NEW MANAGEMENT SHORTCUTS -->
+<div class="quick-link-panel">
+  <h3>Business Management Centre</h3>
+  <p>Access your global vehicle pricing system and shipment management tools.</p>
 
+  <a class="action-link" href="global-pricing.html">
+    GLOBAL PRICING MANAGEMENT →
+  </a>
+
+  <a class="action-link secondary" href="admin-tracking.html">
+    SHIPMENT CONTROL →
+  </a>
+
+  <a class="action-link secondary" href="vehicles.html" target="_blank">
+    VIEW PUBLIC SHOWROOM →
+  </a>
+</div>
+
+<!-- OVERVIEW -->
 <div class="panel">
   <h2>Dashboard Overview</h2>
   <p class="muted">Your business at a glance.</p>
 
   <div class="stats-grid">
-
-    <div class="stat-card">
-      <span>Total Vehicles</span>
-      <h3 id="statVehicles">—</h3>
-    </div>
-
-    <div class="stat-card">
-      <span>Customer Orders</span>
-      <h3 id="statOrders">—</h3>
-    </div>
-
-    <div class="stat-card">
-      <span>Pending Negotiations</span>
-      <h3 id="statOffers">—</h3>
-    </div>
-
-    <div class="stat-card">
-      <span>Pending Enquiries</span>
-      <h3 id="statEnquiries">—</h3>
-    </div>
-
-    <div class="stat-card">
-      <span>Published Vehicles</span>
-      <h3 id="statPublished">—</h3>
-    </div>
-
-    <div class="stat-card">
-      <span>Completed Orders</span>
-      <h3 id="statCompleted">—</h3>
-    </div>
-
+    <div class="stat-card"><span>Total Vehicles</span><h3 id="statVehicles">—</h3></div>
+    <div class="stat-card"><span>Customer Orders</span><h3 id="statOrders">—</h3></div>
+    <div class="stat-card"><span>Pending Negotiations</span><h3 id="statOffers">—</h3></div>
+    <div class="stat-card"><span>Pending Enquiries</span><h3 id="statEnquiries">—</h3></div>
+    <div class="stat-card"><span>Published Vehicles</span><h3 id="statPublished">—</h3></div>
+    <div class="stat-card"><span>Completed Orders</span><h3 id="statCompleted">—</h3></div>
   </div>
 
   <div class="overview-actions">
@@ -372,12 +153,10 @@ button:disabled{opacity:.5;cursor:not-allowed}
   </div>
 
   <div id="overviewMessage" class="message"></div>
-
   <button class="secondary" onclick="loadOverview()">Refresh Statistics</button>
 </div>
 
 <!-- NAVIGATION -->
-
 <div class="tabs">
   <button class="tab-button active" onclick="showTab('vehiclesTab',this)">Vehicles</button>
   <button class="tab-button" onclick="showTab('offersTab',this)">Negotiations</button>
@@ -387,90 +166,81 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <!-- VEHICLES -->
-
 <div id="vehiclesTab" class="tab-content active">
+  <div class="panel">
+    <h2>Vehicle Management</h2>
+    <p class="muted">Add vehicles, update prices, upload photos and control publication.</p>
 
-<div class="panel">
-  <h2>Vehicle Management</h2>
-  <p class="muted">Add vehicles, update prices, upload photos and control publication.</p>
+    <p class="muted">For advanced international pricing and original currency management, use the Global Pricing Management page above.</p>
 
-  <input type="hidden" id="vehicleId">
+    <input type="hidden" id="vehicleId">
 
-  <div class="grid">
-    <div>
-      <label>Vehicle Model</label>
-      <input id="model" placeholder="e.g. Model 3">
+    <div class="grid">
+      <div>
+        <label>Vehicle Model</label>
+        <input id="model" placeholder="e.g. Model 3">
+      </div>
+      <div>
+        <label>Variant</label>
+        <input id="variant" placeholder="e.g. Standard RWD">
+      </div>
+      <div>
+        <label>Year</label>
+        <input id="year" type="number" placeholder="2026">
+      </div>
+      <div>
+        <label>Selling Price (USD)</label>
+        <input id="sellingPrice" type="number" min="0" placeholder="36990">
+      </div>
+      <div>
+        <label>Reference Price (USD)</label>
+        <input id="referencePrice" type="number" min="0" placeholder="39990">
+      </div>
+      <div>
+        <label>Deposit Percentage (%)</label>
+        <input id="depositPercentage" type="number" min="0" max="100" value="30">
+      </div>
+      <div>
+        <label>Stock Quantity</label>
+        <input id="stockQuantity" type="number" min="0" placeholder="1">
+      </div>
+      <div>
+        <label>Availability</label>
+        <select id="availability">
+          <option value="pre_order">Pre-order</option>
+          <option value="in_stock">In Stock</option>
+          <option value="limited_stock">Limited Stock</option>
+          <option value="out_of_stock">Out of Stock</option>
+        </select>
+      </div>
     </div>
 
-    <div>
-      <label>Variant</label>
-      <input id="variant" placeholder="e.g. Standard RWD">
-    </div>
+    <label>Vehicle Description</label>
+    <textarea id="description" placeholder="Vehicle details..."></textarea>
 
-    <div>
-      <label>Year</label>
-      <input id="year" type="number" placeholder="2026">
-    </div>
+    <label>Upload Vehicle Photos</label>
+    <input id="vehiclePhotos" type="file" accept="image/*" multiple>
 
-    <div>
-      <label>Selling Price (USD)</label>
-      <input id="sellingPrice" type="number" min="0" placeholder="36990">
-    </div>
+    <div id="photoPreview" class="preview-grid"></div>
 
-    <div>
-      <label>Reference Price (USD)</label>
-      <input id="referencePrice" type="number" min="0" placeholder="39990">
-    </div>
+    <label>
+      <input type="checkbox" id="published" checked>
+      Publish this vehicle on the website
+    </label>
 
-    <div>
-      <label>Deposit Percentage (%)</label>
-      <input id="depositPercentage" type="number" min="0" max="100" value="30">
-    </div>
+    <div id="vehicleMessage" class="message"></div>
 
-    <div>
-      <label>Stock Quantity</label>
-      <input id="stockQuantity" type="number" min="0" placeholder="1">
-    </div>
-
-    <div>
-      <label>Availability</label>
-      <select id="availability">
-        <option value="pre_order">Pre-order</option>
-        <option value="in_stock">In Stock</option>
-        <option value="limited_stock">Limited Stock</option>
-        <option value="out_of_stock">Out of Stock</option>
-      </select>
-    </div>
+    <button id="saveVehicleBtn" onclick="saveVehicle()">Save Vehicle</button>
+    <button class="secondary" onclick="resetVehicleForm()">Clear Form</button>
   </div>
 
-  <label>Vehicle Description</label>
-  <textarea id="description" placeholder="Vehicle details..."></textarea>
-
-  <label>Upload Vehicle Photos</label>
-  <input id="vehiclePhotos" type="file" accept="image/*" multiple>
-
-  <div id="photoPreview" class="preview-grid"></div>
-
-  <label>
-    <input type="checkbox" id="published" checked>
-    Publish this vehicle on the website
-  </label>
-
-  <div id="vehicleMessage" class="message"></div>
-
-  <button id="saveVehicleBtn" onclick="saveVehicle()">Save Vehicle</button>
-  <button class="secondary" onclick="resetVehicleForm()">Clear Form</button>
-</div>
-
-<div class="panel">
-  <h2>Vehicle Listings</h2>
-  <div id="vehicleList"><p class="muted">Loading vehicles...</p></div>
-</div>
-
+  <div class="panel">
+    <h2>Vehicle Listings</h2>
+    <div id="vehicleList"><p class="muted">Loading vehicles...</p></div>
+  </div>
 </div>
 
 <!-- NEGOTIATIONS -->
-
 <div id="offersTab" class="tab-content">
   <div class="panel">
     <h2>Customer Negotiations</h2>
@@ -480,7 +250,6 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <!-- ENQUIRIES -->
-
 <div id="enquiriesTab" class="tab-content">
   <div class="panel">
     <h2>Purchase Enquiries</h2>
@@ -490,206 +259,142 @@ button:disabled{opacity:.5;cursor:not-allowed}
 </div>
 
 <!-- CUSTOMER ORDERS -->
-
 <div id="ordersTab" class="tab-content">
 
-<div class="panel">
-  <h2>Create Customer Order</h2>
+  <div class="panel">
+    <h2>Create Customer Order</h2>
 
-  <label>Customer Email</label>
-  <input id="orderCustomerEmail" type="email" placeholder="Customer registered email">
+    <label>Customer Email</label>
+    <input id="orderCustomerEmail" type="email" placeholder="Customer registered email">
 
-  <label>Vehicle Name</label>
-  <input id="orderVehicleName" placeholder="e.g. Tesla Model 3">
+    <label>Vehicle Name</label>
+    <input id="orderVehicleName" placeholder="e.g. Tesla Model 3">
 
-  <label>Tracking Number (optional)</label>
-  <input id="orderTrackingNumber" placeholder="Leave blank to generate automatically">
+    <label>Tracking Number (optional)</label>
+    <input id="orderTrackingNumber" placeholder="Leave blank to generate automatically">
 
-  <div class="grid">
-    <div>
-      <label>Payment Status</label>
-      <select id="orderPaymentStatus">
-        <option>Pending</option>
-        <option>Partially Paid</option>
-        <option>Paid</option>
-        <option>Refunded</option>
-      </select>
+    <div class="grid">
+      <div>
+        <label>Payment Status</label>
+        <select id="orderPaymentStatus">
+          <option>Pending</option>
+          <option>Partially Paid</option>
+          <option>Paid</option>
+          <option>Refunded</option>
+        </select>
+      </div>
+      <div>
+        <label>Order Status</label>
+        <select id="orderStatus">
+          <option>Order Received</option>
+          <option>Processing</option>
+          <option>Preparing for Shipment</option>
+          <option>Shipped</option>
+          <option>In Transit</option>
+          <option>Out for Delivery</option>
+          <option>Delivered</option>
+          <option>Cancelled</option>
+        </select>
+      </div>
     </div>
 
-    <div>
-      <label>Order Status</label>
-      <select id="orderStatus">
-        <option>Order Received</option>
-        <option>Processing</option>
-        <option>Preparing for Shipment</option>
-        <option>Shipped</option>
-        <option>In Transit</option>
-        <option>Out for Delivery</option>
-        <option>Delivered</option>
-        <option>Cancelled</option>
-      </select>
-    </div>
+    <label>Delivery Country</label>
+    <input id="orderCountry" placeholder="e.g. United States">
+
+    <label>Shipping Carrier</label>
+    <input id="orderCarrier" placeholder="e.g. DHL">
+
+    <label>Tracking URL</label>
+    <input id="orderTrackingURL" type="url" placeholder="https://">
+
+    <label>Estimated Delivery Date</label>
+    <input id="orderDeliveryDate" type="date">
+
+    <label>Private Admin Note</label>
+    <textarea id="orderAdminNote" placeholder="Internal note for administrators..."></textarea>
+
+    <div id="orderCreateMessage" class="message"></div>
+
+    <button id="createOrderBtn" onclick="createCustomerOrder()">Create Order</button>
+    <button class="secondary" onclick="resetOrderForm()">Clear Form</button>
+
+    <a class="action-link secondary" href="admin-tracking.html">OPEN SHIPMENT CONTROL →</a>
   </div>
 
-  <label>Delivery Country</label>
-  <input id="orderCountry" placeholder="e.g. United States">
-
-  <label>Shipping Carrier</label>
-  <input id="orderCarrier" placeholder="e.g. DHL">
-
-  <label>Tracking URL</label>
-  <input id="orderTrackingURL" type="url" placeholder="https://">
-
-  <label>Estimated Delivery Date</label>
-  <input id="orderDeliveryDate" type="date">
-
-  <label>Private Admin Note</label>
-  <textarea id="orderAdminNote" placeholder="Internal note for administrators..."></textarea>
-
-  <div id="orderCreateMessage" class="message"></div>
-
-  <button id="createOrderBtn" onclick="createCustomerOrder()">Create Order</button>
-  <button class="secondary" onclick="resetOrderForm()">Clear Form</button>
-</div>
-
-<div class="panel">
-  <h2>Customer Orders</h2>
-  <div id="orderList"><p class="muted">Loading orders...</p></div>
-</div>
-
-</div>
-
-<!-- NEW LIVE CHAT CENTRE -->
-
-<div id="chatTab" class="tab-content">
-
   <div class="panel">
+    <h2>Customer Orders</h2>
+    <div id="orderList"><p class="muted">Loading orders...</p></div>
+  </div>
+</div>
 
+<!-- LIVE CHAT -->
+<div id="chatTab" class="tab-content">
+  <div class="panel">
     <div class="chat-header">
       <div>
         <h2>Customer Live Chat</h2>
         <p class="muted">Communicate directly with website customers.</p>
       </div>
-
-      <button class="secondary" onclick="loadChatConversations()">
-        Refresh Chats
-      </button>
+      <button class="secondary" onclick="loadChatConversations()">Refresh Chats</button>
     </div>
 
     <div class="chat-layout">
-
-      <!-- CONVERSATION LIST -->
-
       <div class="panel chat-list" style="margin:0;padding:12px">
-
         <h3>Conversations</h3>
-
         <div id="chatConversationList">
           <p class="muted">Loading conversations...</p>
         </div>
-
       </div>
 
-      <!-- CHAT WINDOW -->
-
       <div class="panel" style="margin:0">
-
         <h3 id="activeChatTitle">Select a Conversation</h3>
-
-        <p id="activeChatEmail" class="muted">
-          Customer information will appear here.
-        </p>
+        <p id="activeChatEmail" class="muted">Customer information will appear here.</p>
 
         <div id="adminChatMessages" class="chat-messages">
-
-          <p class="muted">
-            Select a customer conversation to view messages.
-          </p>
-
+          <p class="muted">Select a customer conversation to view messages.</p>
         </div>
 
         <div class="chat-reply">
-
           <label>Your Reply</label>
+          <textarea id="adminChatReply" maxlength="2000" placeholder="Write your message to the customer..."></textarea>
 
-          <textarea
-            id="adminChatReply"
-            maxlength="2000"
-            placeholder="Write your message to the customer..."
-          ></textarea>
-
-          <button id="sendChatReplyBtn" onclick="sendAdminChatReply()">
-            Send Reply
-          </button>
-
-          <button
-            id="closeChatBtn"
-            class="danger"
-            onclick="closeAdminChat()"
-            disabled
-          >
-            Close Conversation
-          </button>
-
-          <button
-            id="reopenChatBtn"
-            class="success"
-            onclick="reopenAdminChat()"
-            disabled
-          >
-            Reopen Conversation
-          </button>
-
+          <button id="sendChatReplyBtn" onclick="sendAdminChatReply()">Send Reply</button>
+          <button id="closeChatBtn" class="danger" onclick="closeAdminChat()" disabled>Close Conversation</button>
+          <button id="reopenChatBtn" class="success" onclick="reopenAdminChat()" disabled>Reopen Conversation</button>
         </div>
 
         <div id="adminChatStatus" class="message"></div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
 
 </section>
 </div>
 
 <script>
+"use strict";
 
-// ==========================================
-// SUPABASE CONNECTION
-// ==========================================
+/* SUPABASE CONNECTION */
+const SUPABASE_URL="https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
 
-const SUPABASE_URL = "https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 
-const SUPABASE_ANON_KEY =
-"sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+let currentUser=null;
+let vehicles=[];
+let existingImages=[];
+let removedImages=[];
+let selectedFiles=[];
 
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
+let activeChatId=null;
+let activeChatStatus=null;
+let chatRefreshTimer=null;
+let chatRefreshRunning=false;
 
-let currentUser = null;
-let vehicles = [];
-let existingImages = [];
-let removedImages = [];
-let selectedFiles = [];
-
-// LIVE CHAT VARIABLES
-
-let activeChatId = null;
-let activeChatStatus = null;
-let chatRefreshTimer = null;
-let chatRefreshRunning = false;
-
-// ==========================================
-// HELPERS
-// ==========================================
-
-function escapeHTML(value) {
-  return String(value ?? "").replace(/[&<>"']/g, char => ({
+/* HELPERS */
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({
     "&":"&amp;",
     "<":"&lt;",
     ">":"&gt;",
@@ -698,25 +403,22 @@ function escapeHTML(value) {
   })[char]);
 }
 
-function showMessage(id,message,type="") {
+function showMessage(id,message,type=""){
   const el=document.getElementById(id);
   if(!el)return;
-
   el.textContent=message;
   el.className="message";
-
   if(type)el.classList.add(type);
 }
 
-function hideMessage(id) {
+function hideMessage(id){
   const el=document.getElementById(id);
   if(!el)return;
-
   el.textContent="";
   el.className="message";
 }
 
-function formatMoney(value) {
+function formatMoney(value){
   return new Intl.NumberFormat("en-US",{
     style:"currency",
     currency:"USD",
@@ -724,65 +426,62 @@ function formatMoney(value) {
   }).format(Number(value||0));
 }
 
-function formatDate(value) {
+function formatDate(value){
   if(!value)return "Not provided";
-
   const date=new Date(value);
-
   return Number.isNaN(date.getTime())
-    ? escapeHTML(value)
-    : date.toLocaleString();
+    ?escapeHTML(value)
+    :date.toLocaleString();
 }
 
-// ==========================================
-// ADMIN AUTHENTICATION
-// ==========================================
+function safeTrackingURL(value){
+  if(!value)return "";
+  try{
+    const url=new URL(value);
+    return url.protocol==="https:"?url.href:"";
+  }catch(error){
+    return "";
+  }
+}
 
-async function loginAdmin() {
+/* ADMIN AUTHENTICATION */
+async function loginAdmin(){
   hideMessage("loginMessage");
 
   const email=document.getElementById("loginEmail").value.trim();
   const password=document.getElementById("loginPassword").value;
 
-  if(!email||!password) {
+  if(!email||!password){
     showMessage("loginMessage","Enter your email and password.","error");
     return;
   }
 
   const button=document.getElementById("loginBtn");
-
   button.disabled=true;
   button.textContent="Signing in...";
 
-  try {
-    const {data,error}=await db.auth.signInWithPassword({
-      email,
-      password
-    });
-
+  try{
+    const {data,error}=await db.auth.signInWithPassword({email,password});
     if(error)throw error;
 
     currentUser=data.user;
 
-    if(!await verifyAdmin()) {
+    if(!await verifyAdmin()){
       await db.auth.signOut();
       currentUser=null;
-
       throw new Error("This account is not authorised as an administrator.");
     }
 
     await openDashboard();
-
-  } catch(error) {
+  }catch(error){
     showMessage("loginMessage",error.message||"Login failed.","error");
-
-  } finally {
+  }finally{
     button.disabled=false;
     button.textContent="Sign In";
   }
 }
 
-async function verifyAdmin() {
+async function verifyAdmin(){
   if(!currentUser)return false;
 
   const {data,error}=await db.from("admin_users")
@@ -791,33 +490,30 @@ async function verifyAdmin() {
     .maybeSingle();
 
   if(error)throw error;
-
   return Boolean(data);
 }
 
-async function checkSession() {
-  try {
+async function checkSession(){
+  try{
     const {data,error}=await db.auth.getSession();
-
     if(error)throw error;
     if(!data.session)return;
 
     currentUser=data.session.user;
 
-    if(!await verifyAdmin()) {
+    if(!await verifyAdmin()){
       await db.auth.signOut();
       currentUser=null;
       return;
     }
 
     await openDashboard();
-
-  } catch(error) {
+  }catch(error){
     console.error("Session check failed:",error);
   }
 }
 
-async function openDashboard() {
+async function openDashboard(){
   document.getElementById("loginPanel").classList.add("hidden");
   document.getElementById("dashboard").classList.remove("hidden");
 
@@ -834,28 +530,18 @@ async function openDashboard() {
   startChatRefresh();
 }
 
-async function logoutAdmin() {
-
+async function logoutAdmin(){
   stopChatRefresh();
-
   activeChatId=null;
-
   await db.auth.signOut();
-
   currentUser=null;
-
   document.getElementById("dashboard").classList.add("hidden");
   document.getElementById("loginPanel").classList.remove("hidden");
-
   document.getElementById("loginPassword").value="";
 }
 
-// ==========================================
-// DASHBOARD OVERVIEW
-// ==========================================
-
-async function loadOverview() {
-
+/* DASHBOARD OVERVIEW */
+async function loadOverview(){
   const ids=[
     "statVehicles",
     "statOrders",
@@ -865,14 +551,10 @@ async function loadOverview() {
     "statCompleted"
   ];
 
-  ids.forEach(id=>{
-    document.getElementById(id).textContent="...";
-  });
-
+  ids.forEach(id=>document.getElementById(id).textContent="...");
   hideMessage("overviewMessage");
 
-  try {
-
+  try{
     const [
       vehiclesResult,
       ordersResult,
@@ -881,29 +563,12 @@ async function loadOverview() {
       publishedResult,
       completedResult
     ]=await Promise.all([
-
-      db.from("vehicles")
-        .select("*",{count:"exact",head:true}),
-
-      db.from("customer_orders")
-        .select("*",{count:"exact",head:true}),
-
-      db.from("negotiations")
-        .select("*",{count:"exact",head:true})
-        .eq("status","pending"),
-
-      db.from("enquiries")
-        .select("*",{count:"exact",head:true})
-        .eq("status","Pending"),
-
-      db.from("vehicles")
-        .select("*",{count:"exact",head:true})
-        .eq("is_published",true),
-
-      db.from("customer_orders")
-        .select("*",{count:"exact",head:true})
-        .eq("order_status","Delivered")
-
+      db.from("vehicles").select("*",{count:"exact",head:true}),
+      db.from("customer_orders").select("*",{count:"exact",head:true}),
+      db.from("negotiations").select("*",{count:"exact",head:true}).eq("status","pending"),
+      db.from("enquiries").select("*",{count:"exact",head:true}).eq("status","Pending"),
+      db.from("vehicles").select("*",{count:"exact",head:true}).eq("is_published",true),
+      db.from("customer_orders").select("*",{count:"exact",head:true}).eq("order_status","Delivered")
     ]);
 
     const results=[
@@ -916,7 +581,6 @@ async function loadOverview() {
     ];
 
     const failed=results.find(result=>result.error);
-
     if(failed)throw failed.error;
 
     const values={
@@ -929,40 +593,21 @@ async function loadOverview() {
     };
 
     Object.entries(values).forEach(([id,value])=>{
-      document.getElementById(id).textContent=
-        Number(value).toLocaleString();
+      document.getElementById(id).textContent=Number(value).toLocaleString();
     });
-
-  } catch(error) {
-
+  }catch(error){
     console.error("Dashboard statistics:",error);
-
-    ids.forEach(id=>{
-      document.getElementById(id).textContent="—";
-    });
-
-    showMessage(
-      "overviewMessage",
-      "Some statistics could not load. Check database permissions and status values.",
-      "error"
-    );
+    ids.forEach(id=>document.getElementById(id).textContent="—");
+    showMessage("overviewMessage","Some statistics could not load. Check database permissions and status values.","error");
   }
 }
 
-// ==========================================
-// DASHBOARD TABS
-// ==========================================
-
-function showTab(tabId,button) {
-
-  document.querySelectorAll(".tab-content")
-    .forEach(tab=>tab.classList.remove("active"));
-
-  document.querySelectorAll(".tab-button")
-    .forEach(btn=>btn.classList.remove("active"));
+/* DASHBOARD TABS */
+function showTab(tabId,button){
+  document.querySelectorAll(".tab-content").forEach(tab=>tab.classList.remove("active"));
+  document.querySelectorAll(".tab-button").forEach(btn=>btn.classList.remove("active"));
 
   document.getElementById(tabId).classList.add("active");
-
   if(button)button.classList.add("active");
 
   if(tabId==="vehiclesTab")loadVehicles();
@@ -970,29 +615,23 @@ function showTab(tabId,button) {
   if(tabId==="enquiriesTab")loadEnquiries();
   if(tabId==="ordersTab")loadOrders();
 
-  if(tabId==="chatTab") {
+  if(tabId==="chatTab"){
     loadChatConversations();
     if(activeChatId)loadAdminChatMessages();
   }
 }
 
-// ==========================================
-// VEHICLE PHOTO MANAGEMENT
-// ==========================================
-
+/* VEHICLE PHOTO MANAGEMENT */
 document.getElementById("vehiclePhotos").addEventListener("change",event=>{
   selectedFiles=Array.from(event.target.files||[]);
   renderPreviews();
 });
 
-function renderPreviews() {
-
+function renderPreviews(){
   const preview=document.getElementById("photoPreview");
-
   preview.innerHTML="";
 
   existingImages.forEach(url=>{
-
     if(removedImages.includes(url))return;
 
     const item=document.createElement("div");
@@ -1006,7 +645,6 @@ function renderPreviews() {
     btn.type="button";
     btn.className="danger";
     btn.textContent="×";
-
     btn.onclick=()=>{
       removedImages.push(url);
       renderPreviews();
@@ -1017,7 +655,6 @@ function renderPreviews() {
   });
 
   selectedFiles.forEach((file,index)=>{
-
     const item=document.createElement("div");
     item.className="preview-item";
 
@@ -1029,7 +666,6 @@ function renderPreviews() {
     btn.type="button";
     btn.className="danger";
     btn.textContent="×";
-
     btn.onclick=()=>{
       selectedFiles.splice(index,1);
       renderPreviews();
@@ -1040,51 +676,33 @@ function renderPreviews() {
   });
 }
 
-async function uploadPhotos(vehicleId) {
-
+async function uploadPhotos(vehicleId){
   const uploadedURLs=[];
 
-  for(const file of selectedFiles) {
-
+  for(const file of selectedFiles){
     const extension=file.name.split(".").pop()||"jpg";
+    const fileName=vehicleId+"/"+Date.now()+"-"+Math.random().toString(36).slice(2)+"."+extension;
 
-    const fileName=
-      vehicleId+"/"+
-      Date.now()+"-"+
-      Math.random().toString(36).slice(2)+
-      "."+extension;
-
-    const {error}=await db.storage
-      .from("vehicle-images")
-      .upload(fileName,file,{
-        cacheControl:"3600",
-        upsert:false
-      });
+    const {error}=await db.storage.from("vehicle-images").upload(fileName,file,{
+      cacheControl:"3600",
+      upsert:false
+    });
 
     if(error)throw error;
 
-    const {data}=db.storage
-      .from("vehicle-images")
-      .getPublicUrl(fileName);
-
+    const {data}=db.storage.from("vehicle-images").getPublicUrl(fileName);
     uploadedURLs.push(data.publicUrl);
   }
 
   return uploadedURLs;
 }
 
-// ==========================================
-// LOAD VEHICLES
-// ==========================================
-
-async function loadVehicles() {
-
+/* LOAD VEHICLES */
+async function loadVehicles(){
   const list=document.getElementById("vehicleList");
-
   list.innerHTML="<p class='muted'>Loading vehicles...</p>";
 
-  try {
-
+  try{
     const {data,error}=await db.from("vehicles")
       .select("*")
       .order("created_at",{ascending:false});
@@ -1093,16 +711,13 @@ async function loadVehicles() {
 
     vehicles=data||[];
 
-    if(!vehicles.length) {
+    if(!vehicles.length){
       list.innerHTML="<p class='muted'>No vehicles added yet.</p>";
       return;
     }
 
     list.innerHTML=vehicles.map(vehicle=>{
-
-      const images=Array.isArray(vehicle.image_urls)
-        ?vehicle.image_urls:[];
-
+      const images=Array.isArray(vehicle.image_urls)?vehicle.image_urls:[];
       const firstImage=images.length
         ?`<img src="${escapeHTML(images[0])}" alt="${escapeHTML(vehicle.model)}">`
         :"";
@@ -1110,139 +725,85 @@ async function loadVehicles() {
       const published=vehicle.is_published===true;
 
       return `
-      <div class="vehicle-card">
+        <div class="vehicle-card">
+          ${firstImage}
+          <h3>${escapeHTML(vehicle.model||"Unnamed Vehicle")}</h3>
+          <p><strong>Variant:</strong> ${escapeHTML(vehicle.variant||"Not specified")}</p>
+          <p><strong>Year:</strong> ${escapeHTML(vehicle.year||"Not specified")}</p>
+          <p><strong>Price:</strong> ${formatMoney(vehicle.selling_price)}</p>
+          <p><strong>Original Currency:</strong> ${escapeHTML(vehicle.currency||"USD")}</p>
+          <p><strong>Availability:</strong> ${escapeHTML(vehicle.availability||"Not specified")}</p>
+          <p><strong>Stock:</strong> ${escapeHTML(vehicle.stock_quantity??0)}</p>
+          <p><strong>Publication:</strong> ${published?"Published":"Unpublished"}</p>
 
-        ${firstImage}
+          <button onclick="editVehicle('${escapeHTML(vehicle.id)}')">Edit</button>
 
-        <h3>${escapeHTML(vehicle.model||"Unnamed Vehicle")}</h3>
+          <button class="secondary" onclick="toggleVehiclePublication('${escapeHTML(vehicle.id)}',${!published})">
+            ${published?"Unpublish":"Publish"}
+          </button>
 
-        <p><strong>Variant:</strong> ${escapeHTML(vehicle.variant||"Not specified")}</p>
-
-        <p><strong>Year:</strong> ${escapeHTML(vehicle.year||"Not specified")}</p>
-
-        <p><strong>Price:</strong> ${formatMoney(vehicle.selling_price)}</p>
-
-        <p><strong>Availability:</strong> ${escapeHTML(vehicle.availability||"Not specified")}</p>
-
-        <p><strong>Stock:</strong> ${escapeHTML(vehicle.stock_quantity??0)}</p>
-
-        <p><strong>Publication:</strong> ${published?"Published":"Unpublished"}</p>
-
-        <button onclick="editVehicle('${escapeHTML(vehicle.id)}')">Edit</button>
-
-        <button class="secondary"
-          onclick="toggleVehiclePublication('${escapeHTML(vehicle.id)}',${!published})">
-          ${published?"Unpublish":"Publish"}
-        </button>
-
-        <button class="danger"
-          onclick="deleteVehicle('${escapeHTML(vehicle.id)}')">
-          Delete
-        </button>
-
-      </div>`;
-
+          <button class="danger" onclick="deleteVehicle('${escapeHTML(vehicle.id)}')">Delete</button>
+        </div>
+      `;
     }).join("");
-
-  } catch(error) {
-
+  }catch(error){
     console.error(error);
-
-    list.innerHTML=
-      `<p class="message error">${escapeHTML(error.message)}</p>`;
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
-// ==========================================
-// SAVE VEHICLE
-// ==========================================
-
-async function saveVehicle() {
-
+/* SAVE VEHICLE */
+async function saveVehicle(){
   hideMessage("vehicleMessage");
 
   const model=document.getElementById("model").value.trim();
+  const price=Number(document.getElementById("sellingPrice").value);
 
-  const price=Number(
-    document.getElementById("sellingPrice").value
-  );
-
-  if(!model) {
+  if(!model){
     showMessage("vehicleMessage","Enter vehicle model.","error");
     return;
   }
 
-  if(!Number.isFinite(price)||price<=0) {
+  if(!Number.isFinite(price)||price<=0){
     showMessage("vehicleMessage","Enter a valid selling price.","error");
     return;
   }
 
   const button=document.getElementById("saveVehicleBtn");
-
   button.disabled=true;
   button.textContent="Saving...";
 
-  try {
-
+  try{
     const editingId=document.getElementById("vehicleId").value;
-
     const vehicleId=editingId||crypto.randomUUID();
 
     const uploadedURLs=await uploadPhotos(vehicleId);
-
     const finalImages=[
       ...existingImages.filter(url=>!removedImages.includes(url)),
       ...uploadedURLs
     ];
 
     const payload={
-
       model,
-
       variant:document.getElementById("variant").value.trim(),
-
       year:Number(document.getElementById("year").value)||null,
-
       description:document.getElementById("description").value.trim(),
-
       selling_price:price,
-
-      reference_price:Number(
-        document.getElementById("referencePrice").value
-      )||null,
-
-      deposit_percentage:Number(
-        document.getElementById("depositPercentage").value
-      )||30,
-
-      stock_quantity:Number(
-        document.getElementById("stockQuantity").value
-      )||0,
-
+      reference_price:Number(document.getElementById("referencePrice").value)||null,
+      deposit_percentage:Number(document.getElementById("depositPercentage").value)||30,
+      stock_quantity:Number(document.getElementById("stockQuantity").value)||0,
       availability:document.getElementById("availability").value,
-
       image_urls:finalImages,
-
       is_published:document.getElementById("published").checked,
-
       updated_at:new Date().toISOString()
     };
 
     let result;
 
-    if(editingId) {
-
-      result=await db.from("vehicles")
-        .update(payload)
-        .eq("id",editingId);
-
-    } else {
-
-      result=await db.from("vehicles")
-        .insert({
-          id:vehicleId,
-          ...payload
-        });
+    if(editingId){
+      result=await db.from("vehicles").update(payload).eq("id",editingId);
+    }else{
+      result=await db.from("vehicles").insert({id:vehicleId,...payload});
     }
 
     if(result.error)throw result.error;
@@ -1255,34 +816,18 @@ async function saveVehicle() {
 
     resetVehicleForm();
 
-    await Promise.all([
-      loadVehicles(),
-      loadOverview()
-    ]);
-
-  } catch(error) {
-
+    await Promise.all([loadVehicles(),loadOverview()]);
+  }catch(error){
     console.error(error);
-
-    showMessage(
-      "vehicleMessage",
-      error.message||"Could not save vehicle.",
-      "error"
-    );
-
-  } finally {
-
+    showMessage("vehicleMessage",error.message||"Could not save vehicle.","error");
+  }finally{
     button.disabled=false;
     button.textContent="Save Vehicle";
   }
 }
 
-function editVehicle(id) {
-
-  const vehicle=vehicles.find(
-    item=>String(item.id)===String(id)
-  );
-
+function editVehicle(id){
+  const vehicle=vehicles.find(item=>String(item.id)===String(id));
   if(!vehicle)return alert("Vehicle not found.");
 
   document.getElementById("vehicleId").value=vehicle.id||"";
@@ -1297,40 +842,22 @@ function editVehicle(id) {
   document.getElementById("availability").value=vehicle.availability||"pre_order";
   document.getElementById("published").checked=vehicle.is_published===true;
 
-  existingImages=Array.isArray(vehicle.image_urls)
-    ?[...vehicle.image_urls]:[];
-
+  existingImages=Array.isArray(vehicle.image_urls)?[...vehicle.image_urls]:[];
   removedImages=[];
   selectedFiles=[];
 
   document.getElementById("vehiclePhotos").value="";
-
   renderPreviews();
 
-  document.getElementById("vehiclesTab")
-    .scrollIntoView({behavior:"smooth"});
-
-  showMessage(
-    "vehicleMessage",
-    "Editing vehicle: "+vehicle.model,
-    "success"
-  );
+  document.getElementById("vehiclesTab").scrollIntoView({behavior:"smooth"});
+  showMessage("vehicleMessage","Editing vehicle: "+vehicle.model,"success");
 }
 
-function resetVehicleForm() {
-
+function resetVehicleForm(){
   [
-    "vehicleId",
-    "model",
-    "variant",
-    "year",
-    "description",
-    "sellingPrice",
-    "referencePrice",
-    "stockQuantity"
-  ].forEach(id=>{
-    document.getElementById(id).value="";
-  });
+    "vehicleId","model","variant","year","description",
+    "sellingPrice","referencePrice","stockQuantity"
+  ].forEach(id=>document.getElementById(id).value="");
 
   document.getElementById("depositPercentage").value="30";
   document.getElementById("availability").value="pre_order";
@@ -1342,248 +869,137 @@ function resetVehicleForm() {
   selectedFiles=[];
 
   renderPreviews();
-
   hideMessage("vehicleMessage");
 }
 
-async function toggleVehiclePublication(id,publish) {
-
+async function toggleVehiclePublication(id,publish){
   const {error}=await db.from("vehicles")
-    .update({
-      is_published:publish,
-      updated_at:new Date().toISOString()
-    })
+    .update({is_published:publish,updated_at:new Date().toISOString()})
     .eq("id",id);
 
   if(error)return alert(error.message);
-
-  await Promise.all([
-    loadVehicles(),
-    loadOverview()
-  ]);
+  await Promise.all([loadVehicles(),loadOverview()]);
 }
 
-async function deleteVehicle(id) {
-
+async function deleteVehicle(id){
   if(!confirm("Are you sure you want to delete this vehicle?"))return;
 
-  const {error}=await db.from("vehicles")
-    .delete()
-    .eq("id",id);
-
+  const {error}=await db.from("vehicles").delete().eq("id",id);
   if(error)return alert(error.message);
 
-  await Promise.all([
-    loadVehicles(),
-    loadOverview()
-  ]);
+  await Promise.all([loadVehicles(),loadOverview()]);
 }
 
-// ==========================================
-// NEGOTIATIONS
-// ==========================================
-
-async function loadOffers() {
-
+/* NEGOTIATIONS */
+async function loadOffers(){
   const list=document.getElementById("offerList");
-
   list.innerHTML="<p class='muted'>Loading negotiations...</p>";
 
-  try {
-
+  try{
     const {data,error}=await db.from("negotiations")
       .select("*")
       .order("created_at",{ascending:false});
 
     if(error)throw error;
 
-    if(!data||!data.length) {
+    if(!data||!data.length){
       list.innerHTML="<p class='muted'>No customer negotiations yet.</p>";
       return;
     }
 
     list.innerHTML=data.map(offer=>`
-
       <div class="offer-card">
-
         <h3>${escapeHTML(offer.vehicle_id||"Vehicle Negotiation")}</h3>
-
         <p><strong>Customer:</strong> ${escapeHTML(offer.customer_name||"Not provided")}</p>
-
         <p><strong>Email:</strong> ${escapeHTML(offer.email||offer.customer_email||"Not provided")}</p>
-
         <p><strong>Phone:</strong> ${escapeHTML(offer.phone||offer.customer_phone||"Not provided")}</p>
-
         <p><strong>Offer:</strong> ${formatMoney(offer.proposed_budget)}</p>
-
         <p><strong>Message:</strong> ${escapeHTML(offer.customer_message||"No message")}</p>
-
         <p><strong>Status:</strong> ${escapeHTML(offer.status||"Pending")}</p>
-
         ${offer.counter_offer?`<p><strong>Counteroffer:</strong> ${formatMoney(offer.counter_offer)}</p>`:""}
 
-        <button class="success"
-          onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">
-          Accept
-        </button>
-
-        <button class="secondary"
-          onclick="makeCounter('${escapeHTML(offer.id)}')">
-          Make Counteroffer
-        </button>
-
-        <button class="danger"
-          onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">
-          Reject
-        </button>
-
+        <button class="success" onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">Accept</button>
+        <button class="secondary" onclick="makeCounter('${escapeHTML(offer.id)}')">Make Counteroffer</button>
+        <button class="danger" onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">Reject</button>
       </div>
-
     `).join("");
-
-  } catch(error) {
-
+  }catch(error){
     console.error(error);
-
-    list.innerHTML=
-      `<p class="message error">${escapeHTML(error.message)}</p>`;
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
-async function respondToOffer(id,status) {
-
-  const {error}=await db.from("negotiations")
-    .update({status})
-    .eq("id",id);
-
+async function respondToOffer(id,status){
+  const {error}=await db.from("negotiations").update({status}).eq("id",id);
   if(error)return alert(error.message);
-
-  await Promise.all([
-    loadOffers(),
-    loadOverview()
-  ]);
+  await Promise.all([loadOffers(),loadOverview()]);
 }
 
-async function makeCounter(id) {
-
+async function makeCounter(id){
   const amount=prompt("Enter your counteroffer amount in USD:");
-
   if(amount===null)return;
 
   const counteroffer=Number(amount);
-
-  if(!Number.isFinite(counteroffer)||counteroffer<=0) {
-    return alert("Enter a valid amount.");
-  }
+  if(!Number.isFinite(counteroffer)||counteroffer<=0)return alert("Enter a valid amount.");
 
   const {error}=await db.from("negotiations")
-    .update({
-      status:"countered",
-      counter_offer:counteroffer
-    })
+    .update({status:"countered",counter_offer:counteroffer})
     .eq("id",id);
 
   if(error)return alert(error.message);
-
-  await Promise.all([
-    loadOffers(),
-    loadOverview()
-  ]);
+  await Promise.all([loadOffers(),loadOverview()]);
 }
 
-// ==========================================
-// PURCHASE ENQUIRIES
-// ==========================================
-
-async function loadEnquiries() {
-
+/* PURCHASE ENQUIRIES */
+async function loadEnquiries(){
   const list=document.getElementById("enquiryList");
-
   list.innerHTML="<p class='muted'>Loading enquiries...</p>";
 
-  try {
-
+  try{
     const {data,error}=await db.from("enquiries")
       .select("*")
       .order("created_at",{ascending:false});
 
     if(error)throw error;
 
-    if(!data||!data.length) {
+    if(!data||!data.length){
       list.innerHTML="<p class='muted'>No purchase enquiries yet.</p>";
       return;
     }
 
     list.innerHTML=data.map(enquiry=>{
-
-      const vehicle=vehicles.find(
-        item=>String(item.id)===String(enquiry.vehicle_id)
-      );
+      const vehicle=vehicles.find(item=>String(item.id)===String(enquiry.vehicle_id));
 
       return `
-
-      <div class="enquiry-card">
-
-        <h3>${escapeHTML(vehicle?.model||"Vehicle Enquiry")}</h3>
-
-        <p><strong>Customer:</strong> ${escapeHTML(enquiry.customer_name||"Not provided")}</p>
-
-        <p><strong>Email:</strong> ${escapeHTML(enquiry.email||"Not provided")}</p>
-
-        <p><strong>Phone:</strong> ${escapeHTML(enquiry.phone||"Not provided")}</p>
-
-        <p><strong>Enquiry Type:</strong> ${escapeHTML(enquiry.enquiry_type||"Not specified")}</p>
-
-        <p><strong>Preferred Colour:</strong> ${escapeHTML(enquiry.preferred_colour||"Not specified")}</p>
-
-        <p><strong>Delivery Country:</strong> ${escapeHTML(enquiry.delivery_country||"Not specified")}</p>
-
-        <p><strong>Message:</strong> ${escapeHTML(enquiry.message||"No message")}</p>
-
-        <p><strong>Status:</strong> ${escapeHTML(enquiry.status||"Pending")}</p>
-
-        <p><strong>Date:</strong> ${formatDate(enquiry.created_at)}</p>
-
-        <button onclick="updateEnquiryStatus('${escapeHTML(enquiry.id)}')">
-          Update Status
-        </button>
-
-      </div>
-
+        <div class="enquiry-card">
+          <h3>${escapeHTML(vehicle?.model||"Vehicle Enquiry")}</h3>
+          <p><strong>Customer:</strong> ${escapeHTML(enquiry.customer_name||"Not provided")}</p>
+          <p><strong>Email:</strong> ${escapeHTML(enquiry.email||"Not provided")}</p>
+          <p><strong>Phone:</strong> ${escapeHTML(enquiry.phone||"Not provided")}</p>
+          <p><strong>Enquiry Type:</strong> ${escapeHTML(enquiry.enquiry_type||"Not specified")}</p>
+          <p><strong>Preferred Colour:</strong> ${escapeHTML(enquiry.preferred_colour||"Not specified")}</p>
+          <p><strong>Delivery Country:</strong> ${escapeHTML(enquiry.delivery_country||"Not specified")}</p>
+          <p><strong>Message:</strong> ${escapeHTML(enquiry.message||"No message")}</p>
+          <p><strong>Status:</strong> ${escapeHTML(enquiry.status||"Pending")}</p>
+          <p><strong>Date:</strong> ${formatDate(enquiry.created_at)}</p>
+          <button onclick="updateEnquiryStatus('${escapeHTML(enquiry.id)}')">Update Status</button>
+        </div>
       `;
-
     }).join("");
-
-  } catch(error) {
-
+  }catch(error){
     console.error(error);
-
-    list.innerHTML=
-      `<p class="message error">${escapeHTML(error.message)}</p>`;
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
-async function updateEnquiryStatus(id) {
-
-  const status=prompt(
-    "Enter new status (Pending, Contacted, Processing, Completed, Cancelled):"
-  );
-
+async function updateEnquiryStatus(id){
+  const status=prompt("Enter new status (Pending, Contacted, Processing, Completed, Cancelled):");
   if(status===null)return;
 
   const selectedStatus=status.trim();
+  const allowed=["Pending","Contacted","Processing","Completed","Cancelled"];
 
-  const allowed=[
-    "Pending",
-    "Contacted",
-    "Processing",
-    "Completed",
-    "Cancelled"
-  ];
-
-  if(!allowed.includes(selectedStatus)) {
-    return alert("Invalid status.");
-  }
+  if(!allowed.includes(selectedStatus))return alert("Invalid status.");
 
   const {error}=await db.from("enquiries")
     .update({status:selectedStatus})
@@ -1592,208 +1008,98 @@ async function updateEnquiryStatus(id) {
   if(error)return alert(error.message);
 
   alert("Enquiry status updated.");
-
-  await Promise.all([
-    loadEnquiries(),
-    loadOverview()
-  ]);
+  await Promise.all([loadEnquiries(),loadOverview()]);
 }
 
-// ==========================================
-// ORDER NOTIFICATIONS
-// ==========================================
+/* ORDER NOTIFICATIONS */
+async function sendOrderNotification(event,orderId){
+  if(!orderId)return {success:false,message:"Order ID unavailable."};
 
-async function sendOrderNotification(event,orderId) {
+  try{
+    const {data,error}=await db.functions.invoke("send-order-notification",{
+      body:{event,order_id:orderId}
+    });
 
-  if(!orderId) {
-    return {
-      success:false,
-      message:"Order ID unavailable."
-    };
-  }
+    if(error)return {success:false,message:error.message||"Notification failed."};
+    if(data?.error)return {success:false,message:data.error};
 
-  try {
-
-    const {data,error}=await db.functions.invoke(
-      "send-order-notification",
-      {
-        body:{
-          event,
-          order_id:orderId
-        }
-      }
-    );
-
-    if(error) {
-      return {
-        success:false,
-        message:error.message||"Notification failed."
-      };
-    }
-
-    if(data?.error) {
-      return {
-        success:false,
-        message:data.error
-      };
-    }
-
-    return {
-      success:true,
-      message:"Notification request completed."
-    };
-
-  } catch(error) {
-
+    return {success:true,message:"Notification request completed."};
+  }catch(error){
     console.error(error);
-
-    return {
-      success:false,
-      message:error.message||"Notification failed."
-    };
+    return {success:false,message:error.message||"Notification failed."};
   }
 }
 
-// ==========================================
-// CREATE CUSTOMER ORDER
-// ==========================================
-
-async function createCustomerOrder() {
-
+/* CREATE CUSTOMER ORDER */
+async function createCustomerOrder(){
   hideMessage("orderCreateMessage");
 
-  const customerEmail=
-    document.getElementById("orderCustomerEmail").value.trim();
+  const customerEmail=document.getElementById("orderCustomerEmail").value.trim();
+  const vehicleName=document.getElementById("orderVehicleName").value.trim();
 
-  const vehicleName=
-    document.getElementById("orderVehicleName").value.trim();
-
-  if(!customerEmail||!vehicleName) {
-
-    showMessage(
-      "orderCreateMessage",
-      "Customer email and vehicle name are required.",
-      "error"
-    );
-
+  if(!customerEmail||!vehicleName){
+    showMessage("orderCreateMessage","Customer email and vehicle name are required.","error");
     return;
   }
 
   const button=document.getElementById("createOrderBtn");
-
   button.disabled=true;
   button.textContent="Creating Order...";
 
-  try {
-
+  try{
     const orderData={
-
       customerEmail,
-
       vehicleName,
-
-      tracking_number:
-        document.getElementById("orderTrackingNumber").value.trim()||null,
-
-      payment_status:
-        document.getElementById("orderPaymentStatus").value,
-
-      order_status:
-        document.getElementById("orderStatus").value,
-
-      delivery_country:
-        document.getElementById("orderCountry").value.trim(),
-
-      shipping_carrier:
-        document.getElementById("orderCarrier").value.trim(),
-
-      tracking_url:
-        document.getElementById("orderTrackingURL").value.trim(),
-
-      estimated_delivery:
-        document.getElementById("orderDeliveryDate").value||null,
-
-      admin_note:
-        document.getElementById("orderAdminNote").value.trim()
+      tracking_number:document.getElementById("orderTrackingNumber").value.trim()||null,
+      payment_status:document.getElementById("orderPaymentStatus").value,
+      order_status:document.getElementById("orderStatus").value,
+      delivery_country:document.getElementById("orderCountry").value.trim(),
+      shipping_carrier:document.getElementById("orderCarrier").value.trim(),
+      tracking_url:document.getElementById("orderTrackingURL").value.trim(),
+      estimated_delivery:document.getElementById("orderDeliveryDate").value||null,
+      admin_note:document.getElementById("orderAdminNote").value.trim()
     };
 
-    const {data,error}=await db.functions.invoke(
-      "create-customer-order-",
-      {
-        body:orderData
-      }
-    );
+    const {data,error}=await db.functions.invoke("create-customer-order-",{
+      body:orderData
+    });
 
     if(error)throw error;
-
     if(data?.error)throw new Error(data.error);
 
-    const createdOrder=
-      data?.order||
-      data?.customer_order||
-      data||
-      {};
-
+    const createdOrder=data?.order||data?.customer_order||data||{};
     const orderId=createdOrder.id||null;
-
-    const trackingNumber=
-      createdOrder.tracking_number||
-      orderData.tracking_number||
-      "Created successfully";
+    const trackingNumber=createdOrder.tracking_number||orderData.tracking_number||"Created successfully";
 
     let notificationMessage="";
 
-    if(orderId) {
-
-      const notification=await sendOrderNotification(
-        "order_created",
-        orderId
-      );
-
+    if(orderId){
+      const notification=await sendOrderNotification("order_created",orderId);
       notificationMessage=notification.success
         ?" Notification requested."
         :" Notification failed: "+notification.message;
-
-    } else {
-
-      notificationMessage=
-        " Email notification not triggered because the function did not return an order ID.";
+    }else{
+      notificationMessage=" Email notification not triggered because the function did not return an order ID.";
     }
 
     showMessage(
       "orderCreateMessage",
-      "Order created successfully. Tracking: "+
-      trackingNumber+
-      notificationMessage,
+      "Order created successfully. Tracking: "+trackingNumber+notificationMessage,
       "success"
     );
 
     resetOrderForm();
-
-    await Promise.all([
-      loadOrders(),
-      loadOverview()
-    ]);
-
-  } catch(error) {
-
+    await Promise.all([loadOrders(),loadOverview()]);
+  }catch(error){
     console.error(error);
-
-    showMessage(
-      "orderCreateMessage",
-      error.message||"Could not create customer order.",
-      "error"
-    );
-
-  } finally {
-
+    showMessage("orderCreateMessage",error.message||"Could not create customer order.","error");
+  }finally{
     button.disabled=false;
     button.textContent="Create Order";
   }
 }
 
-function resetOrderForm() {
-
+function resetOrderForm(){
   document.getElementById("orderCustomerEmail").value="";
   document.getElementById("orderVehicleName").value="";
   document.getElementById("orderTrackingNumber").value="";
@@ -1806,82 +1112,52 @@ function resetOrderForm() {
   document.getElementById("orderAdminNote").value="";
 }
 
-// ==========================================
-// LOAD CUSTOMER ORDERS
-// ==========================================
-
-async function loadOrders() {
-
+/* LOAD CUSTOMER ORDERS */
+async function loadOrders(){
   const list=document.getElementById("orderList");
-
   list.innerHTML="<p class='muted'>Loading orders...</p>";
 
-  try {
-
+  try{
     const {data,error}=await db.from("customer_orders")
       .select("*")
       .order("created_at",{ascending:false});
 
     if(error)throw error;
 
-    if(!data||!data.length) {
+    if(!data||!data.length){
       list.innerHTML="<p class='muted'>No customer orders yet.</p>";
       return;
     }
 
-    list.innerHTML=data.map(order=>`
+    list.innerHTML=data.map(order=>{
+      const trackingURL=safeTrackingURL(order.tracking_url);
 
-      <div class="order-card">
-
-        <h3>${escapeHTML(order.vehicle_name||"Vehicle Order")}</h3>
-
-        <p><strong>Customer ID:</strong> ${escapeHTML(order.customer_id||"Not available")}</p>
-
-        <p><strong>Tracking Number:</strong> ${escapeHTML(order.tracking_number||"Not assigned")}</p>
-
-        <p><strong>Payment:</strong> ${escapeHTML(order.payment_status||"Pending")}</p>
-
-        <p><strong>Order Status:</strong> ${escapeHTML(order.order_status||"Processing")}</p>
-
-        <p><strong>Country:</strong> ${escapeHTML(order.delivery_country||"Not provided")}</p>
-
-        <p><strong>Carrier:</strong> ${escapeHTML(order.shipping_carrier||"Not assigned")}</p>
-
-        <p><strong>Estimated Delivery:</strong> ${formatDate(order.estimated_delivery)}</p>
-
-        <p><strong>Tracking URL:</strong>
-          ${
-            order.tracking_url
-            ?`<a href="${escapeHTML(order.tracking_url)}" target="_blank" rel="noopener noreferrer">Open Tracking</a>`
-            :"Not provided"
-          }
-        </p>
-
-        <p><strong>Private Admin Note:</strong> ${escapeHTML(order.admin_note||"None")}</p>
-
-        <button onclick="editCustomerOrder('${escapeHTML(order.id)}')">
-          Update Order
-        </button>
-
-      </div>
-
-    `).join("");
-
-  } catch(error) {
-
+      return `
+        <div class="order-card">
+          <h3>${escapeHTML(order.vehicle_name||"Vehicle Order")}</h3>
+          <p><strong>Customer ID:</strong> ${escapeHTML(order.customer_id||"Not available")}</p>
+          <p><strong>Tracking Number:</strong> ${escapeHTML(order.tracking_number||"Not assigned")}</p>
+          <p><strong>Payment:</strong> ${escapeHTML(order.payment_status||"Pending")}</p>
+          <p><strong>Order Status:</strong> ${escapeHTML(order.order_status||"Processing")}</p>
+          <p><strong>Country:</strong> ${escapeHTML(order.delivery_country||"Not provided")}</p>
+          <p><strong>Carrier:</strong> ${escapeHTML(order.shipping_carrier||"Not assigned")}</p>
+          <p><strong>Estimated Delivery:</strong> ${formatDate(order.estimated_delivery)}</p>
+          <p><strong>Tracking URL:</strong>
+            ${trackingURL?`<a href="${escapeHTML(trackingURL)}" target="_blank" rel="noopener noreferrer">Open Tracking</a>`:"Not provided"}
+          </p>
+          <p><strong>Private Admin Note:</strong> ${escapeHTML(order.admin_note||"None")}</p>
+          <button onclick="editCustomerOrder('${escapeHTML(order.id)}')">Update Order</button>
+        </div>
+      `;
+    }).join("");
+  }catch(error){
     console.error(error);
-
-    list.innerHTML=
-      `<p class="message error">${escapeHTML(error.message)}</p>`;
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
-// ==========================================
-// UPDATE CUSTOMER ORDER
-// ==========================================
-
-async function editCustomerOrder(id) {
-
+/* UPDATE CUSTOMER ORDER */
+async function editCustomerOrder(id){
   const {data:order,error:fetchError}=await db.from("customer_orders")
     .select("*")
     .eq("id",id)
@@ -1893,108 +1169,51 @@ async function editCustomerOrder(id) {
     "Payment status:\nPending, Partially Paid, Paid, Refunded",
     order.payment_status||"Pending"
   );
-
   if(paymentStatus===null)return;
 
   const orderStatus=prompt(
     "Order status:\nOrder Received, Processing, Preparing for Shipment, Shipped, In Transit, Out for Delivery, Delivered, Cancelled",
     order.order_status||"Processing"
   );
-
   if(orderStatus===null)return;
 
-  const carrier=prompt(
-    "Shipping carrier:",
-    order.shipping_carrier||""
-  );
-
+  const carrier=prompt("Shipping carrier:",order.shipping_carrier||"");
   if(carrier===null)return;
 
-  const trackingURL=prompt(
-    "Tracking URL:",
-    order.tracking_url||""
-  );
-
+  const trackingURL=prompt("Tracking URL:",order.tracking_url||"");
   if(trackingURL===null)return;
 
-  const deliveryDate=prompt(
-    "Estimated delivery date (YYYY-MM-DD):",
-    order.estimated_delivery||""
-  );
-
+  const deliveryDate=prompt("Estimated delivery date (YYYY-MM-DD):",order.estimated_delivery||"");
   if(deliveryDate===null)return;
 
-  const adminNote=prompt(
-    "Private admin note:",
-    order.admin_note||""
-  );
-
+  const adminNote=prompt("Private admin note:",order.admin_note||"");
   if(adminNote===null)return;
 
-  const allowedPayments=[
-    "Pending",
-    "Partially Paid",
-    "Paid",
-    "Refunded"
-  ];
-
+  const allowedPayments=["Pending","Partially Paid","Paid","Refunded"];
   const allowedStatuses=[
-    "Order Received",
-    "Processing",
-    "Preparing for Shipment",
-    "Shipped",
-    "In Transit",
-    "Out for Delivery",
-    "Delivered",
-    "Cancelled"
+    "Order Received","Processing","Preparing for Shipment",
+    "Shipped","In Transit","Out for Delivery","Delivered","Cancelled"
   ];
 
-  if(!allowedPayments.includes(paymentStatus.trim())) {
-    return alert("Invalid payment status.");
-  }
+  if(!allowedPayments.includes(paymentStatus.trim()))return alert("Invalid payment status.");
+  if(!allowedStatuses.includes(orderStatus.trim()))return alert("Invalid order status.");
 
-  if(!allowedStatuses.includes(orderStatus.trim())) {
-    return alert("Invalid order status.");
-  }
-
-  if(trackingURL.trim()) {
-
-    try {
-
-      const parsedURL=new URL(trackingURL.trim());
-
-      if(parsedURL.protocol!=="https:") {
-        return alert("Tracking links must use HTTPS.");
-      }
-
-    } catch(_) {
-
-      return alert("Enter a valid tracking URL.");
-    }
+  if(trackingURL.trim()&&!safeTrackingURL(trackingURL.trim())){
+    return alert("Enter a valid HTTPS tracking URL.");
   }
 
   const updateData={
-
     payment_status:paymentStatus.trim(),
-
     order_status:orderStatus.trim(),
-
     shipping_carrier:carrier.trim(),
-
     tracking_url:trackingURL.trim(),
-
     estimated_delivery:deliveryDate.trim()||null,
-
     admin_note:adminNote.trim(),
-
     updated_at:new Date().toISOString()
   };
 
-  const paymentChanged=
-    (order.payment_status||"")!==updateData.payment_status;
-
-  const statusChanged=
-    (order.order_status||"")!==updateData.order_status;
+  const paymentChanged=(order.payment_status||"")!==updateData.payment_status;
+  const statusChanged=(order.order_status||"")!==updateData.order_status;
 
   const {error}=await db.from("customer_orders")
     .update(updateData)
@@ -2004,141 +1223,72 @@ async function editCustomerOrder(id) {
 
   const problems=[];
 
-  if(paymentChanged) {
-
-    const result=await sendOrderNotification(
-      "payment_updated",
-      id
-    );
-
-    if(!result.success) {
-      problems.push("Payment notification: "+result.message);
-    }
+  if(paymentChanged){
+    const result=await sendOrderNotification("payment_updated",id);
+    if(!result.success)problems.push("Payment notification: "+result.message);
   }
 
-  if(statusChanged) {
-
-    const result=await sendOrderNotification(
-      "order_status_updated",
-      id
-    );
-
-    if(!result.success) {
-      problems.push("Order notification: "+result.message);
-    }
+  if(statusChanged){
+    const result=await sendOrderNotification("order_status_updated",id);
+    if(!result.success)problems.push("Order notification: "+result.message);
   }
 
-  await Promise.all([
-    loadOrders(),
-    loadOverview()
-  ]);
+  await Promise.all([loadOrders(),loadOverview()]);
 
-  if(problems.length) {
-
-    alert(
-      "Order updated successfully, but some notifications failed:\n\n"+
-      problems.join("\n\n")
-    );
-
-  } else if(paymentChanged||statusChanged) {
-
+  if(problems.length){
+    alert("Order updated successfully, but some notifications failed:\n\n"+problems.join("\n\n"));
+  }else if(paymentChanged||statusChanged){
     alert("Order updated successfully. Notification requests submitted.");
-
-  } else {
-
+  }else{
     alert("Customer order updated successfully.");
   }
 }
 
-// ==========================================
-// NEW: ADMIN LIVE CHAT CENTRE
-// ==========================================
-
-// LOAD CUSTOMER CONVERSATIONS
-
-async function loadChatConversations() {
-
+/* LIVE CHAT CENTRE */
+async function loadChatConversations(){
   if(!currentUser)return;
 
   const list=document.getElementById("chatConversationList");
-
   if(!list)return;
 
-  try {
-
-    const {data,error}=await db
-      .from("chat_conversations")
+  try{
+    const {data,error}=await db.from("chat_conversations")
       .select("*")
       .order("last_message_at",{ascending:false});
 
     if(error)throw error;
 
-    if(!data||!data.length) {
-
-      list.innerHTML=`
-        <p class="muted">
-          No customer conversations yet.
-        </p>
-      `;
-
+    if(!data||!data.length){
+      list.innerHTML="<p class='muted'>No customer conversations yet.</p>";
       return;
     }
 
     list.innerHTML=data.map(chat=>{
-
       const selected=String(chat.id)===String(activeChatId);
 
       return `
-
-        <div
-          class="chat-card ${selected?"selected":""}"
-          onclick="openAdminChat('${escapeHTML(chat.id)}')"
-        >
-
+        <div class="chat-card ${selected?"selected":""}" onclick="openAdminChat('${escapeHTML(chat.id)}')">
           <h3>${escapeHTML(chat.visitor_name||"Customer")}</h3>
-
           <p>${escapeHTML(chat.visitor_email||"No email")}</p>
-
-          <p>
-            Last activity:
-            ${formatDate(chat.last_message_at)}
-          </p>
-
+          <p>Last activity: ${formatDate(chat.last_message_at)}</p>
           <span class="chat-status ${chat.status==="closed"?"closed":""}">
             ${escapeHTML(chat.status||"open")}
           </span>
-
         </div>
-
       `;
-
     }).join("");
-
-  } catch(error) {
-
+  }catch(error){
     console.error("Chat conversations:",error);
-
-    list.innerHTML=`
-      <p class="message error">
-        ${escapeHTML(error.message)}
-      </p>
-    `;
+    list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
-
-// OPEN A CUSTOMER CONVERSATION
-
-async function openAdminChat(id) {
-
+async function openAdminChat(id){
   activeChatId=id;
-
   hideMessage("adminChatStatus");
 
-  try {
-
-    const {data,error}=await db
-      .from("chat_conversations")
+  try{
+    const {data,error}=await db.from("chat_conversations")
       .select("*")
       .eq("id",id)
       .single();
@@ -2147,238 +1297,126 @@ async function openAdminChat(id) {
 
     activeChatStatus=data.status;
 
-    document.getElementById("activeChatTitle").textContent=
-      data.visitor_name||"Customer";
-
-    document.getElementById("activeChatEmail").textContent=
-      data.visitor_email||"Email not provided";
+    document.getElementById("activeChatTitle").textContent=data.visitor_name||"Customer";
+    document.getElementById("activeChatEmail").textContent=data.visitor_email||"Email not provided";
 
     updateChatButtons();
-
     await loadAdminChatMessages();
-
     await loadChatConversations();
-
-  } catch(error) {
-
+  }catch(error){
     console.error(error);
-
-    showMessage(
-      "adminChatStatus",
-      error.message||"Could not open conversation.",
-      "error"
-    );
+    showMessage("adminChatStatus",error.message||"Could not open conversation.","error");
   }
 }
 
-
-// UPDATE CHAT BUTTONS
-
-function updateChatButtons() {
-
+function updateChatButtons(){
   const closed=activeChatStatus==="closed";
 
-  document.getElementById("sendChatReplyBtn").disabled=
-    !activeChatId||closed;
-
-  document.getElementById("adminChatReply").disabled=
-    !activeChatId||closed;
-
-  document.getElementById("closeChatBtn").disabled=
-    !activeChatId||closed;
-
-  document.getElementById("reopenChatBtn").disabled=
-    !activeChatId||!closed;
+  document.getElementById("sendChatReplyBtn").disabled=!activeChatId||closed;
+  document.getElementById("adminChatReply").disabled=!activeChatId||closed;
+  document.getElementById("closeChatBtn").disabled=!activeChatId||closed;
+  document.getElementById("reopenChatBtn").disabled=!activeChatId||!closed;
 }
 
-
-// LOAD MESSAGES
-
-async function loadAdminChatMessages() {
-
+async function loadAdminChatMessages(){
   if(!activeChatId||!currentUser)return;
 
   const box=document.getElementById("adminChatMessages");
 
-  try {
-
-    const {data,error}=await db
-      .from("chat_messages")
+  try{
+    const {data,error}=await db.from("chat_messages")
       .select("*")
       .eq("conversation_id",activeChatId)
       .order("created_at",{ascending:true});
 
     if(error)throw error;
 
-    if(!data||!data.length) {
-
-      box.innerHTML=`
-        <p class="muted">
-          No messages yet. You can reply when the customer sends a message.
-        </p>
-      `;
-
+    if(!data||!data.length){
+      box.innerHTML="<p class='muted'>No messages yet. You can reply when the customer sends a message.</p>";
       return;
     }
 
     box.innerHTML=data.map(message=>{
-
-      const role=message.sender_role==="admin"
-        ?"admin":"visitor";
+      const role=message.sender_role==="admin"?"admin":"visitor";
 
       return `
-
         <div class="chat-message ${role}">
-
-          <strong>
-            ${escapeHTML(message.sender_name||role)}
-          </strong>
-
+          <strong>${escapeHTML(message.sender_name||role)}</strong>
           <p>${escapeHTML(message.message)}</p>
-
           <small>${formatDate(message.created_at)}</small>
-
         </div>
-
       `;
-
     }).join("");
 
     box.scrollTop=box.scrollHeight;
-
-  } catch(error) {
-
+  }catch(error){
     console.error("Chat messages:",error);
-
-    box.innerHTML=`
-      <p class="message error">
-        ${escapeHTML(error.message)}
-      </p>
-    `;
+    box.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
   }
 }
 
-
-// SEND ADMIN REPLY
-
-async function sendAdminChatReply() {
-
-  if(!activeChatId) {
-
-    showMessage(
-      "adminChatStatus",
-      "Select a customer conversation first.",
-      "error"
-    );
-
+async function sendAdminChatReply(){
+  if(!activeChatId){
+    showMessage("adminChatStatus","Select a customer conversation first.","error");
     return;
   }
 
-  if(activeChatStatus==="closed") {
-
-    showMessage(
-      "adminChatStatus",
-      "This conversation is closed. Reopen it before replying.",
-      "error"
-    );
-
+  if(activeChatStatus==="closed"){
+    showMessage("adminChatStatus","This conversation is closed. Reopen it before replying.","error");
     return;
   }
 
   const input=document.getElementById("adminChatReply");
-
   const message=input.value.trim();
 
   if(!message)return;
 
-  if(message.length>2000) {
-
-    showMessage(
-      "adminChatStatus",
-      "Your reply cannot exceed 2,000 characters.",
-      "error"
-    );
-
+  if(message.length>2000){
+    showMessage("adminChatStatus","Your reply cannot exceed 2,000 characters.","error");
     return;
   }
 
   const button=document.getElementById("sendChatReplyBtn");
-
   button.disabled=true;
   button.textContent="Sending...";
 
-  try {
-
-    const {error}=await db
-      .from("chat_messages")
-      .insert({
-
-        conversation_id:activeChatId,
-
-        sender_role:"admin",
-
-        sender_name:"TESLA Innovation Support",
-
-        admin_user_id:currentUser.id,
-
-        message:message
-
-      });
+  try{
+    const {error}=await db.from("chat_messages").insert({
+      conversation_id:activeChatId,
+      sender_role:"admin",
+      sender_name:"TESLA Innovation Support",
+      admin_user_id:currentUser.id,
+      message
+    });
 
     if(error)throw error;
 
-    const {error:updateError}=await db
-      .from("chat_conversations")
-      .update({
-        last_message_at:new Date().toISOString()
-      })
+    const {error:updateError}=await db.from("chat_conversations")
+      .update({last_message_at:new Date().toISOString()})
       .eq("id",activeChatId);
 
     if(updateError)throw updateError;
 
     input.value="";
-
-    showMessage(
-      "adminChatStatus",
-      "Your reply has been sent successfully.",
-      "success"
-    );
+    showMessage("adminChatStatus","Your reply has been sent successfully.","success");
 
     await loadAdminChatMessages();
-
     await loadChatConversations();
-
-  } catch(error) {
-
+  }catch(error){
     console.error(error);
-
-    showMessage(
-      "adminChatStatus",
-      error.message||"Could not send your reply.",
-      "error"
-    );
-
-  } finally {
-
+    showMessage("adminChatStatus",error.message||"Could not send your reply.","error");
+  }finally{
     button.textContent="Send Reply";
-
     updateChatButtons();
   }
 }
 
-
-// CLOSE CONVERSATION
-
-async function closeAdminChat() {
-
+async function closeAdminChat(){
   if(!activeChatId)return;
-
   if(!confirm("Close this customer conversation?"))return;
 
-  try {
-
-    const {error}=await db
-      .from("chat_conversations")
+  try{
+    const {error}=await db.from("chat_conversations")
       .update({
         status:"closed",
         updated_at:new Date().toISOString()
@@ -2388,38 +1426,20 @@ async function closeAdminChat() {
     if(error)throw error;
 
     activeChatStatus="closed";
-
     updateChatButtons();
 
-    showMessage(
-      "adminChatStatus",
-      "Conversation closed successfully.",
-      "success"
-    );
-
+    showMessage("adminChatStatus","Conversation closed successfully.","success");
     await loadChatConversations();
-
-  } catch(error) {
-
-    showMessage(
-      "adminChatStatus",
-      error.message||"Could not close conversation.",
-      "error"
-    );
+  }catch(error){
+    showMessage("adminChatStatus",error.message||"Could not close conversation.","error");
   }
 }
 
-
-// REOPEN CONVERSATION
-
-async function reopenAdminChat() {
-
+async function reopenAdminChat(){
   if(!activeChatId)return;
 
-  try {
-
-    const {error}=await db
-      .from("chat_conversations")
+  try{
+    const {error}=await db.from("chat_conversations")
       .update({
         status:"open",
         updated_at:new Date().toISOString()
@@ -2429,95 +1449,56 @@ async function reopenAdminChat() {
     if(error)throw error;
 
     activeChatStatus="open";
-
     updateChatButtons();
 
-    showMessage(
-      "adminChatStatus",
-      "Conversation reopened successfully.",
-      "success"
-    );
-
+    showMessage("adminChatStatus","Conversation reopened successfully.","success");
     await loadChatConversations();
-
-  } catch(error) {
-
-    showMessage(
-      "adminChatStatus",
-      error.message||"Could not reopen conversation.",
-      "error"
-    );
+  }catch(error){
+    showMessage("adminChatStatus",error.message||"Could not reopen conversation.","error");
   }
 }
 
-
-// AUTOMATIC CHAT REFRESH
-
-function startChatRefresh() {
-
+/* AUTOMATIC CHAT REFRESH */
+function startChatRefresh(){
   stopChatRefresh();
 
   chatRefreshTimer=setInterval(async()=>{
-
     if(!currentUser||chatRefreshRunning)return;
 
     chatRefreshRunning=true;
 
-    try {
-
+    try{
       await loadChatConversations();
-
-      if(activeChatId) {
-        await loadAdminChatMessages();
-      }
-
-    } finally {
-
+      if(activeChatId)await loadAdminChatMessages();
+    }finally{
       chatRefreshRunning=false;
     }
-
   },5000);
 }
 
-
-function stopChatRefresh() {
-
-  if(chatRefreshTimer) {
-
+function stopChatRefresh(){
+  if(chatRefreshTimer){
     clearInterval(chatRefreshTimer);
-
     chatRefreshTimer=null;
   }
 }
 
-
-// ==========================================
-// AUTH STATE CHANGES
-// ==========================================
-
+/* AUTH STATE CHANGES */
 db.auth.onAuthStateChange(event=>{
-
-  if(event==="SIGNED_OUT") {
-
+  if(event==="SIGNED_OUT"){
     stopChatRefresh();
 
     activeChatId=null;
     activeChatStatus=null;
-
     currentUser=null;
 
     document.getElementById("dashboard").classList.add("hidden");
-
     document.getElementById("loginPanel").classList.remove("hidden");
   }
 });
 
-// ==========================================
-// START DASHBOARD
-// ==========================================
-
+/* START DASHBOARD */
 checkSession();
-
 </script>
 </body>
 </html>
