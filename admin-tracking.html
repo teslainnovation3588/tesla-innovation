@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#08090b">
+<title>Shipment Control | TESLA Innovation</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#08090b;color:#fff;font-family:Arial,sans-serif;line-height:1.5}
+header{padding:20px 5%;background:#111;border-bottom:1px solid #333;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-weight:900;letter-spacing:2px}
+.logo span{color:#e82127}
+a{color:#e82127;text-decoration:none}
+header a{color:#ddd;font-size:13px}
+main{width:92%;max-width:1100px;margin:35px auto}
+h1{font-size:29px;margin:8px 0}
+.sub{color:#999;font-size:13px;margin-bottom:25px}
+.panel{background:#121418;border:1px solid #333;border-radius:9px;padding:22px;margin-bottom:20px}
+input,select,textarea{width:100%;padding:12px;background:#08090b;color:white;border:1px solid #393d45;border-radius:5px;font:inherit}
+textarea{min-height:85px;resize:vertical}
+label{display:block;font-size:12px;color:#ccc;margin:13px 0 5px}
+button{background:#e82127;color:white;border:0;padding:12px 17px;border-radius:5px;font-weight:bold;cursor:pointer}
+button:disabled{opacity:.5}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.order{background:#191c21;border:1px solid #353941;border-radius:8px;padding:18px;margin-top:14px}
+.order h3{margin-bottom:8px}
+.order p{font-size:12px;color:#aaa;margin:5px 0;overflow-wrap:anywhere}
+.order button{margin-top:12px}
+.badge{display:inline-block;background:#282d35;padding:5px 10px;border-radius:20px;font-size:11px;margin:5px 0}
+#dashboard{display:none}
+#message{font-size:13px;margin-top:12px}
+.muted{color:#999;font-size:12px}
+footer{text-align:center;padding:25px;color:#666;font-size:11px;border-top:1px solid #333;margin-top:40px}
+@media(max-width:650px){.grid{grid-template-columns:1fr}.panel{padding:17px}h1{font-size:25px}}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">TESLA <span>INNOVATION</span></div>
+ <div style="display:flex;gap:18px">
+  <a href="admin.html">Main Admin</a>
+  <a href="tracking.html">Customer Tracking</a>
+ </div>
+</header>
+
+<main>
+ <section id="loginPanel" class="panel">
+  <h1>Admin Access</h1>
+  <p class="sub">Sign in with your authorised administrator account.</p>
+  <form id="loginForm">
+   <label>Email address</label>
+   <input id="email" type="email" autocomplete="username" required>
+   <label>Password</label>
+   <input id="password" type="password" autocomplete="current-password" required>
+   <button id="loginButton" style="width:100%;margin-top:18px">SECURE LOGIN</button>
+  </form>
+  <p id="loginMessage"></p>
+ </section>
+
+ <section id="dashboard">
+  <h1>Shipment Control Centre</h1>
+  <p class="sub">Manage tracking numbers, shipping carriers, delivery stages and customer updates.</p>
+
+  <div class="panel">
+   <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+    <h2>Customer Orders</h2>
+    <button onclick="loadOrders()">REFRESH ORDERS</button>
+   </div>
+   <div id="ordersList" class="muted" style="margin-top:15px">Loading...</div>
+  </div>
+
+  <div class="panel">
+   <h2>Update Shipment</h2>
+   <p class="muted">Select an order above to load its delivery information here.</p>
+
+   <form id="shipmentForm">
+    <input type="hidden" id="orderId">
+
+    <label>Vehicle / Customer</label>
+    <input id="vehicleName" readonly>
+
+    <div class="grid">
+     <div>
+      <label>Payment verification</label>
+      <select id="paymentStatus">
+       <option value="pending">Pending</option>
+       <option value="verified">Verified</option>
+       <option value="rejected">Rejected</option>
+      </select>
+     </div>
+     <div>
+      <label>Delivery stage</label>
+      <select id="orderStatus">
+       <option value="ORDER CONFIRMED">Order Confirmed</option>
+       <option value="PROCESSING">Processing</option>
+       <option value="DISPATCHED">Dispatched</option>
+       <option value="IN TRANSIT">In Transit</option>
+       <option value="OUT FOR DELIVERY">Out for Delivery</option>
+       <option value="DELIVERED">Delivered</option>
+      </select>
+     </div>
+    </div>
+
+    <div class="grid">
+     <div>
+      <label>Shipping carrier</label>
+      <input id="carrier" placeholder="e.g. DHL, FedEx, shipping company">
+     </div>
+     <div>
+      <label>Tracking number</label>
+      <input id="trackingNumber" maxlength="120">
+     </div>
+    </div>
+
+    <label>Official carrier tracking URL</label>
+    <input id="trackingUrl" type="url" placeholder="https://...">
+
+    <label>Estimated delivery date</label>
+    <input id="estimatedDelivery" type="date">
+
+    <label>Customer delivery update / admin note</label>
+    <textarea id="adminNote" maxlength="1500" placeholder="Enter a genuine shipment update for the customer..."></textarea>
+
+    <button id="saveButton" style="width:100%;margin-top:20px">SAVE SHIPMENT UPDATE</button>
+    <p id="saveMessage"></p>
+   </form>
+  </div>
+
+  <button onclick="logout()" style="background:#292d34">LOG OUT</button>
+ </section>
+</main>
+
+<footer>TESLA Innovation · Private Administration</footer>
+
+<script>
+'use strict';
+
+const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
+const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let currentAdmin=null;
+
+const $=id=>document.getElementById(id);
+
+function message(id,text,color){
+ $(id).textContent=text;
+ $(id).style.color=color||'#aaa';
+}
+
+async function verifyAdmin(user){
+ if(!user)return false;
+
+ const {data,error}=await db
+  .from('admin_users')
+  .select('user_id')
+  .eq('user_id',user.id)
+  .maybeSingle();
+
+ if(error){
+  console.error(error);
+  return false;
+ }
+
+ return !!data;
+}
+
+async function showDashboard(user){
+ const allowed=await verifyAdmin(user);
+
+ if(!allowed){
+  await db.auth.signOut();
+  message('loginMessage','This account is not authorised to access shipment administration.','#ff7777');
+  return;
+ }
+
+ currentAdmin=user;
+ $('loginPanel').style.display='none';
+ $('dashboard').style.display='block';
+ await loadOrders();
+}
+
+$('loginForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+
+ const button=$('loginButton');
+ button.disabled=true;
+ button.textContent='VERIFYING...';
+
+ try{
+  const {data,error}=await db.auth.signInWithPassword({
+   email:$('email').value.trim(),
+   password:$('password').value
+  });
+
+  if(error)throw error;
+
+  const allowed=await verifyAdmin(data.user);
+
+  if(!allowed){
+   await db.auth.signOut();
+   throw new Error('Access denied. This account is not an authorised administrator.');
+  }
+
+  await showDashboard(data.user);
+
+ }catch(error){
+  message('loginMessage',error.message,'#ff7777');
+ }finally{
+  button.disabled=false;
+  button.textContent='SECURE LOGIN';
+ }
+});
+
+function safeText(value){
+ return value===null||value===undefined||value===''?'Not provided':String(value);
+}
+
+function makeOrderCard(order){
+ const card=document.createElement('div');
+ card.className='order';
+
+ const title=document.createElement('h3');
+ title.textContent=order.vehicle_name||'Vehicle order';
+ card.appendChild(title);
+
+ [
+  ['Order ID',order.id],
+  ['Payment',order.payment_status],
+  ['Delivery status',order.order_status],
+  ['Country',order.delivery_country],
+  ['Tracking number',order.tracking_number]
+ ].forEach(([label,value])=>{
+  const p=document.createElement('p');
+  p.textContent=label+': '+safeText(value);
+  card.appendChild(p);
+ });
+
+ const button=document.createElement('button');
+ button.textContent='MANAGE THIS SHIPMENT';
+ button.addEventListener('click',()=>selectOrder(order));
+ card.appendChild(button);
+
+ return card;
+}
+
+async function loadOrders(){
+ const list=$('ordersList');
+ list.textContent='Loading customer orders...';
+
+ try{
+  const {data,error}=await db
+   .from('customer_orders')
+   .select('id,customer_id,vehicle_name,tracking_number,payment_status,order_status,delivery_country,shipping_carrier,tracking_url,estimated_delivery,admin_note,created_at,updated_at')
+   .order('created_at',{ascending:false});
+
+  if(error)throw error;
+
+  list.replaceChildren();
+
+  if(!data||!data.length){
+   list.textContent='No customer orders found.';
+   return;
+  }
+
+  data.forEach(order=>list.appendChild(makeOrderCard(order)));
+
+ }catch(error){
+  console.error(error);
+  list.textContent='Unable to load orders. Check administrator database permissions.';
+ }
+}
+
+function selectOrder(order){
+ $('orderId').value=order.id;
+ $('vehicleName').value=order.vehicle_name||'Vehicle order';
+ $('paymentStatus').value=order.payment_status||'pending';
+ $('orderStatus').value=order.order_status||'ORDER CONFIRMED';
+ $('carrier').value=order.shipping_carrier||'';
+ $('trackingNumber').value=order.tracking_number||'';
+ $('trackingUrl').value=order.tracking_url||'';
+ $('estimatedDelivery').value=order.estimated_delivery
+  ?String(order.estimated_delivery).slice(0,10):'';
+ $('adminNote').value=order.admin_note||'';
+
+ message('saveMessage','Editing order '+order.id,'#8ff0b4');
+ $('shipmentForm').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+$('shipmentForm').addEventListener('submit',async e=>{
+ e.preventDefault();
+
+ const id=$('orderId').value;
+
+ if(!id){
+  message('saveMessage','Select an order first.','#ff7777');
+  return;
+ }
+
+ const button=$('saveButton');
+ button.disabled=true;
+ button.textContent='SAVING...';
+
+ try{
+  const {data:{user},error:authError}=await db.auth.getUser();
+
+  if(authError||!user)throw new Error('Your administrator session has expired.');
+
+  if(!await verifyAdmin(user))throw new Error('Administrator access could not be verified.');
+
+  const trackingUrl=$('trackingUrl').value.trim();
+
+  if(trackingUrl){
+   const url=new URL(trackingUrl);
+   if(!['http:','https:'].includes(url.protocol)){
+    throw new Error('Enter a valid HTTP or HTTPS tracking URL.');
+   }
+  }
+
+  const update={
+   payment_status:$('paymentStatus').value,
+   order_status:$('orderStatus').value,
+   shipping_carrier:$('carrier').value.trim()||null,
+   tracking_number:$('trackingNumber').value.trim()||null,
+   tracking_url:trackingUrl||null,
+   estimated_delivery:$('estimatedDelivery').value||null,
+   admin_note:$('adminNote').value.trim()||null,
+   updated_at:new Date().toISOString()
+  };
+
+  const {error}=await db
+   .from('customer_orders')
+   .update(update)
+   .eq('id',id);
+
+  if(error)throw error;
+
+  message('saveMessage','Shipment information saved successfully.','#8ff0b4');
+  await loadOrders();
+
+ }catch(error){
+  console.error(error);
+  message('saveMessage',error.message,'#ff7777');
+ }finally{
+  button.disabled=false;
+  button.textContent='SAVE SHIPMENT UPDATE';
+ }
+});
+
+async function logout(){
+ await db.auth.signOut();
+ currentAdmin=null;
+ $('dashboard').style.display='none';
+ $('loginPanel').style.display='block';
+}
+
+db.auth.getSession().then(async({data,error})=>{
+ if(error)return;
+
+ if(data.session){
+  await showDashboard(data.session.user);
+ }
+});
+
+db.auth.onAuthStateChange((event)=>{
+ if(event==='SIGNED_OUT'){
+  $('dashboard').style.display='none';
+  $('loginPanel').style.display='block';
+ }
+});
+</script>
+</body>
+</html>
