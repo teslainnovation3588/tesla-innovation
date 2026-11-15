@@ -71,6 +71,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
 .quick-link-panel h3{color:#fff}
 .quick-link-panel p{color:#aaa;line-height:1.6}
 .badge{display:inline-block;padding:5px 9px;border-radius:20px;background:#292929;color:#ddd;font-size:12px;margin:4px 0}
+.currency-note{font-size:12px;color:#999;line-height:1.5;margin-top:-8px;margin-bottom:12px}
 @media(max-width:750px){.chat-layout{grid-template-columns:1fr}.chat-list{max-height:280px}}
 @media(max-width:600px){body{padding:12px}.panel{padding:15px}button,.action-link{padding:11px 13px}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.stat-card{padding:15px}.stat-card h3{font-size:25px}.chat-messages{height:330px}}
 </style>
@@ -112,7 +113,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
   <button class="secondary" onclick="logoutAdmin()">Logout</button>
 </header>
 
-<!-- NEW MANAGEMENT SHORTCUTS -->
+<!-- MANAGEMENT SHORTCUTS -->
 <div class="quick-link-panel">
   <h3>Business Management Centre</h3>
   <p>Access your global vehicle pricing system and shipment management tools.</p>
@@ -125,7 +126,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
     SHIPMENT CONTROL →
   </a>
 
-  <a class="action-link secondary" href="vehicles.html" target="_blank">
+  <a class="action-link secondary" href="vehicles.html" target="_blank" rel="noopener noreferrer">
     VIEW PUBLIC SHOWROOM →
   </a>
 </div>
@@ -180,30 +181,54 @@ button:disabled{opacity:.5;cursor:not-allowed}
         <label>Vehicle Model</label>
         <input id="model" placeholder="e.g. Model 3">
       </div>
+
       <div>
         <label>Variant</label>
         <input id="variant" placeholder="e.g. Standard RWD">
       </div>
+
       <div>
         <label>Year</label>
         <input id="year" type="number" placeholder="2026">
       </div>
+
       <div>
-        <label>Selling Price (USD)</label>
-        <input id="sellingPrice" type="number" min="0" placeholder="36990">
+        <label>Original Selling Price</label>
+        <input id="sellingPrice" type="number" min="0" step="0.01" placeholder="36990">
       </div>
+
       <div>
-        <label>Reference Price (USD)</label>
-        <input id="referencePrice" type="number" min="0" placeholder="39990">
+        <label>Original Reference Price</label>
+        <input id="referencePrice" type="number" min="0" step="0.01" placeholder="39990">
       </div>
+
+      <div>
+        <label>Original Currency</label>
+        <select id="currency">
+          <option value="USD">USD — US Dollar</option>
+          <option value="CNY">CNY — Chinese Yuan</option>
+          <option value="NGN">NGN — Nigerian Naira</option>
+          <option value="GBP">GBP — British Pound</option>
+          <option value="EUR">EUR — Euro</option>
+          <option value="AED">AED — UAE Dirham</option>
+          <option value="CAD">CAD — Canadian Dollar</option>
+          <option value="AUD">AUD — Australian Dollar</option>
+          <option value="JPY">JPY — Japanese Yen</option>
+          <option value="ZAR">ZAR — South African Rand</option>
+        </select>
+        <p class="currency-note">Chinese vehicle prices should normally be entered in CNY. Tesla prices should normally be entered in USD.</p>
+      </div>
+
       <div>
         <label>Deposit Percentage (%)</label>
         <input id="depositPercentage" type="number" min="0" max="100" value="30">
       </div>
+
       <div>
         <label>Stock Quantity</label>
         <input id="stockQuantity" type="number" min="0" placeholder="1">
       </div>
+
       <div>
         <label>Availability</label>
         <select id="availability">
@@ -283,6 +308,7 @@ button:disabled{opacity:.5;cursor:not-allowed}
           <option>Refunded</option>
         </select>
       </div>
+
       <div>
         <label>Order Status</label>
         <select id="orderStatus">
@@ -403,6 +429,21 @@ function escapeHTML(value){
   })[char]);
 }
 
+/* CURRENCY-AWARE PRICE FORMAT */
+function formatMoney(value,currency="USD"){
+  const code=String(currency||"USD").toUpperCase();
+
+  try{
+    return new Intl.NumberFormat("en-US",{
+      style:"currency",
+      currency:code,
+      maximumFractionDigits:2
+    }).format(Number(value||0));
+  }catch(error){
+    return Number(value||0).toLocaleString()+" "+code;
+  }
+}
+
 function showMessage(id,message,type=""){
   const el=document.getElementById(id);
   if(!el)return;
@@ -416,14 +457,6 @@ function hideMessage(id){
   if(!el)return;
   el.textContent="";
   el.className="message";
-}
-
-function formatMoney(value){
-  return new Intl.NumberFormat("en-US",{
-    style:"currency",
-    currency:"USD",
-    maximumFractionDigits:2
-  }).format(Number(value||0));
 }
 
 function formatDate(value){
@@ -533,6 +566,7 @@ async function openDashboard(){
 async function logoutAdmin(){
   stopChatRefresh();
   activeChatId=null;
+  activeChatStatus=null;
   await db.auth.signOut();
   currentUser=null;
   document.getElementById("dashboard").classList.add("hidden");
@@ -723,6 +757,7 @@ async function loadVehicles(){
         :"";
 
       const published=vehicle.is_published===true;
+      const currency=vehicle.currency||"USD";
 
       return `
         <div class="vehicle-card">
@@ -730,8 +765,10 @@ async function loadVehicles(){
           <h3>${escapeHTML(vehicle.model||"Unnamed Vehicle")}</h3>
           <p><strong>Variant:</strong> ${escapeHTML(vehicle.variant||"Not specified")}</p>
           <p><strong>Year:</strong> ${escapeHTML(vehicle.year||"Not specified")}</p>
-          <p><strong>Price:</strong> ${formatMoney(vehicle.selling_price)}</p>
-          <p><strong>Original Currency:</strong> ${escapeHTML(vehicle.currency||"USD")}</p>
+          <p><strong>Original Price:</strong> ${formatMoney(vehicle.selling_price,currency)}</p>
+          <p><strong>Reference Price:</strong> ${vehicle.reference_price?formatMoney(vehicle.reference_price,currency):"Not provided"}</p>
+          <p><strong>Original Currency:</strong> ${escapeHTML(currency)}</p>
+          <p><strong>Deposit:</strong> ${escapeHTML(vehicle.deposit_percentage??30)}%</p>
           <p><strong>Availability:</strong> ${escapeHTML(vehicle.availability||"Not specified")}</p>
           <p><strong>Stock:</strong> ${escapeHTML(vehicle.stock_quantity??0)}</p>
           <p><strong>Publication:</strong> ${published?"Published":"Unpublished"}</p>
@@ -758,6 +795,7 @@ async function saveVehicle(){
 
   const model=document.getElementById("model").value.trim();
   const price=Number(document.getElementById("sellingPrice").value);
+  const currency=document.getElementById("currency").value;
 
   if(!model){
     showMessage("vehicleMessage","Enter vehicle model.","error");
@@ -766,6 +804,13 @@ async function saveVehicle(){
 
   if(!Number.isFinite(price)||price<=0){
     showMessage("vehicleMessage","Enter a valid selling price.","error");
+    return;
+  }
+
+  const deposit=Number(document.getElementById("depositPercentage").value);
+
+  if(!Number.isFinite(deposit)||deposit<0||deposit>100){
+    showMessage("vehicleMessage","Deposit percentage must be between 0 and 100.","error");
     return;
   }
 
@@ -790,7 +835,8 @@ async function saveVehicle(){
       description:document.getElementById("description").value.trim(),
       selling_price:price,
       reference_price:Number(document.getElementById("referencePrice").value)||null,
-      deposit_percentage:Number(document.getElementById("depositPercentage").value)||30,
+      currency,
+      deposit_percentage:deposit,
       stock_quantity:Number(document.getElementById("stockQuantity").value)||0,
       availability:document.getElementById("availability").value,
       image_urls:finalImages,
@@ -837,6 +883,7 @@ function editVehicle(id){
   document.getElementById("description").value=vehicle.description||"";
   document.getElementById("sellingPrice").value=vehicle.selling_price||"";
   document.getElementById("referencePrice").value=vehicle.reference_price||"";
+  document.getElementById("currency").value=vehicle.currency||"USD";
   document.getElementById("depositPercentage").value=vehicle.deposit_percentage??30;
   document.getElementById("stockQuantity").value=vehicle.stock_quantity??"";
   document.getElementById("availability").value=vehicle.availability||"pre_order";
@@ -859,6 +906,7 @@ function resetVehicleForm(){
     "sellingPrice","referencePrice","stockQuantity"
   ].forEach(id=>document.getElementById(id).value="");
 
+  document.getElementById("currency").value="USD";
   document.getElementById("depositPercentage").value="30";
   document.getElementById("availability").value="pre_order";
   document.getElementById("published").checked=true;
@@ -907,22 +955,27 @@ async function loadOffers(){
       return;
     }
 
-    list.innerHTML=data.map(offer=>`
-      <div class="offer-card">
-        <h3>${escapeHTML(offer.vehicle_id||"Vehicle Negotiation")}</h3>
-        <p><strong>Customer:</strong> ${escapeHTML(offer.customer_name||"Not provided")}</p>
-        <p><strong>Email:</strong> ${escapeHTML(offer.email||offer.customer_email||"Not provided")}</p>
-        <p><strong>Phone:</strong> ${escapeHTML(offer.phone||offer.customer_phone||"Not provided")}</p>
-        <p><strong>Offer:</strong> ${formatMoney(offer.proposed_budget)}</p>
-        <p><strong>Message:</strong> ${escapeHTML(offer.customer_message||"No message")}</p>
-        <p><strong>Status:</strong> ${escapeHTML(offer.status||"Pending")}</p>
-        ${offer.counter_offer?`<p><strong>Counteroffer:</strong> ${formatMoney(offer.counter_offer)}</p>`:""}
+    list.innerHTML=data.map(offer=>{
+      const offerCurrency=offer.currency||"USD";
 
-        <button class="success" onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">Accept</button>
-        <button class="secondary" onclick="makeCounter('${escapeHTML(offer.id)}')">Make Counteroffer</button>
-        <button class="danger" onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">Reject</button>
-      </div>
-    `).join("");
+      return `
+        <div class="offer-card">
+          <h3>${escapeHTML(offer.vehicle_id||"Vehicle Negotiation")}</h3>
+          <p><strong>Customer:</strong> ${escapeHTML(offer.customer_name||"Not provided")}</p>
+          <p><strong>Email:</strong> ${escapeHTML(offer.email||offer.customer_email||"Not provided")}</p>
+          <p><strong>Phone:</strong> ${escapeHTML(offer.phone||offer.customer_phone||"Not provided")}</p>
+          <p><strong>Offer:</strong> ${formatMoney(offer.proposed_budget,offerCurrency)}</p>
+          <p><strong>Offer Currency:</strong> ${escapeHTML(offerCurrency)}</p>
+          <p><strong>Message:</strong> ${escapeHTML(offer.customer_message||"No message")}</p>
+          <p><strong>Status:</strong> ${escapeHTML(offer.status||"Pending")}</p>
+          ${offer.counter_offer?`<p><strong>Counteroffer:</strong> ${formatMoney(offer.counter_offer,offerCurrency)}</p>`:""}
+
+          <button class="success" onclick="respondToOffer('${escapeHTML(offer.id)}','accepted')">Accept</button>
+          <button class="secondary" onclick="makeCounter('${escapeHTML(offer.id)}')">Make Counteroffer</button>
+          <button class="danger" onclick="respondToOffer('${escapeHTML(offer.id)}','rejected')">Reject</button>
+        </div>
+      `;
+    }).join("");
   }catch(error){
     console.error(error);
     list.innerHTML=`<p class="message error">${escapeHTML(error.message)}</p>`;
@@ -936,7 +989,15 @@ async function respondToOffer(id,status){
 }
 
 async function makeCounter(id){
-  const amount=prompt("Enter your counteroffer amount in USD:");
+  const {data:offer,error:fetchError}=await db.from("negotiations")
+    .select("currency,proposed_budget")
+    .eq("id",id)
+    .single();
+
+  if(fetchError)return alert(fetchError.message);
+
+  const currency=offer.currency||"USD";
+  const amount=prompt("Enter your counteroffer amount in "+currency+":");
   if(amount===null)return;
 
   const counteroffer=Number(amount);
@@ -1042,6 +1103,13 @@ async function createCustomerOrder(){
     return;
   }
 
+  const trackingURL=document.getElementById("orderTrackingURL").value.trim();
+
+  if(trackingURL&&!safeTrackingURL(trackingURL)){
+    showMessage("orderCreateMessage","Enter a valid HTTPS tracking URL.","error");
+    return;
+  }
+
   const button=document.getElementById("createOrderBtn");
   button.disabled=true;
   button.textContent="Creating Order...";
@@ -1055,7 +1123,7 @@ async function createCustomerOrder(){
       order_status:document.getElementById("orderStatus").value,
       delivery_country:document.getElementById("orderCountry").value.trim(),
       shipping_carrier:document.getElementById("orderCarrier").value.trim(),
-      tracking_url:document.getElementById("orderTrackingURL").value.trim(),
+      tracking_url:trackingURL,
       estimated_delivery:document.getElementById("orderDeliveryDate").value||null,
       admin_note:document.getElementById("orderAdminNote").value.trim()
     };
