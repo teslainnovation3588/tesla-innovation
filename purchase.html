@@ -2,64 +2,55 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#08090b">
-<meta name="description" content="Global vehicle purchase checkout at TESLA Innovation.">
-<title>Global Vehicle Checkout | TESLA Innovation</title>
+<title>Secure Checkout | TESLA Innovation</title>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#08090b;color:#fff;font-family:Arial,sans-serif;line-height:1.6}
-.wrap{width:92%;max-width:1050px;margin:auto}
-header{background:#101114;border-bottom:1px solid #333;padding:18px 0}
-.brand{font-size:21px;font-weight:900;letter-spacing:2px;text-decoration:none;color:white}
+.wrap{width:92%;max-width:1100px;margin:auto}
+header{padding:20px 0;background:#111317;border-bottom:1px solid #333}
+.brand{font-size:21px;font-weight:900;letter-spacing:2px;color:#fff;text-decoration:none}
 .brand span{color:#e82127}
 .back{color:#ddd;text-decoration:none;font-size:13px}
-.layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:40px 0}
-.panel{background:#111317;border:1px solid #333;border-radius:10px;padding:24px}
-.eyebrow{color:#e82127;font-weight:bold;letter-spacing:3px;font-size:11px}
-h1{font-size:30px;margin:10px 0 22px}
+.layout{display:grid;grid-template-columns:1fr 1fr;gap:24px;padding:35px 0}
+.panel{background:#111317;border:1px solid #333;border-radius:12px;padding:25px}
+.eyebrow{color:#e82127;font-size:11px;font-weight:bold;letter-spacing:3px}
+h1{font-size:29px;margin:10px 0 20px}
+h2{font-size:21px;margin:10px 0}
 .muted{color:#aaa;font-size:13px}
-.vehicle-image{width:100%;height:250px;object-fit:cover;border-radius:7px;background:#222}
-.vehicle-title{font-size:23px;margin-top:18px}
-.variant{color:#aaa;font-size:13px}
+.vehicle-image{width:100%;height:230px;object-fit:cover;border-radius:8px;background:#222}
 .line{display:flex;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #333}
 .line strong{text-align:right;overflow-wrap:anywhere}
 .total{font-size:19px;font-weight:bold}
-.note{background:#1a1d22;border-left:3px solid #e82127;padding:14px;margin-top:18px;font-size:13px;color:#ddd}
-label{display:block;font-size:12px;margin:13px 0 5px;color:#ddd}
-input,select,textarea{width:100%;padding:13px;background:#08090b;border:1px solid #363a41;border-radius:5px;color:white;font:inherit}
+label{display:block;margin:14px 0 5px;font-size:12px;color:#ddd}
+input,select,textarea{width:100%;padding:13px;background:#08090b;border:1px solid #3a3d43;border-radius:6px;color:white;font:inherit}
 textarea{min-height:75px}
-.payment-option{display:flex;align-items:flex-start;gap:12px;padding:15px;margin-top:12px;border:1px solid #444;border-radius:7px;cursor:pointer;background:#17191e}
-.payment-option:has(input:checked){border-color:#e82127;background:#211416}
-.payment-option input{width:18px;height:18px;margin-top:4px;accent-color:#e82127}
-.payment-option strong{display:block;font-size:14px}
-.payment-option small{display:block;color:#aaa;font-size:12px;margin-top:3px}
-button{width:100%;margin-top:18px;padding:15px;background:#e82127;color:white;border:0;border-radius:5px;font-weight:bold;cursor:pointer}
+button{width:100%;padding:15px;margin-top:18px;border:0;border-radius:6px;background:#e82127;color:white;font-weight:bold;cursor:pointer}
 button:disabled{opacity:.5;cursor:not-allowed}
-.status{font-size:13px;margin-top:13px;overflow-wrap:anywhere}
-.support{font-size:13px;margin-top:16px}
-.support a{color:#ff656a}
-.security{font-size:12px;color:#aaa;margin-top:13px}
-footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px solid #333}
-#authLoading{position:fixed;inset:0;z-index:100;background:#08090b;display:flex;align-items:center;justify-content:center;text-align:center;padding:25px}
-.auth-box{max-width:400px}
-.currency-caption{font-size:11px;color:#999;margin-top:7px}
-@media(max-width:760px){
- .layout{grid-template-columns:1fr;padding:24px 0}
- .panel{padding:18px}
- .vehicle-image{height:210px}
-}
+.note{background:#1a1d22;border-left:3px solid #e82127;padding:14px;margin-top:15px;font-size:13px;color:#ddd}
+.status{margin-top:14px;font-size:13px;overflow-wrap:anywhere}
+.hidden{display:none!important}
+.wallet{background:#08090b;border:1px solid #444;border-radius:8px;padding:15px;margin-top:15px}
+.wallet-address{font-size:12px;overflow-wrap:anywhere;color:#8de4b5;margin-top:8px}
+.copy{background:#343840;padding:10px;margin-top:10px}
+.step{border:1px solid #333;border-radius:8px;padding:16px;margin-top:15px}
+.badge{display:inline-block;background:#252a31;padding:5px 10px;border-radius:20px;font-size:11px;color:#8de4b5}
+.security{font-size:12px;color:#999;margin-top:15px}
+footer{text-align:center;padding:25px;border-top:1px solid #333;color:#777;font-size:11px}
+#authLoading{position:fixed;inset:0;background:#08090b;z-index:20;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+@media(max-width:760px){.layout{grid-template-columns:1fr;padding:20px 0}.panel{padding:18px}.vehicle-image{height:200px}}
 </style>
 </head>
 
 <body>
 
 <div id="authLoading">
- <div class="auth-box">
-  <h2>Checking your account...</h2>
-  <p class="muted">Please wait while we verify your customer account.</p>
+ <div>
+  <h2>Checking customer account...</h2>
+  <p class="muted">Please wait.</p>
  </div>
 </div>
 
@@ -71,16 +62,18 @@ footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px s
 </header>
 
 <main class="wrap">
+
 <div class="layout">
 
 <section class="panel">
- <div class="eyebrow">GLOBAL VEHICLE PURCHASE</div>
+
+ <div class="eyebrow">VEHICLE SUMMARY</div>
  <h1>Review your vehicle</h1>
 
- <img id="vehicleImage" class="vehicle-image" alt="Selected vehicle">
+ <img id="vehicleImage" class="vehicle-image" alt="Vehicle">
 
- <h2 id="vehicleName" class="vehicle-title">Loading vehicle...</h2>
- <div id="vehicleVariant" class="variant"></div>
+ <h2 id="vehicleName">Loading vehicle...</h2>
+ <p id="vehicleVariant" class="muted"></p>
 
  <div class="line">
   <span>Original vehicle price</span>
@@ -89,113 +82,166 @@ footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px s
 
  <div class="line">
   <span>Estimated local price</span>
-  <strong id="localPrice">Loading...</strong>
+  <strong id="localPrice">—</strong>
  </div>
 
  <div class="line">
-  <span>Taxes / delivery / other fees</span>
+  <span>Delivery and other fees</span>
   <strong>To be confirmed</strong>
  </div>
 
  <div class="line total">
-  <span>Estimated vehicle total</span>
+  <span>Vehicle total</span>
   <strong id="total">—</strong>
  </div>
 
- <label for="displayCurrency">Display prices in</label>
+ <label for="displayCurrency">Display currency</label>
  <select id="displayCurrency">
-  <option value="NGN">Nigerian Naira (NGN)</option>
-  <option value="USD">US Dollar (USD)</option>
-  <option value="GBP">British Pound (GBP)</option>
-  <option value="EUR">Euro (EUR)</option>
-  <option value="CNY">Chinese Yuan (CNY)</option>
-  <option value="CAD">Canadian Dollar (CAD)</option>
-  <option value="AUD">Australian Dollar (AUD)</option>
-  <option value="AED">UAE Dirham (AED)</option>
-  <option value="SAR">Saudi Riyal (SAR)</option>
-  <option value="ZAR">South African Rand (ZAR)</option>
-  <option value="INR">Indian Rupee (INR)</option>
-  <option value="JPY">Japanese Yen (JPY)</option>
-  <option value="CHF">Swiss Franc (CHF)</option>
-  <option value="SGD">Singapore Dollar (SGD)</option>
+  <option value="NGN">NGN</option>
+  <option value="USD">USD</option>
+  <option value="GBP">GBP</option>
+  <option value="EUR">EUR</option>
+  <option value="CNY">CNY</option>
+  <option value="CAD">CAD</option>
+  <option value="AUD">AUD</option>
+  <option value="AED">AED</option>
+  <option value="SAR">SAR</option>
+  <option value="ZAR">ZAR</option>
+  <option value="INR">INR</option>
+  <option value="JPY">JPY</option>
+  <option value="CHF">CHF</option>
+  <option value="SGD">SGD</option>
  </select>
 
- <p class="currency-caption" id="rateStatus">
-  Preparing exchange rates...
- </p>
+ <p id="rateStatus" class="muted" style="margin-top:8px"></p>
 
  <div class="note">
-  Converted prices are estimates based on exchange rates. Your vehicle's original listing currency remains unchanged. Final pricing, taxes, delivery and payment arrangements will be confirmed before payment.
+  Currency conversions are estimates. The original vehicle price and currency remain unchanged. Final delivery costs and payment arrangements must be confirmed.
  </div>
 
- <p class="support">
-  Need assistance?
-  <a href="mailto:teslainnovation65@outlook.com">Contact customer support</a>
- </p>
 </section>
 
 <section class="panel">
+
  <div class="eyebrow">CUSTOMER CHECKOUT</div>
- <h2 style="margin:8px 0 5px">Complete your purchase</h2>
- <p class="muted">Your registered customer account is required.</p>
+ <h2>Complete your purchase</h2>
+ <p class="muted">Sign in to your registered customer account.</p>
 
  <form id="purchaseForm">
 
   <label>Full name</label>
   <input id="fullName" maxlength="120" autocomplete="name" required>
 
-  <label>Account email address</label>
+  <label>Account email</label>
   <input id="email" type="email" readonly>
 
   <label>Phone number</label>
-  <input id="phone" type="tel" maxlength="40" autocomplete="tel" required>
+  <input id="phone" type="tel" maxlength="40" required>
 
-  <label>Preferred colour / selected options</label>
+  <label>Preferred colour / vehicle options</label>
   <input id="colour" maxlength="160">
 
   <label>Delivery country</label>
   <input id="country" maxlength="100" required>
 
   <label>Delivery address</label>
-  <textarea id="address" maxlength="500" placeholder="Enter your delivery address"></textarea>
+  <textarea id="address" maxlength="500"></textarea>
 
-  <label style="margin-top:22px">Choose your payment preference</label>
+  <label>Payment preference</label>
 
-  <label class="payment-option">
-   <input type="radio" name="paymentChoice" value="deposit" checked>
-   <span>
-    <strong id="depositTitle">30% Initial Deposit</strong>
-    <small id="depositDescription">Pay the initial deposit and arrange the remaining balance later.</small>
-   </span>
+  <label class="step">
+   <input type="radio" name="paymentChoice" value="deposit" checked style="width:auto">
+   <strong id="depositTitle">30% Initial Deposit</strong>
+   <p class="muted">Pay the initial deposit and arrange the remaining balance later.</p>
   </label>
 
-  <label class="payment-option">
-   <input type="radio" name="paymentChoice" value="full">
-   <span>
-    <strong>Full Vehicle Payment</strong>
-    <small>Request payment arrangements for the entire vehicle price.</small>
-   </span>
+  <label class="step">
+   <input type="radio" name="paymentChoice" value="full" style="width:auto">
+   <strong>Full Vehicle Payment</strong>
+   <p class="muted">Submit the full vehicle payment.</p>
   </label>
 
-  <div class="line">
-   <span>Estimated amount payable</span>
+  <div class="line total">
+   <span>Amount payable</span>
    <strong id="payableAmount">—</strong>
   </div>
 
-  <div class="note" id="paymentNotice">
-   Payment amounts and arrangements are subject to final confirmation.
+  <div class="note">
+   Taxes, shipping and import duties are confirmed separately. Your order is not confirmed as paid until payment verification is complete.
   </div>
 
-  <button id="submitButton" type="submit">
-   CONTINUE TO PAYMENT
-  </button>
+  <button id="createOrderButton" type="submit">CREATE PURCHASE ORDER</button>
 
-  <div id="formStatus" class="status" role="status"></div>
+  <p id="formStatus" class="status" role="status"></p>
 
-  <p class="security">
-   🔒 Customer account verification · Secure payment arrangements
-  </p>
  </form>
+
+ <!-- CRYPTO PAYMENT SECTION -->
+
+ <div id="cryptoSection" class="hidden">
+
+  <div class="step">
+   <span class="badge">ORDER CREATED</span>
+   <h2>Your order is ready</h2>
+   <p class="muted">Order reference:</p>
+   <strong id="orderReference" style="overflow-wrap:anywhere"></strong>
+  </div>
+
+  <h2 style="margin-top:25px">Choose cryptocurrency</h2>
+
+  <label>Payment asset</label>
+  <select id="asset">
+   <option value="USDT">USDT</option>
+   <option value="ETH">ETH</option>
+   <option value="BTC">BTC</option>
+  </select>
+
+  <label>Blockchain network</label>
+  <select id="network"></select>
+
+  <div class="wallet">
+   <span class="badge">RECEIVING WALLET</span>
+   <p class="muted" style="margin-top:10px">Send only the selected cryptocurrency through the selected network.</p>
+   <div id="walletAddress" class="wallet-address"></div>
+   <button type="button" class="copy" id="copyWallet">COPY WALLET ADDRESS</button>
+  </div>
+
+  <div class="note">
+   <strong>Payment safety</strong><br>
+   Verify the asset, network and wallet address before transferring. Never send USDT TRC20 to an Ethereum-only network or BTC to an ETH address.
+  </div>
+
+  <div class="line total">
+   <span>Fiat amount due</span>
+   <strong id="fiatDue">—</strong>
+  </div>
+
+  <p class="muted" style="margin-top:10px">
+   The exact cryptocurrency amount must be calculated using an agreed exchange quote before sending. The amount you enter below will be checked manually by our payment administrator.
+  </p>
+
+  <form id="cryptoForm">
+
+   <label>Cryptocurrency amount sent</label>
+   <input id="cryptoAmount" type="number" min="0.00000001" step="any" placeholder="Enter actual amount sent" required>
+
+   <label>Blockchain transaction hash / TXID</label>
+   <input id="transactionHash" maxlength="100" placeholder="Paste transaction hash" required>
+
+   <button id="submitCryptoButton" type="submit">SUBMIT PAYMENT FOR VERIFICATION</button>
+
+  </form>
+
+  <p id="cryptoStatus" class="status" role="status"></p>
+
+  <div class="note">
+   Your payment remains pending until an administrator independently verifies the transaction on the blockchain. A screenshot or transaction hash alone is not proof of payment.
+  </div>
+
+ </div>
+
+ <p class="security">🔒 Secure customer account · Manual payment verification</p>
+
 </section>
 
 </div>
@@ -206,411 +252,453 @@ footer{text-align:center;padding:25px;color:#777;font-size:11px;border-top:1px s
 <script>
 'use strict';
 
-const SUPABASE_URL='https://dnmktpmvjzsxzmgizdcv.supabase.co';
-const SUPABASE_KEY='sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
-const CHECKOUT_URL=SUPABASE_URL+'/functions/v1/stripe-checkout-test';
+const SUPABASE_URL = 'https://dnmktpmvjzsxzmgizdcv.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj';
+const FUNCTION_URL = SUPABASE_URL + '/functions/v1/crypto-payments';
 
-const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
-const $=id=>document.getElementById(id);
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = id => document.getElementById(id);
 
-let customer=null;
-let vehicle=null;
-let rates={};
-let rateLoaded=false;
-let rateRequestNumber=0;
+let customer = null;
+let vehicle = null;
+let rates = {};
+let rateLoaded = false;
+let wallets = [];
+let currentOrder = null;
+let paymentLocked = false;
 
-const vehicleId=new URLSearchParams(location.search).get('vehicle');
+const vehicleId = new URLSearchParams(location.search).get('vehicle');
 
-function getCurrency(car){
- if(car.currency)return String(car.currency).toUpperCase();
+function currencyOf(car) {
+ if (car.currency) return String(car.currency).toUpperCase();
 
- const text=(
-  (car.model||'')+' '+
-  (car.variant||'')+' '+
-  (car.description||'')
- ).toLowerCase();
+ const text = ((car.model || '') + ' ' + (car.variant || '')).toLowerCase();
 
- if(/\b(mg|geely|gac|byd)\b/.test(text))return 'CNY';
+ if (/\b(mg|geely|gac|byd)\b/.test(text)) return 'CNY';
 
  return 'USD';
 }
 
-function formatMoney(value,currency){
- const code=String(currency||'USD').toUpperCase();
-
- try{
-  return new Intl.NumberFormat('en-US',{
-   style:'currency',
-   currency:code,
-   maximumFractionDigits:2
-  }).format(Number(value)||0);
- }catch(error){
-  return Number(value||0).toLocaleString()+' '+code;
+function money(value, currency) {
+ try {
+  return new Intl.NumberFormat('en-US', {
+   style: 'currency',
+   currency: currency,
+   maximumFractionDigits: 2
+  }).format(Number(value) || 0);
+ } catch {
+  return Number(value || 0).toLocaleString() + ' ' + currency;
  }
 }
 
-/*
- Use the same currency preference as vehicles.html.
- The second key supports the earlier checkout preference.
-*/
-function getSavedCurrency(){
- return localStorage.getItem('teslaDisplayCurrency')||
-        localStorage.getItem('tesla_display_currency')||
-        'NGN';
+function payable() {
+ const price = Number(vehicle?.selling_price || 0);
+ const percentage = Number(vehicle?.deposit_percentage ?? 30);
+ const choice = document.querySelector('input[name="paymentChoice"]:checked')?.value;
+
+ return choice === 'full' ? price : price * percentage / 100;
 }
 
-function saveCurrencyPreference(currency){
- localStorage.setItem('teslaDisplayCurrency',currency);
- localStorage.setItem('tesla_display_currency',currency);
+function updatePrices() {
+ if (!vehicle) return;
+
+ const base = currencyOf(vehicle);
+ const target = $('displayCurrency').value;
+ const price = Number(vehicle.selling_price || 0);
+ const due = payable();
+ const percentage = Number(vehicle.deposit_percentage ?? 30);
+
+ $('originalPrice').textContent = money(price, base);
+ $('depositTitle').textContent = percentage + '% Initial Deposit';
+
+ let convertedPrice = null;
+ let convertedDue = null;
+
+ if (base === target) {
+  convertedPrice = price;
+  convertedDue = due;
+ } else if (rateLoaded && rates[target]) {
+  convertedPrice = price * rates[target];
+  convertedDue = due * rates[target];
+ }
+
+ $('localPrice').textContent = convertedPrice === null
+  ? 'Conversion unavailable'
+  : money(convertedPrice, target);
+
+ $('total').textContent = convertedPrice === null
+  ? money(price, base)
+  : money(convertedPrice, target);
+
+ $('payableAmount').textContent = convertedDue === null
+  ? money(due, base)
+  : money(convertedDue, target);
 }
 
-/* CUSTOMER AUTHENTICATION */
-async function checkCustomer(){
- const {data,error}=await db.auth.getUser();
+async function loadRates() {
+ if (!vehicle) return;
 
- if(error||!data.user){
-  const destination=location.pathname+location.search+location.hash;
+ const base = currencyOf(vehicle);
+ const target = $('displayCurrency').value;
 
-  localStorage.setItem(
-   'tesla_pending_customer_action',
-   destination
+ rateLoaded = false;
+ rates = {};
+
+ if (base === target) {
+  rateLoaded = true;
+  rates[target] = 1;
+  $('rateStatus').textContent = 'Original currency selected.';
+  updatePrices();
+  return;
+ }
+
+ $('rateStatus').textContent = 'Loading estimated exchange rates...';
+
+ try {
+  const response = await fetch(
+   'https://open.er-api.com/v6/latest/' + encodeURIComponent(base),
+   {cache: 'no-store'}
   );
 
+  const data = await response.json();
+
+  if (!response.ok || data.result !== 'success') {
+   throw new Error('Exchange rates unavailable.');
+  }
+
+  rates = data.rates || {};
+  rateLoaded = true;
+
+  $('rateStatus').textContent = 'Estimated exchange rates loaded.';
+ } catch (error) {
+  $('rateStatus').textContent = 'Exchange rate unavailable. Original price remains available.';
+ }
+
+ updatePrices();
+}
+
+async function getSession() {
+ const {data, error} = await db.auth.getSession();
+
+ if (error || !data.session) {
+  throw new Error('Your login session has expired. Please sign in again.');
+ }
+
+ return data.session;
+}
+
+async function callPaymentFunction(payload) {
+ const session = await getSession();
+
+ const response = await fetch(FUNCTION_URL, {
+  method: 'POST',
+  headers: {
+   'Content-Type': 'application/json',
+   'apikey': SUPABASE_KEY,
+   'Authorization': 'Bearer ' + session.access_token
+  },
+  body: JSON.stringify(payload)
+ });
+
+ const result = await response.json();
+
+ if (!response.ok || !result.success) {
+  throw new Error(result.error || 'Payment request failed.');
+ }
+
+ return result;
+}
+
+async function checkCustomer() {
+ const {data, error} = await db.auth.getUser();
+
+ if (error || !data.user) {
+  const destination = location.pathname + location.search;
+
+  localStorage.setItem('tesla_pending_customer_action', destination);
+
   location.replace(
-   'customer.html?returnTo='+encodeURIComponent(destination)
+   'customer.html?returnTo=' + encodeURIComponent(destination)
   );
 
   return false;
  }
 
- customer=data.user;
- $('email').value=customer.email||'';
+ customer = data.user;
+ $('email').value = customer.email || '';
 
  return true;
 }
 
-/* EXCHANGE RATES */
-async function loadRates(){
- if(!vehicle)return;
-
- const requestNumber=++rateRequestNumber;
- const target=$('displayCurrency').value;
- const base=getCurrency(vehicle);
-
- rateLoaded=false;
- rates={};
-
- if(target===base){
-  rates[target]=1;
-  rateLoaded=true;
-  $('rateStatus').textContent='Original and display currencies are the same.';
-  updatePrices();
+async function loadVehicle() {
+ if (!vehicleId) {
+  $('vehicleName').textContent = 'No vehicle selected';
+  $('createOrderButton').disabled = true;
+  $('formStatus').textContent = 'Return to the vehicle collection and select a vehicle.';
   return;
  }
 
- $('rateStatus').textContent='Updating exchange rates...';
+ const {data, error} = await db
+  .from('vehicles')
+  .select('*')
+  .eq('id', vehicleId)
+  .eq('is_published', true)
+  .single();
 
- try{
-  const response=await fetch(
-   'https://open.er-api.com/v6/latest/'+encodeURIComponent(base),
-   {cache:'no-store'}
-  );
-
-  const data=await response.json();
-
-  if(!response.ok||data.result!=='success'||!data.rates){
-   throw new Error('Exchange-rate data unavailable.');
-  }
-
-  if(requestNumber!==rateRequestNumber)return;
-
-  rates=data.rates;
-  rateLoaded=true;
-
-  $('rateStatus').textContent=
-   'Exchange rates loaded. Converted prices are estimates.';
-
-  updatePrices();
-
- }catch(error){
-  if(requestNumber!==rateRequestNumber)return;
-
-  console.warn('Exchange rate error:',error);
-
-  rateLoaded=false;
-  rates={};
-
-  $('rateStatus').textContent=
-   'Exchange rate unavailable. Original listing prices are shown instead.';
-
-  updatePrices();
- }
-}
-
-function convert(value){
- const base=getCurrency(vehicle);
- const target=$('displayCurrency').value;
-
- if(base===target)return Number(value)||0;
-
- if(!rateLoaded||!Number.isFinite(Number(rates[target]))){
-  return null;
+ if (error || !data) {
+  throw new Error('Unable to load this vehicle.');
  }
 
- return (Number(value)||0)*Number(rates[target]);
-}
+ vehicle = data;
 
-/* PAYMENT CALCULATIONS */
-function getPayableAmount(){
- if(!vehicle)return 0;
-
- const price=Number(vehicle.selling_price)||0;
- const percentage=Number(vehicle.deposit_percentage??30);
-
- const choice=document.querySelector(
-  'input[name="paymentChoice"]:checked'
- )?.value;
-
- return choice==='full'
-  ?price
-  :price*percentage/100;
-}
-
-function updatePrices(){
- if(!vehicle)return;
-
- const base=getCurrency(vehicle);
- const target=$('displayCurrency').value;
-
- const price=Number(vehicle.selling_price)||0;
- const percentage=Number(vehicle.deposit_percentage??30);
- const deposit=price*percentage/100;
-
- $('originalPrice').textContent=formatMoney(price,base);
-
- const convertedPrice=convert(price);
- const convertedDeposit=convert(deposit);
- const convertedPayable=convert(getPayableAmount());
-
- $('depositTitle').textContent=
-  percentage+'% Initial Deposit';
-
- if(convertedPrice===null){
-  $('localPrice').textContent='Exchange rate unavailable';
-  $('total').textContent=formatMoney(price,base);
-  $('payableAmount').textContent=
-   formatMoney(getPayableAmount(),base);
-
-  $('depositDescription').textContent=
-   'Deposit: '+formatMoney(deposit,base)+
-   '. Remaining balance: '+formatMoney(price-deposit,base);
-
-  $('paymentNotice').textContent=
-   'The original price is displayed in '+base+
-   '. Local currency conversion is temporarily unavailable. Final payment arrangements must be confirmed.';
-
-  return;
+ if (vehicle.availability === 'out_of_stock') {
+  throw new Error('This vehicle is currently out of stock.');
  }
 
- $('localPrice').textContent=formatMoney(convertedPrice,target);
- $('total').textContent=formatMoney(convertedPrice,target);
+ $('vehicleName').textContent = vehicle.model || 'Selected vehicle';
+ $('vehicleVariant').textContent = vehicle.variant || 'Premium vehicle';
 
- $('payableAmount').textContent=
-  convertedPayable===null
-   ?'—'
-   :formatMoney(convertedPayable,target);
+ const image = Array.isArray(vehicle.image_urls) && vehicle.image_urls.length
+  ? vehicle.image_urls[0]
+  : '';
 
- $('depositDescription').textContent=
-  'Estimated deposit: '+formatMoney(convertedDeposit,target)+
-  '. Remaining balance: '+
-  formatMoney(convertedPrice-convertedDeposit,target);
+ $('vehicleImage').src = image ||
+  'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85';
 
- const isUSD=base==='USD';
+ const savedCurrency =
+  localStorage.getItem('teslaDisplayCurrency') ||
+  localStorage.getItem('tesla_display_currency') ||
+  'NGN';
 
- $('paymentNotice').textContent=isUSD
-  ?'Your original vehicle price is in USD. The existing Stripe test checkout uses USD. Any displayed local currency conversion is an estimate.'
-  :'This vehicle is listed in '+base+'. The converted amount is an estimate. Our team must confirm the final payment currency and amount before payment. No non-USD Stripe payment is initiated here.';
-}
-
-/* LOAD VEHICLE */
-async function loadVehicle(){
- if(!vehicleId){
-  $('vehicleName').textContent='No vehicle selected';
-  $('submitButton').disabled=true;
-  $('formStatus').textContent=
-   'Return to the vehicle collection and select a vehicle.';
-  return;
+ if ($('displayCurrency').querySelector('option[value="' + savedCurrency + '"]')) {
+  $('displayCurrency').value = savedCurrency;
  }
 
- try{
-  const {data,error}=await db
-   .from('vehicles')
-   .select('*')
-   .eq('id',vehicleId)
-   .eq('is_published',true)
-   .single();
-
-  if(error)throw error;
-
-  vehicle=data;
-
-  $('vehicleName').textContent=vehicle.model||'Selected vehicle';
-  $('vehicleVariant').textContent=vehicle.variant||'Premium vehicle';
-
-  const image=Array.isArray(vehicle.image_urls)&&vehicle.image_urls.length
-   ?vehicle.image_urls[0]
-   :'';
-
-  $('vehicleImage').src=image||
-   'https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=85';
-
-  $('displayCurrency').value=getSavedCurrency();
-
-  if(!$('displayCurrency').querySelector(
-   'option[value="'+$('displayCurrency').value+'"]'
-  )){
-   $('displayCurrency').value='NGN';
-  }
-
-  await loadRates();
-
- }catch(error){
-  console.error(error);
-
-  $('vehicleName').textContent='Vehicle unavailable';
-  $('submitButton').disabled=true;
-
-  $('formStatus').textContent=
-   'Unable to load this vehicle. Please return to the vehicle collection.';
- }
+ await loadRates();
 }
 
-/* CURRENCY SELECTOR */
-$('displayCurrency').addEventListener('change',()=>{
- const currency=$('displayCurrency').value;
+function getSelectedWallet() {
+ const asset = $('asset').value;
+ const network = $('network').value;
 
- saveCurrencyPreference(currency);
+ return wallets.find(wallet =>
+  wallet.asset === asset && wallet.network === network
+ );
+}
+
+function updateWallet() {
+ const asset = $('asset').value;
+
+ const availableNetworks = wallets.filter(wallet => wallet.asset === asset);
+
+ $('network').innerHTML = '';
+
+ availableNetworks.forEach(wallet => {
+  const option = document.createElement('option');
+  option.value = wallet.network;
+  option.textContent = wallet.network;
+  $('network').appendChild(option);
+ });
+
+ const selected = getSelectedWallet();
+
+ $('walletAddress').textContent = selected
+  ? selected.wallet_address
+  : 'Wallet unavailable. Contact support before sending funds.';
+
+ $('copyWallet').disabled = !selected;
+}
+
+function configureCrypto(result) {
+ currentOrder = result.order;
+ wallets = result.wallets || [];
+
+ $('orderReference').textContent = currentOrder.id;
+
+ const due = currentOrder.payment_choice === 'full'
+  ? Number(currentOrder.vehicle_price)
+  : Number(currentOrder.deposit_amount);
+
+ $('fiatDue').textContent = money(
+  due,
+  currentOrder.currency || 'USD'
+ );
+
+ const supportedAssets = [...new Set(wallets.map(wallet => wallet.asset))];
+
+ $('asset').innerHTML = '';
+
+ supportedAssets.forEach(asset => {
+  const option = document.createElement('option');
+  option.value = asset;
+  option.textContent = asset;
+  $('asset').appendChild(option);
+ });
+
+ if (!supportedAssets.length) {
+  throw new Error('No active crypto wallets are available.');
+ }
+
+ $('cryptoSection').classList.remove('hidden');
+ $('purchaseForm').classList.add('hidden');
+
+ updateWallet();
+
+ $('cryptoSection').scrollIntoView({behavior: 'smooth'});
+}
+
+$('displayCurrency').addEventListener('change', () => {
+ const currency = $('displayCurrency').value;
+
+ localStorage.setItem('teslaDisplayCurrency', currency);
+ localStorage.setItem('tesla_display_currency', currency);
+
  loadRates();
 });
 
-/* PAYMENT METHOD SELECTOR */
-document.querySelectorAll(
- 'input[name="paymentChoice"]'
-).forEach(input=>{
- input.addEventListener('change',updatePrices);
+document.querySelectorAll('input[name="paymentChoice"]').forEach(input => {
+ input.addEventListener('change', updatePrices);
 });
 
-/* SUBMIT PURCHASE */
-$('purchaseForm').addEventListener('submit',async event=>{
+$('asset').addEventListener('change', updateWallet);
+$('network').addEventListener('change', updateWallet);
+
+$('copyWallet').addEventListener('click', async () => {
+ const wallet = getSelectedWallet();
+
+ if (!wallet) return;
+
+ try {
+  await navigator.clipboard.writeText(wallet.wallet_address);
+  $('copyWallet').textContent = 'ADDRESS COPIED';
+ } catch {
+  $('cryptoStatus').textContent = 'Copy unavailable. Select and copy the wallet address manually.';
+ }
+});
+
+// CREATE ORDER
+
+$('purchaseForm').addEventListener('submit', async event => {
  event.preventDefault();
 
- if(!await checkCustomer())return;
- if(!vehicle)return;
+ const button = $('createOrderButton');
+ const status = $('formStatus');
 
- const button=$('submitButton');
- const status=$('formStatus');
- const base=getCurrency(vehicle);
+ if (!vehicle || currentOrder) return;
 
- /*
- Existing Stripe test checkout is only used
- for vehicles whose original listing currency is USD.
- */
- if(base!=='USD'){
-  status.style.color='#ffcc66';
-  status.textContent=
-   'Your vehicle is listed in '+base+
-   '. Please contact customer support to confirm the final payment currency and arrangements. No payment has been taken.';
+ button.disabled = true;
+ button.textContent = 'CREATING ORDER...';
+
+ status.textContent = 'Creating your purchase order...';
+ status.style.color = '#aaa';
+
+ try {
+  const result = await callPaymentFunction({
+   action: 'create_order',
+   vehicle_id: vehicle.id,
+   customer_name: $('fullName').value.trim(),
+   phone: $('phone').value.trim(),
+   delivery_country: $('country').value.trim(),
+   delivery_address: $('address').value.trim(),
+   payment_choice: document.querySelector('input[name="paymentChoice"]:checked').value,
+   selected_options: $('colour').value.trim()
+  });
+
+  configureCrypto(result);
+
+  status.style.color = '#43d69a';
+  status.textContent = 'Your purchase order has been created.';
+ } catch (error) {
+  status.style.color = '#ff7777';
+  status.textContent = error.message;
+
+  button.disabled = false;
+  button.textContent = 'CREATE PURCHASE ORDER';
+ }
+});
+
+// SUBMIT CRYPTO PAYMENT
+
+$('cryptoForm').addEventListener('submit', async event => {
+ event.preventDefault();
+
+ if (!currentOrder || paymentLocked) return;
+
+ const button = $('submitCryptoButton');
+ const status = $('cryptoStatus');
+ const wallet = getSelectedWallet();
+
+ if (!wallet) {
+  status.textContent = 'The selected wallet is unavailable.';
   return;
  }
 
- button.disabled=true;
- button.textContent='CONNECTING...';
+ const amount = Number($('cryptoAmount').value);
+ const hash = $('transactionHash').value.trim();
 
- status.style.color='#aaa';
- status.textContent='Preparing your secure test payment session...';
+ if (!Number.isFinite(amount) || amount <= 0) {
+  status.textContent = 'Enter a valid cryptocurrency amount.';
+  return;
+ }
 
- try{
-  const {
-   data:{session},
-   error:sessionError
-  }=await db.auth.getSession();
+ if (!hash) {
+  status.textContent = 'Enter your transaction hash.';
+  return;
+ }
 
-  if(sessionError||!session){
-   throw new Error(
-    'Your login session has expired. Please sign in again.'
-   );
-  }
+ button.disabled = true;
+ button.textContent = 'SUBMITTING...';
 
-  const paymentChoice=document.querySelector(
-   'input[name="paymentChoice"]:checked'
-  )?.value;
+ status.style.color = '#aaa';
+ status.textContent = 'Submitting payment for verification...';
 
-  const payload={
-   vehicle_id:vehicle.id,
-   customer_name:$('fullName').value.trim(),
-   phone:$('phone').value.trim(),
-   delivery_country:$('country').value.trim(),
-   delivery_address:$('address').value.trim(),
-   payment_choice:paymentChoice
-  };
-
-  const response=await fetch(CHECKOUT_URL,{
-   method:'POST',
-   headers:{
-    'Content-Type':'application/json',
-    'apikey':SUPABASE_KEY,
-    'Authorization':'Bearer '+session.access_token
-   },
-   body:JSON.stringify(payload)
+ try {
+  const result = await callPaymentFunction({
+   action: 'submit_payment',
+   order_id: currentOrder.id,
+   asset: wallet.asset,
+   network: wallet.network,
+   transaction_hash: hash,
+   crypto_amount: amount,
+   payment_type: currentOrder.payment_choice
   });
 
-  const result=await response.json();
+  paymentLocked = true;
 
-  if(!response.ok){
-   throw new Error(
-    result.error||'Unable to start secure test payment.'
-   );
-  }
+  status.style.color = '#43d69a';
+  status.textContent =
+   'Payment submitted successfully. Reference: ' +
+   result.payment.id +
+   '. Your payment is awaiting administrator verification.';
 
-  if(!result.success||!result.checkout_url){
-   throw new Error(
-    'Stripe did not return a valid checkout address.'
-   );
-  }
+  button.textContent = 'PAYMENT SUBMITTED';
+ } catch (error) {
+  status.style.color = '#ff7777';
+  status.textContent = error.message;
 
-  status.style.color='#43d69a';
-  status.textContent='Test checkout created. Redirecting...';
-
-  window.location.assign(result.checkout_url);
-
- }catch(error){
-  console.error(error);
-
-  status.style.color='#ff7777';
-  status.textContent=error.message;
-
-  button.disabled=false;
-  button.textContent='CONTINUE TO PAYMENT';
+  button.disabled = false;
+  button.textContent = 'SUBMIT PAYMENT FOR VERIFICATION';
  }
 });
 
-/* INITIALIZE */
-async function initialize(){
- const authenticated=await checkCustomer();
+// INITIALIZE
 
- if(!authenticated)return;
+async function initialize() {
+ try {
+  const authenticated = await checkCustomer();
 
- $('authLoading').style.display='none';
+  if (!authenticated) return;
 
- const params=new URLSearchParams(location.search);
+  $('authLoading').style.display = 'none';
 
- if(params.get('payment')==='cancelled'){
-  $('formStatus').style.color='#ffcc66';
-  $('formStatus').textContent=
-   'Payment was cancelled. Your order has not been confirmed.';
+  await loadVehicle();
+ } catch (error) {
+  $('authLoading').style.display = 'none';
+  $('vehicleName').textContent = 'Checkout unavailable';
+  $('createOrderButton').disabled = true;
+  $('formStatus').textContent = error.message;
+  $('formStatus').style.color = '#ff7777';
  }
-
- await loadVehicle();
 }
 
 initialize();
