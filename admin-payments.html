@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>TESLA Innovation | Crypto Payment Review</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;padding:18px;background:#080808;color:#fff;font-family:Arial,sans-serif}
+.container{max-width:1100px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.brand{color:#e82127}
+.panel,.payment-card{background:#151515;border:1px solid #303030;border-radius:12px;padding:20px;margin-bottom:18px}
+.muted{color:#999;line-height:1.6}
+input{width:100%;padding:13px;margin:8px 0 15px;background:#080808;border:1px solid #444;border-radius:7px;color:white;font-size:15px}
+label{display:block;color:#ddd;font-size:14px}
+button,.link{display:inline-block;border:0;border-radius:7px;padding:12px 16px;margin:5px 5px 5px 0;background:#e82127;color:#fff;font-weight:bold;text-decoration:none;cursor:pointer;font-size:13px}
+button:disabled{opacity:.5;cursor:not-allowed}
+.secondary{background:#333}
+.success{background:#168b48}
+.danger{background:#a3151a}
+.hidden{display:none!important}
+.message{padding:12px;border-radius:7px;margin:12px 0;display:none;overflow-wrap:anywhere}
+.message.error{display:block;background:#4a1515;color:#ffbaba}
+.message.success{display:block;background:#123c25;color:#a8ffc6}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:18px 0}
+.stat{background:#202020;border:1px solid #333;border-radius:10px;padding:18px}
+.stat span{color:#aaa;font-size:13px}
+.stat h2{color:#e82127;margin:12px 0 0;font-size:28px}
+.payment-card h3{margin-top:0}
+.row{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.detail{background:#0c0c0c;border:1px solid #292929;border-radius:8px;padding:12px;margin:8px 0;overflow-wrap:anywhere}
+.detail small{display:block;color:#999;margin-bottom:6px}
+.hash{font-family:monospace;color:#ffb4b4;word-break:break-all}
+.warning{background:#3a2a0c;border:1px solid #80621d;color:#ffe1a0;padding:13px;border-radius:8px;line-height:1.6;margin:12px 0}
+.status{display:inline-block;padding:6px 10px;border-radius:20px;background:#493814;color:#ffdc8a;font-size:12px}
+a{color:#ff7777;overflow-wrap:anywhere}
+@media(max-width:600px){body{padding:10px}.panel,.payment-card{padding:14px}}
+</style>
+</head>
+<body>
+<div class="container">
+
+<header>
+  <div>
+    <h1><span class="brand">TESLA</span> Innovation</h1>
+    <p class="muted">Crypto Payment Review Centre</p>
+  </div>
+  <div>
+    <a class="link secondary" href="admin.html">Main Admin</a>
+    <button id="logoutBtn" class="secondary hidden" onclick="logout()">Logout</button>
+  </div>
+</header>
+
+<section id="loginPanel" class="panel">
+  <h2>Administrator Login</h2>
+  <p class="muted">Sign in using your authorised TESLA Innovation administrator account.</p>
+  <label>Email Address</label>
+  <input id="email" type="email" autocomplete="username" placeholder="Admin email">
+  <label>Password</label>
+  <input id="password" type="password" autocomplete="current-password" placeholder="Password">
+  <div id="loginMessage" class="message"></div>
+  <button id="loginBtn" onclick="login()">Sign In</button>
+</section>
+
+<section id="dashboard" class="hidden">
+  <div class="panel">
+    <h2>Payment Overview</h2>
+    <p class="muted">Review customer crypto payment submissions and their verification status.</p>
+    <div class="stats">
+      <div class="stat"><span>Pending Review</span><h2 id="pendingCount">—</h2></div>
+      <div class="stat"><span>Verified Payments</span><h2 id="verifiedCount">—</h2></div>
+      <div class="stat"><span>Rejected Payments</span><h2 id="rejectedCount">—</h2></div>
+    </div>
+    <button onclick="loadPayments()">Refresh Payments</button>
+    <div id="pageMessage" class="message"></div>
+  </div>
+
+  <div class="panel">
+    <h2>Pending Crypto Submissions</h2>
+    <p class="muted">Only approve after independently confirming the transaction on the correct blockchain.</p>
+    <div id="pendingList"><p class="muted">Loading payments...</p></div>
+  </div>
+
+  <div class="panel">
+    <h2>Payment History</h2>
+    <div id="historyList"><p class="muted">Loading history...</p></div>
+  </div>
+</section>
+
+</div>
+
+<script>
+"use strict";
+
+const SUPABASE_URL="https://dnmktpmvjzsxzmgizdcv.supabase.co";
+const SUPABASE_KEY="sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY);
+
+let currentUser=null;
+let paymentRows=[];
+let orderMap={};
+
+function escapeHTML(value){
+  return String(value??"").replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[c]);
+}
+
+function money(value,currency){
+  const amount=Number(value||0);
+  const code=String(currency||"USD").toUpperCase();
+  try{
+    return new Intl.NumberFormat("en-US",{
+      style:"currency",currency:code,maximumFractionDigits:2
+    }).format(amount);
+  }catch(e){
+    return amount.toLocaleString()+" "+code;
+  }
+}
+
+function message(id,text,type){
+  const el=document.getElementById(id);
+  el.textContent=text;
+  el.className="message "+type;
+}
+
+function clearMessage(id){
+  const el=document.getElementById(id);
+  el.textContent="";
+  el.className="message";
+}
+
+async function verifyAdmin(){
+  if(!currentUser)return false;
+
+  const {data,error}=await db.from("admin_users")
+    .select("user_id")
+    .eq("user_id",currentUser.id)
+    .maybeSingle();
+
+  if(error)throw error;
+  return Boolean(data);
+}
+
+async function login(){
+  clearMessage("loginMessage");
+
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
+
+  if(!email||!password){
+    message("loginMessage","Enter your email and password.","error");
+    return;
+  }
+
+  const button=document.getElementById("loginBtn");
+  button.disabled=true;
+  button.textContent="Signing in...";
+
+  try{
+    const {data,error}=await db.auth.signInWithPassword({email,password});
+    if(error)throw error;
+
+    currentUser=data.user;
+
+    if(!await verifyAdmin()){
+      await db.auth.signOut();
+      currentUser=null;
+      throw new Error("This account is not authorised as an administrator.");
+    }
+
+    await openDashboard();
+  }catch(error){
+    message("loginMessage",error.message||"Login failed.","error");
+  }finally{
+    button.disabled=false;
+    button.textContent="Sign In";
+  }
+}
+
+async function checkSession(){
+  try{
+    const {data,error}=await db.auth.getSession();
+    if(error)throw error;
+    if(!data.session)return;
+
+    currentUser=data.session.user;
+
+    if(!await verifyAdmin()){
+      await db.auth.signOut();
+      currentUser=null;
+      return;
+    }
+
+    await openDashboard();
+  }catch(error){
+    console.error(error);
+  }
+}
+
+async function openDashboard(){
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("dashboard").classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.remove("hidden");
+  await loadPayments();
+}
+
+async function logout(){
+  await db.auth.signOut();
+  currentUser=null;
+  document.getElementById("dashboard").classList.add("hidden");
+  document.getElementById("loginPanel").classList.remove("hidden");
+  document.getElementById("logoutBtn").classList.add("hidden");
+  document.getElementById("password").value="";
+}
+
+function explorerURL(payment){
+  const hash=String(payment.transaction_hash||"").trim();
+  const network=String(payment.network||"").toLowerCase();
+
+  if(!hash)return "";
+
+  if(network==="trc20"){
+    return "https://tronscan.org/#/transaction/"+encodeURIComponent(hash);
+  }
+
+  if(network==="erc20"||network==="ethereum"){
+    return "https://etherscan.io/tx/"+encodeURIComponent(hash);
+  }
+
+  if(network==="bitcoin"||network==="btc"){
+    return "https://www.blockchain.com/explorer/transactions/btc/"+encodeURIComponent(hash);
+  }
+
+  return "";
+}
+
+function explorerName(network){
+  const n=String(network||"").toLowerCase();
+  if(n==="trc20")return "Open on Tronscan";
+  if(n==="erc20"||n==="ethereum")return "Open on Etherscan";
+  if(n==="bitcoin"||n==="btc")return "Open Bitcoin Explorer";
+  return "Explorer unavailable";
+}
+
+async function loadPayments(){
+  clearMessage("pageMessage");
+  document.getElementById("pendingList").innerHTML="<p class='muted'>Loading pending payments...</p>";
+  document.getElementById("historyList").innerHTML="<p class='muted'>Loading payment history...</p>";
+
+  try{
+    const {data,error}=await db.from("payments")
+      .select("*")
+      .order("created_at",{ascending:false});
+
+    if(error)throw error;
+
+    paymentRows=data||[];
+    orderMap={};
+
+    const orderIds=[...new Set(paymentRows.map(p=>p.order_id).filter(Boolean))];
+
+    if(orderIds.length){
+      const {data:orders,error:orderError}=await db.from("orders")
+        .select("*")
+        .in("id",orderIds);
+
+      if(orderError)throw orderError;
+
+      (orders||[]).forEach(order=>{
+        orderMap[order.id]=order;
+      });
+    }
+
+    renderPayments();
+  }catch(error){
+    console.error(error);
+    message("pageMessage","Could not load payments: "+(error.message||"Unknown error"),"error");
+    document.getElementById("pendingList").innerHTML="<p class='muted'>Payment records could not be loaded.</p>";
+    document.getElementById("historyList").innerHTML="";
+  }
+}
+
+function paymentCard(payment,showActions){
+  const order=orderMap[payment.order_id]||{};
+  const explorer=explorerURL(payment);
+  const customer=order.customer_name||"Customer information unavailable";
+  const email=order.email||"Not available";
+  const phone=order.phone||"Not available";
+  const asset=payment.asset||"Crypto";
+  const network=payment.network||"Not specified";
+  const fiatAmount=payment.fiat_amount??payment.amount;
+  const fiatCurrency=payment.fiat_currency||payment.currency||order.currency||"USD";
+  const cryptoAmount=payment.crypto_amount??"Not supplied";
+  const hash=payment.transaction_hash||"Not supplied";
+  const wallet=payment.wallet_address||"Not recorded";
+  const paymentStatus=payment.payment_status||"unknown";
+
+  return `
+  <article class="payment-card">
+    <h3>${escapeHTML(customer)}</h3>
+    <span class="status">${escapeHTML(paymentStatus.toUpperCase())}</span>
+
+    <div class="row">
+      <div class="detail"><small>Customer email</small>${escapeHTML(email)}</div>
+      <div class="detail"><small>Phone</small>${escapeHTML(phone)}</div>
+      <div class="detail"><small>Order ID</small>${escapeHTML(payment.order_id||"Unavailable")}</div>
+      <div class="detail"><small>Submitted</small>${escapeHTML(new Date(payment.created_at).toLocaleString())}</div>
+      <div class="detail"><small>Fiat amount submitted</small><strong>${escapeHTML(money(fiatAmount,fiatCurrency))}</strong></div>
+      <div class="detail"><small>Crypto amount declared</small><strong>${escapeHTML(String(cryptoAmount))} ${escapeHTML(asset)}</strong></div>
+      <div class="detail"><small>Asset / Network</small>${escapeHTML(asset)} / ${escapeHTML(network)}</div>
+      <div class="detail"><small>Payment type</small>${escapeHTML(payment.payment_type||"Not specified")}</div>
+    </div>
+
+    <div class="detail">
+      <small>Transaction hash</small>
+      <div class="hash">${escapeHTML(hash)}</div>
+      ${explorer?`<p><a href="${escapeHTML(explorer)}" target="_blank" rel="noopener noreferrer">${escapeHTML(explorerName(network))} ↗</a></p>`:""}
+    </div>
+
+    <div class="detail">
+      <small>Receiving wallet recorded</small>
+      <div class="hash">${escapeHTML(wallet)}</div>
+    </div>
+
+    ${payment.proof_url?`<p><a href="${escapeHTML(payment.proof_url)}" target="_blank" rel="noopener noreferrer">View uploaded payment proof ↗</a></p>`:""}
+
+    ${showActions?`
+      <div class="warning">
+        MANUAL VERIFICATION REQUIRED. Check the transaction on the correct blockchain. Confirm the receiving wallet, asset/token, network, actual amount received and required confirmations. A transaction hash or screenshot alone is not proof of payment.
+      </div>
+      <button class="success" onclick="reviewPayment('${escapeHTML(payment.id)}','verify_payment',this)">Approve Verified Payment</button>
+      <button class="danger" onclick="reviewPayment('${escapeHTML(payment.id)}','reject_payment',this)">Reject Payment</button>
+    `:""}
+  </article>`;
+}
+
+function renderPayments(){
+  const pending=paymentRows.filter(p=>String(p.payment_status).toLowerCase()==="pending");
+  const verified=paymentRows.filter(p=>String(p.payment_status).toLowerCase()==="verified");
+  const rejected=paymentRows.filter(p=>String(p.payment_status).toLowerCase()==="rejected");
+
+  document.getElementById("pendingCount").textContent=pending.length;
+  document.getElementById("verifiedCount").textContent=verified.length;
+  document.getElementById("rejectedCount").textContent=rejected.length;
+
+  document.getElementById("pendingList").innerHTML=pending.length
+    ?pending.map(p=>paymentCard(p,true)).join("")
+    :"<p class='muted'>There are no pending crypto payment submissions.</p>";
+
+  const history=paymentRows.filter(p=>!pending.includes(p));
+
+  document.getElementById("historyList").innerHTML=history.length
+    ?history.map(p=>paymentCard(p,false)).join("")
+    :"<p class='muted'>No completed payment reviews yet.</p>";
+}
+
+async function reviewPayment(paymentId,action,button){
+  const isApprove=action==="verify_payment";
+
+  const confirmation=isApprove
+    ?"Have you independently verified this transaction on the correct blockchain, including wallet, asset, amount and confirmations?"
+    :"Are you sure you want to reject this payment submission?";
+
+  if(!confirm(confirmation))return;
+
+  button.disabled=true;
+  button.textContent=isApprove?"Approving...":"Rejecting...";
+
+  try{
+    const {data:sessionData,error:sessionError}=await db.auth.getSession();
+    if(sessionError)throw sessionError;
+
+    const token=sessionData.session?.access_token;
+    if(!token)throw new Error("Your administrator session has expired. Sign in again.");
+
+    const response=await fetch(SUPABASE_URL+"/functions/v1/crypto-payments",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer "+token,
+        "apikey":SUPABASE_KEY
+      },
+      body:JSON.stringify({
+        action:action,
+        payment_id:paymentId
+      })
+    });
+
+    const result=await response.json();
+
+    if(!response.ok||result.error){
+      throw new Error(result.error||result.message||"Payment review failed.");
+    }
+
+    message("pageMessage",isApprove
+      ?"Payment approved. The payment status has been updated."
+      :"Payment rejected. The payment status has been updated.","success");
+
+    await loadPayments();
+  }catch(error){
+    console.error(error);
+    message("pageMessage",error.message||"Could not update payment.","error");
+    button.disabled=false;
+    button.textContent=isApprove?"Approve Verified Payment":"Reject Payment";
+  }
+}
+
+checkSession();
+</script>
+</body>
+</html>
