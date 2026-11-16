@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#080808">
+<title>My Payments | TESLA Innovation</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#080808;color:#fff;font-family:Arial,sans-serif;min-height:100vh}
+header{padding:20px 6%;border-bottom:1px solid #292929;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.logo{font-size:20px;font-weight:bold;letter-spacing:2px}
+.logo span{color:#e82127}
+header a{color:#ccc;text-decoration:none;font-size:13px}
+.container{max-width:1050px;margin:35px auto;padding:20px}
+h1{font-size:30px;margin-bottom:10px}
+.subtitle{color:#999;line-height:1.6;margin-bottom:25px}
+.panel{background:#141414;border:1px solid #303030;border-radius:12px;padding:22px;margin-bottom:20px}
+.order-card{background:#191919;border:1px solid #333;border-radius:10px;padding:20px;margin:15px 0}
+.order-card h2{font-size:20px;margin-bottom:15px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:15px 0}
+.stat{background:#0d0d0d;border:1px solid #303030;border-radius:8px;padding:14px;overflow-wrap:anywhere}
+.stat small{display:block;color:#999;margin-bottom:8px}
+.stat strong{font-size:18px}
+.green{color:#70e6a0}
+.red{color:#ff7777}
+.yellow{color:#ffda7a}
+.badge{display:inline-block;background:#303030;border-radius:20px;padding:7px 11px;font-size:11px;margin:5px 0}
+button,.btn{border:0;border-radius:6px;background:#e82127;color:#fff;padding:12px 17px;font-weight:bold;cursor:pointer;text-decoration:none;display:inline-block;font-size:13px;margin:5px 5px 5px 0}
+.secondary{background:#333}
+.payment{background:#0d0d0d;border:1px solid #303030;border-radius:8px;padding:14px;margin-top:12px;overflow-wrap:anywhere}
+.payment p{color:#bbb;font-size:13px;line-height:1.7;margin:5px 0}
+.hash{font-family:monospace;color:#ffaaaa;word-break:break-all}
+.notice{padding:14px;background:#352a10;color:#ffe4a0;border-radius:8px;line-height:1.6;font-size:13px;margin:12px 0}
+.empty{color:#999;padding:18px 0;line-height:1.6}
+.message{padding:13px;border-radius:7px;margin:12px 0;display:none;line-height:1.5}
+.error{display:block;background:#401616;color:#ffb3b3}
+.success{display:block;background:#12351f;color:#a8f0bd}
+footer{text-align:center;padding:30px;color:#666;font-size:12px}
+@media(max-width:600px){.container{padding:13px;margin:20px auto}header{padding:17px}.panel,.order-card{padding:15px}h1{font-size:25px}}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">TESLA <span>INNOVATION</span></div>
+  <div>
+    <a href="customer.html">CUSTOMER PORTAL</a>
+    &nbsp; | &nbsp;
+    <a href="index.html">SHOWROOM</a>
+  </div>
+</header>
+
+<main class="container">
+
+  <h1>My Payment Centre</h1>
+  <p class="subtitle">
+    View your vehicle purchase payments, submitted crypto transactions,
+    verification progress and outstanding balances.
+  </p>
+
+  <section id="loadingPanel" class="panel">
+    <p class="empty">Checking your customer account...</p>
+  </section>
+
+  <section id="paymentDashboard" class="hidden">
+    <div class="panel">
+      <h2>Account Overview</h2>
+      <p class="subtitle" id="customerEmail"></p>
+      <button onclick="loadPayments()">REFRESH PAYMENT STATUS ↻</button>
+      <div id="message" class="message"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Your Vehicle Purchases</h2>
+      <div id="ordersList">
+        <p class="empty">Loading your purchases...</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  TESLA Innovation © 2026<br><br>
+  Customer Payment Centre
+</footer>
+
+<script>
+"use strict";
+
+const SUPABASE_URL =
+"https://dnmktpmvjzsxzmgizdcv.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_80ZPvReXfDaw0UhD872X4Q_Vz2xcrbj";
+
+const db = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
+
+let currentCustomer = null;
+
+function el(tag,className,text){
+  const node=document.createElement(tag);
+  if(className) node.className=className;
+  if(text!==undefined) node.textContent=String(text);
+  return node;
+}
+
+function money(value,currency){
+  const amount=Number(value||0);
+  const code=String(currency||"USD").toUpperCase();
+
+  try{
+    return new Intl.NumberFormat("en-US",{
+      style:"currency",
+      currency:code,
+      maximumFractionDigits:2
+    }).format(amount);
+  }catch(error){
+    return amount.toLocaleString()+" "+code;
+  }
+}
+
+function showMessage(text,type){
+  const box=document.getElementById("message");
+  box.textContent=text;
+  box.className="message "+type;
+}
+
+function clearMessage(){
+  const box=document.getElementById("message");
+  box.textContent="";
+  box.className="message";
+}
+
+function statusClass(status){
+  const value=String(status||"").toLowerCase();
+
+  if(value==="paid"||value==="verified") return "green";
+  if(value==="rejected"||value==="payment_rejected") return "red";
+  if(value==="partially_paid"||value==="payment_submitted") return "yellow";
+
+  return "";
+}
+
+function addStat(parent,label,value,className){
+  const box=el("div","stat");
+  box.appendChild(el("small","",label));
+  box.appendChild(el("strong",className||"",value));
+  parent.appendChild(box);
+}
+
+function explorerURL(payment){
+  const hash=String(payment.transaction_hash||"").trim();
+  const network=String(payment.network||"").toLowerCase();
+
+  if(!hash) return "";
+
+  if(network==="trc20"){
+    return "https://tronscan.org/#/transaction/"+encodeURIComponent(hash);
+  }
+
+  if(network==="erc20"||network==="ethereum"){
+    return "https://etherscan.io/tx/"+encodeURIComponent(hash);
+  }
+
+  if(network==="bitcoin"||network==="btc"){
+    return "https://www.blockchain.com/explorer/transactions/btc/"+encodeURIComponent(hash);
+  }
+
+  return "";
+}
+
+function addPaymentHistory(parent,payments){
+  parent.appendChild(el("h3","","Payment Submissions"));
+
+  if(!payments.length){
+    parent.appendChild(
+      el("p","empty","No crypto payment submissions have been recorded for this order yet.")
+    );
+    return;
+  }
+
+  payments.forEach(payment=>{
+    const box=el("div","payment");
+
+    const status=String(payment.payment_status||"pending").toUpperCase();
+
+    box.appendChild(
+      el("span","badge "+statusClass(payment.payment_status),status)
+    );
+
+    const asset=payment.asset||"Crypto";
+    const network=payment.network||"Not specified";
+    const cryptoAmount=payment.crypto_amount??"Not supplied";
+    const fiatAmount=payment.fiat_amount??payment.amount;
+    const currency=payment.fiat_currency||payment.currency||"USD";
+
+    box.appendChild(el("p","","Crypto: "+cryptoAmount+" "+asset));
+    box.appendChild(el("p","","Network: "+network));
+    box.appendChild(el("p","","Submitted amount: "+money(fiatAmount,currency)));
+    box.appendChild(el("p","","Submitted: "+new Date(payment.created_at).toLocaleString()));
+
+    if(payment.transaction_hash){
+      box.appendChild(el("p","hash","Transaction: "+payment.transaction_hash));
+    }
+
+    const explorer=explorerURL(payment);
+
+    if(explorer){
+      const link=el("a","btn secondary","VIEW BLOCKCHAIN TRANSACTION ↗");
+      link.href=explorer;
+      link.target="_blank";
+      link.rel="noopener noreferrer";
+      box.appendChild(link);
+    }
+
+    parent.appendChild(box);
+  });
+}
+
+function renderOrder(order,payments){
+  const card=el("article","order-card");
+
+  card.appendChild(
+    el("h2","","Vehicle Purchase")
+  );
+
+  const orderStatus=order.order_status||"Awaiting update";
+  const paymentStatus=order.payment_status||"Pending";
+  const currency=order.currency||"USD";
+
+  card.appendChild(
+    el("span","badge "+statusClass(paymentStatus),
+      "PAYMENT: "+String(paymentStatus).replaceAll("_"," ").toUpperCase()
+    )
+  );
+
+  const grid=el("div","grid");
+
+  addStat(grid,"Order reference",order.id);
+  addStat(grid,"Vehicle price",money(order.vehicle_price,currency));
+  addStat(grid,"Required deposit",money(order.deposit_amount,currency));
+  addStat(grid,"Outstanding at order creation",money(order.balance_amount,currency));
+  addStat(grid,"Order status",String(orderStatus).replaceAll("_"," "));
+  addStat(grid,"Payment status",String(paymentStatus).replaceAll("_"," "));
+
+  card.appendChild(grid);
+
+  const verifiedPayments=payments.filter(
+    p=>String(p.payment_status).toLowerCase()==="verified"
+  );
+
+  const pendingPayments=payments.filter(
+    p=>String(p.payment_status).toLowerCase()==="pending"
+  );
+
+  const rejectedPayments=payments.filter(
+    p=>String(p.payment_status).toLowerCase()==="rejected"
+  );
+
+  const totalPaid=verifiedPayments.reduce(
+    (sum,p)=>sum+Number(p.fiat_amount??p.amount??0),0
+  );
+
+  const vehiclePrice=Number(order.vehicle_price||0);
+  const remaining=Math.max(0,vehiclePrice-totalPaid);
+
+  const summary=el("div","grid");
+
+  addStat(summary,"Verified payments",money(totalPaid,currency),"green");
+  addStat(summary,"Remaining vehicle balance",money(remaining,currency),remaining>0?"yellow":"green");
+  addStat(summary,"Awaiting review",pendingPayments.length,"yellow");
+  addStat(summary,"Rejected submissions",rejectedPayments.length,"red");
+
+  card.appendChild(el("h3","","Payment Summary"));
+  card.appendChild(summary);
+
+  if(pendingPayments.length){
+    card.appendChild(
+      el("div","notice",
+        "Your payment submission is awaiting administrator verification. Your balance will update after approval."
+      )
+    );
+  }else if(paymentStatus==="paid"){
+    card.appendChild(
+      el("div","notice",
+        "Your purchase payment is marked as paid. Please contact the business for delivery arrangements."
+      )
+    );
+  }else if(rejectedPayments.length){
+    card.appendChild(
+      el("div","notice",
+        "One or more payment submissions were rejected. Please contact the business before making another payment."
+      )
+    );
+  }
+
+  addPaymentHistory(card,payments);
+
+  const contact=el("a","btn","CONTACT CUSTOMER SUPPORT");
+  contact.href="contact.html";
+  card.appendChild(contact);
+
+  return card;
+}
+
+async function loadPayments(){
+  if(!currentCustomer) return;
+
+  clearMessage();
+
+  const list=document.getElementById("ordersList");
+  list.replaceChildren(el("p","empty","Loading your payment records..."));
+
+  try{
+    const {data:orders,error:ordersError}=await db
+      .from("orders")
+      .select("*")
+      .eq("customer_id",currentCustomer.id)
+      .order("created_at",{ascending:false});
+
+    if(ordersError) throw ordersError;
+
+    if(!orders||orders.length===0){
+      list.replaceChildren(
+        el("p","empty",
+          "No vehicle purchases are currently linked to your account. Once you complete checkout, your purchases will appear here."
+        )
+      );
+      return;
+    }
+
+    const orderIds=orders.map(order=>order.id);
+
+    const {data:payments,error:paymentsError}=await db
+      .from("payments")
+      .select("*")
+      .in("order_id",orderIds)
+      .order("created_at",{ascending:false});
+
+    if(paymentsError) throw paymentsError;
+
+    const paymentRows=payments||[];
+
+    list.replaceChildren();
+
+    orders.forEach(order=>{
+      const orderPayments=paymentRows.filter(
+        payment=>payment.order_id===order.id
+      );
+
+      list.appendChild(renderOrder(order,orderPayments));
+    });
+
+  }catch(error){
+    console.error(error);
+    list.replaceChildren(
+      el("p","empty","We could not load your payment records. Please refresh or contact customer support.")
+    );
+    showMessage(error.message||"Unable to load payments.","error");
+  }
+}
+
+async function initialize(){
+  try{
+    const {data,error}=await db.auth.getSession();
+
+    if(error) throw error;
+
+    if(!data.session){
+      window.location.replace("customer.html?returnTo="+encodeURIComponent(
+        window.location.pathname+window.location.search
+      ));
+      return;
+    }
+
+    currentCustomer=data.session.user;
+
+    document.getElementById("loadingPanel").classList.add("hidden");
+    document.getElementById("paymentDashboard").classList.remove("hidden");
+
+    document.getElementById("customerEmail").textContent=
+      "Signed in as "+currentCustomer.email;
+
+    await loadPayments();
+
+  }catch(error){
+    console.error(error);
+    document.getElementById("loadingPanel").textContent=
+      "Unable to verify your customer session. Please return to the Customer Portal and sign in again.";
+  }
+}
+
+db.auth.onAuthStateChange((event,session)=>{
+  if(event==="SIGNED_OUT"){
+    window.location.replace("customer.html");
+  }
+});
+
+initialize();
+</script>
+
+</body>
+</html>
