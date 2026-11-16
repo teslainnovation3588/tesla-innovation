@@ -206,6 +206,11 @@ input:focus{border-color:#e82127}
     color:#fff;
 }
 
+.payment-action{
+    background:#168b48;
+    color:#fff;
+}
+
 .vehicle-action{
     background:#292929;
     color:#fff;
@@ -373,11 +378,18 @@ footer{
 
         <p class="subtitle" id="customerEmail"></p>
 
+        <!-- CUSTOMER MANAGEMENT SHORTCUTS -->
+
         <div class="dashboard-actions">
 
             <a href="tracking.html"
                class="action-link track-action">
                 TRACK MY ORDERS →
+            </a>
+
+            <a href="payment-status.html"
+               class="action-link payment-action">
+                MY PAYMENTS →
             </a>
 
             <a href="vehicles.html"
@@ -941,12 +953,6 @@ async function loadOrders(customerId){
         card.appendChild(status);
 
 
-        /*
-          Dedicated full tracking page.
-          The tracking page independently checks
-          the signed-in customer's order access.
-        */
-
         const trackingButton = document.createElement('a');
 
         trackingButton.href = 'tracking.html';
@@ -957,11 +963,6 @@ async function loadOrders(customerId){
 
         card.appendChild(trackingButton);
 
-
-        /*
-          External carrier tracking link.
-          Only HTTP and HTTPS URLs are accepted.
-        */
 
         if(order.tracking_url){
 
